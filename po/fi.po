@@ -2,51 +2,53 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: listaller@freelists.org\n"
-"POT-Creation-Date: 2012-09-29 21:23+0200\n"
-"PO-Revision-Date: 2009-05-06 13:36+0000\n"
-"Last-Translator: Matthias Klumpp <Unknown>\n"
+"POT-Creation-Date: 2012-10-01 19:20+0200\n"
+"PO-Revision-Date: 2012-07-27 11:15+0000\n"
+"Last-Translator: Beluga <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-05-21 16:37+0000\n"
-"X-Generator: Launchpad (build 15275)\n"
+"X-Launchpad-Export-Date: 2012-10-01 17:08+0000\n"
+"X-Generator: Launchpad (build 16061)\n"
 
 #: ../src/manager.vala:158
 msgid ""
 "'%s' has no file-list registered. The software database might be broken."
 msgstr ""
+"'%s' ei ole rekisteröity tiedostoluetteloa. Ohjelmistotietokanta saattaa "
+"olla rikki."
 
-#: ../tools/lipa/lipa-installer.vala:114
+#: ../tools/lipa/lipa-installer.vala:120
 msgid "<<< Press ENTER to continue! >>>"
 msgstr ""
 
-#: ../src/installer.vala:202
+#: ../src/installer.vala:206
 msgid "A higher version '%s' of this application has already been installed."
-msgstr ""
+msgstr "Tästä sovelluksesta on jo asennettuna uudempi versio '%s'."
 
-#: ../src/installer.vala:200
+#: ../src/installer.vala:204
 msgid "A lower version '%s' of this application has already been installed."
-msgstr ""
+msgstr "Tästä sovelluksesta on jo asennettuna vanhempi versio '%s'."
 
 #: ../tools/runapp/runapp.vala:69 ../tools/lipa/lipa.vala:54
 #: ../tools/lipkgen/lipkgen.vala:49 ../tools/depscan/depscan-tool.vala:41
 #: ../tools/likey/likey.vala:38
 msgid "Activate verbose mode"
-msgstr ""
+msgstr "Ota käyttöön selväkielinen tila"
 
 #: ../src/application.vala:389
 msgid "Application ID %s is invalid!"
-msgstr ""
+msgstr "Sovelluksen ID %s on virheellinen!"
 
 #: ../tools/lipkgen/lipkgen.vala:41
 msgid "Build IPK package"
-msgstr ""
+msgstr "Tee IPK-paketti"
 
-#: ../src/installer.vala:236
+#: ../src/installer.vala:240
 msgid "Copying files to their destination"
-msgstr ""
+msgstr "Tiedostoja kopioidaan kohteeseen"
 
 #: ../src/ipk-package.vala:313
 msgid ""
@@ -54,154 +56,168 @@ msgid ""
 "to perform this action?\n"
 "Error message was \"%s\"."
 msgstr ""
+"Tiedoston %s kopioiminen haluttuun kohteeseen epäonnistui. Onko sinulla "
+"tarvittavat oikeuden toiminnon suorittamiseen\n"
+"Virheviesti oli \"%s\""
 
 #: ../src/ipk-filelist.vala:194
 msgid "Could not create file '%s'! File already exists."
-msgstr ""
+msgstr "Tiedoston '%s' luominen epäonnistui! Tiedosto on jo olemassa."
 
 #: ../src/database-internal.vala:235
 msgid "Could not create software database!"
-msgstr ""
+msgstr "Ohjelmistotietokannan luominen epäonnistui!"
 
-#: ../src/ipk-package.vala:571
+#: ../src/ipk-package.vala:572
 msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
 msgstr ""
+"IPK:n purkaminen epäonnistui! Paketti saattaa olla vioittunut. Virhe: %s"
 
 #: ../src/ipk-package.vala:262
 msgid "Could not extract file %s! Error: %s"
-msgstr ""
+msgstr "Tiedoston %s purkaminen epäonnistui! Virhe: %s"
 
 #: ../src/feed-installer.vala:153
 msgid "Could not extract file! Error: %s"
-msgstr ""
+msgstr "Tiedostoa ei voitu purkaa! Virhe: %s"
 
 #. : IPk builder was unable to find IPK source scripts
-#: ../tools/lipkgen/ipkbuilder.vala:398 ../tools/lipkgen/prepare.vala:51
+#: ../tools/lipkgen/ipkbuilder.vala:408 ../tools/lipkgen/prepare.vala:51
 msgid "Could not find IPK source files!"
-msgstr ""
+msgstr "IPK:n lähdetiedostoja ei löytynyt!"
 
-#: ../tools/lipa/lipa-manager.vala:85
+#: ../tools/lipa/lipa-manager.vala:91
 msgid "Could not find application which matches '%s'!\n"
-msgstr ""
+msgstr "Ei löytynyt sovellusta, joka täsmää '%s' kanssa!\n"
 
 #: ../src/application.vala:434 ../src/varsetter.vala:45
 msgid "Could not load desktop file values: %s"
-msgstr ""
+msgstr "Työpöytätiedostojen arvojen lataaminen epäonnistui: %s"
 
 #: ../src/pkit-tasks.vala:80
 msgid ""
 "Could not obtain a PkBackendProxy instance. Maybe the Listaller-PkPlugin is "
 "not installed or broken?"
 msgstr ""
+"PkBackendProxy-ilmentymän käyttöönotto epäonnistui. Listaller-PkPlugin "
+"saattaa olla rikki tai sitä ei ole asennettu."
 
 #: ../src/ipk-package.vala:398
 msgid "Could not open IPK file! Error: %s"
-msgstr ""
+msgstr "IPK-tiedoston avaaminen epäonnistui! Virhe: %s"
 
 #: ../src/application.vala:475 ../src/application.vala:502
 #: ../src/varsetter.vala:56
 msgid "Could not open desktop file: %s"
-msgstr ""
+msgstr "Työpöytätiedoston avaaminen epäonnistui: %s"
 
-#: ../src/installer.vala:173
+#: ../src/installer.vala:177
 msgid ""
 "Could not open the software database, maybe it is locked at time.\n"
 "Please close all other running installations to continue!"
 msgstr ""
+"Ohjelmistotietokannan avaaminen epäonnistui, ehkä se on lukittu.\n"
+"Ole hyvä ja sulje kaikki muut käynnissä olevat asennukset jatkaaksesi!"
 
 #: ../src/ipk-package.vala:211
 msgid ""
 "Could not override file %s! Maybe the software database is damaged or this "
 "package is broken!"
 msgstr ""
+"Tiedoston %s ohittaminen epäonnistui! Ohjelmistotietokanta saattaa olla "
+"vioittunut tai tämä paketti on rikki!"
 
 #: ../src/ipk-package.vala:332 ../src/feed-installer.vala:176
 msgid "Could not override file %s, this file already exists!"
-msgstr ""
+msgstr "Tiedoston %s ohittaminen epäonnistui, tiedosto on jo olemassa!"
 
 #: ../src/ipk-package.vala:93
 msgid "Could not read IPK control information! Error: %s"
-msgstr ""
+msgstr "IPK:n kontrollitietoja ei voitu lukea! Virhe %s"
 
-#: ../src/ipk-package.vala:601
+#: ../src/ipk-package.vala:602
 msgid ""
 "Could not read IPK payload container! Package might be damaged. Error: %s"
 msgstr ""
+"IPK-paketin lukeminen epäonnistui! Paketti saattaa olla vioittunut. Virhe: %s"
 
 #: ../src/feed-installer.vala:204
 msgid ""
 "Could not read dependency archive! Archive might be damaged. Message: %s"
 msgstr ""
+"Riippuvuuspakettia ei voitu lukea! Paketti saattaa olla vioittunut. Viesti: "
+"%s"
 
 #: ../src/manager.vala:166
 msgid "Could not remove file %s!"
-msgstr ""
+msgstr "Tiedoston %s poistaminen epäonnistui!"
 
 #: ../src/manager.vala:152
 msgid "Could not uninstall application %s. It is not installed."
 msgstr ""
+"Sovelluksen %s asennuksen poistaminen epäonnistui. Sitä ei ole asennettu."
 
 #: ../tools/lipkgen/lipkgen.vala:43 ../tools/lipkgen/lipkgen.vala:45
 #: ../tools/appcompile/appcompile.vala:39
 #: ../tools/appcompile/appcompile.vala:41
 msgid "DIRECTORY"
-msgstr ""
+msgstr "HAKEMISTO"
 
 #: ../src/database-internal.vala:323
 msgid "Database action '%s' failed: %s"
-msgstr ""
+msgstr "Tietokantatoiminto '%s' epäonnistui: %s"
 
 #: ../src/database-internal.vala:128
 msgid "Database action failed"
-msgstr ""
+msgstr "Tietokantatoiminto epäonnistui"
 
 #: ../src/database-internal.vala:125
 msgid "Database action successful"
-msgstr ""
+msgstr "Tietokantatoiminto onnistui"
 
 #: ../src/database-internal.vala:119
 msgid "Database locked"
-msgstr ""
+msgstr "Tietokanta lukittu"
 
 #: ../src/database-internal.vala:122
 msgid "Database unlocked"
-msgstr ""
+msgstr "Tietokannan lukitus poistettu"
 
-#: ../tools/lipa/lipa-installer.vala:97
+#: ../tools/lipa/lipa-installer.vala:103
 msgid "Description:"
-msgstr ""
+msgstr "Kuvaus:"
 
-#: ../src/pkit-tasks.vala:206
+#: ../src/pkit-tasks.vala:209
 msgid "Details from PackageKit: %s"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:119
+#: ../tools/lipa/lipa-installer.vala:125
 msgid "Do you accept these terms and conditions?"
-msgstr ""
+msgstr "Hyväksytkö nämä ehdot?"
 
-#: ../tools/lipa/lipa-installer.vala:144
+#: ../tools/lipa/lipa-installer.vala:150
 msgid "Do you want to install %s now?"
-msgstr ""
+msgstr "Asennetaanko %s nyt?"
 
-#: ../tools/lipa/lipa-manager.vala:95
+#: ../tools/lipa/lipa-manager.vala:101
 msgid "Do you want to remove %s (%s) now?"
-msgstr ""
+msgstr "Poistetaanko %s (%s) nyt?"
 
 #: ../tools/depscan/depscan-tool.vala:68
 msgid "ERROR: %s"
-msgstr ""
+msgstr "VIRHE: %s"
 
 #: ../tools/appcompile/appcompile.vala:45
 msgid "Enable verbose mode"
-msgstr ""
+msgstr "Ota käyttöön selväkielinen tila"
 
 #: ../src/utils.vala:240 ../src/utils.vala:273
 msgid "Error while finding files in directory %s: %s"
-msgstr ""
+msgstr "Virhe etsittäessä tiedostoja hakemistossa %s: %s"
 
 #: ../src/ipk-control.vala:403 ../tools/depscan/depscan.vala:75
 msgid "Error: %s\n"
-msgstr ""
+msgstr "Virhe: %s\n"
 
 #: ../tools/likey/likey.vala:42
 msgid "FPR"
@@ -213,11 +229,11 @@ msgstr ""
 
 #: ../src/zfeed.vala:64
 msgid "File %s not found or permission denied!"
-msgstr ""
+msgstr "Tiedostoa %s ei löytynyt tai käyttö evätty!"
 
 #: ../src/ipk-filelist.vala:142
 msgid "File '%s' doesn't exist."
-msgstr ""
+msgstr "Tiedostoa '%s' ei ole."
 
 #: ../src/varsetter.vala:88
 msgid "File does not exist!"
@@ -225,19 +241,19 @@ msgstr ""
 
 #: ../tools/lipkgen/lipkgen.vala:47
 msgid "GPG-Sign the resulting package"
-msgstr ""
+msgstr "Allekirjoita paketti käyttämällä GPG:tä."
 
-#: ../tools/lipa/lipa-manager.vala:69
+#: ../tools/lipa/lipa-manager.vala:75
 msgid "INSTALLED"
-msgstr ""
+msgstr "ASENNETTU"
 
 #: ../src/ipk-package.vala:409
 msgid "IPK package could not be found!"
-msgstr ""
+msgstr "IPK-pakettia ei löytynyt!"
 
 #: ../tools/lipkgen/lipkgen.vala:45
 msgid "IPK package output directory"
-msgstr ""
+msgstr "Hakemisto luodulle IPK-paketille."
 
 #: ../tools/likey/likey.vala:42
 msgid "Import key with fingerprint FPR"
@@ -245,32 +261,32 @@ msgstr ""
 
 #: ../tools/lipa/lipa.vala:56
 msgid "Install an IPK package"
-msgstr ""
-
-#: ../src/installer.vala:279 ../src/installer.vala:335
-#: ../tools/lipa/lipa-installer.vala:50
-msgid "Installation completed!"
-msgstr ""
+msgstr "Asenna IPK-paketti"
 
 #: ../src/installer.vala:283 ../src/installer.vala:339
+#: ../tools/lipa/lipa-installer.vala:56
+msgid "Installation completed!"
+msgstr "Asennus valmis!"
+
+#: ../src/installer.vala:287 ../src/installer.vala:343
 msgid "Installation failed!"
-msgstr ""
+msgstr "Asennus epäonnistui!"
 
-#: ../tools/lipa/lipa-installer.vala:95
+#: ../tools/lipa/lipa-installer.vala:101
 msgid "Installation of %s"
-msgstr ""
+msgstr "%s asennus"
 
-#: ../src/pkit-tasks.vala:360 ../src/pkit-tasks.vala:377
+#: ../src/pkit-tasks.vala:363 ../src/pkit-tasks.vala:380
 msgid "Installation of native packages failed with message: %s"
-msgstr ""
+msgstr "Paikallisten pakettien asennus epäonnistui virheilmoituksella %s"
 
-#: ../tools/lipa/lipa-installer.vala:149
+#: ../tools/lipa/lipa-installer.vala:155
 msgid "Installing"
-msgstr ""
+msgstr "Asennetaan"
 
-#: ../src/pkit-tasks.vala:433
+#: ../src/pkit-tasks.vala:436
 msgid "Installing native packages: %s"
-msgstr ""
+msgstr "Asennetaan paikallisia paketteja: %s"
 
 #: ../tools/likey/likey.vala:103
 msgid "Key '%s' imported successfully!"
@@ -284,23 +300,26 @@ msgstr ""
 msgid "Key not found!"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:105
+#: ../tools/lipa/lipa-installer.vala:111
 msgid "License:"
-msgstr ""
+msgstr "Lisenssi:"
 
 #: ../tools/lipa/lipa.vala:62
 msgid "List all installed applications"
-msgstr ""
+msgstr "Listaa kaikki asennetut sovellukset"
 
 #: ../tools/lipa/lipa.vala:60
 msgid "List installed Listaller applications"
-msgstr ""
+msgstr "Listaa kaikki asennetut Listaller-sovellukset"
 
 #: ../tools/lipa/lipa.vala:67
 msgid ""
 "Listaller command-line tool: No command specified.\n"
 "Run '%s --help' to see a list of available commands."
 msgstr ""
+"Listallerin komentorivityökalu: Komentoa ei määritelty\n"
+"Suorittamalla komennon ”%s --help” näet luettelon käytettävissä olevista "
+"valitsimista."
 
 #: ../tools/likey/likey.vala:40
 msgid "Lookup key which matches PATTERN"
@@ -308,58 +327,64 @@ msgstr ""
 
 #: ../src/security-info.vala:191
 msgid "Low security."
-msgstr ""
+msgstr "Matala tietoturva."
 
-#: ../src/installer.vala:250
+#: ../src/installer.vala:254
 msgid "Making '%s' known to your system."
-msgstr ""
+msgstr "Annetaan '%s' järjestelmän tietoon."
 
 #: ../tools/lipkgen/ipkbuilder.vala:142
 msgid "Malformed line in file listing: %s"
-msgstr ""
+msgstr "Epämuotoinen rivi tiedostolistauksessa: %s"
 
 #: ../src/security-info.vala:188
 msgid "Medium security."
-msgstr ""
+msgstr "Keskitason tietoturva."
 
 #: ../tools/lipa/lipa.vala:127
 msgid "Missing parameter for 'install' action: No IPK package specified.\n"
-msgstr ""
+msgstr "Puuttuva parametri toiminnolle 'asenna': IPK-pakettia ei määritelty.\n"
 
 #: ../tools/lipa/lipa.vala:139
 msgid ""
 "Missing parameter for 'remove' action: No application-id or name specified.\n"
 msgstr ""
+"Puuttuva parametri toiminnolle 'poista': Sovelluksen tunnistetta tai nimeä "
+"ei määritelty.\n"
 
 #: ../src/security-info.vala:127
 msgid "Never trust."
-msgstr ""
+msgstr "Älä luota koskaan."
 
 #: ../tools/runapp/runapp.vala:106
 msgid "No application specified!"
-msgstr ""
+msgstr "Sovellusta ei määritelty!"
 
 #: ../tools/depscan/depscan-tool.vala:79
 msgid "No path given!"
-msgstr ""
+msgstr "Hakemistopolku puuttuu!"
 
-#: ../src/ipk-package.vala:657 ../src/ipk-package.vala:728
+#: ../src/ipk-package.vala:658 ../src/ipk-package.vala:730
 msgid ""
 "No payload data archive has been registered! This might be a bug in this "
 "application, please report the issue!"
 msgstr ""
+"Datapakettia ei ole rekisteröity! Tämä saattaa johtua bugista sovelluksessa, "
+"ole hyvä ja luo ongelmaraportti!"
 
 #: ../src/ipk-control.vala:422
 msgid "No valid DOAP data found in directory %s - Can't open control files."
 msgstr ""
+"Hakemistosta %s ei löytynyt kunnollista DOAP-dataa - kontrollitiedostoja ei "
+"voida avata."
 
 #: ../src/security-info.vala:92
 msgid "One key has been revoked"
-msgstr ""
+msgstr "Yksi avain on peruttu"
 
 #: ../src/security-info.vala:86
 msgid "One key has expired"
-msgstr ""
+msgstr "Yksi avain on vanhentunut"
 
 #: ../tools/likey/likey.vala:40
 msgid "PATTERN"
@@ -371,104 +396,110 @@ msgid ""
 "Package uses custom variables - usually this is not intentional, please "
 "contact the package author!"
 msgstr ""
+"Paketti käyttää räätälöityjä muuttujia - tämä ei yleensä ole tietoista, ole "
+"hyvä ja ota yhteyttä paketin luojaan!"
 
-#: ../src/pkit-tasks.vala:184
+#: ../src/pkit-tasks.vala:187
 msgid ""
 "PackageKit backend does not support finding packages by stuff they provide - "
 "Installer was unable to use native packages to satisfy dependencies of this "
 "application."
 msgstr ""
 
-#: ../src/pkit-tasks.vala:296
+#: ../src/pkit-tasks.vala:299
 msgid ""
 "PackageKit backend does not support searching for files - Installer was "
 "unable to use native packages to satisfy dependencies of this application."
 msgstr ""
 
-#: ../src/pkit-tasks.vala:327
+#: ../src/pkit-tasks.vala:330
 msgid ""
 "PackageKit transaction failed!\n"
 "Exit message was: %s"
 msgstr ""
+"PackageKitin toimitus epäonnistui!\n"
+"Poistumisviesti oli: %s"
 
 #: ../tools/lipkgen/lipkgen.vala:43
 msgid "Path to Listaller package source directory"
-msgstr ""
+msgstr "Polku Listaller-paketin lähdehakemistoon"
 
 #: ../tools/appcompile/appcompile.vala:39
 msgid "Path to the application's source code"
-msgstr ""
+msgstr "Hakemistopolku sovelluksen lähdekoodiin"
 
-#: ../src/installer.vala:205
+#: ../src/installer.vala:209
 msgid "Please remove the existing version to continue!"
-msgstr ""
+msgstr "Ole hyvä ja poista olemassaoleva versio jatkaaksesi!"
 
 #: ../tools/depscan/depscan-tool.vala:39
 msgid "Print machine-readable simple text"
-msgstr ""
+msgstr "Tulosta konekielistä yksinkertaista tekstiä"
 
 #: ../src/security-info.vala:101
 msgid "Pubkey is missing"
-msgstr ""
+msgstr "Pubkey puuttuu"
 
 #: ../src/doap.vala:157
 msgid "Query returned no results. Maybe there's no release defined?"
-msgstr ""
+msgstr "Haulla ei löytynyt mitään. Ehkä julkaisua ei ole määritelty?"
 
 #: ../src/doap.vala:201
 msgid "Query returned no results. Maybe this DOAP data is broken?"
-msgstr ""
+msgstr "Haulla ei löytynyt mitään. Ehkä DOAP-data on rikki?"
 
 #: ../src/signature.vala:127
 msgid "RFU"
 msgstr ""
 
-#: ../tools/lipa/lipa-manager.vala:110
+#: ../tools/lipa/lipa-manager.vala:116
 msgid "Removal of %s completed successfully!"
-msgstr ""
+msgstr "Poistettiin %s onnistuneesti!"
 
-#: ../tools/lipa/lipa-manager.vala:112
+#: ../tools/lipa/lipa-manager.vala:118
 msgid "Removal of %s failed!"
-msgstr ""
+msgstr "%s poistaminen epäonnistui!"
 
 #: ../src/manager.vala:179 ../src/manager.vala:222
 msgid "Removal of %s finished."
-msgstr ""
+msgstr "%s poistaminen suoritettu loppuun."
 
 #: ../src/manager.vala:144
 msgid "Removal of %s started."
-msgstr ""
+msgstr "%s poistaminen aloitettu."
 
 #: ../tools/lipa/lipa.vala:58
 msgid "Remove an application installed using Listaller"
-msgstr ""
+msgstr "Poista Listallerilla asennettu sovellus"
 
-#: ../tools/lipa/lipa-manager.vala:100
+#: ../tools/lipa/lipa-manager.vala:106
 msgid "Removing"
-msgstr ""
+msgstr "Poistetaan"
 
-#: ../src/installer.vala:216
+#: ../src/installer.vala:220
 msgid "Resolving dependencies of '%s'."
-msgstr ""
+msgstr "Ratkaistaan '%s' riippuvuuksia."
 
 #: ../tools/runapp/runapp.vala:83 ../tools/lipa/lipa.vala:80
 #: ../tools/lipkgen/lipkgen.vala:62 ../tools/appcompile/appcompile.vala:69
 #: ../tools/depscan/depscan-tool.vala:54 ../tools/likey/likey.vala:61
 msgid "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
+"Suorittamalla komennon ”%s --help” näet luettelon käytettävissä olevista "
+"valitsimista.\n"
 
-#: ../src/installer.vala:188
+#: ../src/installer.vala:192
 msgid "Running installation of %s"
-msgstr ""
+msgstr "Suoritetaan %s asennusta"
 
-#: ../tools/lipa/lipa-installer.vala:131 ../tools/lipa/lipa-installer.vala:133
-#: ../tools/lipa/lipa-installer.vala:135
+#: ../tools/lipa/lipa-installer.vala:137 ../tools/lipa/lipa-installer.vala:139
+#: ../tools/lipa/lipa-installer.vala:141
 msgid "Security is:"
-msgstr ""
+msgstr "Tietoturva on:"
 
-#: ../src/installer.vala:396
+#: ../src/installer.vala:400
 msgid "Setup has not been initialized!"
-msgstr ""
+msgstr "Asennusta ei ole aloitettu!"
 
 #: ../src/security-info.vala:185
 msgid "Should be safe to use."
@@ -478,90 +509,104 @@ msgstr ""
 #: ../tools/lipkgen/lipkgen.vala:39 ../tools/appcompile/appcompile.vala:37
 #: ../tools/depscan/depscan-tool.vala:35 ../tools/likey/likey.vala:36
 msgid "Show the application's version"
-msgstr ""
+msgstr "Näytä sovelluksen versio"
 
 #: ../src/security-info.vala:95
 msgid "Signature has expired"
-msgstr ""
+msgstr "Allekirjoitus on vanhentunut"
 
 #: ../src/security-info.vala:98
 msgid "Signature is bad"
-msgstr ""
+msgstr "Allekirjoitus on vääränlainen"
 
 #: ../src/security-info.vala:83
 msgid "Signature is fully valid"
-msgstr ""
+msgstr "Allekirjoitus on oikeanlainen"
 
 #: ../src/database-internal.vala:131
 msgid "Software database closed"
-msgstr ""
+msgstr "Ohjelmistotietokanta suljettu"
 
 #: ../src/database-internal.vala:134
 msgid "Software database message (%d)"
-msgstr ""
+msgstr "Ohjelmistotietokannan viesti (%d)"
 
 #: ../src/database-internal.vala:116
 msgid "Software database opened"
-msgstr ""
+msgstr "Ohjelmistotietokanta avattu"
 
 #: ../tools/appcompile/appcompile.vala:41
 msgid "Software install prefix"
-msgstr ""
+msgstr "Ohjelmistoasennuksen etuliite"
 
 #: ../data/mime/listaller-ipk.xml.in.h:1
 msgid "Software installation package"
-msgstr ""
+msgstr "Ohjelmistoasennuksen paketti"
 
-#: ../src/ipk-package.vala:762
+#: ../src/ipk-package.vala:756
 msgid ""
 "Some files of this package could not be installed, because they were not "
 "found in payload data.\n"
 "This IPK package might be damaged, please obtain a new copy!"
 msgstr ""
+"Joitakin tiedostoja tästä paketista ei voitu asentaa, koska niitä ole "
+"pakettidatassa.\n"
+"IPK-paketti saattaa olla vioittunut, ole hyvä ja hae uusi kopio!"
 
 #: ../src/security-info.vala:80
 msgid "Status of this signature is unknown or package is not signed."
 msgstr ""
+"Tämän allekirjoituksen tilaa ei tunneta tai pakettia ei ole allekirjoitettu."
 
 #: ../tools/appcompile/appcompile.vala:43
 msgid "Strip debug infos from files in install-target"
-msgstr ""
+msgstr "Riisu debug-tiedot install-targetin tiedostoista"
 
-#: ../src/installer.vala:405
+#: ../src/installer.vala:409
 msgid ""
 "The installer will only work with the %s operating system, but you use "
 "'%s'.\n"
 "Setup can not continue, sorry."
 msgstr ""
+"Asennus onnistuu ainoastaan %s-käyttöjärjestelmässä, mutta käytössäsi on "
+"'%s'.\n"
+"Asennusta ei ikävä kyllä voida jatkaa."
 
-#: ../src/installer.vala:204
-msgid "This application has already been installed."
+#: ../tools/lipkgen/ipkbuilder.vala:216
+msgid "There are no files in file-list for architecture '%s'!"
 msgstr ""
+
+#: ../src/installer.vala:208
+msgid "This application has already been installed."
+msgstr "Sovellus on jo asennettu"
 
 #: ../src/ipk-package.vala:161
 msgid ""
 "This package can't be installed on your system architecture (%s)!\n"
 "Please get a package which was built for your machine."
 msgstr ""
+"Tätä pakettia ei voitu asentaa järjestelmääsi (%s)!\n"
+"Ole hyvä ja hae paketti, joka on tarkoitettu käytössäsi olevalle "
+"järjestelmälle."
 
 #: ../src/security-info.vala:194
 msgid "This package could be dangerous!"
-msgstr ""
+msgstr "Tämä paketti saattaa olla vaarallinen!"
 
-#: ../src/installer.vala:143
+#: ../src/installer.vala:147
 msgid ""
 "This package is a delta-package, containing software patches. It is usually "
 "distributed via update-services, you can't install it using this tool. "
 "Please obtain a non-delta version of this application!"
 msgstr ""
 
-#: ../src/installer.vala:127
+#: ../src/installer.vala:131
 msgid ""
 "This package was built using a more recent version of Listaller.\n"
 "Please update your copy of Listaller to be able to install it."
 msgstr ""
 
-#: ../src/installer.vala:135
+#: ../src/installer.vala:139
 msgid ""
 "This package was built using spec version '%s', but we need at least '%s' or "
 "higher to proceed.\n"
@@ -571,44 +616,52 @@ msgstr ""
 
 #: ../src/database-internal.vala:223
 msgid "Tried to access locked database! This shouldn't happen."
-msgstr ""
+msgstr "Yritettiin pääsyä lukittuun tietokantaan! Näin ei pitäisi tapahtua."
 
 #: ../src/database-internal.vala:333
 msgid "Tried to access locked database! This shouldn't happen. Message: %s"
 msgstr ""
+"Yritettiin pääsyä lukittuun tietokantaan! Näin ei pitäisi tapahtua. Viesti: "
+"%s"
 
-#: ../src/ipk-package.vala:643 ../src/ipk-package.vala:715
+#: ../src/ipk-package.vala:644 ../src/ipk-package.vala:717
 msgid "Tried to perform action on invalid IPK package."
-msgstr ""
+msgstr "Yritettiin suorittaa toiminto virheelliselle IPK-paketille."
 
 #: ../src/database.vala:107
 msgid ""
 "Tried to perform action on private software database, but the database is "
 "not opened! (this should never happen!)"
 msgstr ""
+"Yritettiin suoritaa toiminto yksityiselle ohjelmistotietokannalle, mutta "
+"tietokantaa ei avattu! (Näin ei tulisi ikinä tapahtua!)"
 
 #: ../src/database.vala:96
 msgid ""
 "Tried to perform action on shared software database, but the database is not "
 "opened! (maybe a permission problem?)"
 msgstr ""
+"Yritettiin suoritaa toiminto jaetulle ohjelmistotietokannalle, mutta "
+"tietokantaa ei avattu! (Kenties käyttöoikeusongelma?)"
 
 #: ../src/database-internal.vala:434 ../src/database-internal.vala:491
 #: ../src/database-internal.vala:849
 msgid "Tried to write on readonly database! (This should never happen)"
 msgstr ""
+"Yritettiin kirjoittaa Vain luku -tietokantaan! (Näin ei tulisi ikinä "
+"tapahtua)"
 
 #: ../src/security-info.vala:133
 msgid "Trust is full"
-msgstr ""
+msgstr "Täysi luottamus"
 
 #: ../src/security-info.vala:130
 msgid "Trust is marginal"
-msgstr ""
+msgstr "Vähäpätöinen luottamus"
 
 #: ../src/security-info.vala:136
 msgid "Trust is ultimate."
-msgstr ""
+msgstr "Äärimmäinen luottamus"
 
 #: ../src/security-info.vala:121
 msgid "Trust level is unknown"
@@ -619,6 +672,9 @@ msgid ""
 "Trying to remove local application, but AppManager is in superuser mode!\n"
 "Setting AppManager to local mode now."
 msgstr ""
+"Yritetään poistaa paikallista sovellusta, mutta AppManager on superuser-"
+"tilassa!\n"
+"Asetetaan AppManager paikalliseen tilaan."
 
 #: ../src/manager.vala:234
 msgid ""
@@ -626,131 +682,142 @@ msgid ""
 "mode!\n"
 "Setting AppManager to superuse mode now."
 msgstr ""
+"Yritetään poistaa jaettua sovellusta, mutta AppManager ei ole superuser-"
+"tilassa!\n"
+"Asetetaan AppManager superuser-tilaan."
 
 #: ../src/database.vala:402
 msgid "Unable to add a dependency to database: %s"
-msgstr ""
+msgstr "Riippuvuuden lisääminen tietokantaan %s epäonnistui."
 
 #: ../src/database.vala:218
 msgid "Unable to add application file list to database: %s"
-msgstr ""
+msgstr "Sovelluksen tiedostoluettelon lisääminen tietokantaan %s epäonnistui."
 
 #: ../src/database.vala:197
 msgid "Unable to add application to database: %s"
-msgstr ""
+msgstr "Sovelluksen lisääminen tietokantaan %s epäonnistui."
 
-#: ../tools/lipkgen/ipkbuilder.vala:441
+#: ../tools/lipkgen/ipkbuilder.vala:451
 msgid "Unable to build package: %s"
-msgstr ""
+msgstr "Paketin %s luominen epäonnistui."
 
 #: ../src/database.vala:253
 msgid "Unable to count applications: %s"
-msgstr ""
+msgstr "Sovellusten %s laskeminen epäonnistui"
 
 #: ../src/database-internal.vala:413
 msgid "Unable to create database config table: %s"
-msgstr ""
+msgstr "Tietokannan asetustaulun %s luominen epäonnistui"
 
 #: ../src/database-internal.vala:393
 msgid "Unable to create database tables: %s"
-msgstr ""
+msgstr "Tietokantataulujen %s luominen epäonnistui"
 
 #: ../src/ipk-package.vala:220
 msgid "Unable to create destination directory."
-msgstr ""
+msgstr "Kohdehakemiston luominen epäonnistui."
 
 #: ../src/ipk-filelist.vala:208
 msgid "Unable to create file '%s'!"
-msgstr ""
+msgstr "Tiedoston '%s' luominen epäonnistui!"
 
 #: ../src/feed-installer.vala:101
 msgid "Unable to download feed %s. Message: %s"
-msgstr ""
+msgstr "Syötteen %s lataaminen epäonnistui. Viesti: %s"
 
-#: ../src/ipk-package.vala:569
+#: ../src/ipk-package.vala:570
 msgid "Unable to extract IPK data!"
-msgstr ""
+msgstr "IPK-datan purkaminen epäonnistui!"
 
 #: ../src/ipk-package.vala:427
 msgid "Unable to extract IPK metadata!"
-msgstr ""
+msgstr "IPK-metadatan purkaminen epäonnistui!"
 
 #: ../src/ipk-package.vala:283
 msgid "Unable to extract data file %s. Message: %s"
-msgstr ""
+msgstr "Datatiedoston %s purkaminen epäonnistui. Viesti: %s"
 
 #: ../src/ipk-package.vala:266
 msgid ""
 "Unable to extract data file %s. This IPK package might be damaged, please "
 "obtain a new copy."
 msgstr ""
+"Datatiedoston %s purkaminen epäonnistui. Tämä IPK-paketti saattaa olla "
+"vioittunut, ole hyvä ja hae uusi kopio."
 
 #: ../src/feed-installer.vala:186
 msgid "Unable to extract file '%s' for dependency '%s'!"
-msgstr ""
+msgstr "Tiedoston '%s' purkaminen riippuvuutta '%s' varten epäonnistui!"
 
 #: ../src/ipk-package.vala:243 ../src/ipk-package.vala:350
 #: ../src/ipk-package.vala:368
 msgid "Unable to extract file. %s"
-msgstr ""
+msgstr "Tiedoston purkaminen epäonnistui. %s"
 
 #: ../src/ipk-package.vala:488
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
+"Allekirjoituksen purkaminen epäonnistui! Ehkä pakettia ei ole "
+"allekirjoitettu."
 
 #: ../src/database.vala:272
 msgid "Unable to fetch application by id: %s"
-msgstr ""
+msgstr "Sovelluksen hakeminen tunnisteen avulla epäonnistui: %s"
 
 #: ../src/database.vala:294
 msgid "Unable to fetch application by name: %s"
-msgstr ""
+msgstr "Sovelluksen hakeminen nimen avulla epäonnistui: %s"
 
 #: ../src/database.vala:239 ../src/database-internal.vala:543
 msgid "Unable to fetch application file list: %s"
-msgstr ""
+msgstr "Sovelluksen tiedostoluettelon hakeminen epäonnistui: %s"
 
 #: ../src/feed-installer.vala:238
 msgid ""
 "Unable to find a matching implementation of '%s' for your system/"
 "architecture."
 msgstr ""
+"Kohdetta '%s' vastaavaa toteutusta ei löytynyt käytössäsi olevalle "
+"järjestelmälle."
 
-#: ../src/pkit-tasks.vala:204
+#: ../src/pkit-tasks.vala:207
 msgid "Unable to find native package for '%s'!"
-msgstr ""
+msgstr "Paikallisen paketin haku kohteelle '%s' epäonnistui!"
 
 #: ../src/dep-installer.vala:58
 msgid "Unable to find valid candidate to satisfy dependency '%s'!"
-msgstr ""
+msgstr "Riippuvuutta '%s' ei voitu ratkaista!"
 
 #: ../src/ipk-metafile.vala:53
 msgid "Unable to get meta-information list: %s"
-msgstr ""
+msgstr "Metatietoluettelon %s haku epäonnistui"
 
 #: ../src/database.vala:126
 msgid "Unable to open database for read-only: %s"
-msgstr ""
+msgstr "Tietokannan avaaminen Vain luku -tilassa epäonnistui: %s"
 
 #: ../src/database.vala:152
 msgid "Unable to open database for writing: %s"
-msgstr ""
+msgstr "Tietokannan avaaminen kirjoittamista varten epäonnistui: %s"
 
 #: ../src/manager.vala:78
 msgid "Unable to open software database for reading & writing!"
 msgstr ""
+"Ohjelmistotietokannan avaaminen kirjoittamista ja lukemista varten "
+"epäonnistui!"
 
 #: ../src/manager.vala:84
 msgid "Unable to open software database for reading only!"
-msgstr ""
+msgstr "Ohjelmistotietokannan avaaminen lukemista varten epäonnistui!"
 
 #: ../src/ipk-package.vala:514
 msgid "Unable to read package signature! Message: %s"
-msgstr ""
+msgstr "Paketin allekirjoituksen lukeminen epäonnistui! Viesti: %s"
 
 #: ../src/database.vala:315
 msgid "Unable to remove application from database: %s"
-msgstr ""
+msgstr "Sovelluksen poistaminen tietokannasta epäonnistui: %s"
 
 #: ../src/varsetter.vala:88 ../src/varsetter.vala:96
 msgid "Unable to save modified desktop-file! %s"
@@ -758,19 +825,19 @@ msgstr ""
 
 #: ../src/database.vala:334
 msgid "Unable to search application database: %s"
-msgstr ""
+msgstr "Haun tekeminen sovellustietokannasta epäonnistui: %s"
 
 #: ../src/database-internal.vala:516
 msgid "Unable to write application file list! Message: %s"
-msgstr ""
+msgstr "Sovelluksen tiedostoluettelon kirjoittaminen epäonnistui! Viesti: %s"
 
 #: ../src/ipk-metafile.vala:99
 msgid "Unable to write meta information! Message: %s"
-msgstr ""
+msgstr "Metatietojen kirjoittaminen epäonnistui! Viesti: %s"
 
-#: ../tools/lipkgen/ipkbuilder.vala:359
+#: ../tools/lipkgen/ipkbuilder.vala:369
 msgid "Unable to write signature file! Message: %s"
-msgstr ""
+msgstr "Allekirjoitustiedoston kirjoittaminen epäonnistui! Viesti: %s"
 
 #: ../src/signature.vala:109 ../src/signature.vala:110
 #: ../src/signature.vala:124 ../src/signature.vala:125
@@ -779,7 +846,7 @@ msgstr ""
 
 #: ../tools/depscan/depscan-tool.vala:37
 msgid "Use recursive mode"
-msgstr ""
+msgstr "Käytä rekursiivista tilaa"
 
 #: ../src/ipk-package.vala:296
 msgid ""
@@ -787,20 +854,23 @@ msgid ""
 "creation.\n"
 "Please obtain a new copy and try again."
 msgstr ""
+"Tiedoston %s vahvistaminen epäonnistui! Tätä IPK-tiedostoa on saatettu "
+"muokata luomisen jälkeen.\n"
+"Ole hyvä ja hae uusi kopio ja yritä uudelleen."
 
 #: ../src/security-info.vala:124
 msgid "Validity is undefined"
-msgstr ""
+msgstr "Kelpoisuutta ei määritelty"
 
 #: ../src/application.vala:377
 msgid "We don't know a desktop-file for application '%s'!"
-msgstr ""
+msgstr "Tiedossa ei ole työpöytätiedostoa sovellukselle '%s'!"
 
 #: ../src/zfeed.vala:82
 msgid "XML file is not a valid ZI feed!"
 msgstr ""
 
-#: ../src/installer.vala:421
+#: ../src/installer.vala:425
 msgid ""
 "You are not allowed to install this package, because it's security level is "
 "'%s' and you need at least a package with security-level '%s'.\n"
@@ -808,7 +878,7 @@ msgid ""
 "try again!"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:122
+#: ../tools/lipa/lipa-installer.vala:128
 msgid ""
 "You need to agree with the license to install & use the application. Exiting "
 "setup now."
@@ -818,9 +888,13 @@ msgstr ""
 msgid "You need to be root to change Listaller's key database!"
 msgstr ""
 
+#: ../tools/lipkgen/ipkbuilder.vala:278
+msgid "Your package has errors and was therefore not generated."
+msgstr ""
+
 #: ../src/zfeed.vala:71
 msgid "ZI XML file '%s' is damaged."
-msgstr ""
+msgstr "ZI XML -tiedosto '%s' on vioittunut."
 
 #: ../src/signature.vala:119 ../src/signature.vala:126
 msgid "[None]"
@@ -836,7 +910,7 @@ msgstr ""
 
 #: ../tools/lipkgen/lipkgen.vala:69
 msgid "error: %s"
-msgstr ""
+msgstr "virhe: %s"
 
 #: ../src/security-info.vala:35
 msgid "high"
@@ -862,13 +936,13 @@ msgstr ""
 msgid "okay"
 msgstr ""
 
-#: ../tools/lipa/lipa-manager.vala:61
+#: ../tools/lipa/lipa-manager.vala:67
 msgid "personal"
-msgstr ""
+msgstr "henkilökohtainen"
 
-#: ../tools/lipa/lipa-manager.vala:63
+#: ../tools/lipa/lipa-manager.vala:69
 msgid "shared"
-msgstr ""
+msgstr "jaettu"
 
 #: ../src/signature.vala:95
 msgid ""

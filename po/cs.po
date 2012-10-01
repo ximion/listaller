@@ -7,51 +7,53 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@freelists.org\n"
-"POT-Creation-Date: 2012-09-29 21:23+0200\n"
-"PO-Revision-Date: 2010-10-05 17:09+0000\n"
+"POT-Creation-Date: 2012-10-01 19:20+0200\n"
+"PO-Revision-Date: 2012-10-01 00:02+0000\n"
 "Last-Translator: Konki <pavel.konkol@seznam.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-05-21 16:37+0000\n"
-"X-Generator: Launchpad (build 15275)\n"
+"X-Launchpad-Export-Date: 2012-10-01 17:08+0000\n"
+"X-Generator: Launchpad (build 16061)\n"
 
 #: ../src/manager.vala:158
 msgid ""
 "'%s' has no file-list registered. The software database might be broken."
 msgstr ""
+"'%s' nemá registrován žádný seznam souborů. Databáze softwaru může být "
+"poškozena."
 
-#: ../tools/lipa/lipa-installer.vala:114
+#: ../tools/lipa/lipa-installer.vala:120
 msgid "<<< Press ENTER to continue! >>>"
 msgstr ""
 
-#: ../src/installer.vala:202
+#: ../src/installer.vala:206
 msgid "A higher version '%s' of this application has already been installed."
-msgstr ""
+msgstr "Vyšší verze '%s' této aplikace je již nainstalována."
 
-#: ../src/installer.vala:200
+#: ../src/installer.vala:204
 msgid "A lower version '%s' of this application has already been installed."
-msgstr ""
+msgstr "Nižší verze '%s' této aplikace je již nainstalována."
 
 #: ../tools/runapp/runapp.vala:69 ../tools/lipa/lipa.vala:54
 #: ../tools/lipkgen/lipkgen.vala:49 ../tools/depscan/depscan-tool.vala:41
 #: ../tools/likey/likey.vala:38
 msgid "Activate verbose mode"
-msgstr ""
+msgstr "Aktivovat podrobný režim"
 
 #: ../src/application.vala:389
 msgid "Application ID %s is invalid!"
-msgstr ""
+msgstr "ID aplikace %s je neplatné!"
 
 #: ../tools/lipkgen/lipkgen.vala:41
 msgid "Build IPK package"
-msgstr ""
+msgstr "Sestavit balíček IPK"
 
-#: ../src/installer.vala:236
+#: ../src/installer.vala:240
 msgid "Copying files to their destination"
-msgstr ""
+msgstr "Kopírování souborů do jejich cíle"
 
 #: ../src/ipk-package.vala:313
 msgid ""
@@ -59,154 +61,164 @@ msgid ""
 "to perform this action?\n"
 "Error message was \"%s\"."
 msgstr ""
+"Nelze zkopírovat soubor %s do jeho cíle. Máte dostatečná oprávnění k "
+"provedení této činnosti?\n"
+"Chybová zpráva byla \"%s\"."
 
 #: ../src/ipk-filelist.vala:194
 msgid "Could not create file '%s'! File already exists."
-msgstr ""
+msgstr "Nelze vytvořit soubor '%s'! Již existuje."
 
 #: ../src/database-internal.vala:235
 msgid "Could not create software database!"
-msgstr ""
+msgstr "Nelze vytvořit databázi softwaru!"
 
-#: ../src/ipk-package.vala:571
+#: ../src/ipk-package.vala:572
 msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
-msgstr ""
+msgstr "Nelze extrahovat obsah IPK! Balíček může být poškozen. Chyba: %s"
 
 #: ../src/ipk-package.vala:262
 msgid "Could not extract file %s! Error: %s"
-msgstr ""
+msgstr "Nelze extrahovat soubor %s! Chyba: %s"
 
 #: ../src/feed-installer.vala:153
 msgid "Could not extract file! Error: %s"
-msgstr ""
+msgstr "Nelze extrahovat soubor! Chyba: %s"
 
 #. : IPk builder was unable to find IPK source scripts
-#: ../tools/lipkgen/ipkbuilder.vala:398 ../tools/lipkgen/prepare.vala:51
+#: ../tools/lipkgen/ipkbuilder.vala:408 ../tools/lipkgen/prepare.vala:51
 msgid "Could not find IPK source files!"
-msgstr ""
+msgstr "Nelze najít zdrojové soubory IPK!"
 
-#: ../tools/lipa/lipa-manager.vala:85
+#: ../tools/lipa/lipa-manager.vala:91
 msgid "Could not find application which matches '%s'!\n"
-msgstr ""
+msgstr "Nelze najít aplikaci odpovídající '%s'!\n"
 
 #: ../src/application.vala:434 ../src/varsetter.vala:45
 msgid "Could not load desktop file values: %s"
-msgstr ""
+msgstr "Nelze načíst hodnoty souboru plochy: %s"
 
 #: ../src/pkit-tasks.vala:80
 msgid ""
 "Could not obtain a PkBackendProxy instance. Maybe the Listaller-PkPlugin is "
 "not installed or broken?"
 msgstr ""
+"Nelze získat instanci PkBackendProxy. Možná, že Listaller-PkPlugin není "
+"nainstalován nebo je poškozen?"
 
 #: ../src/ipk-package.vala:398
 msgid "Could not open IPK file! Error: %s"
-msgstr ""
+msgstr "Nelze otevřít soubor IPK! Chyba: %s"
 
 #: ../src/application.vala:475 ../src/application.vala:502
 #: ../src/varsetter.vala:56
 msgid "Could not open desktop file: %s"
-msgstr ""
+msgstr "Nelze otevřít soubor plochy: %s"
 
-#: ../src/installer.vala:173
+#: ../src/installer.vala:177
 msgid ""
 "Could not open the software database, maybe it is locked at time.\n"
 "Please close all other running installations to continue!"
 msgstr ""
+"Nelze otevřít databázi softwaru, možná, že je nyní uzamčena.\n"
+"Prosím uzavřete všechny ostatní spuštěné instalace pro pokračování!"
 
 #: ../src/ipk-package.vala:211
 msgid ""
 "Could not override file %s! Maybe the software database is damaged or this "
 "package is broken!"
 msgstr ""
+"Nelze přepsat soubor %s! Možná, že je tento balíček nebo databáze softwaru "
+"poškozena!"
 
 #: ../src/ipk-package.vala:332 ../src/feed-installer.vala:176
 msgid "Could not override file %s, this file already exists!"
-msgstr ""
+msgstr "Nelze přepsat soubor %s, tento soubor již existuje!"
 
 #: ../src/ipk-package.vala:93
 msgid "Could not read IPK control information! Error: %s"
-msgstr ""
+msgstr "Nelze přečíst kontrolní informace IPK! Chyba: %s"
 
-#: ../src/ipk-package.vala:601
+#: ../src/ipk-package.vala:602
 msgid ""
 "Could not read IPK payload container! Package might be damaged. Error: %s"
 msgstr ""
+"Nelze přečíst kontejner obsahu IPK! Balíček může být poškozen. Chyba: %s"
 
 #: ../src/feed-installer.vala:204
 msgid ""
 "Could not read dependency archive! Archive might be damaged. Message: %s"
-msgstr ""
+msgstr "Nelze přečíst archiv závislostí! Archiv může být poškozen. Zpráva: %s"
 
 #: ../src/manager.vala:166
 msgid "Could not remove file %s!"
-msgstr ""
+msgstr "Nelze odstranit soubor %s!"
 
 #: ../src/manager.vala:152
 msgid "Could not uninstall application %s. It is not installed."
-msgstr ""
+msgstr "Nelze odinstalovat aplikaci %s. Není nainstalována."
 
 #: ../tools/lipkgen/lipkgen.vala:43 ../tools/lipkgen/lipkgen.vala:45
 #: ../tools/appcompile/appcompile.vala:39
 #: ../tools/appcompile/appcompile.vala:41
 msgid "DIRECTORY"
-msgstr ""
+msgstr "ADRESÁŘ"
 
 #: ../src/database-internal.vala:323
 msgid "Database action '%s' failed: %s"
-msgstr ""
+msgstr "Činnost databáze '%s' selhala: %s"
 
 #: ../src/database-internal.vala:128
 msgid "Database action failed"
-msgstr ""
+msgstr "Činnost databáze selhala"
 
 #: ../src/database-internal.vala:125
 msgid "Database action successful"
-msgstr ""
+msgstr "Činnost databáze byla úspěšná"
 
 #: ../src/database-internal.vala:119
 msgid "Database locked"
-msgstr ""
+msgstr "Databáze uzamčena"
 
 #: ../src/database-internal.vala:122
 msgid "Database unlocked"
-msgstr ""
+msgstr "Databáze odemčena"
 
-#: ../tools/lipa/lipa-installer.vala:97
+#: ../tools/lipa/lipa-installer.vala:103
 msgid "Description:"
-msgstr ""
+msgstr "Popis:"
 
-#: ../src/pkit-tasks.vala:206
+#: ../src/pkit-tasks.vala:209
 msgid "Details from PackageKit: %s"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:119
+#: ../tools/lipa/lipa-installer.vala:125
 msgid "Do you accept these terms and conditions?"
-msgstr ""
+msgstr "Přijímate tyto podmínky?"
 
-#: ../tools/lipa/lipa-installer.vala:144
+#: ../tools/lipa/lipa-installer.vala:150
 msgid "Do you want to install %s now?"
-msgstr ""
+msgstr "Chcete nyní %s nainstalovat?"
 
-#: ../tools/lipa/lipa-manager.vala:95
+#: ../tools/lipa/lipa-manager.vala:101
 msgid "Do you want to remove %s (%s) now?"
-msgstr ""
+msgstr "Chcete nyní %s (%s) odstranit?"
 
 #: ../tools/depscan/depscan-tool.vala:68
 msgid "ERROR: %s"
-msgstr ""
+msgstr "CHYBA: %s"
 
 #: ../tools/appcompile/appcompile.vala:45
 msgid "Enable verbose mode"
-msgstr ""
+msgstr "Povolit podrobný režim"
 
 #: ../src/utils.vala:240 ../src/utils.vala:273
 msgid "Error while finding files in directory %s: %s"
-msgstr ""
+msgstr "Chyba při hledání souborů v adresáři %s: %s"
 
 #: ../src/ipk-control.vala:403 ../tools/depscan/depscan.vala:75
 msgid "Error: %s\n"
-msgstr ""
+msgstr "Chyba: %s\n"
 
 #: ../tools/likey/likey.vala:42
 msgid "FPR"
@@ -218,11 +230,11 @@ msgstr ""
 
 #: ../src/zfeed.vala:64
 msgid "File %s not found or permission denied!"
-msgstr ""
+msgstr "Soubor %s nenalezen, nebo přístup zamítnut!"
 
 #: ../src/ipk-filelist.vala:142
 msgid "File '%s' doesn't exist."
-msgstr ""
+msgstr "Soubor %s neexistuje."
 
 #: ../src/varsetter.vala:88
 msgid "File does not exist!"
@@ -230,19 +242,19 @@ msgstr ""
 
 #: ../tools/lipkgen/lipkgen.vala:47
 msgid "GPG-Sign the resulting package"
-msgstr ""
+msgstr "Podepsat výsledný baliček pomocí GPG"
 
-#: ../tools/lipa/lipa-manager.vala:69
+#: ../tools/lipa/lipa-manager.vala:75
 msgid "INSTALLED"
-msgstr ""
+msgstr "NAINSTALOVÁNO"
 
 #: ../src/ipk-package.vala:409
 msgid "IPK package could not be found!"
-msgstr ""
+msgstr "Balíček IPK nemohl být nenalezen!"
 
 #: ../tools/lipkgen/lipkgen.vala:45
 msgid "IPK package output directory"
-msgstr ""
+msgstr "Výstupní adresář balíčku IPK"
 
 #: ../tools/likey/likey.vala:42
 msgid "Import key with fingerprint FPR"
@@ -250,37 +262,36 @@ msgstr ""
 
 #: ../tools/lipa/lipa.vala:56
 msgid "Install an IPK package"
-msgstr ""
+msgstr "Instalovat balíček IPK"
 
-#: ../src/installer.vala:279 ../src/installer.vala:335
-#: ../tools/lipa/lipa-installer.vala:50
+#: ../src/installer.vala:283 ../src/installer.vala:339
+#: ../tools/lipa/lipa-installer.vala:56
 msgid "Installation completed!"
 msgstr "Instalace dokončena!"
 
-#: ../src/installer.vala:283 ../src/installer.vala:339
+#: ../src/installer.vala:287 ../src/installer.vala:343
 msgid "Installation failed!"
-msgstr ""
+msgstr "Instalace selhala!"
 
-#: ../tools/lipa/lipa-installer.vala:95
+#: ../tools/lipa/lipa-installer.vala:101
 msgid "Installation of %s"
-msgstr ""
+msgstr "Instalace %s"
 
-#: ../src/pkit-tasks.vala:360 ../src/pkit-tasks.vala:377
+#: ../src/pkit-tasks.vala:363 ../src/pkit-tasks.vala:380
 msgid "Installation of native packages failed with message: %s"
-msgstr ""
+msgstr "Instalace nativních balíčků selhala se zprávou: %s"
 
-#: ../tools/lipa/lipa-installer.vala:149
+#: ../tools/lipa/lipa-installer.vala:155
 msgid "Installing"
-msgstr ""
+msgstr "Instalace"
 
-#: ../src/pkit-tasks.vala:433
+#: ../src/pkit-tasks.vala:436
 msgid "Installing native packages: %s"
-msgstr ""
+msgstr "Instalování nativních balíčků: %s"
 
 #: ../tools/likey/likey.vala:103
-#, fuzzy
 msgid "Key '%s' imported successfully!"
-msgstr "Aplikace %a byla úspěšně nainstalována!"
+msgstr ""
 
 #: ../src/security-info.vala:89
 msgid "Key is missing"
@@ -290,23 +301,25 @@ msgstr ""
 msgid "Key not found!"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:105
+#: ../tools/lipa/lipa-installer.vala:111
 msgid "License:"
-msgstr ""
+msgstr "Licence:"
 
 #: ../tools/lipa/lipa.vala:62
 msgid "List all installed applications"
-msgstr ""
+msgstr "Vypsat všechny nainstalované aplikace"
 
 #: ../tools/lipa/lipa.vala:60
 msgid "List installed Listaller applications"
-msgstr ""
+msgstr "Vypsat všechny nainstalované aplikace Listaller"
 
 #: ../tools/lipa/lipa.vala:67
 msgid ""
 "Listaller command-line tool: No command specified.\n"
 "Run '%s --help' to see a list of available commands."
 msgstr ""
+"Listaller nástroj příkazového řádku: Nezadán žádný příkaz.\n"
+"Spusťte '%s --help' pro výpis všech dostupných příkazů."
 
 #: ../tools/likey/likey.vala:40
 msgid "Lookup key which matches PATTERN"
@@ -314,58 +327,63 @@ msgstr ""
 
 #: ../src/security-info.vala:191
 msgid "Low security."
-msgstr ""
+msgstr "Nízká bezpečnost."
 
-#: ../src/installer.vala:250
+#: ../src/installer.vala:254
 msgid "Making '%s' known to your system."
-msgstr ""
+msgstr "Seznamování '%s' s vaším systémem."
 
 #: ../tools/lipkgen/ipkbuilder.vala:142
 msgid "Malformed line in file listing: %s"
-msgstr ""
+msgstr "Poškozený řádek ve výpisu souborů: %s"
 
 #: ../src/security-info.vala:188
 msgid "Medium security."
-msgstr ""
+msgstr "Střední zabezpečení."
 
 #: ../tools/lipa/lipa.vala:127
 msgid "Missing parameter for 'install' action: No IPK package specified.\n"
-msgstr ""
+msgstr "Chybějící parametr pro činnost 'install': Nezadán žádný balíček IPK.\n"
 
 #: ../tools/lipa/lipa.vala:139
 msgid ""
 "Missing parameter for 'remove' action: No application-id or name specified.\n"
 msgstr ""
+"Chybějící parametr pro činnost 'remove': Nezadáno žádné id aplikace nebo "
+"název.\n"
 
 #: ../src/security-info.vala:127
 msgid "Never trust."
-msgstr ""
+msgstr "Nikdy nevěřit."
 
 #: ../tools/runapp/runapp.vala:106
 msgid "No application specified!"
-msgstr ""
+msgstr "Nezadána žádná aplikace!"
 
 #: ../tools/depscan/depscan-tool.vala:79
 msgid "No path given!"
-msgstr ""
+msgstr "Nezadána žádná cesta!"
 
-#: ../src/ipk-package.vala:657 ../src/ipk-package.vala:728
+#: ../src/ipk-package.vala:658 ../src/ipk-package.vala:730
 msgid ""
 "No payload data archive has been registered! This might be a bug in this "
 "application, please report the issue!"
 msgstr ""
+"Nebyla zaregistrována žádná data obsahu archivu! To může být chyba v "
+"aplikaci. prosím nahlaste tuto chybu!"
 
 #: ../src/ipk-control.vala:422
 msgid "No valid DOAP data found in directory %s - Can't open control files."
 msgstr ""
+"V adresáři %s nenalezena žádná data DOAP - Nelze otevřít kontrolní soubory."
 
 #: ../src/security-info.vala:92
 msgid "One key has been revoked"
-msgstr ""
+msgstr "Jeden klíč byl zrušen"
 
 #: ../src/security-info.vala:86
 msgid "One key has expired"
-msgstr ""
+msgstr "Jeden klíč vypršel"
 
 #: ../tools/likey/likey.vala:40
 msgid "PATTERN"
@@ -377,105 +395,110 @@ msgid ""
 "Package uses custom variables - usually this is not intentional, please "
 "contact the package author!"
 msgstr ""
+"Balíček používá vlastní proměnné - většinou toto není úmyslně, prosím "
+"kontaktujte tvůrce balíčku!"
 
-#: ../src/pkit-tasks.vala:184
+#: ../src/pkit-tasks.vala:187
 msgid ""
 "PackageKit backend does not support finding packages by stuff they provide - "
 "Installer was unable to use native packages to satisfy dependencies of this "
 "application."
 msgstr ""
 
-#: ../src/pkit-tasks.vala:296
+#: ../src/pkit-tasks.vala:299
 msgid ""
 "PackageKit backend does not support searching for files - Installer was "
 "unable to use native packages to satisfy dependencies of this application."
 msgstr ""
 
-#: ../src/pkit-tasks.vala:327
+#: ../src/pkit-tasks.vala:330
 msgid ""
 "PackageKit transaction failed!\n"
 "Exit message was: %s"
 msgstr ""
+"Přenos PackageKit selhal!\n"
+"Návratový kód byl: %s"
 
 #: ../tools/lipkgen/lipkgen.vala:43
 msgid "Path to Listaller package source directory"
-msgstr ""
+msgstr "Cesta ke zdrojovému adresáři balíčku Listaller"
 
 #: ../tools/appcompile/appcompile.vala:39
 msgid "Path to the application's source code"
-msgstr ""
+msgstr "Cesta ke zdrojovému kódu aplikace"
 
-#: ../src/installer.vala:205
+#: ../src/installer.vala:209
 msgid "Please remove the existing version to continue!"
-msgstr ""
+msgstr "Pro pokračování prosím odstraňte současnou verzi!"
 
 #: ../tools/depscan/depscan-tool.vala:39
 msgid "Print machine-readable simple text"
-msgstr ""
+msgstr "Vytisknout jednoduchý text čitelný strojem"
 
 #: ../src/security-info.vala:101
 msgid "Pubkey is missing"
-msgstr ""
+msgstr "Pubkey chybí"
 
 #: ../src/doap.vala:157
 msgid "Query returned no results. Maybe there's no release defined?"
-msgstr ""
+msgstr "Dotaz nevrátil žádné výsledky. Možná není zadána žádná verze?"
 
 #: ../src/doap.vala:201
 msgid "Query returned no results. Maybe this DOAP data is broken?"
-msgstr ""
+msgstr "Dotaz nevrátil žádné výsledky. Možná jsou tyto data DOAP poškozená?"
 
 #: ../src/signature.vala:127
 msgid "RFU"
 msgstr ""
 
-#: ../tools/lipa/lipa-manager.vala:110
-#, fuzzy
+#: ../tools/lipa/lipa-manager.vala:116
 msgid "Removal of %s completed successfully!"
-msgstr "Aplikace %a byla úspěšně nainstalována!"
+msgstr "Odstranění %s úspěšně dokončeno!"
 
-#: ../tools/lipa/lipa-manager.vala:112
+#: ../tools/lipa/lipa-manager.vala:118
 msgid "Removal of %s failed!"
-msgstr ""
+msgstr "Odstranění %s selhalo!"
 
 #: ../src/manager.vala:179 ../src/manager.vala:222
 msgid "Removal of %s finished."
-msgstr ""
+msgstr "Odstranění %s dokončneo."
 
 #: ../src/manager.vala:144
 msgid "Removal of %s started."
-msgstr ""
+msgstr "Odstranění %s spuštěno."
 
 #: ../tools/lipa/lipa.vala:58
 msgid "Remove an application installed using Listaller"
-msgstr ""
+msgstr "Odstranit nainstalovanou aplikaci pomocí Listaller"
 
-#: ../tools/lipa/lipa-manager.vala:100
+#: ../tools/lipa/lipa-manager.vala:106
 msgid "Removing"
-msgstr ""
+msgstr "Odstraňování"
 
-#: ../src/installer.vala:216
+#: ../src/installer.vala:220
 msgid "Resolving dependencies of '%s'."
-msgstr ""
+msgstr "Řešení závislostí '%s'."
 
 #: ../tools/runapp/runapp.vala:83 ../tools/lipa/lipa.vala:80
 #: ../tools/lipkgen/lipkgen.vala:62 ../tools/appcompile/appcompile.vala:69
 #: ../tools/depscan/depscan-tool.vala:54 ../tools/likey/likey.vala:61
 msgid "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
+"Spusťte '%s --help' pro získání úplného přehledu dostupných parametrů "
+"příkazové řádky.\n"
 
-#: ../src/installer.vala:188
+#: ../src/installer.vala:192
 msgid "Running installation of %s"
-msgstr ""
+msgstr "Spouštění instalace %s"
 
-#: ../tools/lipa/lipa-installer.vala:131 ../tools/lipa/lipa-installer.vala:133
-#: ../tools/lipa/lipa-installer.vala:135
+#: ../tools/lipa/lipa-installer.vala:137 ../tools/lipa/lipa-installer.vala:139
+#: ../tools/lipa/lipa-installer.vala:141
 msgid "Security is:"
-msgstr ""
+msgstr "Bezpečnost je:"
 
-#: ../src/installer.vala:396
+#: ../src/installer.vala:400
 msgid "Setup has not been initialized!"
-msgstr ""
+msgstr "Instalace nebyla zavedena!"
 
 #: ../src/security-info.vala:185
 msgid "Should be safe to use."
@@ -485,90 +508,101 @@ msgstr ""
 #: ../tools/lipkgen/lipkgen.vala:39 ../tools/appcompile/appcompile.vala:37
 #: ../tools/depscan/depscan-tool.vala:35 ../tools/likey/likey.vala:36
 msgid "Show the application's version"
-msgstr ""
+msgstr "Zobrazit verzi aplikace"
 
 #: ../src/security-info.vala:95
 msgid "Signature has expired"
-msgstr ""
+msgstr "Podpis vypršel"
 
 #: ../src/security-info.vala:98
 msgid "Signature is bad"
-msgstr ""
+msgstr "Podpis je špatný"
 
 #: ../src/security-info.vala:83
 msgid "Signature is fully valid"
-msgstr ""
+msgstr "Podpis je zcela platný"
 
 #: ../src/database-internal.vala:131
 msgid "Software database closed"
-msgstr ""
+msgstr "Databáze softwaru uzavřena"
 
 #: ../src/database-internal.vala:134
 msgid "Software database message (%d)"
-msgstr ""
+msgstr "Zpráva databáze softwaru (%d)"
 
 #: ../src/database-internal.vala:116
 msgid "Software database opened"
-msgstr ""
+msgstr "Databáze softwaru otevřena"
 
 #: ../tools/appcompile/appcompile.vala:41
 msgid "Software install prefix"
-msgstr ""
+msgstr "Místo instalace softwaru"
 
 #: ../data/mime/listaller-ipk.xml.in.h:1
 msgid "Software installation package"
-msgstr ""
+msgstr "Instalační balíček softwaru"
 
-#: ../src/ipk-package.vala:762
+#: ../src/ipk-package.vala:756
 msgid ""
 "Some files of this package could not be installed, because they were not "
 "found in payload data.\n"
 "This IPK package might be damaged, please obtain a new copy!"
 msgstr ""
+"Některé soubory v tomto balíčku nemohly být nainstalovány, protože nebyly "
+"nalezeny v datech obsahu.\n"
+"Tento balíček IPK může být poškozen, prosím obstarejte si novou kopii!"
 
 #: ../src/security-info.vala:80
 msgid "Status of this signature is unknown or package is not signed."
-msgstr ""
+msgstr "Stav tohoto podpisu je neznámý nebo balíček není podepsán."
 
 #: ../tools/appcompile/appcompile.vala:43
 msgid "Strip debug infos from files in install-target"
-msgstr ""
+msgstr "Odebrat informace pro ladění ze souborů v cíli instalce"
 
-#: ../src/installer.vala:405
+#: ../src/installer.vala:409
 msgid ""
 "The installer will only work with the %s operating system, but you use "
 "'%s'.\n"
 "Setup can not continue, sorry."
 msgstr ""
+"Instalátor funguje pouze v operačním systému %s, ale vy používáte '%s'.\n"
+"Instalace nemůže pokračovat, je nám líto."
 
-#: ../src/installer.vala:204
-msgid "This application has already been installed."
+#: ../tools/lipkgen/ipkbuilder.vala:216
+msgid "There are no files in file-list for architecture '%s'!"
 msgstr ""
+
+#: ../src/installer.vala:208
+msgid "This application has already been installed."
+msgstr "Tato aplikace již je nainstalována."
 
 #: ../src/ipk-package.vala:161
 msgid ""
 "This package can't be installed on your system architecture (%s)!\n"
 "Please get a package which was built for your machine."
 msgstr ""
+"Tento balíček nelze nainstalovat na vaší architektuře systému (%s)!\n"
+"Prosím pořiďte si balíček, který byl sestaven pro váš stroj."
 
 #: ../src/security-info.vala:194
 msgid "This package could be dangerous!"
-msgstr ""
+msgstr "Tento balíček by mohl být nebezpečný!"
 
-#: ../src/installer.vala:143
+#: ../src/installer.vala:147
 msgid ""
 "This package is a delta-package, containing software patches. It is usually "
 "distributed via update-services, you can't install it using this tool. "
 "Please obtain a non-delta version of this application!"
 msgstr ""
 
-#: ../src/installer.vala:127
+#: ../src/installer.vala:131
 msgid ""
 "This package was built using a more recent version of Listaller.\n"
 "Please update your copy of Listaller to be able to install it."
 msgstr ""
 
-#: ../src/installer.vala:135
+#: ../src/installer.vala:139
 msgid ""
 "This package was built using spec version '%s', but we need at least '%s' or "
 "higher to proceed.\n"
@@ -578,44 +612,49 @@ msgstr ""
 
 #: ../src/database-internal.vala:223
 msgid "Tried to access locked database! This shouldn't happen."
-msgstr ""
+msgstr "Pokus o přistup k uzamčené databázi! To by se nemělo stát."
 
 #: ../src/database-internal.vala:333
 msgid "Tried to access locked database! This shouldn't happen. Message: %s"
-msgstr ""
+msgstr "Pokus o přístup k uzamčené databázi! To by se nemělo dít. Zpráva: %s"
 
-#: ../src/ipk-package.vala:643 ../src/ipk-package.vala:715
+#: ../src/ipk-package.vala:644 ../src/ipk-package.vala:717
 msgid "Tried to perform action on invalid IPK package."
-msgstr ""
+msgstr "Pokus o provedení činnosti v neplatném balíčku IPK."
 
 #: ../src/database.vala:107
 msgid ""
 "Tried to perform action on private software database, but the database is "
 "not opened! (this should never happen!)"
 msgstr ""
+"Pokus o provedení činnosti na soukromé databázi softwaru, ale databáze není "
+"otevřena! (to by se nikdy nemělo stát!)"
 
 #: ../src/database.vala:96
 msgid ""
 "Tried to perform action on shared software database, but the database is not "
 "opened! (maybe a permission problem?)"
 msgstr ""
+"Pokus o provedení činnosti na sdílené databázi softwaru, ale databáze není "
+"otevřena! (možná problém s oprávněním?)"
 
 #: ../src/database-internal.vala:434 ../src/database-internal.vala:491
 #: ../src/database-internal.vala:849
 msgid "Tried to write on readonly database! (This should never happen)"
 msgstr ""
+"Pokus o zápis do databáze pouze pro čtení! (To by se nikdy nemělo stát)"
 
 #: ../src/security-info.vala:133
 msgid "Trust is full"
-msgstr ""
+msgstr "Důvěra je plná"
 
 #: ../src/security-info.vala:130
 msgid "Trust is marginal"
-msgstr ""
+msgstr "Důvěra je okrajová"
 
 #: ../src/security-info.vala:136
 msgid "Trust is ultimate."
-msgstr ""
+msgstr "Důvěra je konečná."
 
 #: ../src/security-info.vala:121
 msgid "Trust level is unknown"
@@ -626,6 +665,8 @@ msgid ""
 "Trying to remove local application, but AppManager is in superuser mode!\n"
 "Setting AppManager to local mode now."
 msgstr ""
+"Pokus o odstranění místní aplikace, ale správce aplikací je v režimu\n"
+"superuživatele! Nastavování správce do místního režimu."
 
 #: ../src/manager.vala:234
 msgid ""
@@ -633,133 +674,137 @@ msgid ""
 "mode!\n"
 "Setting AppManager to superuse mode now."
 msgstr ""
+"Pokus o odstranění sdílené aplikace, ale správce aplikací není v režimu "
+"superuživatele!\n"
+"Nastavování správce do režimu superuživatele."
 
 #: ../src/database.vala:402
 msgid "Unable to add a dependency to database: %s"
-msgstr ""
+msgstr "Nelze přidat závislost do databáze: %s"
 
 #: ../src/database.vala:218
 msgid "Unable to add application file list to database: %s"
-msgstr ""
+msgstr "Nelze přidat seznam souborů aplikace do databáze: %s"
 
 #: ../src/database.vala:197
 msgid "Unable to add application to database: %s"
-msgstr ""
+msgstr "Nelze přidat aplikaci do databáze: %s"
 
-#: ../tools/lipkgen/ipkbuilder.vala:441
+#: ../tools/lipkgen/ipkbuilder.vala:451
 msgid "Unable to build package: %s"
-msgstr ""
+msgstr "Nelze sestavit balíček: %s"
 
 #: ../src/database.vala:253
 msgid "Unable to count applications: %s"
-msgstr ""
+msgstr "Nelze spočítat aplikace: %s"
 
 #: ../src/database-internal.vala:413
-#, fuzzy
 msgid "Unable to create database config table: %s"
-msgstr "Nemohu přepsat soubor %f."
+msgstr "Nelze vytvořit tabulku nastavení databáze: %s"
 
 #: ../src/database-internal.vala:393
-#, fuzzy
 msgid "Unable to create database tables: %s"
-msgstr "Nemohu přepsat soubor %f."
+msgstr "Nelze vytvořit tabulky databáze: %s"
 
 #: ../src/ipk-package.vala:220
 msgid "Unable to create destination directory."
-msgstr ""
+msgstr "Nelze vytvořit cílový adresář."
 
 #: ../src/ipk-filelist.vala:208
 msgid "Unable to create file '%s'!"
-msgstr ""
+msgstr "Nelze vytvořit soubor '%s'!"
 
 #: ../src/feed-installer.vala:101
 msgid "Unable to download feed %s. Message: %s"
-msgstr ""
+msgstr "Nelze stáhnout kanál %s. Zpráva: %s"
 
-#: ../src/ipk-package.vala:569
+#: ../src/ipk-package.vala:570
 msgid "Unable to extract IPK data!"
-msgstr ""
+msgstr "Nelze extrahovat data IPK!"
 
 #: ../src/ipk-package.vala:427
 msgid "Unable to extract IPK metadata!"
-msgstr ""
+msgstr "Nelze extrahovat metadata IPK!"
 
 #: ../src/ipk-package.vala:283
 msgid "Unable to extract data file %s. Message: %s"
-msgstr ""
+msgstr "Nelze extrahovat datový soubor %s. Zpráva: %s"
 
 #: ../src/ipk-package.vala:266
 msgid ""
 "Unable to extract data file %s. This IPK package might be damaged, please "
 "obtain a new copy."
 msgstr ""
+"Nelze extrahovat datový soubor %s. Tento balíček IPK mže být poškozen, "
+"prosím pořiďte si novou kopii."
 
 #: ../src/feed-installer.vala:186
 msgid "Unable to extract file '%s' for dependency '%s'!"
-msgstr ""
+msgstr "Nelze extrahovat soubor %s pro závislost '%s'!"
 
 #: ../src/ipk-package.vala:243 ../src/ipk-package.vala:350
 #: ../src/ipk-package.vala:368
 msgid "Unable to extract file. %s"
-msgstr ""
+msgstr "Nelze extrahovat soubor. %s"
 
 #: ../src/ipk-package.vala:488
 msgid "Unable to extract signature! Maybe package is not signed."
-msgstr ""
+msgstr "Nelze extrahovat podpis! Balíček možná není podepsán."
 
 #: ../src/database.vala:272
 msgid "Unable to fetch application by id: %s"
-msgstr ""
+msgstr "Nelze získat aplikaci podle id: %s"
 
 #: ../src/database.vala:294
 msgid "Unable to fetch application by name: %s"
-msgstr ""
+msgstr "Nelze získat aplikaci podle názvu: %s"
 
 #: ../src/database.vala:239 ../src/database-internal.vala:543
 msgid "Unable to fetch application file list: %s"
-msgstr ""
+msgstr "Nelze získat soubor seznamu aplikaci: %s"
 
 #: ../src/feed-installer.vala:238
 msgid ""
 "Unable to find a matching implementation of '%s' for your system/"
 "architecture."
 msgstr ""
+"Nelze získat shodující se implementaci '%s' pro váš systém/architekturu."
 
-#: ../src/pkit-tasks.vala:204
+#: ../src/pkit-tasks.vala:207
 msgid "Unable to find native package for '%s'!"
-msgstr ""
+msgstr "Nelze najít nativní balíček pro '%s'!"
 
 #: ../src/dep-installer.vala:58
 msgid "Unable to find valid candidate to satisfy dependency '%s'!"
-msgstr ""
+msgstr "Nelze najít platného kandidáta k uspokojení závislosti '%s'!"
 
 #: ../src/ipk-metafile.vala:53
 msgid "Unable to get meta-information list: %s"
-msgstr ""
+msgstr "Nelze získat seznam metainformací: %s"
 
 #: ../src/database.vala:126
 msgid "Unable to open database for read-only: %s"
-msgstr ""
+msgstr "Nelze otevřít databázi pro čtení: %s"
 
 #: ../src/database.vala:152
 msgid "Unable to open database for writing: %s"
-msgstr ""
+msgstr "Nelze otevřít databázi pro zápis: %s"
 
 #: ../src/manager.vala:78
 msgid "Unable to open software database for reading & writing!"
-msgstr ""
+msgstr "Nelze otevřít databáze softwaru pro čtení a zápis!"
 
 #: ../src/manager.vala:84
 msgid "Unable to open software database for reading only!"
-msgstr ""
+msgstr "Nelze otevřít databáze softwaru pouze pro čtení!"
 
 #: ../src/ipk-package.vala:514
 msgid "Unable to read package signature! Message: %s"
-msgstr ""
+msgstr "Nelze přečíst podpis balíčku! Zpráva: %s"
 
 #: ../src/database.vala:315
 msgid "Unable to remove application from database: %s"
-msgstr ""
+msgstr "Nelze odstranit aplikaci z databáze: %s"
 
 #: ../src/varsetter.vala:88 ../src/varsetter.vala:96
 msgid "Unable to save modified desktop-file! %s"
@@ -767,19 +812,19 @@ msgstr ""
 
 #: ../src/database.vala:334
 msgid "Unable to search application database: %s"
-msgstr ""
+msgstr "Nelze hledat v databázi aplikace: %s"
 
 #: ../src/database-internal.vala:516
 msgid "Unable to write application file list! Message: %s"
-msgstr ""
+msgstr "Nelze zapsat soubor seznam aplikace! Zpráva: %s"
 
 #: ../src/ipk-metafile.vala:99
 msgid "Unable to write meta information! Message: %s"
-msgstr ""
+msgstr "Nelze zapsat meta informace! Zpráva: %s"
 
-#: ../tools/lipkgen/ipkbuilder.vala:359
+#: ../tools/lipkgen/ipkbuilder.vala:369
 msgid "Unable to write signature file! Message: %s"
-msgstr ""
+msgstr "Nelze zapsat soubor podpisu! Zpráva: %s"
 
 #: ../src/signature.vala:109 ../src/signature.vala:110
 #: ../src/signature.vala:124 ../src/signature.vala:125
@@ -788,7 +833,7 @@ msgstr ""
 
 #: ../tools/depscan/depscan-tool.vala:37
 msgid "Use recursive mode"
-msgstr ""
+msgstr "Použít rekurzivní režim"
 
 #: ../src/ipk-package.vala:296
 msgid ""
@@ -796,20 +841,22 @@ msgid ""
 "creation.\n"
 "Please obtain a new copy and try again."
 msgstr ""
+"Ověření souboru %s selhalo! Tento soubor IPK mohl být po vytvoření změněn.\n"
+"Prosím obstarejte si novou kopii a zkuste to znovu."
 
 #: ../src/security-info.vala:124
 msgid "Validity is undefined"
-msgstr ""
+msgstr "Platnost není určena"
 
 #: ../src/application.vala:377
 msgid "We don't know a desktop-file for application '%s'!"
-msgstr ""
+msgstr "Pro aplikaci '%s' není známý soubor plochy!"
 
 #: ../src/zfeed.vala:82
 msgid "XML file is not a valid ZI feed!"
 msgstr ""
 
-#: ../src/installer.vala:421
+#: ../src/installer.vala:425
 msgid ""
 "You are not allowed to install this package, because it's security level is "
 "'%s' and you need at least a package with security-level '%s'.\n"
@@ -817,7 +864,7 @@ msgid ""
 "try again!"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:122
+#: ../tools/lipa/lipa-installer.vala:128
 msgid ""
 "You need to agree with the license to install & use the application. Exiting "
 "setup now."
@@ -827,9 +874,13 @@ msgstr ""
 msgid "You need to be root to change Listaller's key database!"
 msgstr ""
 
+#: ../tools/lipkgen/ipkbuilder.vala:278
+msgid "Your package has errors and was therefore not generated."
+msgstr ""
+
 #: ../src/zfeed.vala:71
 msgid "ZI XML file '%s' is damaged."
-msgstr ""
+msgstr "Soubor ZI XML '%s' je poškozený."
 
 #: ../src/signature.vala:119 ../src/signature.vala:126
 msgid "[None]"
@@ -845,7 +896,7 @@ msgstr ""
 
 #: ../tools/lipkgen/lipkgen.vala:69
 msgid "error: %s"
-msgstr ""
+msgstr "chyba: %s"
 
 #: ../src/security-info.vala:35
 msgid "high"
@@ -871,13 +922,13 @@ msgstr ""
 msgid "okay"
 msgstr ""
 
-#: ../tools/lipa/lipa-manager.vala:61
+#: ../tools/lipa/lipa-manager.vala:67
 msgid "personal"
-msgstr ""
+msgstr "osobní"
 
-#: ../tools/lipa/lipa-manager.vala:63
+#: ../tools/lipa/lipa-manager.vala:69
 msgid "shared"
-msgstr ""
+msgstr "sdílené"
 
 #: ../src/signature.vala:95
 msgid ""
@@ -1307,6 +1358,9 @@ msgstr ""
 #~ "Balík IPK je nejspíš poškozen nebo nemáte dostatečná oprávnění pro "
 #~ "přístup k potřebný souborům a složkám."
 
+#~ msgid "The application %a was installed successfully!"
+#~ msgstr "Aplikace %a byla úspěšně nainstalována!"
+
 #~ msgid "The application %a was not installed."
 #~ msgstr "Aplikace %a nebyla nainstalována."
 
@@ -1386,6 +1440,9 @@ msgstr ""
 #~ msgstr ""
 #~ "Nemohu načíst ikonu aplikace %a.. Informujte vývojáře Listaller nebo této "
 #~ "aplikace!"
+
+#~ msgid "Unable to overwrite the file %f."
+#~ msgstr "Nemohu přepsat soubor %f."
 
 #~ msgid "Uninstall"
 #~ msgstr "Odinstalovat"

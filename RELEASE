@@ -1,9 +1,9 @@
 Listaller Release Notes
 
 1. Merge translations from Launchpad:
-   Export translations: http://translations.launchpad.net/listaller/master/+export
+   Export translations: https://translations.launchpad.net/listaller/master/+export
    -> Merge them with po/
-   -> run 'make nls-update'
+   -> run 'make l10n-update'
    Commit translations
 
 2. Write NEWS entries for Listaller in the same format as usual.
