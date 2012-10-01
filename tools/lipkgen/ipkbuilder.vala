@@ -211,6 +211,10 @@ private class Builder : Object {
 			error_message ("Could not compile IPK file list!");
 			return false;
 		}
+
+		if (flist.get_files_list ().size <= 0)
+			Report.log_error (_("There are no files in file-list for architecture '%s'!").printf (arch));
+
 		// Add to control file list, if file was created successfully
 		ctrlfiles.add (tmp);
 
@@ -268,6 +272,12 @@ private class Builder : Object {
 		const int buffsize = 8192;
 		char buff[8192];
 		bool ret = true;
+
+		if (Report.get_instance ().contains_error ()) {
+			debug ("Report contains error(s), exiting!");
+			Report.log_info (_("Your package has errors and was therefore not generated."));
+			return false;
+		}
 
 		// Set output file name
 		if (outname == "") {
@@ -454,6 +464,7 @@ private class Builder : Object {
 			return false;
 		}
 
+		Report.set_print_fatal_msg (false);
 
 		create_dir_parents (Path.build_filename (tmpdir, "control", null));
 		create_dir_parents (Path.build_filename (tmpdir, "data", null));

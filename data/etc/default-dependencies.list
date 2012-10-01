@@ -10,7 +10,7 @@ Libraries: linux-gate.so.*
            libselinux.so.*
            linux-vdso.so.*
 
-Name: LibC-6
+Name: Libc6
 ID: libc6
 Standard: true
 Libraries: libc.so.*
