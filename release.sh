@@ -43,11 +43,13 @@ make clean all
 mkdir -p ./release-tar-tmp
 git archive --prefix="Listaller-$LISTALLER_VERSION/" "$GIT_TAG^{tree}" | tar -x -C ./release-tar-tmp
 
+R_ROOT="./release-tar-tmp/Listaller-$LISTALLER_VERSION"
+
 # cleanup files which should not go to the release tarball
 find ./release-tar-tmp -name .gitignore -type f -delete
-rm ./release-tar-tmp/release.sh
-rm ./release-tar-tmp/Makefile.in
-rm ./release-tar-tmp/prepare
+rm $R_ROOT/release.sh
+rm $R_ROOT/Makefile.in
+rm $R_ROOT/prepare
 
 # create release tarball
 cd ./release-tar-tmp
