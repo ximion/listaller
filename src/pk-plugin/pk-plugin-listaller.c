@@ -267,11 +267,17 @@ listaller_message_cb (GObject *sender, ListallerMessageItem *message, PkPlugin *
 static void
 listaller_progress_cb (GObject *sender, ListallerProgressItem *item, PkPlugin *plugin)
 {
+	gint value;
+	value = listaller_progress_item_get_value (item);
+
+	if (listaller_progress_item_get_prog_type != LISTALLER_PROGRESS_ENUM_MAIN_PROGRESS)
+		return;
+
 	pk_plugin_restore_backend (plugin);
 
 	/* emit */
-	pk_backend_job_set_percentage (plugin->job,
-				       listaller_progress_item_get_value (item));
+	if (value > 0)
+		pk_backend_job_set_percentage (plugin->job, value);
 
 	pk_plugin_redirect_backend_signals (plugin);
 }

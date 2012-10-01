@@ -133,7 +133,7 @@ public class CmdProgressBar : Object {
 
 		// never called start()
 		if (this.percentage == -1)
-			start ("FIXME: need to call pk_progress_bar_start() earlier!");
+			start ("FIXME: need to call progress_bar_start() earlier!");
 
 		// check for old percentage
 		if (percentage == this.percentage) {

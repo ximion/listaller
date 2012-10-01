@@ -51,8 +51,14 @@ public class LipaManager : LipaModule {
 	}
 
 	private void manager_progress_cb (ProgressItem item) {
+		int value = item.value;
+		if (value < 0)
+			return;
+		if (item.prog_type != ProgressEnum.MAIN_PROGRESS)
+			return;
+
 		if (show_progress)
-			progress_bar.set_percentage (item.value);
+			progress_bar.set_percentage (value);
 	}
 
 	private string app_ownership_str (AppItem app) {

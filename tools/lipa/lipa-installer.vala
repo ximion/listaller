@@ -38,6 +38,12 @@ public class LipaInstaller : LipaModule {
 	}
 
 	public void setup_progress (ProgressItem item) {
+		int value = item.value;
+		if (value < 0)
+			return;
+		if (item.prog_type != ProgressEnum.MAIN_PROGRESS)
+			return;
+
 		if (setup_running)
 			progress_bar.set_percentage (item.value);
 
