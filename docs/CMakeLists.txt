@@ -2,6 +2,12 @@
 
 add_subdirectory (man)
 
+find_program (XMLTO xmlto)
+mark_as_advanced (XMLTO)
+if (XMLTO STREQUAL "")
+	message (FATAL_ERROR "Xmlto was not found! Please install it to continue!")
+endif (XMLTO STREQUAL "")
+
 # Find required tools
 find_program (YELP_BUILD yelp-build)
 mark_as_advanced (YELP_BUILD)

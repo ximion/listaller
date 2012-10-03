@@ -1,12 +1,12 @@
 # CMakeLists to install graphics for Listaller
 
 # Mimetypes
-install(FILES package-x-ipk.png
+install(FILES package-x-ipk_32.png
+	RENAME package-x-ipk.png
 	DESTINATION share/icons/hicolor/32x32/mimetypes)
-# Install to /pixmaps too
-# FIXME: Should not install to two directories, find policy for this
-install(FILES package-x-ipk.png
-	DESTINATION share/pixmaps)
+install(FILES package-x-ipk_48.png
+	RENAME package-x-ipk.png
+	DESTINATION share/icons/hicolor/48x48/mimetypes)
 
 # Graphics for "Distribution Tested" button
 #install(FILES
