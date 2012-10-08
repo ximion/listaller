@@ -125,7 +125,7 @@ private class VarSolver : Object {
 		add_icon_var (48);
 		add_icon_var (64);
 		add_icon_var (128);
-		add_icon_var (265);
+		add_icon_var (256);
 	}
 
 	private void add_icon_var (int size) {
@@ -284,7 +284,7 @@ private class VarSolver : Object {
 		fname = find_liappicon (icon_name, 128, ssettings);
 		if (fname != "")
 			return fname;
-		fname = find_liappicon (icon_name, 265, ssettings);
+		fname = find_liappicon (icon_name, 256, ssettings);
 		if (fname != "")
 			return fname;
 		fname = find_liappicon (icon_name, 32, ssettings);

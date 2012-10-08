@@ -72,7 +72,7 @@ variables will <em>always</em> have the value described here!</p>
 	</tr>
 	<tr>
 		<td><p><code>%ICON-&lt;?&gt;%</code></p></td> <td><p>Directory for application icons associated with the
-		application's desktop-file. Values for &lt;?&gt; can be 16, 24, 32, 48, 64, 128 or 265.</p></td>
+		application's desktop-file. Values for &lt;?&gt; can be 16, 24, 32, 48, 64, 128 or 256.</p></td>
 		<td><p><file>/usr/share/icons/hicolor/&lt;?&gt;x&lt;?&gt;/apps</file></p></td>   <td><p><file>~/.local/share/icons/hicolor/&lt;?&gt;x&lt;?&gt;/apps</file></p></td>
 	</tr>
 </table>

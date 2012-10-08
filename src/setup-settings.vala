@@ -244,7 +244,7 @@ public class SetupSettings : Object {
 				break;
 			case 128: size_valid = true;
 				break;
-			case 265: size_valid = true;
+			case 256: size_valid = true;
 				break;
 			default: size_valid = false;
 				break;
