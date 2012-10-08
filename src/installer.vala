@@ -22,8 +22,6 @@ using GLib;
 using Listaller;
 using Listaller.Utils;
 
-[CCode (cheader_filename = "listaller-glib/installer.h")]
-
 namespace Listaller {
 
 /**
