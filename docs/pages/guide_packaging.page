@@ -1,9 +1,12 @@
 <page xmlns="http://projectmallard.org/1.0/" type="guide" id="packaging">
 <info>
   <link type="guide" xref="index"/>
+
+  <link type="topic" xref="depscan"/>
+  <link type="topic" xref="appcompile"/>
 </info>
 
-<title>Create Listaller packages</title>
+<title>Listaller Packaging</title>
 
 <p>Creating Listaller packages and cross-distro applications is easy. Just follow the instructions below and read the documents.</p>
 

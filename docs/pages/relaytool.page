@@ -1,6 +1,8 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="relaytool">
 <info>
     <link type="topic" xref="app-development"/>
+    <link type="topic" xref="depscan"/>
+
     <credit type="author">
         <name>Matthias Klumpp</name>
         <email>matthias@tenstral.net</email>

@@ -9,7 +9,7 @@
 
 <title>Developing Listaller-ready applications</title>
 
-<p>We produced several standalone tools, the libuild programs, that are designed to help Linux developers write
+<p>We created several standalone tools, the libuild programs, that are designed to help Linux developers write
 better software that runs on a wider variety of distributions. Most of them are independent of Listaller itself:
 you can use them even if you don't provide your software using the rest of our software.</p>
 
