@@ -1,0 +1,81 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="ipk-install-howto">
+<info>
+    <link type="topic" xref="enduser-guide"/>
+
+    <credit type="author">
+        <name>Matthias Klumpp</name>
+        <email>matthias@tenstral.net</email>
+        <years>2012</years>
+    </credit>
+
+    <desc>Learn how you can install an IPK package.</desc>
+</info>
+
+<title>How to install IPK packages</title>
+
+<section id="install-ipk-gui">
+<title>Installing packages (GUI method)</title>
+
+       <p>Installing Listaller packages is really easy. Just make sure you have Listaller installed,
+       then follow the steps below.</p>
+
+       <steps>
+           <item><p>Download an IPK package or get it from somewhere else.</p></item>
+
+           <item><p>Open the IPK-package with your PackageKit package installer (Apper or GNOME-PackageKit).
+           If a Listaller frontent is installed, simply double/single-clicking the package file should already
+           launch the right application.</p></item>
+
+           <item><p>After the package is opened, just follow the instructions on screen to install it.</p></item>
+
+           <item><p>The application is now installed. You should be able to launch it via you application-menu. (Plasma, GNOME-Shell, KRunner, …)
+           If there have been problems making the setup work for you, please file a bug against Listaller so we can fix it.</p></item>
+       </steps>
+
+       <p>Listaller uses a system based on GPG-keys and some other values to check if a package can be trusted, as 3rd-party applications
+       can come from any source and it is not certain that they won't contain malicious software.</p>
+
+       <p>The system administrator has set a minimum trust level for packages. If your package is below this level, you will not be able to
+       install the package. By default, unsigned packages can never be installed without lowering the minimum security level.</p>
+
+       <p>If you have troubles installing an application because of this, you can temporarily change the minimum trust in Listaller's config file,
+       or speak to your system administrator.</p>
+
+</section>
+If you want to uninstall the software, you can use any PackageKit frontend to remove it, if you installed the application in “shared mode” as superuser. Otherwise, you need a Listaller-tool to remove it, e.g. limanager-gtk on GNOME. Just click uninstall and you're done.
+
+<section id="install-ipk-cli">
+<title>Installing packages (CLI method)</title>
+
+<p>There are many ways to install an IPK package via the command line. We encourage you to use the <cmd>lipa</cmd> application, which is shipped with Listaller,
+but you could also use <cmd>pkcon</cmd>, the PackageKit command-line tool.</p>
+
+    <section id="lipa">
+    <title>Install using lipa</title>
+        <p>To install the package using <cmd>lipa</cmd>, just use the following command:</p>
+        <screen>
+            <output style="prompt">[earth@sun] </output><input>lipa --install <file>./packagename_version.ipk</file></input></screen>
+
+        <p><cmd>lipa</cmd> will then guide you through the rest of the installation process.</p>
+
+    </section>
+
+    <section id="pkcon">
+    <title>Install using pkcon</title>
+        <note style="warning">
+            <p>You should generally prefer using <cmd>lipa</cmd> over <cmd>pkcon</cmd>, since <cmd>lipa</cmd> was specially designed for
+            use with Listaller, while <cmd>pkcon</cmd> is just a command-line PackageKit client, which does not support stuff like Listaller's
+            signature-checking, licenses or private installations.</p>
+        </note>
+
+        <p>To install the package using <cmd>pkcon</cmd>, you can just do the same as you would do when installing a native distribution package:</p>
+        <screen>
+            <output style="prompt">[earth@sun] </output><input>pkcon install-local <file>./packagename_version.ipk</file></input></screen>
+
+        <p>PackageKit will then perform a <em>shared</em> installation of the Listaller package.</p>
+
+    </section>
+
+</section>
+
+</page>

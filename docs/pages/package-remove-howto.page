@@ -1,0 +1,26 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="ipk-remove-howto">
+<info>
+    <link type="topic" xref="enduser-guide"/>
+    <link type="topic" xref="ipk-install-howto"/>
+
+    <credit type="author">
+        <name>Matthias Klumpp</name>
+        <email>matthias@tenstral.net</email>
+        <years>2012</years>
+    </credit>
+
+    <desc>Information how you can remove a Listaller application..</desc>
+</info>
+
+<title>How to remove IPK packages</title>
+
+<section id="remove-ipk">
+<title>Removing packages</title>
+
+<note style="warning">
+    <p>The documentation is not yet complete. You may want to help extending it.</p>
+</note>
+
+</section>
+
+</page>
