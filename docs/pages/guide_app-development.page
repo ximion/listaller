@@ -4,6 +4,7 @@
 
   <link type="topic" xref="relocatable-apps"/>
   <link type="topic" xref="ligcc"/>
+  <link type="topic" xref="relaytool"/>
 </info>
 
 <title>Developing Listaller-ready applications</title>

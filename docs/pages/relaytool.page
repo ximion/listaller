@@ -1,0 +1,102 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="relaytool">
+<info>
+    <link type="topic" xref="app-development"/>
+    <credit type="author">
+        <name>Matthias Klumpp</name>
+        <email>matthias@tenstral.net</email>
+        <years>2012</years>
+    </credit>
+    <credit>
+        <name>The Autopackage Team</name>
+    </credit>
+
+    <desc>This is a program to provide a more convenient interface to dlopen/dlsym. It allows you to easily soft link to libraries.</desc>
+</info>
+
+<title>Relaytool</title>
+
+<section id="whatis">
+<title>What is Relaytool?</title>
+
+       <p>This is a program to provide a more convenient interface to dlopen/dlsym.</p>
+
+       <p>It lets you write the same style of code you would when using a normal hard link (-lwhatever), but the symbols
+       are actually lazy-linked at runtime. You can use the symbols libwhatever_is_present and libwhatever_symbol_is_present()
+       to find out what APIs are actually available at runtime. In other words, the need to use function pointers and lots of
+       manual calls to dlsym() is eliminated, and it becomes much simpler to soft link to things as a result.</p>
+
+       <p>If a symbol is missing at runtime and you call it anyway, your application will abort and an error message is printed
+       that states which function was called. If a variable is missing at runtime, the value is always -1.</p>
+
+
+</section>
+
+<section id="howto">
+<title>How to use Relaytool?</title>
+
+       <p>Replace <input>-lfoo</input> in your link line with <input>relaytool –relay foo -lfoo</input>, assuming libfoo is in the standard
+       search path (<file>/lib/, /usr/lib, /usr/local/lib</file>).
+       You can pass entire gcc linker lines to Relaytool, and it will interpret them accordingly.
+       Most options will be passed through unchanged onto stdout, but <input>-lfoo</input> options that have a preceeding
+       <input>–relay foo</input> argument will trigger stub generation and compilation.</p>
+
+       <p>Note that Relaytool will invoke <sys>$CC</sys> (or gcc if it's not set) to compile the stub file silently.
+       You will not see any output.</p>
+
+       <p>Alternatively, you can use the <input>–replace-all-libs</input> option to cause Relaytool to generate a stub file for
+       every library given in a <input>-lfoo</input> directive.</p>
+
+       <p>Because Relaytool parses linker options, you can feed the output of pkg-config and other config scripts to it:</p>
+
+       <screen>
+       <output style="prompt">[earth@sun] </output><input>relaytool --relay gtkspell `pkg-config --libs gtkspell-2.0`</input></screen>
+
+       <p>The above produces something like this, for example:</p>
+       <listing>
+	       <code>-Wl,--export-dynamic -L/opt/gnome26/lib libgtkspell.so.0.0.0.stub.o -laspell -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0
+		       -lgdk_pixbuf-2.0 -lm -lpangoxft-1.0 -lpangox-1.0 -lpango-1.0 -lgobject-2.0 -lgmodule-2.0 -ldl -lglib-2.0</code>
+       </listing>
+
+       <p>Note how -lgtkspell was replaced with libgtkspell.so.0.0.0.stub.o </p>
+
+       <p>On architectures that Relaytool does not support, the -l is passed through along with a couple of defines to provide
+       libfoo_is_present and libfoo_symbol_is_present.</p>
+
+       <note style="important">
+	       <p>Ensure <sys>CFLAGS=”-fPIC”</sys> if the library exports variables, as GOT fixup requires your program to use PIC code.</p>
+       </note>
+
+       <p>If you want to use Relaytool only for part of a shared library (for instance to make use of symbols available in
+       newer versions only) you can use the <input>–partial-map</input> feature. To use this create a file with a line for each symbol,
+       with F for function or V for variable in the first column, like so:</p>
+       <listing><code><![CDATA[In file foo.relaymap:
+
+F some_function
+V some_variable]]></code>
+       </listing>
+
+       <p>then run:</p>
+       <screen>
+        <output style="prompt">[earth@sun] </output><input>relaytool --partial-map foo.relaymap --relay whatever -lwhatever</input></screen>
+
+       <p>If you want to hard link to a library but soft link to a few symbols, you can use
+       <input>–partial-map</input> and <input>–no-replace</input>.</p>
+
+       <note style="tip">
+	       <p><input>–partial-map</input> is currently incompatible with multiple <input>–relay</input> libraries on the same
+	       command line. You'll have to separate your libraries in different Relaytool calls.</p>
+       </note>
+
+       <p>If you want Relaytool to only generate the symbols required by your code and not the whole list exported by a library,
+       you can use the <input>–minimal-list</input> feature. It takes as argument the list of your object files, from which it
+       derives which symbols for each library are actually needed. For example:</p>
+       <screen>
+        <output style="prompt">[earth@sun] </output><input>relaytool --minimal-list "foo.o bar.o" --relay mylib -lmylib</input></screen>
+
+       <p>This will generate a file exporting only the symbols used in <file>foo.o</file> and <file>bar.o</file> actually found in
+       <file>mylib</file> instead of the complete list of symbols exported from <file>mylib</file>, which can mean big space savings
+       in the final executable.</p>
+
+</section>
+
+</page>
