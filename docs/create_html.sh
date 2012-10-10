@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+echo "Validating documentation..."
+./validate
+echo "Validation completed."
+
 mkdir -p html
 cd html
 yelp-build html ../pages/*page
