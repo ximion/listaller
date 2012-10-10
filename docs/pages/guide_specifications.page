@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<page xmlns="http://projectmallard.org/1.0/" type="guide" id="specifications">
+<info>
+  <link type="guide" xref="index"/>
+
+  <desc>Information about the project and it's specifications</desc>
+</info>
+
+<title>Specifications</title>
+
+<p>Listaller uses various file-formats and many specifications. Here vyou can find a description of them.</p>
+<p>You can also learn about the idea of Listaller and the project plan.</p>
+
+</page>

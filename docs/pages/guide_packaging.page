@@ -6,6 +6,8 @@
   <link type="topic" xref="depscan"/>
   <link type="topic" xref="appcompile"/>
   <link type="topic" xref="packaging-instructions"/>
+
+  <desc>Developer information about creating IPK packages</desc>
 </info>
 
 <title>Listaller Packaging</title>

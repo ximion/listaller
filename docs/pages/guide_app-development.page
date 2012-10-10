@@ -6,6 +6,8 @@
   <link type="topic" xref="relocatable-apps"/>
   <link type="topic" xref="ligcc"/>
   <link type="topic" xref="relaytool"/>
+
+  <desc>How to write cross-distro applications</desc>
 </info>
 
 <title>Developing Listaller-ready applications</title>
