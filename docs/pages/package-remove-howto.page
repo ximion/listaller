@@ -1,7 +1,8 @@
+<?xml version="1.0"?>
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="ipk-remove-howto">
 <info>
     <link type="topic" xref="enduser-guide"/>
-    <link type="topic" xref="ipk-install-howto"/>
+    <link type="seealso" xref="ipk-install-howto"/>
 
     <credit type="author">
         <name>Matthias Klumpp</name>
@@ -20,6 +21,13 @@
 <note style="warning">
     <p>The documentation is not yet complete. You may want to help extending it.</p>
 </note>
+
+<p>If you want to uninstall the software, you can use any PackageKit frontend to remove it,
+if you installed the application in “shared mode” as superuser.
+Otherwise, you need a Listaller-tool to remove it, e.g. limanager-gtk on GNOME. Just click uninstall and you're done.</p>
+
+<p>The <cmd>lipa</cmd> CLI tool is also able to remove Listaller packages, just use the <input>--remove</input> option
+instead of <input>--install</input>, and specify the application name or ID.</p>
 
 </section>
 

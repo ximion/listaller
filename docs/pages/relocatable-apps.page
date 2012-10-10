@@ -260,7 +260,7 @@ Header written to 'binreloc.h']]></code></listing>
 
 <p>
 The API is almost identical to the plain C version, except that it uses glib-style names and glib data types, such as GError.
-See <link href="http://listaller.nlinux.org">the full API reference</link>.
+See <link href="http://listaller.tenstral.net">the full API reference</link>.
 </p>
 </section>
 
@@ -308,7 +308,7 @@ foo_SOURCES = main.c]]></code>
 <p>How to use BinReloc:</p>
 <steps>
 <item><p>Use the special BinReloc Autoconf Macro (<file>binreloc.m4</file>). This file can be found in
-    the <link href="http://listaller.nlinux.org">BinReloc SDK</link>.</p><p>
+    the <link href="http://listaller.tenstral.net">BinReloc SDK</link>.</p><p>
     Append the contents of <file>binreloc.m4</file> to <file>acinclude.m4</file> (which is in the same
     folder as <file>configure.in</file>). Create <file>acinclude.m4</file> if it doesn't exist.</p>
     <p>

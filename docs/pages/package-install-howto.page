@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="ipk-install-howto">
 <info>
     <link type="topic" xref="enduser-guide"/>
@@ -42,7 +43,6 @@
        or speak to your system administrator.</p>
 
 </section>
-If you want to uninstall the software, you can use any PackageKit frontend to remove it, if you installed the application in “shared mode” as superuser. Otherwise, you need a Listaller-tool to remove it, e.g. limanager-gtk on GNOME. Just click uninstall and you're done.
 
 <section id="install-ipk-cli">
 <title>Installing packages (CLI method)</title>

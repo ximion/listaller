@@ -1,9 +1,11 @@
+<?xml version="1.0"?>
 <page xmlns="http://projectmallard.org/1.0/" type="guide" id="packaging">
 <info>
   <link type="guide" xref="index"/>
 
   <link type="topic" xref="depscan"/>
   <link type="topic" xref="appcompile"/>
+  <link type="topic" xref="packaging-instructions"/>
 </info>
 
 <title>Listaller Packaging</title>
