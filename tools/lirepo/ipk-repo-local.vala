@@ -26,10 +26,18 @@ using Listaller.Utils;
 namespace Listaller.IPK {
 
 private class RepoLocal : Repo {
-	private string repo_dir;
+	private string repo_root;
+	private Listaller.Repo.Settings rsettings;
 
 	public RepoLocal (string dir) {
-		repo_dir = dir;
+		repo_root = dir;
+
+		rsettings = new Listaller.Repo.Settings ();
+		rsettings.open (Path.build_filename (repo_root, "reposetting", null));
+	}
+
+	~RepoLocal () {
+		rsettings.save (Path.build_filename (repo_root, "reposetting", null));
 	}
 
 	public bool add_package (string fname) {

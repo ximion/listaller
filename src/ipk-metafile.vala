@@ -84,8 +84,11 @@ private class MetaFile : Object {
 		}
 
 		var file = File.new_for_path (fname);
-		if ( (!overrideExisting) && (file.query_exists ()))
-			return false;
+		if (file.query_exists ())
+			if (!overrideExisting)
+				return false;
+			else
+				file.delete ();
 
 		try {
 			var file_stream = file.create (FileCreateFlags.NONE);
@@ -95,6 +98,7 @@ private class MetaFile : Object {
 			foreach (string line in content) {
 					data_stream.put_string (line + "\n");
 			}
+
 		} catch (Error e) {
 			warning (_("Unable to write meta information! Message: %s").printf (e.message));
 			return false;

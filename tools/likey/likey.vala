@@ -48,6 +48,7 @@ public class LikeyTool : Object {
 		var opt_context = new OptionContext ("- manage Listaller's GPG trusted key database.");
 		opt_context.set_help_enabled (true);
 		opt_context.add_main_entries (options, null);
+
 		if (args.length <= 1) {
 			stderr.printf ("No arguments given!\n");
 			exit_code = 1;

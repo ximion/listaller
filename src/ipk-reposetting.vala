@@ -29,22 +29,36 @@ namespace Listaller.Repo {
 /**
  * Settings of an IPK package repository
  */
-private class Settings : Object {
+internal class Settings : Object {
 	private MetaFile data;
 
 	public Settings () {
 		data = new MetaFile ();
+
+		data.add_value ("Format", "1.0");
 	}
 
 	public bool open (string fname) {
 		return data.open_file (fname);
+	}
+
+	public bool save (string fname) {
+		return data.save_to_file (fname, true);
+	}
+
+	public void set_repo_name (string name) {
+		data.add_value ("Name", name);
+	}
+
+	public string get_repo_name () {
+		return data.get_value ("Name");
 	}
 }
 
 /**
  * Access an IPK-repo content-index
  */
-private class ContentIndex : Object {
+internal class ContentIndex : Object {
 	private MetaFile data;
 
 	public ContentIndex () {

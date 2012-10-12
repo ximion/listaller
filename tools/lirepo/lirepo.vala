@@ -26,10 +26,16 @@ public class LirepoTool : Object {
 	private static string o_repo_dir = "";
 	private static bool o_show_version = false;
 	private static bool o_verbose_mode = false;
+	private static bool o_init = false;
+	private static string? o_add_pkg = null;
 
 	public int exit_code { get; set; }
 
 	private const OptionEntry[] options = {
+		{ "init", 0, 0, OptionArg.NONE, ref o_init,
+		N_("Initialize an empty repository"), null },
+		{ "add", 'a', 0, OptionArg.FILENAME, ref o_add_pkg,
+		N_("Add a package to the repository"), null },
 		{ "version", 'v', 0, OptionArg.NONE, ref o_show_version,
 		N_("Show the application's version"), null },
 		{ "verbose", 0, 0, OptionArg.NONE, ref o_verbose_mode,
@@ -39,9 +45,16 @@ public class LirepoTool : Object {
 
 	public LirepoTool (string[] args) {
 		exit_code = 0;
-		var opt_context = new OptionContext ("- maintain IPK package repositories.");
+		var opt_context = new OptionContext ("- maintain local IPK package repositories.");
 		opt_context.set_help_enabled (true);
 		opt_context.add_main_entries (options, null);
+
+		if (args.length <= 1) {
+			stderr.printf ("No arguments given!\n");
+			exit_code = 1;
+			return;
+		}
+
 		try {
 			opt_context.parse (ref args);
 		} catch (Error e) {
@@ -56,7 +69,6 @@ public class LirepoTool : Object {
 		if (exit_code > 0)
 			return;
 
-		bool done = false;
 		if (o_show_version) {
 			stdout.printf ("lirepo tool, part of Listaller version: %s\n", Listaller.get_full_version_info_str ());
 			return;
@@ -65,6 +77,17 @@ public class LirepoTool : Object {
 		string repodir = o_repo_dir;
 		if (repodir == "")
 			repodir = Environment.get_current_dir ();
+
+		if (o_init) {
+			var repo = new IPK.RepoLocal (repodir);
+		} else if (o_add_pkg != null) {
+			bool ret = false;
+			var repo = new IPK.RepoLocal (repodir);
+
+			ret = repo.add_package (o_add_pkg);
+			if (!ret)
+				exit_code = 4;
+		}
 
 		//! TODO
 	}
