@@ -25,7 +25,7 @@ add_definitions("-DG_LOG_DOMAIN=\"RepoTool\"")
 
 # Listaller repo-tool
 vala_add_executable (lirepo ${LIREPO_SOURCES}
-			PACKAGES ${LISTALLER_BASE_VALA_DEPS} listaller-${LILIBS_VERSION} packagekit-glib2
+			PACKAGES ${LISTALLER_BASE_VALA_DEPS} listaller_internal packagekit-glib2
 			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
 )
 

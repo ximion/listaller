@@ -26,6 +26,9 @@ using Listaller.Utils;
 
 namespace Listaller.Repo {
 
+/**
+ * Settings of an IPK package repository
+ */
 private class Settings : Object {
 	private MetaFile data;
 
@@ -38,10 +41,13 @@ private class Settings : Object {
 	}
 }
 
-private class Contents : Object {
+/**
+ * Access an IPK-repo content-index
+ */
+private class ContentIndex : Object {
 	private MetaFile data;
 
-	public Contents () {
+	public ContentIndex () {
 		data = new MetaFile ();
 	}
 

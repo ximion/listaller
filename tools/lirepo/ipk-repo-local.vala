@@ -25,7 +25,7 @@ using Listaller.Utils;
 
 namespace Listaller.IPK {
 
-internal class RepoLocal : Repo {
+private class RepoLocal : Repo {
 	private string repo_dir;
 
 	public RepoLocal (string dir) {

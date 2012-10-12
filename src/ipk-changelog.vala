@@ -25,10 +25,12 @@ using Listaller.Utils;
 
 namespace Listaller.IPK {
 
+/**
+ * Retrieve information from application changelogs
+ */
 public class Changelog : Object {
 
 	public Changelog () {
-		data = new MetaFile ();
 	}
 
 	public bool open (string fname) {
