@@ -65,8 +65,48 @@ internal class ContentIndex : Object {
 		data = new MetaFile ();
 	}
 
+	private bool load_data_from_archive (Archive.Read ar, Archive.Entry e) {
+		bool ret = false;
+		assert (ar != null);
+
+		size_t entry_size;
+		char *contents;
+
+		entry_size = (size_t) e.size ();
+		contents = (char*)malloc (entry_size);
+		ar.read_data(contents, entry_size);
+
+		ret = data.open_data ((string) contents);
+
+		free (contents);
+
+		return ret;
+	}
+
 	public bool open (string fname) {
-		return data.open_file (fname);
+		bool ret = false;
+		weak Archive.Entry e;
+
+		// Now read all control stuff
+		var ar = new Archive.Read ();
+		// XZ compressed tarballs
+		ar.support_format_tar ();
+		// FIXME: Make compression_xz work
+		ar.support_compression_all ();
+		if (ar.open_filename (fname, 4096) != Archive.Result.OK) {
+			critical ("Unable to open compressed repository content index!");
+			return false;
+		}
+
+		while (ar.next_header (out e) == Archive.Result.OK)
+			if (e.pathname () == "contents") {
+				ret = load_data_from_archive (ar, e);
+			}
+
+		// Close archive
+		ar.close ();
+
+		return ret;
 	}
 }
 

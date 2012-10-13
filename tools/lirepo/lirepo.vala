@@ -79,7 +79,14 @@ public class LirepoTool : Object {
 			repodir = Environment.get_current_dir ();
 
 		if (o_init) {
+			if (FileUtils.test (Path.build_filename (repodir, "reposetting", null), FileTest.EXISTS)) {
+				stderr.printf ("%s\n", _("Could not initialize empty repository: Repo already exists!"));
+				exit_code = 1;
+				return;
+			}
+
 			var repo = new IPK.RepoLocal (repodir);
+			stdout.printf ("%s\n", _("Initialized empty IPK repository."));
 		} else if (o_add_pkg != null) {
 			bool ret = false;
 			var repo = new IPK.RepoLocal (repodir);

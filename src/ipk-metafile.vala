@@ -73,6 +73,22 @@ private class MetaFile : Object {
 		return ret;
 	}
 
+	public bool open_data (string data, bool strip_comments = true) {
+		if (data == null)
+			return false;
+
+		string[] lines = data.split ("\n");
+
+		foreach (string line in lines) {
+				if (strip_comments)
+					if (line.has_prefix ("#"))
+						continue;
+				content.add (line);
+		}
+
+		return true;
+	}
+
 	public bool save_to_file (string fname, bool overrideExisting = false) {
 		if (content.size > 0) {
 			if (content.last ().strip () == "")

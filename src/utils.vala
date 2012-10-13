@@ -332,8 +332,30 @@ private bool move_file (string source, string destination) throws Error {
 		file.delete ();
 	} catch (Error e) {
 		throw e;
-		return false;
 	}
+
+	return true;
+}
+
+private bool copy_file (string source, string destination) throws Error {
+	try {
+		var file = File.new_for_path (source);
+
+		if (!file.query_exists ()) {
+			return false;
+		}
+
+		// Make a copy
+		var dest = File.new_for_path (destination);
+		if (dest.query_exists ()) {
+			//!
+		}
+		file.copy (dest, FileCopyFlags.NONE);
+
+	} catch (Error e) {
+		throw e;
+	}
+
 	return true;
 }
 

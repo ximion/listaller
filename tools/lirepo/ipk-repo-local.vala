@@ -40,7 +40,49 @@ private class RepoLocal : Repo {
 		rsettings.save (Path.build_filename (repo_root, "reposetting", null));
 	}
 
+	private bool add_package_new (string fname) {
+		bool ret;
+		var ipkp = new IPK.Package (fname);
+		ret = ipkp.initialize ();
+		if (!ret)
+			return false;
+
+		AppItem app = ipkp.control.get_application ();
+
+		string app_dir = Path.build_filename (repo_root, app.idname, null);
+
+		ret = create_dir_parents (app_dir);
+		if (!ret) {
+			Report.log_error ("Unable to create app-id directory.");
+			return false;
+		}
+
+		// we do the arch split to prevent invalid archs from being added (this is much more failsafe)
+		string[] archs = ipkp.control.get_architectures ().split ("\n");
+		string archs_str = "";
+		foreach (string s in archs) {
+			if (s == null)
+				continue;
+			s = s.strip ();
+			if (s != "")
+				if (archs_str != "")
+					archs_str = "%s+%s".printf (archs_str, s);
+				else
+					archs_str = s;
+		}
+		string canonical_pkgname = "%s-%s_%s.ipk".printf (app.idname, app.version, archs_str);
+
+		// copy current package to the repo tree
+		ret = copy_file (fname, Path.build_filename (app_dir, canonical_pkgname, null));
+
+		// register package
+		//! TODO
+
+		return false;
+	}
+
 	public bool add_package (string fname) {
+		add_package_new (fname);
 		//! TODO
 		return false;
 	}
