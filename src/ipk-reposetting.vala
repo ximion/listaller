@@ -65,48 +65,80 @@ internal class ContentIndex : Object {
 		data = new MetaFile ();
 	}
 
-	private bool load_data_from_archive (Archive.Read ar, Archive.Entry e) {
-		bool ret = false;
-		assert (ar != null);
-
-		size_t entry_size;
-		char *contents;
-
-		entry_size = (size_t) e.size ();
-		contents = (char*)malloc (entry_size);
-		ar.read_data(contents, entry_size);
-
-		ret = data.open_data ((string) contents);
-
-		free (contents);
-
-		return ret;
-	}
-
 	public bool open (string fname) {
 		bool ret = false;
 		weak Archive.Entry e;
 
+		size_t size;
+		char buff[4096];
+		string cont_str = "";
+
+
 		// Now read all control stuff
 		var ar = new Archive.Read ();
-		// XZ compressed tarballs
-		ar.support_format_tar ();
+		ar.support_format_raw ();
 		// FIXME: Make compression_xz work
 		ar.support_compression_all ();
+
 		if (ar.open_filename (fname, 4096) != Archive.Result.OK) {
 			critical ("Unable to open compressed repository content index!");
 			return false;
 		}
 
 		while (ar.next_header (out e) == Archive.Result.OK)
-			if (e.pathname () == "contents") {
-				ret = load_data_from_archive (ar, e);
+			if (e.pathname () == "data") {
+				for (;;) {
+					size = ar.read_data (buff, 4096);
+					if (size < 0) {
+						// ERROR
+					}
+					if (size == 0)
+						break;
+
+					cont_str = "%s%s".printf (cont_str, (string) buff);
+				}
 			}
+		if (cont_str != "")
+			ret = data.open_data (cont_str);
 
 		// Close archive
 		ar.close ();
 
 		return ret;
+	}
+
+	public bool save (string fname, bool override_existing = true) {
+		string tmp_fname = "%s~%i".printf (fname.substring (0, fname.length - 3), Random.int_range (100, 999));
+
+		var file = File.new_for_path (fname);
+		if (file.query_exists ())
+			if (!override_existing)
+				return false;
+			else
+				file.delete ();
+
+		data.save_to_file (tmp_fname, true);
+
+		// LibArchive is unable to do XZ compression without also creating a tarball.
+		// therefore we have to use the XZ tool.
+		//! FIXME
+
+		string[] argv = { "/usr/bin/xz", tmp_fname, null};
+
+		try {
+			Process.spawn_sync (null, argv, null, 0, null);
+		} catch (Error e) {
+			error ("Unable to compress content-index. Error: %s", e.message);
+			return false;
+		}
+
+		FileUtils.rename ("%s.xz".printf (tmp_fname), fname);
+
+		return true;
+	}
+
+	public void add_application (AppItem app) {
+
 	}
 }
 

@@ -258,6 +258,7 @@ private class Builder : Object {
 			Posix.close (fd);
 		}
 		a.close ();
+
 		return ret;
 	}
 

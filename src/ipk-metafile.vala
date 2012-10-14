@@ -83,10 +83,23 @@ private class MetaFile : Object {
 				if (strip_comments)
 					if (line.has_prefix ("#"))
 						continue;
+				if (line.strip () == "")
+					continue;
+
 				content.add (line);
 		}
 
 		return true;
+	}
+
+	public string get_data () {
+		string out_str = "";
+
+		foreach (string line in content) {
+			out_str = "%s%s\n".printf (out_str, line);
+		}
+
+		return out_str;
 	}
 
 	public bool save_to_file (string fname, bool overrideExisting = false) {
@@ -119,6 +132,7 @@ private class MetaFile : Object {
 			warning (_("Unable to write meta information! Message: %s").printf (e.message));
 			return false;
 		}
+
 		return true;
 	}
 
@@ -126,6 +140,7 @@ private class MetaFile : Object {
 		string s = line.down ().strip ();
 		if ((s == "") || (s.has_prefix ("#")))
 			return true;
+
 		return false;
 	}
 

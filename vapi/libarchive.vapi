@@ -91,7 +91,9 @@ namespace Archive {
 		AR,
 		AR_GNU,
 		AR_BSD,
-		MTREE
+		MTREE,
+		RAW,
+		XAR
 	}
 
 	[CCode (cprefix="ARCHIVE_EXTRACT_", cname="int")]
@@ -145,6 +147,7 @@ namespace Archive {
 		public Result support_compression_uu ();
 		public Result support_compression_xz ();
 		public Result support_format_all ();
+		public Result support_format_raw ();
 		public Result support_format_ar ();
 		public Result support_format_cpio ();
 		public Result support_format_empty ();
