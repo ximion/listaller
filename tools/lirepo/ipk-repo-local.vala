@@ -27,36 +27,25 @@ namespace Listaller.IPK {
 
 private class RepoLocal : Repo {
 	private string repo_root;
-	private Listaller.Repo.Settings rsettings;
+	private string repo_pool_dir;
 
 	public RepoLocal (string dir) {
+		base ();
 		repo_root = dir;
+		repo_pool_dir = Path.build_filename (dir, "pool", null);
 
-		rsettings = new Listaller.Repo.Settings ();
 		rsettings.open (Path.build_filename (repo_root, "reposetting", null));
+		string cindex_fname = Path.build_filename (repo_root, "contents.xz", null);
+		if (FileUtils.test (cindex_fname, FileTest.EXISTS))
+			cindex.open (cindex_fname);
 	}
 
 	~RepoLocal () {
 		rsettings.save (Path.build_filename (repo_root, "reposetting", null));
+		cindex.save (Path.build_filename (repo_root, "contents.xz", null));
 	}
 
-	private bool add_package_new (string fname) {
-		bool ret;
-		var ipkp = new IPK.Package (fname);
-		ret = ipkp.initialize ();
-		if (!ret)
-			return false;
-
-		AppItem app = ipkp.control.get_application ();
-
-		string app_dir = Path.build_filename (repo_root, app.idname, null);
-
-		ret = create_dir_parents (app_dir);
-		if (!ret) {
-			Report.log_error ("Unable to create app-id directory.");
-			return false;
-		}
-
+	private string build_canonical_pkgname (IPK.Package ipkp, AppItem app) {
 		// we do the arch split to prevent invalid archs from being added (this is much more failsafe)
 		string[] archs = ipkp.control.get_architectures ().split ("\n");
 		string archs_str = "";
@@ -72,19 +61,58 @@ private class RepoLocal : Repo {
 		}
 		string canonical_pkgname = "%s-%s_%s.ipk".printf (app.idname, app.version, archs_str);
 
+		return canonical_pkgname;
+	}
+
+	private bool add_package_new (string fname, IPK.Package ipkp, AppItem app) {
+		bool ret;
+		string app_dir = Path.build_filename (repo_pool_dir, app.idname, null);
+
+		ret = create_dir_parents (app_dir);
+		if (!ret) {
+			Report.log_error ("Unable to create app-id directory.");
+			return false;
+		}
+
+
+		string canonical_pkgname = build_canonical_pkgname (ipkp, app);
 		// copy current package to the repo tree
 		ret = copy_file (fname, Path.build_filename (app_dir, canonical_pkgname, null));
+		if (!ret)
+			return false;
 
 		// register package
-		//! TODO
+		cindex.update_application (app);
 
-		return false;
+		return ret;
 	}
 
 	public bool add_package (string fname) {
-		add_package_new (fname);
-		//! TODO
-		return false;
+		bool ret = false;
+		create_dir_parents (repo_pool_dir);
+
+		var ipkp = new IPK.Package (fname);
+		ret = ipkp.initialize ();
+		if (!ret)
+			return false;
+		AppItem app = ipkp.control.get_application ();
+
+		if (cindex.application_exists (app)) {
+			int j = cindex.compare_version (app);
+			if (j == 0) {
+				Report.log_error (_("The package you want to add already exists in the repository."));
+				return false;
+			} else if (j < 0) {
+				Report.log_error (_("A newer version of the package you want to add is already present in the repository."));
+				return false;
+			}
+
+			warning ("TODO: Implement this!");
+		} else {
+			ret = add_package_new (fname, ipkp, app);
+		}
+
+		return ret;
 	}
 
 	public ArrayList<AppItem> get_applist () {

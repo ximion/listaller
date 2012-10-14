@@ -96,7 +96,11 @@ public class LirepoTool : Object {
 				exit_code = 4;
 		}
 
-		//! TODO
+		// show the report
+		var report = Report.get_instance ();
+		if (!report.is_empty ()) {
+			stdout.printf ("%s\n%s\n", _("Repository issue report:"), report.to_string ());
+		}
 	}
 
 	static int main (string[] args) {
@@ -114,10 +118,8 @@ public class LirepoTool : Object {
 		// Run the application
 		main.run ();
 
-		// Display final report
-		Report report = Report.get_instance ();
-		if (!report.is_empty ())
-			stdout.printf ("\nRepository Tool Report:\n%s\n", report.to_string ());
+		// delete report
+		Report.get_instance ().delete ();
 
 		int code = main.exit_code;
 		return code;

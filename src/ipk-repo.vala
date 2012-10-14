@@ -51,9 +51,13 @@ namespace Listaller.IPK {
 /**
  * Basic stuff for Listaller software repos
  */
-internal class Repo : Object {
+internal abstract class Repo : Object {
+	protected Listaller.Repo.ContentIndex cindex;
+	protected Listaller.Repo.Settings rsettings;
 
 	public Repo () {
+		rsettings = new Listaller.Repo.Settings ();
+		cindex = new Listaller.Repo.ContentIndex ();
 	}
 
 	private ArrayList<AppItem> get_applist_from_dir (string dir) {

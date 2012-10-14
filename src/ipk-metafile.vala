@@ -83,11 +83,12 @@ private class MetaFile : Object {
 				if (strip_comments)
 					if (line.has_prefix ("#"))
 						continue;
-				if (line.strip () == "")
-					continue;
 
 				content.add (line);
 		}
+		// kill empty line at the end
+		if (content.last () == "")
+			content.poll_tail ();
 
 		return true;
 	}
@@ -149,6 +150,11 @@ private class MetaFile : Object {
 		var iter = content.list_iterator ();
 		iter.first ();
 
+		if (content.size == 0) {
+			currentBlockId = -1;
+			return false;
+		}
+
 		do {
 			string line = iter.get ();
 			if ((line.down ().has_prefix (field.down () + ":")) &&
@@ -166,6 +172,8 @@ private class MetaFile : Object {
 				return true;
 			}
 		} while (iter.next ());
+		currentBlockId = -1;
+
 		return false;
 	}
 
@@ -173,6 +181,11 @@ private class MetaFile : Object {
 		if (resetIndex)
 			reset ();
 		var iter = content.list_iterator ();
+
+		if (content.size == 0) {
+			currentBlockId = -1;
+			return false;
+		}
 
 		bool start = false;
 		if (currentBlockId < 0)
@@ -204,6 +217,8 @@ private class MetaFile : Object {
 				return true;
 			}
 		} while (iter.next ());
+		currentBlockId = -1;
+
 		return false;
 	}
 

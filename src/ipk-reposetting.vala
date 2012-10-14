@@ -128,7 +128,7 @@ internal class ContentIndex : Object {
 		try {
 			Process.spawn_sync (null, argv, null, 0, null);
 		} catch (Error e) {
-			error ("Unable to compress content-index. Error: %s", e.message);
+			critical ("Unable to compress content-index. Error: %s", e.message);
 			return false;
 		}
 
@@ -137,8 +137,37 @@ internal class ContentIndex : Object {
 		return true;
 	}
 
-	public void add_application (AppItem app) {
+	public void update_application (AppItem app) {
+		data.reset ();
+		data.open_block_by_value ("ID", app.idname);
 
+		data.add_value ("ID", app.idname);
+		data.add_value ("Name", app.full_name);
+		data.add_value ("Version", app.version);
+		if (app.author != null)
+			data.add_value ("Author", app.author);
+		if (app.description != null)
+			data.add_value ("Description", app.description);
+	}
+
+	public bool application_exists (AppItem app) {
+		return data.open_block_by_value ("ID", app.idname);
+	}
+
+	/**
+	* Compare version of app against the one in the package index
+	*
+	* @return 1: new application is newer than app in index
+	*         0: versions are equal
+	*        -1: package in index is newer than new application
+	*/
+	public int compare_version (AppItem app) {
+		data.reset ();
+
+		data.open_block_by_value ("ID", app.idname);
+		string versionB = data.get_value ("Version");
+
+		return compare_versions (app.version, versionB);
 	}
 }
 
