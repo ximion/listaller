@@ -212,7 +212,7 @@ private class Package : MessageObject {
 			return false;
 		}
 
-		ret = touch_dir (dest);
+		ret = create_dir_parents (dest);
 		if (!ret) {
 			// Undo changes & emit error
 			rollback_installation ();

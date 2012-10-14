@@ -51,19 +51,6 @@ private string string_replace (string str, string regex_str, string replace_str)
 	return res;
 }
 
-private bool touch_dir (string dirname) {
-		File d = File.new_for_path (dirname);
-		try {
-			if (!d.query_exists ()) {
-				d.make_directory_with_parents ();
-			}
-		} catch (Error e) {
-			warning ("Unable to create directories! Error: %s".printf (e.message));
-			return false;
-		}
-		return true;
-}
-
 private bool str_empty (string? str) {
 	if ((str == "") || (str == null))
 		return true;
@@ -191,7 +178,7 @@ private string arch_generic (string arch) {
 	return res;
 }
 
-/*
+/**
  * Create directory structure
  */
 private bool create_dir_parents (string dirname) {
@@ -201,9 +188,10 @@ private bool create_dir_parents (string dirname) {
 			d.make_directory_with_parents ();
 		}
 	} catch (Error e) {
-		warning ("Could not create directory: %s", e.message);
+		warning ("Unable to create directories! Error: %s".printf (e.message));
 		return false;
 	}
+
 	return true;
 }
 
