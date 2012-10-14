@@ -27,22 +27,24 @@ namespace Listaller.IPK {
 
 /**
  * A Listaller repo has the following structure:
- * [/]                                      - root
- *  | reposetting                           - basic repository settings (MetaFile format)
- *  | contents.xz                           - contents of this repository (MetaFile format)
- *  | [appid1]                              - directory named like project's application-id (using AppItem appid)
- *  |  \| changelog                         - software changelog
- *  |   | (?)appid1-1.4_amd64+ix86.ipk      - optional: the multi-arch IPK package
- *  |   | appid1-1.4_amd64.ipk              - IPK package to install
- *  |   | (?)appid1.doap                    - optional: application DOAP data (RDF)
- *  |   | [delta]                           - directory with package deltas
- *  |   |  \|
- *  |   |    [amd64]                        - architecture dir
- *  |   |     \| appid-1.0-to-1.4.deltaipk  - deltaIPK packages
- *  |   |      | ...
- *  |   |    [ix86]
- *  |   |    [all]                          - data for all architectures
- *  | [appid2]
+ * [/]                                        - root
+ *  | reposetting                             - basic repository settings (MetaFile format)
+ *  | contents.xz                             - contents of this repository (MetaFile format)
+ *  | [pool]                                  - contains the package data
+ *  |  \| [appid1]                            - directory named like project's application-id (using AppItem appid)
+ *  |   | \| changelog                        - software changelog
+ *  |   |  | (?)appid1-1.4_amd64+ix86.ipk     - optional: the multi-arch IPK package
+ *  |   |  | appid1-1.4_amd64.ipk             - IPK package to install
+ *  |   |  | (?)appid1.doap                   - optional: application DOAP data (RDF)
+ *  |   |  | [delta]                          - directory with package deltas
+ *  |   |  |  \|
+ *  |   |  |    [amd64]                       - architecture dir
+ *  |   |  |     \| appid-1.0-to-1.4.deltaipk - deltaIPK packages
+ *  |   |  |      | ...
+ *  |   |  |    [ix86]
+ *  |   |  |    [all]                         - data for all architectures
+ *  |   | [appid2]
+ *  | [meta]                                  - directory for metadata (icons/AppStream info)
  *    ...
  */
 
