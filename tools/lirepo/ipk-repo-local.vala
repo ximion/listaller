@@ -45,21 +45,8 @@ private class RepoLocal : Repo {
 		cindex.save (Path.build_filename (repo_root, "contents.xz", null));
 	}
 
-	private string build_canonical_pkgname (IPK.Package ipkp, AppItem app) {
-		// we do the arch split to prevent invalid archs from being added (this is much more failsafe)
-		string[] archs = ipkp.control.get_architectures ().split ("\n");
-		string archs_str = "";
-		foreach (string s in archs) {
-			if (s == null)
-				continue;
-			s = s.strip ();
-			if (s != "")
-				if (archs_str != "")
-					archs_str = "%s+%s".printf (archs_str, s);
-				else
-					archs_str = s;
-		}
-		string canonical_pkgname = "%s-%s_%s.ipk".printf (app.idname, app.version, archs_str);
+	private string build_canonical_pkgname (AppItem app, string arch) {
+		string canonical_pkgname = "%s-%s_%s.ipk".printf (app.idname, app.version, arch);
 
 		return canonical_pkgname;
 	}
@@ -74,15 +61,22 @@ private class RepoLocal : Repo {
 			return false;
 		}
 
+		// we do the arch split to prevent invalid archs from being added (this is much more failsafe)
+		string[] archs = ipkp.control.get_architectures ().split ("\n");
+		if (archs.length > 1) {
+			Report.log_error (_("You cannot add multiarch IPK packages to a repository!"));
+			return false;
+		}
+		string arch = archs[0];
 
-		string canonical_pkgname = build_canonical_pkgname (ipkp, app);
+		string canonical_pkgname = build_canonical_pkgname (app, arch);
 		// copy current package to the repo tree
 		ret = copy_file (fname, Path.build_filename (app_dir, canonical_pkgname, null));
 		if (!ret)
 			return false;
 
 		// register package
-		cindex.update_application (app);
+		cindex.update_application (app, arch);
 
 		return ret;
 	}

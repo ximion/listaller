@@ -137,7 +137,7 @@ internal class ContentIndex : Object {
 		return true;
 	}
 
-	public void update_application (AppItem app) {
+	public void update_application (AppItem app, string arch) {
 		data.reset ();
 		data.open_block_by_value ("ID", app.idname);
 
@@ -148,6 +148,13 @@ internal class ContentIndex : Object {
 			data.add_value ("Author", app.author);
 		if (app.description != null)
 			data.add_value ("Description", app.description);
+
+		// update/extend architectures field
+		string current_archs = data.get_value ("Architectures");
+		if (current_archs.index_of (arch) <= 0)
+			current_archs = "%s\n%s".printf (current_archs, arch);
+
+		data.add_value ("Architectures", current_archs);
 	}
 
 	public bool application_exists (AppItem app) {
@@ -168,6 +175,37 @@ internal class ContentIndex : Object {
 		string versionB = data.get_value ("Version");
 
 		return compare_versions (app.version, versionB);
+	}
+
+	public AppItem? get_application (string idname) {
+		data.reset ();
+		if (!data.open_block_by_value ("ID", idname))
+			return null;
+
+		var app = new AppItem.blank ();
+
+		app.idname = data.get_value ("ID");
+		app.full_name = data.get_value ("Name");
+		app.version = data.get_value ("Version");
+		string s = data.get_value ("Author");
+		if (s != "")
+			app.author = s;
+		s = data.get_value ("Description");
+		if (s != "")
+			app.description = s;
+
+		return app;
+	}
+
+	public string? get_registered_archs (AppItem app) {
+		data.reset ();
+		if (!data.open_block_by_value ("ID", app.idname))
+			return null;
+
+		// update/extend architectures field
+		string current_archs = data.get_value ("Architectures");
+
+		return current_archs;
 	}
 }
 
