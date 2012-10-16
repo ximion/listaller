@@ -35,14 +35,11 @@ private class RepoLocal : Repo {
 		repo_pool_dir = Path.build_filename (dir, "pool", null);
 
 		rsettings.open (Path.build_filename (repo_root, "reposetting", null));
-		string cindex_fname = Path.build_filename (repo_root, "contents.xz", null);
-		if (FileUtils.test (cindex_fname, FileTest.EXISTS))
-			cindex.open (cindex_fname);
 	}
 
 	~RepoLocal () {
 		rsettings.save (Path.build_filename (repo_root, "reposetting", null));
-		cindex.save (Path.build_filename (repo_root, "contents.xz", null));
+		save_current_index ();
 	}
 
 	private string build_canonical_pkgname (AppItem app, string arch) {
@@ -51,9 +48,14 @@ private class RepoLocal : Repo {
 		return canonical_pkgname;
 	}
 
-	private bool add_package_new (string fname, IPK.Package ipkp, AppItem app) {
+	/**
+	 * Add a completely new package
+	 */
+	private bool add_package_new (string fname, AppItem app, string arch) {
 		bool ret;
 		string app_dir = Path.build_filename (repo_pool_dir, app.idname, null);
+
+		string canonical_pkgname = build_canonical_pkgname (app, arch);
 
 		ret = create_dir_parents (app_dir);
 		if (!ret) {
@@ -61,15 +63,36 @@ private class RepoLocal : Repo {
 			return false;
 		}
 
-		// we do the arch split to prevent invalid archs from being added (this is much more failsafe)
-		string[] archs = ipkp.control.get_architectures ().split ("\n");
-		if (archs.length > 1) {
-			Report.log_error (_("You cannot add multiarch IPK packages to a repository!"));
+		// copy current package to the repo tree
+		ret = copy_file (fname, Path.build_filename (app_dir, canonical_pkgname, null));
+		if (!ret)
 			return false;
-		}
-		string arch = archs[0];
 
+		// register package
+		cindex.update_application (app, arch);
+
+		return ret;
+	}
+
+	/**
+	 * Update an existing pacjage to a new version
+	 */
+	private bool add_package_existing (string fname, AppItem app, string arch) {
+		bool ret;
+		string app_dir = Path.build_filename (repo_pool_dir, app.idname, null);
+		AppItem appExisting = cindex.get_application (app.idname);
+
+		if (appExisting == null)
+			error ("FATAL: Application was assumed to be present in index, but it was not found!");
+
+		string archExisting = cindex.get_registered_archs (app);
+
+		string canonical_old_pkgname = build_canonical_pkgname (appExisting, arch);
 		string canonical_pkgname = build_canonical_pkgname (app, arch);
+
+		// delete existing package
+		FileUtils.remove (canonical_old_pkgname);
+
 		// copy current package to the repo tree
 		ret = copy_file (fname, Path.build_filename (app_dir, canonical_pkgname, null));
 		if (!ret)
@@ -91,6 +114,19 @@ private class RepoLocal : Repo {
 			return false;
 		AppItem app = ipkp.control.get_application ();
 
+		// we do the arch split to prevent invalid archs from being added (this is much more failsafe)
+		string[] archs = ipkp.control.get_architectures ().split ("\n");
+		if (archs.length > 1) {
+			Report.log_error (_("You cannot add multiarch IPK packages to a repository!"));
+			return false;
+		}
+		string arch = archs[0];
+
+		// save current index, in case there is an unsaved one open
+		// then open arch-specific index
+		save_current_index ();
+		open_index_for_arch (repo_root, arch);
+
 		if (cindex.application_exists (app)) {
 			int j = cindex.compare_version (app);
 			if (j == 0) {
@@ -101,9 +137,10 @@ private class RepoLocal : Repo {
 				return false;
 			}
 
-			warning ("TODO: Implement this!");
+			add_package_existing (fname, app, arch);
+
 		} else {
-			ret = add_package_new (fname, ipkp, app);
+			ret = add_package_new (fname, app, arch);
 		}
 
 		return ret;

@@ -55,15 +55,36 @@ internal abstract class Repo : Object {
 	protected Listaller.Repo.ContentIndex cindex;
 	protected Listaller.Repo.Settings rsettings;
 
+	private string current_cindex_fname;
+
 	public Repo () {
 		rsettings = new Listaller.Repo.Settings ();
 		cindex = new Listaller.Repo.ContentIndex ();
+		current_cindex_fname = "";
 	}
 
 	private ArrayList<AppItem> get_applist_from_dir (string dir) {
 		var appList = new ArrayList<AppItem> ();
 		//! TODO
 		return appList;
+	}
+
+	protected bool open_index_for_arch (string dir, string arch_id) {
+		bool ret = true;
+
+		string cindex_fname = Path.build_filename (dir, "contents_%s.xz".printf (arch_id), null);
+		if (FileUtils.test (cindex_fname, FileTest.EXISTS))
+			ret = cindex.open (cindex_fname);
+		current_cindex_fname = cindex_fname;
+
+		return ret;
+	}
+
+	protected bool save_current_index () {
+		if (current_cindex_fname == "")
+			return true;
+
+		return cindex.save (current_cindex_fname);
 	}
 
 }
