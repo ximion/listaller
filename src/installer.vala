@@ -116,6 +116,16 @@ public class Setup : MessageObject {
 		inst_progress = 0;
 		full_progress = 0;
 
+		// Check if architecture is supported
+		string supportedArchs = ipkp.control.get_architectures ();
+		debug ("Package supported archs: %s\nCurrent machine: %s//%s", supportedArchs, system_machine (), arch_generic (system_machine ()));
+		if ((supportedArchs.index_of (arch_generic (system_machine ())) < 0) &&
+		(supportedArchs.normalize ().down () != "all")) {
+			emit_error (ErrorEnum.WRONG_ARCHITECTURE,
+				_("This package can't be installed on your system architecture (%s)!\nPlease get a package which was built for your machine.").printf (arch_generic (system_machine ())));
+			return false;
+		}
+
 		// Check for high-enough IPK version
 		string ipkSpecVersion = ipkp.control.get_ipk_version ();
 		debug ("Package IPK spec version is '%s', minimum supported version is '%s'.", ipkSpecVersion, IPK.MINIMUM_IPK_SPEC_VERSION);

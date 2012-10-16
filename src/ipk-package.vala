@@ -152,16 +152,6 @@ private class Package : MessageObject {
 						 Path.build_filename (wdir, "dependencies.list", null));
 		}
 
-		// Check if architecture is supported
-		string supportedArchs = ipkc.get_architectures ();
-		debug ("Package supported archs: %s\nCurrent machine: %s//%s", supportedArchs, system_machine (), arch_generic (system_machine ()));
-		if ((supportedArchs.index_of (arch_generic (system_machine ())) < 0) &&
-		    (supportedArchs.normalize ().down () != "all")) {
-			emit_error (ErrorEnum.WRONG_ARCHITECTURE,
-				_("This package can't be installed on your system architecture (%s)!\nPlease get a package which was built for your machine.").printf (arch_generic (system_machine ())));
-			return false;
-		}
-
 		// Set license text, if we have any. (This fubction returns false if file doesn't exists)
 		ipkc.set_license_text_from_file (Path.build_filename (wdir, "license.txt", null));
 
