@@ -69,7 +69,7 @@ private class RepoLocal : Repo {
 			return false;
 
 		// register package
-		cindex.update_application (app, arch);
+		cindex.update_application (app);
 
 		return ret;
 	}
@@ -85,8 +85,6 @@ private class RepoLocal : Repo {
 		if (appExisting == null)
 			error ("FATAL: Application was assumed to be present in index, but it was not found!");
 
-		string archExisting = cindex.get_registered_archs (app);
-
 		string canonical_old_pkgname = build_canonical_pkgname (appExisting, arch);
 		string canonical_pkgname = build_canonical_pkgname (app, arch);
 
@@ -99,7 +97,7 @@ private class RepoLocal : Repo {
 			return false;
 
 		// register package
-		cindex.update_application (app, arch);
+		cindex.update_application (app);
 
 		return ret;
 	}

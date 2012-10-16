@@ -137,7 +137,7 @@ internal class ContentIndex : Object {
 		return true;
 	}
 
-	public void update_application (AppItem app, string arch) {
+	public void update_application (AppItem app) {
 		data.reset ();
 		data.open_block_by_value ("ID", app.idname);
 
@@ -148,13 +148,6 @@ internal class ContentIndex : Object {
 			data.add_value ("Author", app.author);
 		if (app.description != null)
 			data.add_value ("Description", app.description);
-
-		// update/extend architectures field
-		string current_archs = data.get_value ("Architectures");
-		if (current_archs.index_of (arch) <= 0)
-			current_archs = "%s\n%s".printf (current_archs, arch);
-
-		data.add_value ("Architectures", current_archs);
 	}
 
 	public bool application_exists (AppItem app) {
@@ -195,17 +188,6 @@ internal class ContentIndex : Object {
 			app.description = s;
 
 		return app;
-	}
-
-	public string? get_registered_archs (AppItem app) {
-		data.reset ();
-		if (!data.open_block_by_value ("ID", app.idname))
-			return null;
-
-		// update/extend architectures field
-		string current_archs = data.get_value ("Architectures");
-
-		return current_archs;
 	}
 }
 
