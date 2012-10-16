@@ -29,12 +29,13 @@ namespace Listaller.IPK {
  * A Listaller repo has the following structure:
  * [/]                                        - root
  *  | reposetting                             - basic repository settings (MetaFile format)
- *  | contents.xz                             - contents of this repository (MetaFile format)
+ *  | contents_amd64.xz                       - contents of this repository (MetaFile format), arch-specific
+ *  | contents_ix32.xz
  *  | [pool]                                  - contains the package data
  *  |  \| [appid1]                            - directory named like project's application-id (using AppItem appid)
  *  |   | \| changelog                        - software changelog
- *  |   |  | (?)appid1-1.4_amd64+ix86.ipk     - optional: the multi-arch IPK package
  *  |   |  | appid1-1.4_amd64.ipk             - IPK package to install
+ *  |   |  | appid1-1.4_ix32.ipk
  *  |   |  | (?)appid1.doap                   - optional: application DOAP data (RDF)
  *  |   |  | [delta]                          - directory with package deltas
  *  |   |  |  \|
