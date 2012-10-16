@@ -65,7 +65,7 @@ internal class ContentIndex : Object {
 		data = new MetaFile ();
 	}
 
-	public bool open (string fname) {
+	public bool add_file (string fname) {
 		bool ret = false;
 		weak Archive.Entry e;
 
@@ -99,7 +99,7 @@ internal class ContentIndex : Object {
 				}
 			}
 		if (cont_str != "")
-			ret = data.open_data (cont_str);
+			ret = data.add_data (cont_str);
 
 		// Close archive
 		ar.close ();
@@ -188,6 +188,10 @@ internal class ContentIndex : Object {
 			app.description = s;
 
 		return app;
+	}
+
+	public IPK.MetaFile get_data () {
+		return data;
 	}
 }
 

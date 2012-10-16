@@ -52,7 +52,7 @@ namespace Listaller.IPK {
 /**
  * Basic stuff for Listaller software repos
  */
-internal abstract class Repo : Object {
+internal abstract class Repo : MessageObject {
 	protected Listaller.Repo.ContentIndex cindex;
 	protected Listaller.Repo.Settings rsettings;
 
@@ -75,7 +75,7 @@ internal abstract class Repo : Object {
 
 		string cindex_fname = Path.build_filename (dir, "contents_%s.xz".printf (arch_id), null);
 		if (FileUtils.test (cindex_fname, FileTest.EXISTS))
-			ret = cindex.open (cindex_fname);
+			ret = cindex.add_file (cindex_fname);
 		current_cindex_fname = cindex_fname;
 
 		return ret;
@@ -93,10 +93,128 @@ internal abstract class Repo : Object {
 /**
  * A remote package repository
  */
-internal class RepoRemote : Object {
+internal class RepoRemote : Repo {
+	private string repo_url;
+
+	private string tmpdir;
+	private string current_arch;
 
 	public RepoRemote (string url) {
+		repo_url = url;
 
+		current_arch = arch_generic (system_machine ());
+		var conf = new Config ();
+		tmpdir = conf.get_unique_tmp_dir ("repo");
+	}
+
+	private async void do_download (File remote, File local, FileProgressCallback? on_progress) throws Error {
+		try {
+			try {
+				yield remote.find_enclosing_mount_async (0);
+			} catch (IOError e_mount) {
+				// Not mounted...
+			}
+
+			int64 size = 0;
+			try {
+				FileInfo info = yield remote.query_info_async (FileAttribute.STANDARD_SIZE,
+					FileQueryInfoFlags.NONE, 0);
+				size = (int64) info.get_attribute_uint64 (FileAttribute.STANDARD_SIZE);
+			} catch (IOError e_query) {
+				warning ("Cannot query file size, continuing with an unknown size.");
+			}
+
+			FileInputStream input = yield remote.read_async ();
+			FileOutputStream output;
+			int64 downloaded_size = 0;
+
+			if (input.can_seek () && local.query_exists ()) {
+				output = yield local.append_to_async (FileCreateFlags.NONE, 0);
+				output.seek (0, SeekType.END);
+				downloaded_size = output.tell ();
+				input.seek (downloaded_size, SeekType.SET);
+			} else {
+				output = yield local.replace_async (null, false, FileCreateFlags.NONE, 0);
+			}
+
+			uint8[] buf = new uint8[4096];
+
+			ssize_t read = yield input.read_async (buf);
+			while (read != 0) {
+				yield output.write_async (buf[0:read]);
+				if (on_progress != null)
+					on_progress (downloaded_size + read, size);
+				read = yield input.read_async (buf);
+			}
+
+		} catch (Error e) {
+			throw e;
+		}
+	}
+
+	private bool download_file_sync (string remote_url, string local_name) throws Error {
+		File local_file = File.new_for_path (local_name);
+		File remote_file = File.new_for_uri (remote_url);
+
+		MainLoop main_loop = new MainLoop ();
+		Error error = null;
+		do_download (remote_file, local_file, null, (obj, res) => {
+			try {
+				do_download.end (res);
+			} catch (Error e) {
+				error = e;
+			}
+			main_loop.quit();
+		});
+
+		main_loop.run ();
+
+		if (error == null)
+			return true;
+		else
+			throw error;
+
+		return false;
+	}
+
+	public void load_server_index () {
+		string url;
+		string fname;
+		Error error = null;
+
+		fname = Path.build_filename (tmpdir, "contents.xz", null);
+		url = Path.build_filename (repo_url, "contents_%s.xz".printf (current_arch), null);
+		try {
+			download_file_sync (url, fname);
+		} catch (Error e) {
+			error = e;
+		}
+		if (error == null) {
+			cindex.add_file (fname);
+			FileUtils.remove (fname);
+		}
+
+		url = Path.build_filename (repo_url, "contents_all.xz", null);
+		try {
+			download_file_sync (url, fname);
+		} catch (Error e) {
+			if (error != null) {
+				warning ("Unable to fetch repository contents for: '%s'", repo_url);
+
+				//! TODO: Emit Listaller error type!
+
+				return;
+			}
+			error = e;
+		}
+		if (error == null) {
+			cindex.add_file (fname);
+			FileUtils.remove (fname);
+		}
+	}
+
+	public Listaller.Repo.ContentIndex get_index () {
+		return cindex;
 	}
 }
 

@@ -58,8 +58,7 @@ private class MetaFile : Object {
 	}
 
 	public bool open_file (string fname, bool strip_comments = true) {
-		if (content.size != 0)
-			return false;
+		content.clear ();
 
 		return add_data_from_file (fname, strip_comments);
 	}
@@ -73,9 +72,12 @@ private class MetaFile : Object {
 		return ret;
 	}
 
-	public bool open_data (string data, bool strip_comments = true) {
+	public bool add_data (string data, bool strip_comments = true) {
 		if (data == null)
 			return false;
+
+		if (content.size > 0)
+			content.add ("");
 
 		string[] lines = data.split ("\n");
 
