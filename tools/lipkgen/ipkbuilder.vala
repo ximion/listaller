@@ -269,7 +269,7 @@ private class Builder : Object {
 		return res;
 	}
 
-	private bool finalize_ipk () {
+	private bool finalize_ipk (IPK.Control ictrl) {
 		const int buffsize = 8192;
 		char buff[8192];
 		bool ret = true;
@@ -284,8 +284,23 @@ private class Builder : Object {
 		if (outname == "") {
 			string ipkname;
 			// Delete invalid chars from filename
-			string s = delete_chars (appInfo.full_name, {"(", ")", "[", "]", "#", " "});
-			ipkname = s + "-" + appInfo.version.down () + "_install.ipk";
+			string simple_appname = delete_chars (appInfo.full_name, {"(", ")", "[", "]", "#", " "});
+
+			// we do the arch split to prevent invalid archs from being added (this is much more failsafe)
+			string[] archs = ictrl.get_architectures ().split ("\n");
+			string archs_str = "";
+			foreach (string s in archs) {
+				if (s == null)
+					continue;
+				s = s.strip ();
+				if (s != "")
+					if (archs_str != "")
+						archs_str = "%s+%s".printf (archs_str, s);
+					else
+						archs_str = s;
+			}
+
+			ipkname = "%s-%s_%s.ipk".printf (simple_appname, appInfo.version.down (), archs_str);
 			if (outdir == "")
 				outdir = real_path (Path.build_filename (srcdir, "..", "..", null));
 			outname = Path.build_filename (outdir, ipkname, null);
@@ -556,7 +571,7 @@ private class Builder : Object {
 		ret = write_ipk_control_data ();
 		if (!ret)
 			return false;
-		ret = finalize_ipk ();
+		ret = finalize_ipk (ictrl);
 
 		pkbuild_action ("Done.");
 
