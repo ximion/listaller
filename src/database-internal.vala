@@ -508,17 +508,19 @@ private class InternalDB : Object {
 						string fname = fe.fname_installed;
 						if (!shared_db)
 							fname = fold_user_dir (fname);
-						data_stream.put_string (fname + "\n");
+						// store hash and filename in compact form
+						data_stream.put_string ("%s %s\n".printf (fe.hash, fname));
 					}
 				}
 			}
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (_("Unable to write application file list! Message: %s").printf (e.message));
 		}
+
 		return true;
 	}
 
-	public ArrayList<string>? get_application_filelist (AppItem app) throws DatabaseError {
+	public ArrayList<IPK.FileEntry>? get_application_filelist (AppItem app) throws DatabaseError {
 		string metadir = Path.build_filename (regdir, app.idname, null);
 
 		var file = File.new_for_path (Path.build_filename (metadir, "files.list", null));
@@ -526,22 +528,29 @@ private class InternalDB : Object {
 			return null;
 		}
 
-		ArrayList<string> flist = new ArrayList<string> ();
+		var flist = new ArrayList<IPK.FileEntry> ();
 		try {
 			var dis = new DataInputStream (file.read ());
 			string line;
 			// Read lines until end of file (null) is reached
 			while ((line = dis.read_line (null)) != null) {
 				if ((!line.has_prefix ("#")) && (line.strip () != "")) {
-					string fname = line;
+					string[] parts = line.split (" ", 2);
+					string fname = parts[1];
+
 					if (!shared_db)
 						fname = expand_user_dir (fname);
-					flist.add (fname);
+
+					var fe = new IPK.FileEntry ();
+					fe.fname_installed = fname;
+					fe.hash = parts[0];
+					flist.add (fe);
 				}
 			}
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (_("Unable to fetch application file list: %s").printf (e.message));
 		}
+
 		return flist;
 	}
 

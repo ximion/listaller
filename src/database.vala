@@ -221,8 +221,8 @@ private class SoftwareDB : MessageObject {
 		return ret;
 	}
 
-	public ArrayList<string>? get_application_filelist (AppItem app) {
-		ArrayList<string>? res;
+	public ArrayList<IPK.FileEntry>? get_application_filelist (AppItem app) {
+		ArrayList<IPK.FileEntry>? res;
 		try {
 			if (app.shared) {
 				if (shared_db_canbeused (true))
@@ -239,6 +239,7 @@ private class SoftwareDB : MessageObject {
 			emit_dberror (_("Unable to fetch application file list: %s").printf (e.message));
 			res = null;
 		}
+
 		return res;
 	}
 

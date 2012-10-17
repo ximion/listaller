@@ -151,13 +151,14 @@ public class Manager : MessageObject {
 			return false;
 		}
 		// Remove all files which belong to this application
-		ArrayList<string>? files = db.get_application_filelist (app);
+		ArrayList<IPK.FileEntry>? files = db.get_application_filelist (app);
 		if (files == null) {
 			emit_error (ErrorEnum.REMOVAL_FAILED, _("'%s' has no file-list registered. The software database might be broken.").printf (app.full_name));
 			return false;
 		}
 
-		foreach (string fname in files) {
+		foreach (IPK.FileEntry fe in files) {
+			string fname = fe.fname_installed;
 			if (FileUtils.test (fname, FileTest.EXISTS)) {
 				int ret = FileUtils.remove (fname);
 				if (ret != 0) {
@@ -283,15 +284,15 @@ public class Manager : MessageObject {
 		}
 
 		// Remove all files which belong to this application
-		ArrayList<string>? files = db.get_application_filelist (app);
+		ArrayList<IPK.FileEntry>? files = db.get_application_filelist (app);
 		if (files == null) {
 			critical ("Couldn't retrieve file-list for application %s! All apps should have a filelist, this should never happen!", app.idname);
 			return null;
 		}
 
 		string res = "";
-		foreach (string s in files)
-			res += "%s\n".printf (s);
+		foreach (IPK.FileEntry fe in files)
+			res += "%s\n".printf (fe.fname_installed);
 
 		return res;
 	}
