@@ -111,7 +111,9 @@ public class LipaInstaller : LipaModule {
 			print ("%s\n\n", _("License:"));
 			for (int i = 0; i < licenseLines.length; i++) {
 				if (clear_hint) {
-					stdout.printf ("\r                                  \r");
+					// translations might have a different length
+					string tmp = string.nfill (_("<<< Press ENTER to continue! >>>").length, ' ');
+					stdout.printf ("\r  %s  \r".printf (tmp));
 					clear_hint = false;
 				}
 				stdout.printf ("%s\n", licenseLines[i]);
