@@ -178,6 +178,10 @@ private string arch_generic (string arch) {
 	return res;
 }
 
+private string system_machine_generic () {
+	return arch_generic (system_machine ());
+}
+
 /**
  * Create directory structure
  */

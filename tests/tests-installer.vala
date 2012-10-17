@@ -47,7 +47,7 @@ void test_install_package () {
 	bool ret = false;
 	msg ("Installer tests");
 
-	string ipkfilename = Path.build_filename (datadir, "FooBar-1.0_install.ipk", null);
+	string ipkfilename = Path.build_filename (datadir, "FooBar-1.0_%s.ipk".printf (Utils.system_machine_generic ()), null);
 
 	// Excludes stuff like PK dependency installing from testing
 	__unittestmode = true;

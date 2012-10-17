@@ -45,7 +45,7 @@ void test_ipk_package () {
 	bool ret = false;
 	msg ("Package tests");
 
-	string ipkfilename = Path.build_filename (datadir, "FooBar-1.0_install.ipk", null);
+	string ipkfilename = Path.build_filename (datadir, "FooBar-1.0_%s.ipk".printf (Utils.system_machine_generic ()), null);
 	msg ("Loading IPK package %s".printf (ipkfilename));
 
 	IPK.Package ipk = new IPK.Package (ipkfilename);

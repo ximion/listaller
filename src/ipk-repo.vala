@@ -110,7 +110,7 @@ internal class RepoRemote : Repo {
 	public RepoRemote (string url) {
 		repo_url = url;
 
-		current_arch = arch_generic (system_machine ());
+		current_arch = system_machine_generic ();
 		var conf = new Config ();
 		tmpdir = conf.get_unique_tmp_dir ("repo");
 		cindex_indep = new Listaller.Repo.ContentIndex ();

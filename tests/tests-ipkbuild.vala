@@ -70,7 +70,7 @@ void test_lipkgen_build () {
 	msg ("Lipkgen tests");
 
 	// Cleanup
-	FileUtils.remove (Path.build_filename (datadir, "FooBar-1.0_install.ipk", null));
+	FileUtils.remove (Path.build_filename (datadir, "FooBar-1.0_%s.ipk".printf (Utils.system_machine_generic ()), null));
 
 	Environment.set_current_dir (foobar_srcdir);
 	// Now create IPK package for FooBar!
