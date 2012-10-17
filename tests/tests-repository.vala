@@ -41,10 +41,30 @@ void test_repo_error_code_cb (ErrorItem item) {
 	error (item.details);
 }
 
+void print_app_arraylist (ArrayList<AppItem> appList, string label = "") {
+	if (label != "")
+		msg ("Application List [%s]:".printf (label));
+	else
+		msg ("Application List:");
+
+	foreach (AppItem app in appList) {
+		stdout.printf ("%s\n", app.to_string ());
+	}
+	msg ("END");
+}
+
 void test_repo_remote () {
 	var repo_remote = new IPK.RepoRemote ("http://listaller.tenstral.net/stuff/test-repo");
 
 	repo_remote.load_server_index ();
+
+	ArrayList<AppItem> appList = repo_remote.get_available_applications (false);
+	print_app_arraylist (appList, "arch-specific");
+	assert (appList.size >= 1);
+
+	appList = repo_remote.get_available_applications (true);
+	print_app_arraylist (appList, "arch-indep");
+	assert (appList.size >= 0);
 }
 
 int main (string[] args) {

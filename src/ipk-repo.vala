@@ -116,7 +116,7 @@ internal class RepoRemote : Repo {
 		cindex_indep = new Listaller.Repo.ContentIndex ();
 	}
 
-	private async void do_download (File remote, File local, FileProgressCallback? on_progress) throws Error {
+	private async void do_download (File remote, File local, FileProgressCallback? on_progress, bool pedantic = false) throws Error {
 		try {
 			try {
 				yield remote.find_enclosing_mount_async (0);
@@ -130,7 +130,11 @@ internal class RepoRemote : Repo {
 					FileQueryInfoFlags.NONE, 0);
 				size = (int64) info.get_attribute_uint64 (FileAttribute.STANDARD_SIZE);
 			} catch (IOError e_query) {
-				debug ("Cannot query file size, continuing with an unknown size.");
+				if (pedantic) {
+					throw new IOError.INVALID_DATA ("Couldn't download file!\n%s".printf (e_query.message));
+				} else {
+					warning ("Cannot query file size, continuing with an unknown size.");
+				}
 			}
 
 			FileInputStream input = yield remote.read_async ();
@@ -161,13 +165,13 @@ internal class RepoRemote : Repo {
 		}
 	}
 
-	private bool download_file_sync (string remote_url, string local_name) throws Error {
+	private bool download_file_sync (string remote_url, string local_name, bool pedantic = false) throws Error {
 		File local_file = File.new_for_path (local_name);
 		File remote_file = File.new_for_uri (remote_url);
 
 		MainLoop main_loop = new MainLoop ();
 		Error error = null;
-		do_download (remote_file, local_file, null, (obj, res) => {
+		do_download (remote_file, local_file, null, pedantic, (obj, res) => {
 			try {
 				do_download.end (res);
 			} catch (Error e) {
@@ -194,7 +198,7 @@ internal class RepoRemote : Repo {
 		fname = Path.build_filename (tmpdir, "contents.xz", null);
 		url = Path.build_filename (repo_url, "contents_%s.xz".printf (current_arch), null);
 		try {
-			download_file_sync (url, fname);
+			download_file_sync (url, fname, true);
 		} catch (Error e) {
 			error = e;
 		}
@@ -205,7 +209,7 @@ internal class RepoRemote : Repo {
 
 		url = Path.build_filename (repo_url, "contents_all.xz", null);
 		try {
-			download_file_sync (url, fname);
+			download_file_sync (url, fname, true);
 		} catch (Error e) {
 			if (error != null) {
 				warning ("Unable to fetch repository contents for: '%s'", repo_url);
@@ -257,7 +261,14 @@ internal class RepoRemote : Repo {
 	}
 
 	public ArrayList<AppItem> get_available_applications (bool arch_indep) {
-		return null;
+		var appList = new ArrayList<AppItem> ();
+
+		if (arch_indep)
+			appList.add_all (cindex_indep.get_application_list ());
+		else
+			appList.add_all (cindex.get_application_list ());
+
+		return appList;
 	}
 }
 

@@ -171,14 +171,16 @@ internal class ContentIndex : Object {
 		return compare_versions (app.version, versionB);
 	}
 
-	public AppItem? get_application (string idname) {
-		data.reset ();
-		if (!data.open_block_by_value ("ID", idname))
+	private AppItem? read_current_application () {
+		string idname = data.get_value ("ID");
+		if (idname == "") {
+			warning ("No idname for application found!");
 			return null;
+		}
 
 		var app = new AppItem.blank ();
 
-		app.idname = data.get_value ("ID");
+		app.idname = idname;
 		app.full_name = data.get_value ("Name");
 		app.version = data.get_value ("Version");
 		string s = data.get_value ("Author");
@@ -191,8 +193,36 @@ internal class ContentIndex : Object {
 		return app;
 	}
 
+	public AppItem? get_application (string idname) {
+		data.reset ();
+		if (!data.open_block_by_value ("ID", idname))
+			return null;
+
+		AppItem? app = read_current_application ();
+
+		return app;
+	}
+
 	public IPK.MetaFile get_data () {
 		return data;
+	}
+
+	public ArrayList<AppItem> get_application_list () {
+		var appList = new ArrayList<AppItem> ();
+		bool ret;
+
+		ret = data.open_block_first ();
+		if (!ret)
+			return appList;
+
+		AppItem? app;
+		do {
+			app = read_current_application ();
+			if (app != null)
+				appList.add (app);
+		} while (data.block_next ());
+
+		return appList;
 	}
 }
 
