@@ -151,6 +151,7 @@ internal class ContentIndex : Object {
 	}
 
 	public bool application_exists (AppItem app) {
+		data.reset ();
 		return data.open_block_by_value ("ID", app.idname);
 	}
 

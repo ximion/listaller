@@ -88,6 +88,11 @@ internal abstract class Repo : MessageObject {
 		return cindex.save (current_cindex_fname);
 	}
 
+	protected string build_canonical_pkgname (AppItem app, string arch) {
+		string canonical_pkgname = "%s-%s_%s.ipk".printf (app.idname, app.version, arch);
+
+		return canonical_pkgname;
+	}
 }
 
 /**
@@ -99,12 +104,16 @@ internal class RepoRemote : Repo {
 	private string tmpdir;
 	private string current_arch;
 
+	// architecture-independent index
+	private Listaller.Repo.ContentIndex cindex_indep;
+
 	public RepoRemote (string url) {
 		repo_url = url;
 
 		current_arch = arch_generic (system_machine ());
 		var conf = new Config ();
 		tmpdir = conf.get_unique_tmp_dir ("repo");
+		cindex_indep = new Listaller.Repo.ContentIndex ();
 	}
 
 	private async void do_download (File remote, File local, FileProgressCallback? on_progress) throws Error {
@@ -121,7 +130,7 @@ internal class RepoRemote : Repo {
 					FileQueryInfoFlags.NONE, 0);
 				size = (int64) info.get_attribute_uint64 (FileAttribute.STANDARD_SIZE);
 			} catch (IOError e_query) {
-				warning ("Cannot query file size, continuing with an unknown size.");
+				debug ("Cannot query file size, continuing with an unknown size.");
 			}
 
 			FileInputStream input = yield remote.read_async ();
@@ -208,13 +217,47 @@ internal class RepoRemote : Repo {
 			error = e;
 		}
 		if (error == null) {
-			cindex.add_file (fname);
+			cindex_indep.add_file (fname);
 			FileUtils.remove (fname);
 		}
 	}
 
-	public Listaller.Repo.ContentIndex get_index () {
-		return cindex;
+	public string? download_release_package_noindex (AppItem app, string arch) {
+		string pkg_name = build_canonical_pkgname (app, arch);
+
+
+		string url = Path.build_filename (repo_url, "pool", app.idname, pkg_name, null);
+		string fname = Path.build_filename (tmpdir, pkg_name, null);
+
+		try {
+			download_file_sync (url, fname);
+		} catch (Error e) {
+			warning (e.message);
+			//! TODO: Emit Listaller error!
+			return null;
+		}
+
+		return fname;
+	}
+
+	public string? download_release_package (AppItem app) {
+		string arch;
+		// try to find application
+		if (cindex.application_exists (app)) {
+			arch = current_arch;
+		} else if (cindex_indep.application_exists (app)) {
+			arch = "all";
+		} else {
+			//! TODO: Emit Listaller error!
+
+			return null;
+		}
+
+		return download_release_package_noindex (app, arch);
+	}
+
+	public ArrayList<AppItem> get_available_applications (bool arch_indep) {
+		return null;
 	}
 }
 

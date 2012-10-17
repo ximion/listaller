@@ -42,12 +42,6 @@ private class RepoLocal : Repo {
 		save_current_index ();
 	}
 
-	private string build_canonical_pkgname (AppItem app, string arch) {
-		string canonical_pkgname = "%s-%s_%s.ipk".printf (app.idname, app.version, arch);
-
-		return canonical_pkgname;
-	}
-
 	/**
 	 * Add a completely new package
 	 */
