@@ -509,7 +509,10 @@ private class InternalDB : Object {
 						if (!shared_db)
 							fname = fold_user_dir (fname);
 						// store hash and filename in compact form
-						data_stream.put_string ("%s %s\n".printf (fe.hash, fname));
+						string hash = fe.hash;
+						if (hash == "")
+							hash = "NOHASH";
+						data_stream.put_string ("%s %s\n".printf (hash, fname));
 					}
 				}
 			}
