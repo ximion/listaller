@@ -75,6 +75,7 @@ set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
 	ipk-repo.vala
 	ipk-reposetting.vala
 	ipk-changelog.vala
+	repo-list.vala
 	dep-manager.vala
 	dep-installer.vala
 	pkbackend-glue.vala
