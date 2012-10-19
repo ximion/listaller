@@ -1,0 +1,5 @@
+Version: 1.1
+
+AutoFindDeps: true
+InstallModes: Shared
+              Test

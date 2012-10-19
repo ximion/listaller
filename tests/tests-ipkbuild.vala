@@ -28,6 +28,7 @@ string lipkgen_exec;
 string acomp_exec;
 
 string foobar_srcdir;
+string dummy_srcdir;
 string datadir;
 
 void msg (string s) {
@@ -71,10 +72,17 @@ void test_lipkgen_build () {
 
 	// Cleanup
 	FileUtils.remove (Path.build_filename (datadir, "FooBar-1.0_%s.ipk".printf (Utils.system_machine_generic ()), null));
+	FileUtils.remove (Path.build_filename (datadir, "DummyPkg-0.1_all.ipk", null));
 
-	Environment.set_current_dir (foobar_srcdir);
+	string cmd;
+
 	// Now create IPK package for FooBar!
-	string cmd = "%s %s %s %s %s".printf (lipkgen_exec, "-b", "--verbose", "-o", datadir);
+	Environment.set_current_dir (foobar_srcdir);
+	cmd = "%s %s %s %s %s".printf (lipkgen_exec, "-b", "--verbose", "-o", datadir);
+	run_command (cmd);
+	// Now build the dummy IPK!
+	Environment.set_current_dir (dummy_srcdir);
+	cmd = "%s %s %s %s %s".printf (lipkgen_exec, "-b", "--verbose", "-o", datadir);
 	run_command (cmd);
 }
 
@@ -89,8 +97,12 @@ int main (string[] args) {
 
 	datadir = Path.build_filename (datadir, "testdata", null);
 	assert (FileUtils.test (datadir, FileTest.EXISTS) != false);
+
 	foobar_srcdir = real_path (Path.build_filename (datadir, "..", "foobar", null));
 	assert (FileUtils.test (foobar_srcdir, FileTest.EXISTS) != false);
+
+	dummy_srcdir = real_path (Path.build_filename (datadir, "..", "dummy-pack", null));
+	assert (FileUtils.test (dummy_srcdir, FileTest.EXISTS) != false);
 
 	string curdir = Environment.get_current_dir ();
 	Environment.set_current_dir (datadir);

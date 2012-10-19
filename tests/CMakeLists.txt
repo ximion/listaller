@@ -67,7 +67,9 @@ vala_add_executable (li-test-ipk ${LIUNITTEST_SOURCES} tests-ipk.vala
 )
 add_test(ipk-test li-test-ipk ${CMAKE_CURRENT_SOURCE_DIR})
 
-if(TOOLS)
+# NOTE: lipkgen is part of LiTools, but it is essential for other tests to complete, so we don't exclude
+# it here and instead depend on it. People who want to run tests need to be aware that this is intended
+# behaviour.
 # Lipkgen tests
 vala_add_executable (li-test-ipkbuild ${LIUNITTEST_SOURCES} tests-ipkbuild.vala
 				BASE_DIR ${lisrc}
@@ -78,7 +80,7 @@ add_test(ipkbuild-test li-test-ipkbuild ${CMAKE_CURRENT_SOURCE_DIR}
 	${CMAKE_BINARY_DIR}/tools/appcompile/appcompile
 	${CMAKE_BINARY_DIR}/tools/lipkgen/lipkgen
 )
-endif(TOOLS)
+add_dependencies(li-test-ipkbuild lipkgen appcompile)
 
 # IPK installer tests
 vala_add_executable (li-test-installer ${LIUNITTEST_SOURCES} tests-installer.vala

@@ -1,0 +1,8 @@
+# IPK file list
+
+:: %INST%
+../testdata/xfile1.bin
+test.catalog
+zero-byte.rpm
+:: %APP%
+../foobar/foobar.desktop
