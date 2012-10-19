@@ -108,12 +108,15 @@ public class LipaInstaller : LipaModule {
 
 		bool clear_hint = false;
 		if (licenseLines.length > 1) {
+			// translations might have a different length
+			string clear_line = string.nfill (_("<<< Press ENTER to continue! >>>").length, ' ');
+			clear_line = "\r  %s  \r".printf (clear_line);
+
 			print ("%s\n\n", _("License:"));
 			for (int i = 0; i < licenseLines.length; i++) {
 				if (clear_hint) {
-					// translations might have a different length
-					string tmp = string.nfill (_("<<< Press ENTER to continue! >>>").length, ' ');
-					stdout.printf ("\r  %s  \r".printf (tmp));
+					// clear the "press-enter"-link
+					stdout.printf (clear_line);
 					clear_hint = false;
 				}
 				stdout.printf ("%s\n", licenseLines[i]);
