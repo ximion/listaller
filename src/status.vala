@@ -206,4 +206,17 @@ public class ProgressItem : Object {
 	}
 }
 
+/**
+ * Return type describing a software update
+ */
+public class UpdateItem : Object {
+	public AppItem old_app { get; internal set; }
+	public AppItem new_app { get; internal set; }
+
+	public IPK.Changelog changelog { get; internal set; }
+
+	public UpdateItem () {
+	}
+}
+
 } // End of namespace: Listaller

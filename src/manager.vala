@@ -353,8 +353,6 @@ public class Manager : MessageObject {
 		return ret;
 	}
 
-
-
 }
 
 } // End of namespace
