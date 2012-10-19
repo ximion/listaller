@@ -94,6 +94,7 @@ private class Builder : Object {
 		const int buffsize = 8192;
 		char buff[8192];
 		bool ret = true;
+		int ret_v = 0;
 		if ((arch == null) || (arch == "")) {
 			arch = "all";
 		}
@@ -155,8 +156,8 @@ private class Builder : Object {
 
 			// Fetch file details
 			Posix.Stat st;
-			Posix.stat (fname_orig, out st);
-			if (st.st_size <= 0) {
+			ret_v = Posix.stat (fname_orig, out st);
+			if (ret_v != 0) {
 				debug ("File %s not found.", fname_orig);
 				ret = false;
 				break;
