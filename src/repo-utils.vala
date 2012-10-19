@@ -1,4 +1,4 @@
-/* ipk-reposetting.vala - Classes defining special files used in Listaller's IPK repositories
+/* repo-utils.vala - Classes defining special files used in Listaller's IPK repositories
  *
  * Copyright (C) 2012 Matthias Klumpp <matthias@tenstral.net>
  *
@@ -56,16 +56,16 @@ internal class Settings : Object {
 }
 
 /**
- * Access an IPK-repo content-index
+ * Abstract class for access to application-content files
  */
-internal class ContentIndex : Object {
-	private MetaFile data;
+internal abstract class AppContents : Object {
+	protected MetaFile data;
 
-	public ContentIndex () {
+	public AppContents () {
 		data = new MetaFile ();
 	}
 
-	public bool add_file (string fname) {
+	public bool add_file_compressed (string fname) {
 		bool ret = false;
 		weak Archive.Entry e;
 
@@ -107,7 +107,7 @@ internal class ContentIndex : Object {
 		return ret;
 	}
 
-	public bool save (string fname, bool override_existing = true) {
+	public bool save_compressed (string fname, bool override_existing = true) {
 		string tmp_fname = "%s~%i".printf (fname.substring (0, fname.length - 3), Random.int_range (100, 999));
 
 		var file = File.new_for_path (fname);
@@ -137,17 +137,12 @@ internal class ContentIndex : Object {
 		return true;
 	}
 
-	public void update_application (AppItem app) {
-		data.reset ();
-		data.open_block_by_value ("ID", app.idname);
+	public bool open_file (string fname) {
+		return data.open_file (fname);
+	}
 
-		data.add_value ("ID", app.idname);
-		data.add_value ("Name", app.full_name);
-		data.add_value ("Version", app.version);
-		if (app.author != null)
-			data.add_value ("Author", app.author);
-		if (app.description != null)
-			data.add_value ("Description", app.description);
+	public bool save_to_file (string fname, bool override_existing = false) {
+		return data.save_to_file (fname, override_existing);
 	}
 
 	public bool application_exists (AppItem app) {
@@ -223,6 +218,56 @@ internal class ContentIndex : Object {
 		} while (data.block_next ());
 
 		return appList;
+	}
+}
+
+/**
+ * Access an IPK-repo content-index
+ */
+internal class ContentIndex : AppContents {
+	private MetaFile data;
+
+	public ContentIndex () {
+		base ();
+	}
+
+	public void update_application (AppItem app) {
+		data.reset ();
+		data.open_block_by_value ("ID", app.idname);
+
+		data.add_value ("ID", app.idname);
+		data.add_value ("Name", app.full_name);
+		data.add_value ("Version", app.version);
+		if (app.author != null)
+			data.add_value ("Author", app.author);
+		if (app.description != null)
+			data.add_value ("Description", app.description);
+	}
+}
+
+/**
+ * Access Listaller's repository cache
+ */
+private class ContentCache : AppContents {
+
+	public ContentCache () {
+		base ();
+	}
+
+	public void update_application (AppItem app, string arch, string origin) {
+		data.reset ();
+		data.open_block_by_value ("ID", app.idname);
+
+		data.add_value ("ID", app.idname);
+		data.add_value ("Name", app.full_name);
+		data.add_value ("Version", app.version);
+		if (app.author != null)
+			data.add_value ("Author", app.author);
+		if (app.description != null)
+			data.add_value ("Description", app.description);
+
+		data.add_value ("Architecture", arch);
+		data.add_value ("Origin", origin);
 	}
 }
 

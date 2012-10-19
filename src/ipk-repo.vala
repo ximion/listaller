@@ -75,7 +75,7 @@ internal abstract class Repo : MessageObject {
 
 		string cindex_fname = Path.build_filename (dir, "contents_%s.xz".printf (arch_id), null);
 		if (FileUtils.test (cindex_fname, FileTest.EXISTS))
-			ret = cindex.add_file (cindex_fname);
+			ret = cindex.add_file_compressed (cindex_fname);
 		current_cindex_fname = cindex_fname;
 
 		return ret;
@@ -85,7 +85,7 @@ internal abstract class Repo : MessageObject {
 		if (current_cindex_fname == "")
 			return true;
 
-		return cindex.save (current_cindex_fname);
+		return cindex.save_compressed (current_cindex_fname);
 	}
 
 	protected string build_canonical_pkgname (AppItem app, string arch) {
@@ -106,6 +106,15 @@ internal class RepoRemote : Repo {
 
 	// architecture-independent index
 	private Listaller.Repo.ContentIndex cindex_indep;
+
+	public string url {
+		get {
+			return repo_url;
+		}
+		set {
+			repo_url = value;
+		}
+	}
 
 	public RepoRemote (string url) {
 		repo_url = url;
@@ -169,6 +178,8 @@ internal class RepoRemote : Repo {
 		File local_file = File.new_for_path (local_name);
 		File remote_file = File.new_for_uri (remote_url);
 
+		debug (local_name);
+		debug (remote_url);
 		MainLoop main_loop = new MainLoop ();
 		Error error = null;
 		do_download (remote_file, local_file, null, pedantic, (obj, res) => {
@@ -203,7 +214,7 @@ internal class RepoRemote : Repo {
 			error = e;
 		}
 		if (error == null) {
-			cindex.add_file (fname);
+			cindex.add_file_compressed (fname);
 			FileUtils.remove (fname);
 		}
 
@@ -212,7 +223,11 @@ internal class RepoRemote : Repo {
 			download_file_sync (url, fname, true);
 		} catch (Error e) {
 			if (error != null) {
-				warning ("Unable to fetch repository contents for: '%s'", repo_url);
+				string err_msg = e.message;
+				if (err_msg != error.message)
+					err_msg = "%s\n%s".printf (err_msg, error.message);
+
+				warning ("Unable to fetch repository contents for: '%s'\nError: %s", repo_url, err_msg);
 
 				//! TODO: Emit Listaller error type!
 
@@ -221,7 +236,7 @@ internal class RepoRemote : Repo {
 			error = e;
 		}
 		if (error == null) {
-			cindex_indep.add_file (fname);
+			cindex_indep.add_file_compressed (fname);
 			FileUtils.remove (fname);
 		}
 	}

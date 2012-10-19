@@ -1,4 +1,4 @@
-/* repo-list.vala - Access Listaller repository lists
+/* repo-list.vala -- Access Listaller repository lists
  *
  * Copyright (C) 2012 Matthias Klumpp <matthias@tenstral.net>
  *
@@ -50,6 +50,12 @@ private class ListFile : Object {
 			content = null;
 			return false;
 		}
+		if (content.size <= 0) {
+			content.add ("# Listaller software repositories");
+			content.add ("#");
+			content.add ("");
+		}
+
 		return true;
 	}
 
@@ -57,25 +63,6 @@ private class ListFile : Object {
 		content.clear ();
 
 		return add_data_from_file (fname);
-	}
-
-	public bool open_file_add_data (string fname) {
-		content.add ("");
-		var ret = add_data_from_file (fname);
-		if (!ret)
-			content.remove_at (content.size);
-
-		return ret;
-	}
-
-	public string get_data () {
-		string out_str = "";
-
-		foreach (string line in content) {
-			out_str = "%s%s\n".printf (out_str, line);
-		}
-
-		return out_str;
 	}
 
 	public bool save_to_file (string fname, bool overrideExisting = false) {
@@ -122,6 +109,23 @@ private class ListFile : Object {
 
 	public void clear () {
 		content.clear ();
+	}
+
+	public string[] get_repo_urls () {
+		string[] res = {};
+
+		foreach (string s in content) {
+			if (!is_empty (s))
+				res += s;
+		}
+
+		return res;
+	}
+
+	public void add_repo (string hint, string url) {
+		content.add ("# %s".printf (hint));
+		content.add (url);
+		content.add ("");
 	}
 
 }

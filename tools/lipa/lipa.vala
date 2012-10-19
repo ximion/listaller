@@ -41,6 +41,8 @@ public class LipaTool : Object {
 	private static bool o_mode_list = false;
 	private static bool o_mode_list__all = false;
 
+	private static bool o_mode_refresh = false;
+
 	private string[] args;
 
 	private static LipaModule lipa;
@@ -60,6 +62,8 @@ public class LipaTool : Object {
 		N_("List installed Listaller applications"), null },
 		{ "all", 0, 0, OptionArg.NONE, ref o_mode_list__all,
 		N_("List all installed applications"), null },
+		{ "refresh-repos", 0, 0, OptionArg.NONE, ref o_mode_refresh,
+		N_("Refresh repository application cache"), null },
 		{ null }
 	};
 
@@ -150,6 +154,11 @@ public class LipaTool : Object {
 			lipa = lipaManager;
 
 			lipaManager.list_applications (o_mode_list__all);
+		} if (o_mode_refresh) {
+			var lipaManager = new LipaManager ();
+			lipa = lipaManager;
+
+			lipaManager.refresh_cache ();
 		} else {
 			print_nocommand_msg ();
 			exit_code = 0;

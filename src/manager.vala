@@ -63,6 +63,10 @@ public class Manager : MessageObject {
 		status_changed (item);
 	}
 
+	private bool is_shared () {
+		return ssettings.current_mode == IPK.InstallMode.SHARED;
+	}
+
 	private bool init_db (out SoftwareDB sdb, bool writeable = true) {
 		SoftwareDB db = new SoftwareDB (ssettings, true);
 		// Connect the database events with this application manager
@@ -334,10 +338,22 @@ public class Manager : MessageObject {
 		return paths;
 	}
 
-	public bool scan_applications () {
-		//TODO: Scan for 3rd-party installed apps
-		return true;
+	public bool refresh_repository_cache () {
+		bool ret = false;
+		if (!is_shared ())
+			return false;
+
+		if (is_root ()) {
+			var repoMgr = new Repo.Manager ();
+			ret = repoMgr.refresh_cache ();
+		} else {
+			//! TODO: Call PackageKit
+		}
+
+		return ret;
 	}
+
+
 
 }
 

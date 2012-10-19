@@ -72,25 +72,25 @@ pk_plugin_skip_native_backend (PkPlugin *plugin)
 }
 
 /**
- * pk_plugin_listaller_scan_applications:
+ * pk_plugin_listaller_refresh_repos:
  *
- * Updates the current application database
+ * Updates the current application caches
  *
  * Return value: True if successful
  */
 gboolean
-pk_plugin_listaller_scan_applications (PkPlugin *plugin)
+pk_plugin_listaller_refresh_repos (PkPlugin *plugin)
 {
 	gboolean res;
 
 	/* run it */
-	res = listaller_manager_scan_applications (plugin->priv->mgr);
+	res = listaller_manager_refresh_repository_cache (plugin->priv->mgr);
 
-	/* print warning if scan fails */
+	/* print warning if refresh fails */
 	if (!res) {
-		g_warning ("listaller: unable to update application database.");
+		g_warning ("listaller: unable to update application data from repositories.");
 	} else {
-		g_debug ("listaller: application database update finished.");
+		g_debug ("listaller: application cache update finished.");
 	}
 
 	return res;
@@ -704,22 +704,32 @@ out:
 }
 
 /**
- * pk_plugin_transaction_finished_end:
+ * pk_plugin_transaction_finished_results:
  *
- * Hook for the end of a PkTransaction
+ * Hook for the end (results) of a PkTransaction
  */
 void
-pk_plugin_transaction_finished_end (PkPlugin *plugin,
+pk_plugin_transaction_finished_results (PkPlugin *plugin,
 				    PkTransaction *transaction)
 {
 	PkRoleEnum role;
 
+	/* skip simulate actions */
+	if (pk_bitfield_contain (pk_transaction_get_transaction_flags (transaction),
+				 PK_TRANSACTION_FLAG_ENUM_SIMULATE)) {
+		return;
+	}
+
+	/* skip only-download */
+	if (pk_bitfield_contain (pk_transaction_get_transaction_flags (transaction),
+				 PK_TRANSACTION_FLAG_ENUM_ONLY_DOWNLOAD)) {
+		return;
+	}
+
 	/* update application databases */
 	role = pk_transaction_get_role (transaction);
-	if (role == PK_ROLE_ENUM_INSTALL_FILES ||
-	    role == PK_ROLE_ENUM_REMOVE_PACKAGES ||
-	    role == PK_ROLE_ENUM_REFRESH_CACHE) {
-		pk_plugin_listaller_scan_applications (plugin);
+	if (role == PK_ROLE_ENUM_REFRESH_CACHE) {
+		pk_plugin_listaller_refresh_repos (plugin);
 	}
 }
 

@@ -130,6 +130,10 @@ public class LipaManager : LipaModule {
 		show_progress = true;
 	}
 
+	public void refresh_cache () {
+		mgr.refresh_repository_cache ();
+	}
+
 	public override void terminate_action () {
 		if (mgr != null) {
 			critical ("Please don't kill the application, it could damage installed applications and produce unexpected behavior!");

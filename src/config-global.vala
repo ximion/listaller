@@ -94,6 +94,12 @@ internal class Config : Object {
 		return Path.build_filename (suworkdir, "db", null);
 	}
 
+	public string shared_repo_cache_dir () {
+		string dir = Path.build_filename (suworkdir, "repo", null);
+		Utils.create_dir_parents (dir);
+		return dir;
+	}
+
 	public string data_dir () {
 		return datadir;
 	}
