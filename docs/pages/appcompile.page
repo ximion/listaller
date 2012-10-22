@@ -1,42 +1,44 @@
 <?xml version="1.0"?>
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="appcompile">
-<info>
-    <link type="topic" xref="packaging"/>
+  <info>
+    <link type="topic" xref="packaging" />
+    
     <credit type="author">
-        <name>Matthias Klumpp</name>
-        <email>matthias@tenstral.net</email>
-        <years>2012</years>
+      <name>Matthias Klumpp</name>
+      <email>matthias@tenstral.net</email>
+      <years>2012</years>
     </credit>
-
-    <desc>Appcompile is a helper program to build applications from source-code.
-    It will automatically detect the build-system, configure it (applying the necessary
-    flags and custom ones), then build the applicatio and install it into a user-defined directory,
-    so Listaller can use the binaries to generate an IPK package.</desc>
-</info>
-
-<title>Appcompile</title>
-
-<section id="whatis">
-<title>What is Appcompile?</title>
-
-       <p>Appcompile is a helper program to build applications from source-code.
-       It will automatically detect the build-system, configure it (applying the necessary flags and custom ones),
-       then build the applicatio and install it into a user-defined directory, so Listaller can use the binaries to
-       generate an IPK package.</p>
-
-       <p>Using Appcompile is completely optional, it is not required to build IPK packages. However, in many cases it
-       might simplify build-scripts a lot.</p>
-
-
-</section>
-
-<section id="howto">
-<title>How to use Appcompile?</title>
-
-       <note style="warning">
-	       <p>The documentation is not yet complete. You may want to help extending it.</p>
-       </note>
-
-</section>
-
+    
+    <desc>
+      Appcompile is a helper program to build applications from source-code.
+      It will automatically detect the build-system, configure it (applying the necessary
+      flags and custom ones), then build the applicatio and install it into a user-defined directory,
+      so Listaller can use the binaries to generate an IPK package.
+    </desc>
+  </info>
+  
+  <title>Appcompile</title>
+  <section id="whatis">
+    <title>What is Appcompile?</title>
+    
+    <p>
+      Appcompile is a helper program to build applications from source-code.
+      It will automatically detect the build-system, configure it (applying the necessary flags and custom ones),
+      then build the applicatio and install it into a user-defined directory, so Listaller can use the binaries to
+      generate an IPK package.
+    </p>
+    <p>
+      Using Appcompile is completely optional, it is not required to build IPK packages. However, in many cases it
+      might simplify build-scripts a lot.
+    </p>
+    
+  </section>
+  <section id="howto">
+    <title>How to use Appcompile?</title>
+    
+    <note style="warning">
+      <p>The documentation is not yet complete. You may want to help extending it.</p>
+    </note>
+    
+  </section>
 </page>

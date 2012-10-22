@@ -58,10 +58,10 @@ internal class Settings : Object {
 /**
  * Abstract class for access to application-content files
  */
-internal abstract class AppContents : Object {
+internal abstract class ContentFile : Object {
 	protected MetaFile data;
 
-	public AppContents () {
+	public ContentFile () {
 		data = new MetaFile ();
 	}
 
@@ -224,7 +224,7 @@ internal abstract class AppContents : Object {
 /**
  * Access an IPK-repo content-index
  */
-internal class ContentIndex : AppContents {
+internal class ContentIndex : ContentFile {
 	private MetaFile data;
 
 	public ContentIndex () {
@@ -248,7 +248,7 @@ internal class ContentIndex : AppContents {
 /**
  * Access Listaller's repository cache
  */
-private class ContentCache : AppContents {
+private class ContentCache : ContentFile {
 
 	public ContentCache () {
 		base ();

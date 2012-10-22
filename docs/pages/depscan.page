@@ -1,42 +1,43 @@
 <?xml version="1.0"?>
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="depscan">
-<info>
-    <link type="topic" xref="packaging"/>
+  <info>
+    <link type="topic" xref="packaging" />
+    
     <credit type="author">
-        <name>Matthias Klumpp</name>
-        <email>matthias@tenstral.net</email>
-        <years>2012</years>
+      <name>Matthias Klumpp</name>
+      <email>matthias@tenstral.net</email>
+      <years>2012</years>
     </credit>
-
-    <desc>Depscan scans ELF executables' library dependencies and generates a nice report for you.
-    This makes it easier to find out what your software's, dependencies are. Listaller uses this tool at
-    build-time to generate the automatic dependency-list, but you may use it as well to find out why an application
-    has dependency X.</desc>
-</info>
-
-<title>Depscan</title>
-
-<section id="whatis">
-<title>What is Depscan?</title>
-
-       <p>Depscan scans ELF executables library dependencies and generates a nice dependency report for you.
-       This makes it easier to find out what your software's, dependencies are.</p>
-
-       <p>Listaller uses this tool at build-time to generate the automatic dependency-list,
-       but you may use it as well to find out why an application has dependency X.</p>
-
-       <p>Depscan will later be extended to support dependency-detection for other languages, e.g. Python/Ruby too.</p>
-
-
-</section>
-
-<section id="howto">
-<title>How to use Depscan?</title>
-
-       <note style="warning">
-	       <p>The documentation is not yet complete. You may want to help extending it.</p>
-       </note>
-
-</section>
-
+    
+    <desc>
+      Depscan scans ELF executables' library dependencies and generates a nice report for you.
+      This makes it easier to find out what your software's, dependencies are. Listaller uses this tool at
+      build-time to generate the automatic dependency-list, but you may use it as well to find out why an application
+      has dependency X.
+    </desc>
+  </info>
+  
+  <title>Depscan</title>
+  <section id="whatis">
+    <title>What is Depscan?</title>
+    
+    <p>
+      Depscan scans ELF executables library dependencies and generates a nice dependency report for you.
+      This makes it easier to find out what your software's, dependencies are.
+    </p>
+    <p>
+      Listaller uses this tool at build-time to generate the automatic dependency-list,
+      but you may use it as well to find out why an application has dependency X.
+    </p>
+    <p>Depscan will later be extended to support dependency-detection for other languages, e.g. Python/Ruby too.</p>
+    
+  </section>
+  <section id="howto">
+    <title>How to use Depscan?</title>
+    
+    <note style="warning">
+      <p>The documentation is not yet complete. You may want to help extending it.</p>
+    </note>
+    
+  </section>
 </page>

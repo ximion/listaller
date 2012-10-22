@@ -1,41 +1,46 @@
 <?xml version="1.0"?>
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="architecture-naming">
-<info>
-	<link type="topic" xref="specifications"/>
-
-	<credit type="author">
-		<name>Matthias Klumpp</name>
-		<email>matthias@tenstral.net</email>
-		<years>2012</years>
-	</credit>
-
-	<desc>How Listaller treats architecture names</desc>
-</info>
-
-<title>Architecture Naming</title>
-
-<section id="why">
-<title>What are architecture names?</title>
-
-       <p>Architecture names are strings like "x86_64" or "i686" which define the system-architecture of the current computer.</p>
-
-       <p>Compiled programs can only run on the architecture they are built for. Therefore Listaller packages also need to be arch-specific.
-       Unfortunately, there are quite a few architecture names around, e.g. for 64bit-PCs the vendor-neutral name "x86_64" or "amd64".
-       For historical reasons, Listaller uses the naming conventions described below.</p>
-
-</section>
-
-<section id="archnames">
-<title>Architecture names</title>
-
-       <p>Listaller uses the output string of the <cmd>uname -m</cmd> command for nearly all architectures, except for 32bit-PC and 64bit-PC architectures.</p>
-
-       <p>For AMD's 64bit architecture, with the name "x86_64" or "amd64", we use the vendor-name <em>amd64</em>. Listaller will only use and recognize this name.</p>
-
-       <p>For Intel's x86 architecture (names like "i386, "i486", "i686", ...) we use the name <em>ix86</em>. No other names are processed.</p>
-
-       <p>For any other architecture, no special name changes are applied and we use the name which is exposed by the Linux kernel.</p>
-
-</section>
-
+  <info>
+    <link type="topic" xref="specifications" />
+    
+    <credit type="author">
+      <name>Matthias Klumpp</name>
+      <email>matthias@tenstral.net</email>
+      <years>2012</years>
+    </credit>
+    <desc>How Listaller treats architecture names</desc>
+    
+  </info>
+  <title>Architecture Naming</title>
+  <section id="why">
+    <title>What are architecture names?</title>
+    
+    <p>Architecture names are strings like "x86_64" or "i686" which define the system-architecture of the current computer.</p>
+    <p>
+      Compiled programs can only run on the architecture they are built for. Therefore Listaller packages also need to be arch-specific.
+      Unfortunately, there are quite a few architecture names around, e.g. for 64bit-PCs the vendor-neutral name "x86_64" or "amd64".
+      For historical reasons, Listaller uses the naming conventions described below.
+    </p>
+    
+  </section>
+  
+  <section id="archnames">
+    <title>Architecture names</title>
+    
+    <p>
+      Listaller uses the output string of the
+      <cmd>uname -m</cmd>
+      command for nearly all architectures, except for 32bit-PC and 64bit-PC architectures.
+    </p>
+    <p>
+      For AMD's 64bit architecture, with the name "x86_64" or "amd64", we use the vendor-name
+      <em>amd64</em>. Listaller will only use and recognize this name.
+    </p>
+    <p>
+      For Intel's x86 architecture (names like "i386, "i486", "i686", ...) we use the name
+      <em>ix86</em>. No other names are processed.
+    </p>
+    <p>For any other architecture, no special name changes are applied and we use the name which is exposed by the Linux kernel.</p>
+  
+  </section>
 </page>
