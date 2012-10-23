@@ -47,8 +47,11 @@ namespace Listaller.IPK {
  * |   |   |-- [appid2]
  * |   |-- [meta]                                    - directory for metadata (icons/AppStream info)
  * |-- [deps]
- * |   |-- [feeds]
- * |   |-- [data]
+ * |   |-- [feeds]                                   - contains the dependency feed files
+ * |   |-- [data]                                    - contains dependency-data (if necessary)
+ * |   |   |-- [ix32]
+ * |   |   |-- [amd64]
+ * |   |   |-- [all]
  */
 
 /**
@@ -247,7 +250,7 @@ internal class RepoRemote : Repo {
 		string pkg_name = build_canonical_pkgname (app, arch);
 
 
-		string url = Path.build_filename (repo_url, "pool", app.idname, pkg_name, null);
+		string url = Path.build_filename (repo_url, "apps", "pool", app.idname, pkg_name, null);
 		string fname = Path.build_filename (tmpdir, pkg_name, null);
 
 		try {

@@ -147,8 +147,9 @@ private class MetaFile : Object {
 		return false;
 	}
 
-	public bool open_block_by_value (string field, string value) {
-		reset ();
+	public bool open_block_by_value (string field, string value, bool reset_index = true) {
+		if (reset_index)
+			reset ();
 		var iter = content.list_iterator ();
 		iter.first ();
 
@@ -179,8 +180,8 @@ private class MetaFile : Object {
 		return false;
 	}
 
-	public bool open_block_by_field (string field, bool resetIndex = false) {
-		if (resetIndex)
+	public bool open_block_by_field (string field, bool reset_index = false) {
+		if (reset_index)
 			reset ();
 		var iter = content.list_iterator ();
 

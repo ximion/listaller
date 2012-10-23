@@ -145,9 +145,31 @@ internal abstract class ContentFile : Object {
 		return data.save_to_file (fname, override_existing);
 	}
 
-	public bool application_exists (AppItem app) {
+	protected bool open_data_block_for_application (AppItem app) {
 		data.reset ();
-		return data.open_block_by_value ("ID", app.idname);
+		bool ret;
+
+		ret = data.open_block_by_value ("ID", app.idname);
+		if (!ret)
+			return false;
+
+		while (true) {
+			if (data.get_value ("Type").down () == "application")
+				return true;
+
+			ret = data.block_next ();
+			if (!ret)
+				return false;
+			ret = data.open_block_by_value ("ID", app.idname, false);
+			if (!ret)
+				return false;
+		}
+
+		return false;
+	}
+
+	public bool application_exists (AppItem app) {
+		return open_data_block_for_application (app);
 	}
 
 	/**
@@ -167,6 +189,10 @@ internal abstract class ContentFile : Object {
 	}
 
 	private AppItem? read_current_application () {
+		// first check if we have an application present
+		if (data.get_value ("Type").down () != "application")
+			return null;
+
 		string idname = data.get_value ("ID");
 		if (idname == "") {
 			warning ("No idname for application found!");
@@ -232,9 +258,12 @@ internal class ContentIndex : ContentFile {
 	}
 
 	public void update_application (AppItem app) {
-		data.reset ();
-		data.open_block_by_value ("ID", app.idname);
+		bool ret;
+		ret = open_data_block_for_application (app);
+		if (!ret)
+			data.reset ();
 
+		data.add_value ("Type", "application");
 		data.add_value ("ID", app.idname);
 		data.add_value ("Name", app.full_name);
 		data.add_value ("Version", app.version);
@@ -255,9 +284,12 @@ private class ContentCache : ContentFile {
 	}
 
 	public void update_application (AppItem app, string arch, string origin) {
-		data.reset ();
-		data.open_block_by_value ("ID", app.idname);
+		bool ret;
+		ret = open_data_block_for_application (app);
+		if (!ret)
+			data.reset ();
 
+		data.add_value ("Type", "application");
 		data.add_value ("ID", app.idname);
 		data.add_value ("Name", app.full_name);
 		data.add_value ("Version", app.version);

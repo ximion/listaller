@@ -32,7 +32,7 @@ private class RepoLocal : Repo {
 	public RepoLocal (string dir) {
 		base ();
 		repo_root = dir;
-		repo_pool_dir = Path.build_filename (dir, "pool", null);
+		repo_pool_dir = Path.build_filename (dir, "apps", "pool", null);
 
 		rsettings.open (Path.build_filename (repo_root, "reposetting", null));
 	}
