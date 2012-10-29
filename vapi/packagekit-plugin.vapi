@@ -275,6 +275,8 @@ namespace PkPlugin {
 		public void add_supported_content_type (string mime_type);
 		[CCode (cname = "pk_transaction_cancel_bg")]
 		public void cancel_bg ();
+		[CCode (cname = "pk_transaction_error_quark")]
+		public static GLib.Quark error_quark ();
 		[CCode (cname = "pk_transaction_get_backend_job")]
 		public unowned PkPlugin.BackendJob get_backend_job ();
 		[CCode (cname = "pk_transaction_get_conf")]
@@ -405,53 +407,6 @@ namespace PkPlugin {
 		FINISHED,
 		UNKNOWN
 	}
-	[CCode (cheader_filename = "plugin/packagekit-plugin.h", cprefix = "PK_TRANSACTION_ERROR_")]
-	public errordomain TransactionError {
-		[CCode (cname = "PK_TRANSACTION_ERROR_DENIED")]
-		PERMISSIONDENIED,
-		[CCode (cname = "PK_TRANSACTION_ERROR_NOT_RUNNING")]
-		NOTRUNNING,
-		[CCode (cname = "PK_TRANSACTION_ERROR_NO_ROLE")]
-		NOROLE,
-		[CCode (cname = "PK_TRANSACTION_ERROR_CANNOT_CANCEL")]
-		CANNOTCANCEL,
-		[CCode (cname = "PK_TRANSACTION_ERROR_NOT_SUPPORTED")]
-		NOTSUPPORTED,
-		[CCode (cname = "PK_TRANSACTION_ERROR_NO_SUCH_TRANSACTION")]
-		NOSUCHTRANSACTION,
-		[CCode (cname = "PK_TRANSACTION_ERROR_NO_SUCH_FILE")]
-		NOSUCHFILE,
-		[CCode (cname = "PK_TRANSACTION_ERROR_NO_SUCH_DIRECTORY")]
-		NOSUCHDIRECTORY,
-		[CCode (cname = "PK_TRANSACTION_ERROR_TRANSACTION_EXISTS_WITH_ROLE")]
-		TRANSACTIONEXISTSWITHROLE,
-		[CCode (cname = "PK_TRANSACTION_ERROR_REFUSED_BY_POLICY")]
-		REFUSEDBYPOLICY,
-		[CCode (cname = "PK_TRANSACTION_ERROR_PACKAGE_ID_INVALID")]
-		PACKAGEIDINVALID,
-		[CCode (cname = "PK_TRANSACTION_ERROR_SEARCH_INVALID")]
-		SEARCHINVALID,
-		[CCode (cname = "PK_TRANSACTION_ERROR_SEARCH_PATH_INVALID")]
-		SEARCHPATHINVALID,
-		[CCode (cname = "PK_TRANSACTION_ERROR_FILTER_INVALID")]
-		FILTERINVALID,
-		[CCode (cname = "PK_TRANSACTION_ERROR_INPUT_INVALID")]
-		INPUTINVALID,
-		[CCode (cname = "PK_TRANSACTION_ERROR_INVALID_STATE")]
-		INVALIDSTATE,
-		[CCode (cname = "PK_TRANSACTION_ERROR_INITIALIZE_FAILED")]
-		INITIALIZEFAILED,
-		[CCode (cname = "PK_TRANSACTION_ERROR_COMMIT_FAILED")]
-		COMMITFAILED,
-		[CCode (cname = "PK_TRANSACTION_ERROR_PACK_INVALID")]
-		PACKINVALID,
-		[CCode (cname = "PK_TRANSACTION_ERROR_MIME_TYPE_NOT_SUPPORTED")]
-		MIMETYPENOTSUPPORTED,
-		[CCode (cname = "PK_TRANSACTION_ERROR_INVALID_PROVIDE")]
-		INVALIDPROVIDE,
-		[CCode (cname = "PK_TRANSACTION_ERROR_NUMBER_OF_PACKAGES_INVALID")]
-		NUMBEROFPACKAGESINVALID
-	}
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", has_target = false)]
 	public delegate void BackendFileChanged (PkPlugin.Backend backend, void* data);
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", instance_pos = 2.9)]
@@ -492,6 +447,4 @@ namespace PkPlugin {
 	public static bool strtouint64 (string text, uint64 value);
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", cname = "pk_strzero")]
 	public static bool strzero (string text);
-	[CCode (cheader_filename = "plugin/packagekit-plugin.h", cname = "pk_transaction_error_quark")]
-	public static GLib.Quark transaction_error_quark ();
 }
