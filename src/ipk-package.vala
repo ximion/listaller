@@ -97,6 +97,9 @@ private class Package : MessageObject {
 		string doapFileName = "";
 		ipk_selected_arch_ = "";
 		string archFListName = "";
+		string currentArch = arch_generic (system_machine ());
+
+		string archdep_dep_filename = "dependencies-%s.list".printf (currentArch);
 
 		while (ar.next_header (out e) == Result.OK) {
 			string pName = e.pathname ();
@@ -120,10 +123,14 @@ private class Package : MessageObject {
 						ret = extract_entry_to (ar, e, wdir);
 						break;
 					default:
+						if (pName == archdep_dep_filename) {
+							ret = extract_entry_to (ar, e, wdir);
+							break;
+						}
 						if (pName.has_prefix ("files-")) {
 							string arch = pName.substring (6, pName.last_index_of (".") - 6);
 
-							if (arch == arch_generic (system_machine ())) {
+							if (arch == currentArch) {
 								ipk_selected_arch_ = arch;
 								ret = extract_entry_to (ar, e, wdir);
 								archFListName = pName;
@@ -144,12 +151,19 @@ private class Package : MessageObject {
 			return false;
 
 		// Check if all metadata is available
+		// find arch-dependent dep file, if none is there, use generic one
+		string depFile = Path.build_filename (wdir, archdep_dep_filename, null);
+		if (FileUtils.test (depFile, FileTest.EXISTS))
+			debug ("Using arch-dependent dependency info.");
+		else
+			depFile = Path.build_filename (wdir, "dependencies.list", null);
+
 		string tmpf = Path.build_filename (wdir, doapFileName, null);
 		ret = false;
 		if (FileUtils.test (tmpf, FileTest.EXISTS)) {
 			ret = ipkc.open_control (Path.build_filename (wdir, "pksetting", null),
 						 tmpf,
-						 Path.build_filename (wdir, "dependencies.list", null));
+						 depFile);
 		}
 
 		// Set license text, if we have any. (This fubction returns false if file doesn't exists)

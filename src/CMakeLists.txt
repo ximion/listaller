@@ -66,7 +66,7 @@ find_library(M_LIB m)
 pkg_check_modules(GEE REQUIRED gee-1.0>=0.6)
 pkg_check_modules(GIO2 REQUIRED gio-2.0>=2.26)
 pkg_check_modules(REDLAND REQUIRED redland>=0.4)
-pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2>=0.8.4)
+pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2>=0.8.6)
 pkg_check_modules(PACKAGEKIT_PLUGIN REQUIRED packagekit-plugin)
 #find_gir(PKGIR "PackageKitGlib-1.0" REQUIRED)
 

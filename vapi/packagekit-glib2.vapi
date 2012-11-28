@@ -571,6 +571,8 @@ namespace PackageKit {
 		public void sort (PackageKit.PackageSackSortType type);
 		[CCode (cname = "pk_package_sack_test")]
 		public static void test (void* user_data);
+		[CCode (cname = "pk_package_sack_to_file")]
+		public bool to_file (GLib.File file) throws GLib.Error;
 	}
 	[CCode (cheader_filename = "packagekit-glib2/packagekit.h")]
 	[Compact]
