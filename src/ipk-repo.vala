@@ -130,28 +130,6 @@ internal class RepoRemote : Repo {
 		cindex_indep = new Listaller.Repo.ContentIndex ();
 	}
 
-	private bool download_file_sync (string remote_url_http, string local_name, bool pedantic = false) throws Error {
-		var session = new Soup.SessionSync ();
-		var message = new Soup.Message ("GET", remote_url_http);
-
-		var status = session.send_message (message);
-		if (status == 200) {
-			FileUtils.set_contents (local_name,
-	                                (string)message.response_body.data,
-	                                (long)message.response_body.length);
-			return true;
-		} else {
-			/*if (pedantic) {
-				throw new IOError.INVALID_DATA ("Couldn't download file!\n%s".printf (e_query.message));
-			} else {
-				warning ("Cannot query file size, continuing with an unknown size.");
-			}*/
-			throw new IOError.FAILED ("Could not download file: %s\nStatus code: %u".printf (remote_url_http, status));
-		}
-
-		return false;
-	}
-
 	public void load_server_index () {
 		string url;
 		string fname;
@@ -159,8 +137,11 @@ internal class RepoRemote : Repo {
 
 		fname = Path.build_filename (tmpdir, "contents.xz", null);
 		url = Path.build_filename (repo_url, "contents_%s.xz".printf (current_arch), null);
+
+		var dl = new Downloader ();
+
 		try {
-			download_file_sync (url, fname, true);
+			dl.download_file_sync (url, fname, true);
 		} catch (Error e) {
 			error = e;
 		}
@@ -171,7 +152,7 @@ internal class RepoRemote : Repo {
 
 		url = Path.build_filename (repo_url, "contents_all.xz", null);
 		try {
-			download_file_sync (url, fname, true);
+			dl.download_file_sync (url, fname, true);
 		} catch (Error e) {
 			if (error != null) {
 				string err_msg = e.message;
@@ -199,8 +180,10 @@ internal class RepoRemote : Repo {
 		string url = Path.build_filename (repo_url, "apps", "pool", app.idname, pkg_name, null);
 		string fname = Path.build_filename (tmpdir, pkg_name, null);
 
+		var dl = new Downloader ();
+
 		try {
-			download_file_sync (url, fname);
+			dl.download_file_sync (url, fname);
 		} catch (Error e) {
 			warning (e.message);
 			//! TODO: Emit Listaller error!

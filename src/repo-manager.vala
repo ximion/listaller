@@ -74,6 +74,15 @@ private class Manager : MessageObject {
 		//! TODO: Do proper error-handling in the code above!
 		return true;
 	}
+
+	public ArrayList<AppItem> get_applications (string search = "") {
+		ArrayList<AppItem> res;
+
+		//! TODO: implement application filter!
+		res = cache.get_application_list ();
+
+		return res;
+	}
 }
 
 } // End of namespace: Listaller.Repo
