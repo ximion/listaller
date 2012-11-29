@@ -340,14 +340,27 @@ public class Manager : MessageObject {
 
 	public bool refresh_repository_cache () {
 		bool ret = false;
-		if (!is_shared ())
-			return false;
 
 		if (is_root ()) {
 			var repoMgr = new Repo.Manager ();
 			ret = repoMgr.refresh_cache ();
 		} else {
-			//! TODO: Call PackageKit
+			var pktask = new PackageKit.Task ();
+			PackageKit.Results? pkres;
+
+			change_progress (0);
+			try {
+				pkres = pktask.refresh_cache_sync (false, null, pk_progress_cb);
+			} catch (Error e) {
+				emit_error (ErrorEnum.REFRESH_FAILED, e.message);
+				return false;
+			}
+
+			if (pkres.get_exit_code () != PackageKit.Exit.SUCCESS) {
+				PackageKit.Error error = pkres.get_error_code ();
+				emit_error (ErrorEnum.REFRESH_FAILED, error.get_details ());
+				return false;
+			}
 		}
 
 		return ret;

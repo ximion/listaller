@@ -109,8 +109,8 @@ public class LipaManager : LipaModule {
 		// On success, set everything to done
 		if (ret) {
 			progress_bar.set_percentage (100);
-			progress_bar.end ();
 		}
+		progress_bar.end ();
 
 		if (ret) {
 			stdout.printf ("%s\n", _("Removal of %s completed successfully!").printf (app.full_name));
@@ -131,7 +131,13 @@ public class LipaManager : LipaModule {
 	}
 
 	public void refresh_cache () {
-		mgr.refresh_repository_cache ();
+		bool ret;
+
+		progress_bar.start (_("Updating package cache"));
+		ret = mgr.refresh_repository_cache ();
+		if (ret)
+			progress_bar.set_percentage (100);
+		progress_bar.end ();
 	}
 
 	public override void terminate_action () {

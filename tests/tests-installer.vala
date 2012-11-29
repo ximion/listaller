@@ -39,7 +39,7 @@ void test_setup_error_code_cb (ErrorItem item) {
 	msg ("Received error:");
 	msg (" " + item.to_string ());
 	// skip all permission-errors
-	if (item.error != ErrorEnum.ACTION_NOT_ALLOWED)
+	if (item.error != ErrorEnum.OPERATION_NOT_ALLOWED)
 		error (item.details);
 }
 

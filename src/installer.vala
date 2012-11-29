@@ -429,7 +429,7 @@ public class Setup : MessageObject {
 		var pkgSecLvl = sec.get_level ();
 		if (pkgSecLvl < mSecLvl) {
 			// we are not allowed to install this package!
-			emit_error (ErrorEnum.ACTION_NOT_ALLOWED,
+			emit_error (ErrorEnum.OPERATION_NOT_ALLOWED,
 				    _("You are not allowed to install this package, because it's security level is '%s' and you need at least a package with security-level '%s'.\n" +
 					"Please obtain this application from a safe source with good signature and try again!").printf (pkgSecLvl.to_string (), mSecLvl.to_string ()));
 			if ((__unittestmode) && (settings.current_mode == IPK.InstallMode.TEST))

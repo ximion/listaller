@@ -130,78 +130,24 @@ internal class RepoRemote : Repo {
 		cindex_indep = new Listaller.Repo.ContentIndex ();
 	}
 
-	private async void do_download (File remote, File local, FileProgressCallback? on_progress, bool pedantic = false) throws Error {
-		try {
-			try {
-				yield remote.find_enclosing_mount_async (0);
-			} catch (IOError e_mount) {
-				// Not mounted...
-			}
+	private bool download_file_sync (string remote_url_http, string local_name, bool pedantic = false) throws Error {
+		var session = new Soup.SessionSync ();
+		var message = new Soup.Message ("GET", remote_url_http);
 
-			int64 size = 0;
-			try {
-				FileInfo info = yield remote.query_info_async (FileAttribute.STANDARD_SIZE,
-					FileQueryInfoFlags.NONE, 0);
-				size = (int64) info.get_attribute_uint64 (FileAttribute.STANDARD_SIZE);
-			} catch (IOError e_query) {
-				if (pedantic) {
-					throw new IOError.INVALID_DATA ("Couldn't download file!\n%s".printf (e_query.message));
-				} else {
-					warning ("Cannot query file size, continuing with an unknown size.");
-				}
-			}
-
-			FileInputStream input = yield remote.read_async ();
-			FileOutputStream output;
-			int64 downloaded_size = 0;
-
-			if (input.can_seek () && local.query_exists ()) {
-				output = yield local.append_to_async (FileCreateFlags.NONE, 0);
-				output.seek (0, SeekType.END);
-				downloaded_size = output.tell ();
-				input.seek (downloaded_size, SeekType.SET);
-			} else {
-				output = yield local.replace_async (null, false, FileCreateFlags.NONE, 0);
-			}
-
-			uint8[] buf = new uint8[4096];
-
-			ssize_t read = yield input.read_async (buf);
-			while (read != 0) {
-				yield output.write_async (buf[0:read]);
-				if (on_progress != null)
-					on_progress (downloaded_size + read, size);
-				read = yield input.read_async (buf);
-			}
-
-		} catch (Error e) {
-			throw e;
-		}
-	}
-
-	private bool download_file_sync (string remote_url, string local_name, bool pedantic = false) throws Error {
-		File local_file = File.new_for_path (local_name);
-		File remote_file = File.new_for_uri (remote_url);
-
-		debug (local_name);
-		debug (remote_url);
-		MainLoop main_loop = new MainLoop ();
-		Error error = null;
-		do_download (remote_file, local_file, null, pedantic, (obj, res) => {
-			try {
-				do_download.end (res);
-			} catch (Error e) {
-				error = e;
-			}
-			main_loop.quit();
-		});
-
-		main_loop.run ();
-
-		if (error == null)
+		var status = session.send_message (message);
+		if (status == 200) {
+			FileUtils.set_contents (local_name,
+	                                (string)message.response_body.data,
+	                                (long)message.response_body.length);
 			return true;
-		else
-			throw error;
+		} else {
+			/*if (pedantic) {
+				throw new IOError.INVALID_DATA ("Couldn't download file!\n%s".printf (e_query.message));
+			} else {
+				warning ("Cannot query file size, continuing with an unknown size.");
+			}*/
+			throw new IOError.FAILED ("Could not download file: %s\nStatus code: %u".printf (remote_url_http, status));
+		}
 
 		return false;
 	}
