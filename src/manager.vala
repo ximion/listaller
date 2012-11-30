@@ -232,17 +232,18 @@ public class Manager : MessageObject {
 		app.fast_check ();
 
 		IPK.InstallMode mode_old = ssettings.current_mode;
-		if (app.shared != ssettings.shared_mode) {
-			if (app.shared)
+		bool shared = app.state == AppState.INSTALLED_SHARED;
+		if (shared != ssettings.shared_mode) {
+			if (shared)
 				debug (_("Trying to remove shared application, but AppManager is not in superuser mode!\nSetting AppManager to superuse mode now."));
 			else
 				debug (_("Trying to remove local application, but AppManager is in superuser mode!\nSetting AppManager to local mode now."));
-			if (app.shared)
+			if (shared)
 				ssettings.current_mode = IPK.InstallMode.SHARED;
 		}
 
 		bool ret;
-		if ((app.shared) && (!is_root ())) {
+		if ((app.state == AppState.INSTALLED_SHARED) && (!is_root ())) {
 			// Call PackageKit if we aren't root and want to remove a shared application
 			ret = remove_shared_application_internal (app);
 		} else {
@@ -261,10 +262,10 @@ public class Manager : MessageObject {
 			return false;
 
 		// We only want to fetch dependencies from the correct database, so limit DB usage
-		if (item.shared)
-			db.force_db = ForceDB.SHARED;
+		if (item.state == AppState.INSTALLED_SHARED)
+			db.force_db = DBType.SHARED;
 		else
-			db.force_db = ForceDB.PRIVATE;
+			db.force_db = DBType.PRIVATE;
 
 		var tmpItem = db.get_application_by_idname (item.idname);
 		if (tmpItem == null)
@@ -316,10 +317,10 @@ public class Manager : MessageObject {
 		}
 
 		// We only want to fetch dependencies from the correct database, so limit DB usage
-		if (app.shared)
-			db.force_db = ForceDB.SHARED;
+		if (app.state == AppState.INSTALLED_SHARED)
+			db.force_db = DBType.SHARED;
 		else
-			db.force_db = ForceDB.PRIVATE;
+			db.force_db = DBType.PRIVATE;
 
 		// A new DepManager to resolve environment
 		DepManager depman = new DepManager (db);
@@ -368,4 +369,4 @@ public class Manager : MessageObject {
 
 }
 
-} // End of namespace
+} // End of namespace: Listaller

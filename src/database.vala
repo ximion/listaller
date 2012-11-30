@@ -25,7 +25,7 @@ using Listaller.Utils;
 
 namespace Listaller {
 
-private enum ForceDB {
+private enum DBType {
 	NONE,
 	PRIVATE,
 	SHARED;
@@ -37,7 +37,7 @@ private class SoftwareDB : MessageObject {
 
 	private RemoteCacheDB db_available;
 
-	public ForceDB force_db { get; set; }
+	public DBType force_db { get; set; }
 	public SetupSettings setup_settings { get; private set; }
 
 	public signal void application (AppItem appid);
@@ -47,7 +47,7 @@ private class SoftwareDB : MessageObject {
 
 		db_shared = null;
 		db_priv = null;
-		force_db = ForceDB.NONE;
+		force_db = DBType.NONE;
 
 		if (include_shared) {
 			db_shared = new LocalDB (true, setup_settings.test_mode);
@@ -83,7 +83,7 @@ private class SoftwareDB : MessageObject {
 			ret = false;
 		}
 
-		if (force_db == ForceDB.PRIVATE)
+		if (force_db == DBType.PRIVATE)
 			return false;
 
 		/* If shared db does not exist AND we don't have root-access, opening the db will fail.
@@ -101,7 +101,7 @@ private class SoftwareDB : MessageObject {
 	}
 
 	private bool private_db_canbeused (bool error = false) {
-		if (force_db == ForceDB.SHARED)
+		if (force_db == DBType.SHARED)
 			return false;
 
 		if (db_priv == null) {
@@ -184,7 +184,7 @@ private class SoftwareDB : MessageObject {
 	public bool add_application (AppItem app) {
 		bool ret;
 		try {
-		if (app.shared) {
+		if (app.state == AppState.INSTALLED_SHARED) {
 			if (shared_db_canbeused (true))
 				ret = db_shared.add_application (app);
 			else
@@ -205,7 +205,7 @@ private class SoftwareDB : MessageObject {
 	public bool add_application_filelist (AppItem app, Collection<IPK.FileEntry> flist) {
 		bool ret;
 		try {
-			if (app.shared) {
+			if (app.state == AppState.INSTALLED_SHARED) {
 				if (shared_db_canbeused (true))
 					ret = db_shared.add_application_filelist (app, flist);
 				else
@@ -226,7 +226,7 @@ private class SoftwareDB : MessageObject {
 	public ArrayList<IPK.FileEntry>? get_application_filelist (AppItem app) {
 		ArrayList<IPK.FileEntry>? res;
 		try {
-			if (app.shared) {
+			if (app.state == AppState.INSTALLED_SHARED) {
 				if (shared_db_canbeused (true))
 					res = db_shared.get_application_filelist (app);
 				else
@@ -303,7 +303,7 @@ private class SoftwareDB : MessageObject {
 	public bool remove_application (AppItem app) {
 		bool ret;
 		try {
-			if (app.shared) {
+			if (app.state == AppState.INSTALLED_SHARED) {
 				if (shared_db_canbeused (true))
 					ret = db_shared.remove_application (app);
 				else

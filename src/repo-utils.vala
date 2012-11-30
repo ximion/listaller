@@ -224,7 +224,7 @@ internal abstract class ContentFile : Object {
 		return app;
 	}
 
-	public IPK.MetaFile get_data () {
+	public IPK.MetaFile get_raw_data () {
 		return data;
 	}
 

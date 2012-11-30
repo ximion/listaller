@@ -500,7 +500,10 @@ private abstract class InternalDB : Object {
 
 		item.install_time = stmt.column_int (AppRow.INST_TIME);
 		item.dependencies = stmt.column_text (AppRow.DEPS);
-		item.shared = shared_db;
+		if (shared_db)
+			item.state = AppState.INSTALLED_SHARED;
+		else
+			item.state = AppState.INSTALLED_PRIVATE;
 		item.origin = AppOrigin.IPK;
 
 		return item;

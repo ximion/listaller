@@ -63,7 +63,7 @@ public class LipaManager : LipaModule {
 
 	private string app_ownership_str (AppItem app) {
 		string str_ownership;
-		if (!app.shared)
+		if (app.state != AppState.INSTALLED_SHARED)
 			str_ownership = _("personal");
 		else
 			str_ownership = _("shared");

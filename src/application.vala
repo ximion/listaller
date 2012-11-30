@@ -32,11 +32,11 @@ namespace Listaller {
  * about the origin of an application
  */
 public enum AppOrigin {
+	UNKNOWN,
 	ALL,
 	IPK,
 	NATIVE,
-	EXTERN,
-	UNKNOWN;
+	EXTERN;
 
 	public string to_string () {
 		switch (this) {
@@ -54,6 +54,38 @@ public enum AppOrigin {
 
 			default:
 				return ("unknown-origin");
+		}
+	}
+}
+
+/**
+ * Status of an application
+ *
+ * Indicates if an application is installed (and in which mode
+ * it was installed), or if it is in any other, different state.
+ */
+public enum AppState {
+	UNKNOWN,
+	INSTALLED_SHARED,
+	INSTALLED_PRIVATE,
+	AVAILABLE;
+
+	public string to_string () {
+		switch (this) {
+			case INSTALLED_SHARED:
+				return ("installed (shared)");
+
+			case INSTALLED_PRIVATE:
+				return ("installed (private)");
+
+			case AVAILABLE:
+				return ("available");
+
+			case UNKNOWN:
+				return ("unknown");
+
+			default:
+				return ("unknown-status");
 		}
 	}
 }
@@ -90,7 +122,7 @@ public class AppItem : Object {
 	private string _icon_name;
 	private int64  _install_time;
 	private string _dependencies;
-	private bool _shared;
+	private AppState _state;
 	private AppOrigin _origin;
 	private string _app_id;
 	private SetupSettings setup_settings;
@@ -172,25 +204,25 @@ public class AppItem : Object {
 			_desktop_file = fold_user_dir (value);
 
 			// Only do autodetection if we not already have a shared application
-			if (!shared) {
+			if (state != AppState.INSTALLED_SHARED) {
 				// Desktop file in / ==> shared application
 				if (_desktop_file.has_prefix ("/"))
-					shared = true;
-				// Desktop-file in $APP ==> application not shared
-				if (_desktop_file.has_prefix ("%"))
-					shared = false;
+					state = AppState.INSTALLED_SHARED;
+				// Desktop-file in %APP%/user's home ==> application not shared
+				if (_desktop_file.has_prefix ("~"))
+					state = AppState.INSTALLED_PRIVATE;
 			}
 		}
 	}
 
-	public bool shared {
-		get { return _shared; }
+	public AppState state {
+		get { return _state; }
 		set {
-			_shared = value;
-			if (_shared)
+			_state = value;
+			if (_state == AppState.INSTALLED_SHARED)
 				setup_settings.current_mode = IPK.InstallMode.SHARED;
 			else
-				setup_settings.current_mode = IPK.InstallMode.PRIVATE; // FIXME
+				setup_settings.current_mode = IPK.InstallMode.PRIVATE; //! FIXME
 		}
 	}
 
@@ -239,7 +271,7 @@ public class AppItem : Object {
 		_website = "";
 		_icon_name = "";
 		setup_settings = new SetupSettings ();
-		shared = false;
+		_state = AppState.UNKNOWN;
 		_license = AppLicense () {
 			name = "",
 			text = ""

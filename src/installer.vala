@@ -193,7 +193,7 @@ public class Setup : MessageObject {
 		app.fast_check ();
 		// This is required to only check the shared db for this application
 		if (is_root ())
-			app.shared = true;
+			app.state = AppState.INSTALLED_SHARED;
 
 		// We start now!
 		emit_status (StatusEnum.ACTION_STARTED,
@@ -264,7 +264,7 @@ public class Setup : MessageObject {
 		// We don't trust the IPKpackage: App might have changed, so set again if this
 		// is a shared app.
 		if (is_root ())
-			app.shared = true;
+			app.state = AppState.INSTALLED_SHARED;
 
 		// Now register the item
 		ret = db.add_application (app);
