@@ -136,35 +136,22 @@ public enum DatabaseStatus {
 	}
 }
 
-private class InternalDB : Object {
+private abstract class InternalDB : Object {
 	private Database db;
 
 	private bool locked;
-	private string regdir;
 	private string dbname;
-	private bool shared_db;
-	private bool writeable;
+	protected bool shared_db;
+	protected bool writeable;
 
 	private Sqlite.Statement insert_app;
 	private Sqlite.Statement insert_dep;
 
 	public signal void message (MessageItem message);
 
-	public InternalDB (bool shared_mode, bool testmode = false) {
-		// Create internal dummy configuration to fetch required data
-		var tmpSSettings = new SetupSettings ();
-		if (shared_mode)
-			tmpSSettings.current_mode = IPK.InstallMode.SHARED;
-		else
-			tmpSSettings.current_mode = IPK.InstallMode.PRIVATE;
-		// Test mode last to override previous settings if necessary
-		if (testmode)
-			tmpSSettings.current_mode = IPK.InstallMode.TEST;
+	public InternalDB (string fname, bool shared_mode) {
+		dbname = fname;
 
-		// Path with additional data (e.g. the file-list or icons) which is not stored in the SQLite DB
-		regdir = Path.build_filename (tmpSSettings.appregister_dir (), "info", null);
-		// The database filename
-		dbname = tmpSSettings.database_file ();
 		// Whether we fetch data from the "shared" or "private" application database
 		shared_db = shared_mode;
 		writeable = false;
@@ -228,8 +215,6 @@ private class InternalDB : Object {
 			throw new DatabaseError.ERROR (msg);
 		}
 
-		create_dir_parents (regdir);
-
 		// Ensure the database is okay and all tables are created
 		if ((create_db) && (!create_database ())) {
 			throw new DatabaseError.ERROR (_("Could not create software database!"));
@@ -258,7 +243,7 @@ private class InternalDB : Object {
 		return true;
 	}
 
-	public bool open_rw () throws DatabaseError {
+	public virtual bool open_rw () throws DatabaseError {
 		bool ret;
 
 		// If database is locked, we should not try to write on it
@@ -429,7 +414,7 @@ private class InternalDB : Object {
 
 	/* Application stuff */
 
-	public bool add_application (AppItem item) throws DatabaseError {
+	public virtual bool add_application (AppItem item) throws DatabaseError {
 		if (!database_writeable ()) {
 			throw new DatabaseError.ERROR (_("Tried to write on readonly database! (This should never happen)"));
 		}
@@ -473,88 +458,7 @@ private class InternalDB : Object {
 			throw new DatabaseError.ERROR (e.message);
 		}
 
-		string metadir = Path.build_filename (regdir, item.idname, null);
-		create_dir_parents (metadir);
-
-		// Save extra package properties
-		var data = new IPK.MetaFile ();
-		if (item.replaces != null)
-			data.add_value ("Replaces", item.replaces);
-
-		ret = data.save_to_file (Path.build_filename (metadir, "properties", null));
-
 		return ret;
-	}
-
-	public bool add_application_filelist (AppItem aid, Collection<IPK.FileEntry> flist) {
-		if (!database_writeable ()) {
-			throw new DatabaseError.ERROR (_("Tried to write on readonly database! (This should never happen)"));
-		}
-		string metadir = Path.build_filename (regdir, aid.idname, null);
-
-		try {
-			var file = File.new_for_path (Path.build_filename (metadir, "files.list", null));
-			{
-				var file_stream = file.create (FileCreateFlags.NONE);
-
-				if (!file.query_exists ())
-					return false;
-
-				var data_stream = new DataOutputStream (file_stream);
-				data_stream.put_string ("# File list for " + aid.full_name + "\n\n");
-				// Now write file list to file
-				foreach (IPK.FileEntry fe in flist) {
-					if (fe.is_installed ()) {
-						string fname = fe.fname_installed;
-						if (!shared_db)
-							fname = fold_user_dir (fname);
-						// store hash and filename in compact form
-						string hash = fe.hash;
-						if (hash == "")
-							hash = "NOHASH";
-						data_stream.put_string ("%s %s\n".printf (hash, fname));
-					}
-				}
-			}
-		} catch (Error e) {
-			throw new DatabaseError.ERROR (_("Unable to write application file list! Message: %s").printf (e.message));
-		}
-
-		return true;
-	}
-
-	public ArrayList<IPK.FileEntry>? get_application_filelist (AppItem app) throws DatabaseError {
-		string metadir = Path.build_filename (regdir, app.idname, null);
-
-		var file = File.new_for_path (Path.build_filename (metadir, "files.list", null));
-		if (!file.query_exists ()) {
-			return null;
-		}
-
-		var flist = new ArrayList<IPK.FileEntry> ();
-		try {
-			var dis = new DataInputStream (file.read ());
-			string line;
-			// Read lines until end of file (null) is reached
-			while ((line = dis.read_line (null)) != null) {
-				if ((!line.has_prefix ("#")) && (line.strip () != "")) {
-					string[] parts = line.split (" ", 2);
-					string fname = parts[1];
-
-					if (!shared_db)
-						fname = expand_user_dir (fname);
-
-					var fe = new IPK.FileEntry ();
-					fe.fname_installed = fname;
-					fe.hash = parts[0];
-					flist.add (fe);
-				}
-			}
-		} catch (Error e) {
-			throw new DatabaseError.ERROR (_("Unable to fetch application file list: %s").printf (e.message));
-		}
-
-		return flist;
 	}
 
 	public int get_applications_count () throws DatabaseError {
@@ -572,7 +476,7 @@ private class InternalDB : Object {
 		return count;
 	}
 
-	private AppItem? retrieve_app_item (Sqlite.Statement stmt) {
+	protected virtual AppItem? retrieve_app_item (Sqlite.Statement stmt) {
 		AppItem item = new AppItem.blank ();
 
 		item.idname = stmt.column_text (AppRow.IDNAME);
@@ -598,14 +502,6 @@ private class InternalDB : Object {
 		item.dependencies = stmt.column_text (AppRow.DEPS);
 		item.shared = shared_db;
 		item.origin = AppOrigin.IPK;
-
-		string metadir = Path.build_filename (regdir, item.idname, null);
-
-		// Load extra package properties
-		var data = new IPK.MetaFile ();
-		data.open_file (Path.build_filename (metadir, "properties", null));
-
-		item.replaces = data.get_value ("Replaces");
 
 		return item;
 	}
@@ -750,9 +646,7 @@ private class InternalDB : Object {
 		return item;
 	}
 
-	public bool remove_application (AppItem app) throws DatabaseError {
-		bool ret = true;
-		string metadir = Path.build_filename (regdir, app.idname, null);
+	public virtual bool remove_application (AppItem app) throws DatabaseError {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("DELETE FROM applications WHERE name=?", -1, out stmt);
 
@@ -764,10 +658,7 @@ private class InternalDB : Object {
 			throw new DatabaseError.ERROR (e.message);
 		}
 
-		ret = delete_dir_recursive (metadir);
-		if (!ret)
-			warning ("Could not remove metadata directory for application-id %s!".printf (app.idname));
-		return ret;
+		return true;
 	}
 
 	private bool string_in_app_item (AppItem item, string s) {
@@ -972,6 +863,185 @@ private class InternalDB : Object {
 		return true;
 	}
 
+}
+
+/**
+ * Provides access to the database of installed software
+ *
+ * LocalDB is used to access nformation about installed applications
+ * on a system. This includes installed files and various other things.
+ */
+private class LocalDB : InternalDB {
+	private string regdir;
+
+	public LocalDB (bool shared_mode, bool testmode = false) {
+		// Create internal dummy configuration to fetch required data
+		var tmpSSettings = new SetupSettings ();
+		if (shared_mode)
+			tmpSSettings.current_mode = IPK.InstallMode.SHARED;
+		else
+			tmpSSettings.current_mode = IPK.InstallMode.PRIVATE;
+		// Test mode last to override previous settings if necessary
+		if (testmode)
+			tmpSSettings.current_mode = IPK.InstallMode.TEST;
+
+		// Path with additional data (e.g. the file-list or icons) which is not stored in the SQLite DB
+		regdir = Path.build_filename (tmpSSettings.appregister_dir (), "info", null);
+		// The database filename
+		string dbfname = tmpSSettings.database_file ();
+
+		base (dbfname, shared_mode);
+	}
+
+	public override bool open_rw () throws DatabaseError {
+		create_dir_parents (regdir);
+		bool ret;
+		try {
+			ret = base.open_rw ();
+		} catch (Error e) { throw e; }
+
+		return ret;
+	}
+
+	public override bool add_application (AppItem item) throws DatabaseError {
+		bool ret;
+		try {
+			ret = base.add_application (item);
+		} catch (Error e) { throw e; }
+		if (!ret)
+			return ret;
+
+		string metadir = Path.build_filename (regdir, item.idname, null);
+		create_dir_parents (metadir);
+
+		// Save extra package properties
+		var data = new IPK.MetaFile ();
+		if (item.replaces != null)
+			data.add_value ("Replaces", item.replaces);
+
+		ret = data.save_to_file (Path.build_filename (metadir, "properties", null));
+
+		return ret;
+	}
+
+	public bool add_application_filelist (AppItem aid, Collection<IPK.FileEntry> flist) {
+		if (!database_writeable ()) {
+			throw new DatabaseError.ERROR (_("Tried to write on readonly database! (This should never happen)"));
+		}
+
+		string metadir = Path.build_filename (regdir, aid.idname, null);
+
+		try {
+			var file = File.new_for_path (Path.build_filename (metadir, "files.list", null));
+			{
+				var file_stream = file.create (FileCreateFlags.NONE);
+
+				if (!file.query_exists ())
+					return false;
+
+				var data_stream = new DataOutputStream (file_stream);
+				data_stream.put_string ("# File list for " + aid.full_name + "\n\n");
+				// Now write file list to file
+				foreach (IPK.FileEntry fe in flist) {
+					if (fe.is_installed ()) {
+						string fname = fe.fname_installed;
+						if (!shared_db)
+							fname = fold_user_dir (fname);
+						// store hash and filename in compact form
+						string hash = fe.hash;
+						if (hash == "")
+							hash = "NOHASH";
+						data_stream.put_string ("%s %s\n".printf (hash, fname));
+					}
+				}
+			}
+		} catch (Error e) {
+			throw new DatabaseError.ERROR (_("Unable to write application file list! Message: %s").printf (e.message));
+		}
+
+		return true;
+	}
+
+	public ArrayList<IPK.FileEntry>? get_application_filelist (AppItem app) throws DatabaseError {
+		string metadir = Path.build_filename (regdir, app.idname, null);
+
+		var file = File.new_for_path (Path.build_filename (metadir, "files.list", null));
+		if (!file.query_exists ()) {
+			return null;
+		}
+
+		var flist = new ArrayList<IPK.FileEntry> ();
+		try {
+			var dis = new DataInputStream (file.read ());
+			string line;
+			// Read lines until end of file (null) is reached
+			while ((line = dis.read_line (null)) != null) {
+				if ((!line.has_prefix ("#")) && (line.strip () != "")) {
+					string[] parts = line.split (" ", 2);
+					string fname = parts[1];
+
+					if (!shared_db)
+						fname = expand_user_dir (fname);
+
+					var fe = new IPK.FileEntry ();
+					fe.fname_installed = fname;
+					fe.hash = parts[0];
+					flist.add (fe);
+				}
+			}
+		} catch (Error e) {
+			throw new DatabaseError.ERROR (_("Unable to fetch application file list: %s").printf (e.message));
+		}
+
+		return flist;
+	}
+
+	protected override AppItem? retrieve_app_item (Sqlite.Statement stmt) {
+		AppItem item;
+		item = base.retrieve_app_item (stmt);
+		if (item == null)
+			return null;
+
+		string metadir = Path.build_filename (regdir, item.idname, null);
+
+		// Load extra package properties
+		var data = new IPK.MetaFile ();
+		data.open_file (Path.build_filename (metadir, "properties", null));
+
+		item.replaces = data.get_value ("Replaces");
+
+		return item;
+	}
+
+	public override bool remove_application (AppItem app) throws DatabaseError {
+		bool ret = true;
+		string metadir = Path.build_filename (regdir, app.idname, null);
+
+		try {
+			base.remove_application (app);
+		} catch (Error e) { throw e; }
+
+		ret = delete_dir_recursive (metadir);
+		if (!ret)
+			warning ("Could not remove metadata directory for application-id %s!".printf (app.idname));
+		return ret;
+	}
+}
+
+/**
+ * Provides access to cache of available software on remote sources
+ *
+ * This class is used to operate on Listaller's repository cache
+ */
+private class RemoteCacheDB : InternalDB {
+
+	public RemoteCacheDB () {
+		string dbname;
+		var conf = new Config ();
+		dbname = Path.build_filename (conf.shared_repo_cache_dir (), "available.db", null);
+
+		base (dbname, true);
+	}
 }
 
 } // End of namespace

@@ -136,7 +136,7 @@ int main(string[] args)
 		string output, errorOutput;
 		int returnCode;
 		var libPath = File.new_for_path("/lib/");
-		var enumerator = libPath.enumerate_children(FILE_ATTRIBUTE_STANDARD_NAME, 0, null);
+		var enumerator = libPath.enumerate_children(FileAttribute.STANDARD_NAME, 0, null);
 		FileInfo fileinfo;
 		var counter = 0;
 

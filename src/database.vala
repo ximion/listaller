@@ -32,8 +32,10 @@ private enum ForceDB {
 }
 
 private class SoftwareDB : MessageObject {
-	private InternalDB? db_shared;
-	private InternalDB? db_priv;
+	private LocalDB? db_shared;
+	private LocalDB? db_priv;
+
+	private RemoteCacheDB db_available;
 
 	public ForceDB force_db { get; set; }
 	public SetupSettings setup_settings { get; private set; }
@@ -48,17 +50,17 @@ private class SoftwareDB : MessageObject {
 		force_db = ForceDB.NONE;
 
 		if (include_shared) {
-			db_shared = new InternalDB (true, setup_settings.test_mode);
+			db_shared = new LocalDB (true, setup_settings.test_mode);
 
 			/* If we open a shared DB and have root-access, don't open the
 			 * private database. It makes no sense someone is working as root
 			 * and installing private stuff into root's home-dir */
 			if (!is_root ()) {
-				db_priv = new InternalDB (false, setup_settings.test_mode);
+				db_priv = new LocalDB (false, setup_settings.test_mode);
 			}
 		} else {
 			// If we only want to open the personal DB, don't touch the shared one
-			db_priv = new InternalDB (false, setup_settings.test_mode);
+			db_priv = new LocalDB (false, setup_settings.test_mode);
 		}
 
 		this.setup_settings = setup_settings;
@@ -216,8 +218,8 @@ private class SoftwareDB : MessageObject {
 			}
 		} catch (Error e) {
 			emit_dberror (_("Unable to add application file list to database: %s").printf (e.message));
-			ret = false;
 		}
+
 		return ret;
 	}
 
@@ -316,6 +318,7 @@ private class SoftwareDB : MessageObject {
 			emit_dberror (_("Unable to remove application from database: %s").printf (e.message));
 			ret = false;
 		}
+
 		return ret;
 	}
 
