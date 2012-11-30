@@ -888,12 +888,13 @@ private class LocalDB : InternalDB {
 		if (testmode)
 			tmpSSettings.current_mode = IPK.InstallMode.TEST;
 
-		// Path with additional data (e.g. the file-list or icons) which is not stored in the SQLite DB
-		regdir = Path.build_filename (tmpSSettings.appregister_dir (), "info", null);
 		// The database filename
 		string dbfname = tmpSSettings.database_file ();
 
 		base (dbfname, shared_mode);
+
+		// Path with additional data (e.g. the file-list or icons) which is not stored in the SQLite DB
+		regdir = Path.build_filename (tmpSSettings.appregister_dir (), "info", null);
 	}
 
 	public override bool open_rw () throws DatabaseError {
