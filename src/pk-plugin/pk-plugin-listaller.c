@@ -714,6 +714,11 @@ pk_plugin_transaction_finished_results (PkPlugin *plugin,
 {
 	PkRoleEnum role;
 
+	if (pk_backend_job_get_exit_code (transaction->priv->job) == PK_EXIT_ENUM_CANCELLED) {
+		g_debug ("skipping finished_results() because transaction was cancelled";
+		return;
+	}
+
 	/* skip simulate actions */
 	if (pk_bitfield_contain (pk_transaction_get_transaction_flags (transaction),
 				 PK_TRANSACTION_FLAG_ENUM_SIMULATE)) {
