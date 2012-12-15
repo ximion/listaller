@@ -171,7 +171,7 @@ public class Setup : MessageObject {
 		return control.get_application ();
 	}
 
-	private bool install_app_normal () {
+	private bool install_app_normal (string origin = "") {
 		bool ret = true;
 
 		setup_settings.lock ();
@@ -188,7 +188,8 @@ public class Setup : MessageObject {
 
 		// Construct LiAppItem
 		AppItem app = ipkp.control.get_application ();
-		app.origin = AppOrigin.IPK;
+		if (str_empty (origin))
+			app.set_origin_local ();
 		app.dependencies = "?";
 		app.fast_check ();
 		// This is required to only check the shared db for this application

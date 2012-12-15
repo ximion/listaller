@@ -74,15 +74,16 @@ void test_application_ids () {
 	assert (item1.version == "1.0");
 	assert (item1.publisher == "Listaller Project");
 	assert (item1.get_raw_cmd () == "%INST%/foo");
+	assert (item1.origin == "unknown");
 
 	AppItem item2 = new AppItem ("MyApp", "0.1");
-	item2.origin = AppOrigin.IPK;
+	item2.origin = "http://example.com";
 	assert (item2.full_name == "MyApp");
 	assert (item2.idname == "myapp");
 	//item2.desktop_file = Path.build_filename (foobar_dir, "foobar.desktop", null);
 	item2.update_with_desktop_file ();
 	assert (item2.desktop_file == "");
-	assert (item2.appid == "myapp;0.1;;package_ipk");
+	assert (item2.appid == "myapp;0.1;;http://example.com");
 
 	AppItem item3 = new AppItem ("Google Earth", "1.2");
 	assert (item3.idname == "google_earth");

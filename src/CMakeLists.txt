@@ -17,7 +17,8 @@ set(LISTALLER_BASE_SOURCES ${lisrc}/logging.vala
 	${lisrc}/setup-settings.vala
 	${lisrc}/application.vala
 	${lisrc}/database-internal.vala
-	${lisrc}/database.vala
+	${lisrc}/software-db.vala
+	${lisrc}/software-cache.vala
 	${lisrc}/varsolver.vala
 	${lisrc}/varsetter.vala
 	${lisrc}/doap.vala

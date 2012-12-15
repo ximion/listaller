@@ -38,6 +38,7 @@ private const string DATABASE = ""
 		+ "description TEXT, "
 		+ "homepage TEXT, "
 		+ "architecture TEXT NOT NULL, "
+		+ "origin TEXT NOT NULL, "
 		+ "install_time INTEGER, "
 		+ "dependencies TEXT"
 		+ "); "
@@ -49,6 +50,7 @@ private const string DATABASE = ""
 		+ "author TEXT, "
 		+ "homepage TEXT, "
 		+ "architecture TEXT NOT NULL, "
+		+ "origin TEXT NOT NULL, "
 		+ "install_time INTEGER, "
 		+ "provided_by TEXT NOT NULL, "
 		+ "components TEXT NOT NULL, "
@@ -58,9 +60,9 @@ private const string DATABASE = ""
 		"";
 
 private const string appcols = "name, full_name, version, desktop_file, author, publisher, categories, " +
-			"description, homepage, architecture, install_time, dependencies";
+			"description, homepage, architecture, origin, install_time, dependencies";
 private const string depcols = "name, full_name, version, description, author, homepage, architecture, " +
-			"install_time, provided_by, components, environment, dependencies";
+			"origin, install_time, provided_by, components, environment, dependencies";
 
 private enum AppRow {
 	IDNAME = 0,
@@ -73,8 +75,9 @@ private enum AppRow {
 	DESCRIPTION = 7,
 	HOMEPAGE = 8,
 	ARCHITECTURE = 9,
-	INST_TIME = 10,
-	DEPS = 11;
+	ORIGIN = 10,
+	INST_TIME = 11,
+	DEPS = 12;
 }
 
 private enum DepRow {
@@ -85,11 +88,12 @@ private enum DepRow {
 	AUTHOR = 4,
 	HOMEPAGE = 5,
 	ARCHITECTURE = 6,
-	INST_TIME = 7,
-	PROVIDED_BY = 8,
-	COMPONENTS = 9,
-	ENVIRONMENT = 10,
-	DEPENDENCIES = 11;
+	ORIGIN = 7,
+	INST_TIME = 8,
+	PROVIDED_BY = 9,
+	COMPONENTS = 10,
+	ENVIRONMENT = 11,
+	DEPENDENCIES = 12;
 }
 
 public errordomain DatabaseError {
@@ -225,7 +229,7 @@ private abstract class InternalDB : Object {
 		// InsertApp statement
 		try {
 			db_assert (db.prepare_v2 ("INSERT INTO applications (" + appcols + ") "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					-1, out insert_app), "prepare app insert statement");
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (e.message);
@@ -234,7 +238,7 @@ private abstract class InternalDB : Object {
 		// InsertDep statement
 		try {
 			db_assert (db.prepare_v2 ("INSERT INTO dependencies (" + depcols + ") "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					-1, out insert_dep), "prepare dependency insert statement");
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (e.message);
@@ -447,6 +451,8 @@ private abstract class InternalDB : Object {
 			//TODO: Handle arch field
 			db_assert (insert_app.bind_text (AppRow.ARCHITECTURE +1, "current"), "assign value");
 
+			db_assert (insert_app.bind_text (AppRow.ORIGIN +1, item.origin), "assign value");
+
 			db_assert (insert_app.bind_int64 (AppRow.INST_TIME +1, item.install_time), "assign value");
 
 			db_assert (insert_app.bind_text (AppRow.DEPS +1, item.dependencies), "assign value");
@@ -504,7 +510,7 @@ private abstract class InternalDB : Object {
 			item.state = AppState.INSTALLED_SHARED;
 		else
 			item.state = AppState.INSTALLED_PRIVATE;
-		item.origin = AppOrigin.IPK;
+		item.origin = stmt.column_text (AppRow.ORIGIN);
 
 		return item;
 	}
@@ -776,6 +782,8 @@ private abstract class InternalDB : Object {
 			db_assert (insert_dep.bind_int64 (DepRow.INST_TIME +1, dep.install_time), "bind value");
 
 			db_assert (insert_dep.bind_text (DepRow.ARCHITECTURE +1, dep.architecture), "bind value");
+
+			db_assert (insert_dep.bind_text (DepRow.ORIGIN +1, dep.origin), "bind value");
 
 			db_assert (insert_dep.bind_text (DepRow.PROVIDED_BY +1, dep.get_installdata_as_string ()), "bind value");
 

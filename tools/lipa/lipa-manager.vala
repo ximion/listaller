@@ -121,9 +121,9 @@ public class LipaManager : LipaModule {
 	}
 
 	public void list_applications (bool all = false) {
-		AppOrigin filter = AppOrigin.EXTERN;
+		string filter = "?";
 		if (all)
-			filter = AppOrigin.ALL;
+			filter = "*";
 
 		show_progress = false;
 		mgr.find_applications (filter);

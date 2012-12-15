@@ -1,4 +1,4 @@
-/* database.vala - Easy-to-use interface to Listaller's software database(s)
+/* software-db.vala - Easy-to-use interface to Listaller's software database(s)
  *
  * Copyright (C) 2010-2012 Matthias Klumpp <matthias@tenstral.net>
  *
@@ -350,7 +350,7 @@ private class SoftwareDB : MessageObject {
 		}
 	}
 
-	public bool find_all_applications (AppOrigin filter, out ArrayList<AppItem> appList = null) {
+	public bool find_all_applications (string filter, out ArrayList<AppItem> appList = null) {
 		ArrayList<AppItem> alist = new ArrayList<AppItem> ();
 
 		double one = 100d / get_applications_count ();

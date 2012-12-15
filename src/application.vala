@@ -25,40 +25,6 @@ using Listaller.Utils;
 namespace Listaller {
 
 /**
- * Origin of an application
- *
- * Could be from an IPK package, from a native or
- * unknown source. In most cases, you don't care
- * about the origin of an application
- */
-public enum AppOrigin {
-	UNKNOWN,
-	ALL,
-	IPK,
-	NATIVE,
-	EXTERN;
-
-	public string to_string () {
-		switch (this) {
-			case IPK:
-				return ("package_ipk");
-
-			case NATIVE:
-				return ("package_native");
-
-			case EXTERN:
-				return ("package_extern");
-
-			case UNKNOWN:
-				return ("unknown");
-
-			default:
-				return ("unknown-origin");
-		}
-	}
-}
-
-/**
  * Status of an application
  *
  * Indicates if an application is installed (and in which mode
@@ -123,7 +89,7 @@ public class AppItem : Object {
 	private int64  _install_time;
 	private string _dependencies;
 	private AppState _state;
-	private AppOrigin _origin;
+	private string _origin;
 	private string _app_id;
 	private SetupSettings setup_settings;
 
@@ -243,7 +209,7 @@ public class AppItem : Object {
 
 	public string replaces { get; set; }
 
-	public AppOrigin origin {
+	public string origin {
 		get { return _origin; }
 		set { _origin = value; }
 	}
@@ -265,7 +231,7 @@ public class AppItem : Object {
 		_description = "";
 		install_time = 0;
 		categories = "all;";
-		origin = AppOrigin.UNKNOWN;
+		origin = "unknown";
 		_app_id = "";
 		_desktop_file = "";
 		_website = "";
@@ -276,6 +242,10 @@ public class AppItem : Object {
 			name = "",
 			text = ""
 		};
+	}
+
+	public void set_origin_local () {
+		origin = "local";
 	}
 
 	public AppItem (string afullname, string aversion, string desktop_filename = "") {
@@ -366,28 +336,6 @@ public class AppItem : Object {
 		assert (appid != "");
 	}
 
-	public void set_origin_from_string (string? s) {
-		if (s == null)
-			s = "";
-		switch (s) {
-			case ("package_ipk"):
-				origin = AppOrigin.IPK;
-				break;
-
-			case ("package_native"):
-				origin = AppOrigin.NATIVE;
-				break;
-
-			case ("package_extern"):
-				origin = AppOrigin.EXTERN;
-				break;
-
-			default:
-				origin = AppOrigin.UNKNOWN;
-				break;
-		}
-	}
-
 	/** Build a Listaller application-id
 	 *
 	 * An application ID has the following form:
@@ -396,7 +344,7 @@ public class AppItem : Object {
 	 * version is the application's version
 	 * arch the architecture(s) the app was build for
 	 * desktop_file is the application's desktop file
-	 * origin is the origin of this app, ipkpackage, native-pkg, LOKI etc.
+	 * origin is the origin of this app, e.g. a repository-id, "unknown" or "local"
 	 *
 	 * @return a valid application-id
 	 */
@@ -409,10 +357,10 @@ public class AppItem : Object {
 			debug (_("We don't know a desktop-file for application '%s'!").printf (full_name));
 			// If no desktop file was found, use application name and version as ID
 			res = idname + ";" + version;
-			res = res + ";" + ";" + origin.to_string ();
+			res = res + ";" + ";" + origin;
 		} else {
 			res = idname + ";" + version + ";" + desktop_file + ";";
-			res += origin.to_string ();
+			res += origin;
 		}
 		return res;
 	}
@@ -444,7 +392,7 @@ public class AppItem : Object {
 		string dfile = blocks[2];
 		// Set application origin
 		string orig = blocks[3];
-		set_origin_from_string (orig);
+		origin = orig;
 
 		// Rebuild the desktop file
 		if (dfile != null) {

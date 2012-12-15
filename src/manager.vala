@@ -91,7 +91,7 @@ public class Manager : MessageObject {
 		return true;
 	}
 
-	public bool find_applications (AppOrigin filter, out ArrayList<AppItem> appList = null) {
+	public bool find_applications (string filter, out ArrayList<AppItem> appList = null) {
 		SoftwareDB db;
 		if (!init_db (out db, false))
 			return false;
@@ -107,7 +107,7 @@ public class Manager : MessageObject {
 	 * @param appList ArrayList of AppItems to store the result, or NULL
 	 *                (all applications are also emitted in the "application" signal)
 	 */
-	public bool find_applications_by_values (AppOrigin filter,
+	public bool find_applications_by_values (string filter,
 						 [CCode (array_null_terminated = true, array_length = false)] string[] values,
 						 out ArrayList<AppItem> appList = null) {
 		SoftwareDB db;

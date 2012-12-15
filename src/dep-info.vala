@@ -70,6 +70,8 @@ public class Dependency: Object {
 	public string author { get; internal set; }
 	public string version { get; internal set; }
 
+	public string origin { get; internal set; }
+
 	private bool _satisfied;
 	public bool satisfied {
 		get {
@@ -136,6 +138,7 @@ public class Dependency: Object {
 		environment = "";
 		author = "";
 		_full_name = "";
+		origin = "unknown";
 		architecture = Utils.system_machine ();
 	}
 
