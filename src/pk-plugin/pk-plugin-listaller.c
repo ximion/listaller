@@ -106,7 +106,7 @@ pk_listaller_find_applications (PkPlugin *plugin, gchar **values)
 {
 	g_debug ("listaller: searching for applications: %s", values[0]);
 	listaller_manager_find_applications_by_values (plugin->priv->mgr,
-						       LISTALLER_APP_ORIGIN_EXTERN,
+						       "*",
 						       values,
 						       NULL);
 }
@@ -714,8 +714,8 @@ pk_plugin_transaction_finished_results (PkPlugin *plugin,
 {
 	PkRoleEnum role;
 
-	if (pk_backend_job_get_exit_code (transaction->priv->job) == PK_EXIT_ENUM_CANCELLED) {
-		g_debug ("skipping finished_results() because transaction was cancelled";
+	if (pk_backend_job_get_exit_code (plugin->job) == PK_EXIT_ENUM_CANCELLED) {
+		g_debug ("skipping finished_results() because transaction was cancelled");
 		return;
 	}
 
