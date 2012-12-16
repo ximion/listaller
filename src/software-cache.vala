@@ -32,10 +32,13 @@ private class SoftwareCache : Object {
 	private RepoCacheDB cache_db;
 	private bool writeable;
 
+	private string dbname;
+	private string dbname_tmp;
+
 	public SoftwareCache (bool open_write = false) {
-		string dbname;
 		var conf = new Config ();
 		dbname = Path.build_filename (conf.shared_repo_cache_dir (), "available.db", null);
+		dbname_tmp = Path.build_filename (conf.shared_repo_cache_dir (), "available_tmp.db", null);
 
 		cache_db = new RepoCacheDB (dbname);
 		writeable = open_write;
@@ -63,8 +66,6 @@ private class SoftwareCache : Object {
 		if (!writeable)
 			critical ("Tried to refresh non-writeable software cache!");
 
-		var conf = new Config ();
-		string dbname_tmp = Path.build_filename (conf.shared_repo_cache_dir (), "available_tmp.db", null);
 		// clear existing db, which might be left from a failed cache update
 		FileUtils.remove (dbname_tmp);
 
@@ -80,15 +81,25 @@ private class SoftwareCache : Object {
 		if (!writeable)
 			critical ("Tried to finish refresh of non-writeable software cache!");
 
-		var conf = new Config ();
-		string dbname_tmp = Path.build_filename (conf.shared_repo_cache_dir (), "available_tmp.db", null);
-		string dbname = Path.build_filename (conf.shared_repo_cache_dir (), "available.db", null);
-
 		cache_db = null;
 		if (FileUtils.test (dbname_tmp, FileTest.EXISTS)) {
 			FileUtils.remove (dbname);
 			FileUtils.rename (dbname_tmp, dbname);
 		}
+
+		cache_db = new RepoCacheDB (dbname);
+		cache_db.open_rw ();
+	}
+
+	/**
+	 * Aborts a safe-refresh action without damaging the original database
+	 */
+	public void abort_safe_refresh () {
+		if (!writeable)
+			critical ("Tried to abort refresh of non-writeable software cache!");
+
+		cache_db = null;
+		FileUtils.remove (dbname_tmp);
 
 		cache_db = new RepoCacheDB (dbname);
 		cache_db.open_rw ();
