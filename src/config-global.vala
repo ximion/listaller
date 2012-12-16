@@ -34,6 +34,7 @@ internal class Config : Object {
 	public  const string tmpdir_volatile = "/tmp";
 	private const string confdir = "/etc/listaller";
 	private const string suworkdir = "/var/lib/listaller";
+	private const string sucachedir = "/var/cache/listaller";
 	private const string datadir = PkgConfig.DATADIR + "/listaller";
 	private const string su_desktopdir = PkgConfig.PREFIXDIR + "/share/applications";
 	private const string su_icondir = "/usr/share/icons/hicolor";
@@ -75,6 +76,12 @@ internal class Config : Object {
 		} catch (Error e) {
 			su_instroot = "/opt";
 		}
+
+		// create some standard dirs which might not have been created already
+		if (Utils.is_root ()) {
+			Utils.create_dir_parents (sucachedir);
+			Utils.create_dir_parents (suworkdir);
+		}
 	}
 
 	[CCode (array_length = false, array_null_terminated = true)]
@@ -95,7 +102,7 @@ internal class Config : Object {
 	}
 
 	public string shared_repo_cache_dir () {
-		string dir = Path.build_filename (suworkdir, "repo", null);
+		string dir = Path.build_filename (sucachedir, "repo", null);
 		Utils.create_dir_parents (dir);
 		return dir;
 	}

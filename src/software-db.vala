@@ -35,7 +35,7 @@ private class SoftwareDB : MessageObject {
 	private LocalDB? db_shared;
 	private LocalDB? db_priv;
 
-	private RemoteCacheDB db_available;
+	private RepoCacheDB db_available;
 
 	public DBType force_db { get; set; }
 	public SetupSettings setup_settings { get; private set; }

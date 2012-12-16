@@ -25,4 +25,78 @@ using Listaller.Utils;
 
 namespace Listaller.Repo {
 
+/**
+ * Access Listaller's remote repository cache
+ */
+private class SoftwareCache : Object {
+	private RepoCacheDB cache_db;
+	private bool writeable;
+
+	public SoftwareCache (bool open_write = false) {
+		string dbname;
+		var conf = new Config ();
+		dbname = Path.build_filename (conf.shared_repo_cache_dir (), "available.db", null);
+
+		cache_db = new RepoCacheDB (dbname);
+		writeable = open_write;
+		if (writeable)
+			cache_db.open_rw ();
+		else
+			cache_db.open_r ();
+	}
+
+	public void update_application (AppItem app, string arch) {
+		AppItem? tmpApp;
+
+		tmpApp = cache_db.get_application_by_idname (app.idname);
+		if (tmpApp != null) {
+			cache_db.remove_application (tmpApp);
+		}
+
+		cache_db.add_application (app, arch);
+	}
+
+	/**
+	 * This method will open a new tmp database for re-writing the cache
+	 */
+	public void prepare_safe_refresh () {
+		if (!writeable)
+			critical ("Tried to refresh non-writeable software cache!");
+
+		var conf = new Config ();
+		string dbname_tmp = Path.build_filename (conf.shared_repo_cache_dir (), "available_tmp.db", null);
+		// clear existing db, which might be left from a failed cache update
+		FileUtils.remove (dbname_tmp);
+
+		cache_db = null;
+		cache_db = new RepoCacheDB (dbname_tmp);
+		cache_db.open_rw ();
+	}
+
+	/**
+	 * Finishes a safe-update
+	 */
+	public void finish_safe_refresh () {
+		if (!writeable)
+			critical ("Tried to finish refresh of non-writeable software cache!");
+
+		var conf = new Config ();
+		string dbname_tmp = Path.build_filename (conf.shared_repo_cache_dir (), "available_tmp.db", null);
+		string dbname = Path.build_filename (conf.shared_repo_cache_dir (), "available.db", null);
+
+		cache_db = null;
+		if (FileUtils.test (dbname_tmp, FileTest.EXISTS)) {
+			FileUtils.remove (dbname);
+			FileUtils.rename (dbname_tmp, dbname);
+		}
+
+		cache_db = new RepoCacheDB (dbname);
+		cache_db.open_rw ();
+	}
+
+	public ArrayList<AppItem>? get_applications_available () {
+		return cache_db.get_applications_all ();
+	}
 }
+
+} // End of namespace: Listaller.Repo

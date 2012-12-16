@@ -60,6 +60,7 @@ internal class Settings : Object {
  */
 internal abstract class ContentFile : Object {
 	protected MetaFile data;
+	protected string repo_origin;
 
 	public ContentFile () {
 		data = new MetaFile ();
@@ -211,6 +212,8 @@ internal abstract class ContentFile : Object {
 		if (s != "")
 			app.description = s;
 
+		app.origin = repo_origin;
+
 		return app;
 	}
 
@@ -253,8 +256,9 @@ internal abstract class ContentFile : Object {
 internal class ContentIndex : ContentFile {
 	private MetaFile data;
 
-	public ContentIndex () {
+	public ContentIndex (string origin) {
 		base ();
+		repo_origin = origin;
 	}
 
 	public void update_application (AppItem app) {
@@ -271,35 +275,6 @@ internal class ContentIndex : ContentFile {
 			data.add_value ("Author", app.author);
 		if (app.description != null)
 			data.add_value ("Description", app.description);
-	}
-}
-
-/**
- * Access Listaller's repository cache
- */
-private class ContentCache : ContentFile {
-
-	public ContentCache () {
-		base ();
-	}
-
-	public void update_application (AppItem app, string arch, string origin) {
-		bool ret;
-		ret = open_data_block_for_application (app);
-		if (!ret)
-			data.reset ();
-
-		data.add_value ("Type", "application");
-		data.add_value ("ID", app.idname);
-		data.add_value ("Name", app.full_name);
-		data.add_value ("Version", app.version);
-		if (app.author != null)
-			data.add_value ("Author", app.author);
-		if (app.description != null)
-			data.add_value ("Description", app.description);
-
-		data.add_value ("Architecture", arch);
-		data.add_value ("Origin", origin);
 	}
 }
 

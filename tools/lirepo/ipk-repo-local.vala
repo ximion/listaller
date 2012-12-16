@@ -30,7 +30,7 @@ private class RepoLocal : Repo {
 	private string repo_pool_dir;
 
 	public RepoLocal (string dir) {
-		base ();
+		base ("local");
 		repo_root = dir;
 		repo_pool_dir = Path.build_filename (dir, "apps", "pool", null);
 

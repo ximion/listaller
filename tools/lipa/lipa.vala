@@ -62,7 +62,7 @@ public class LipaTool : Object {
 		N_("List installed Listaller applications"), null },
 		{ "all", 0, 0, OptionArg.NONE, ref o_mode_list__all,
 		N_("List all installed applications"), null },
-		{ "refresh-repos", 0, 0, OptionArg.NONE, ref o_mode_refresh,
+		{ "refresh-cache", 0, 0, OptionArg.NONE, ref o_mode_refresh,
 		N_("Refresh repository application cache"), null },
 		{ null }
 	};

@@ -418,7 +418,7 @@ private abstract class InternalDB : Object {
 
 	/* Application stuff */
 
-	public virtual bool add_application (AppItem item) throws DatabaseError {
+	public virtual bool add_application (AppItem item, string arch = "current") throws DatabaseError {
 		if (!database_writeable ()) {
 			throw new DatabaseError.ERROR (_("Tried to write on readonly database! (This should never happen)"));
 		}
@@ -448,8 +448,7 @@ private abstract class InternalDB : Object {
 
 			db_assert (insert_app.bind_text (AppRow.HOMEPAGE +1, item.website), "assign value");
 
-			//TODO: Handle arch field
-			db_assert (insert_app.bind_text (AppRow.ARCHITECTURE +1, "current"), "assign value");
+			db_assert (insert_app.bind_text (AppRow.ARCHITECTURE +1, arch), "assign value");
 
 			db_assert (insert_app.bind_text (AppRow.ORIGIN +1, item.origin), "assign value");
 
@@ -915,10 +914,10 @@ private class LocalDB : InternalDB {
 		return ret;
 	}
 
-	public override bool add_application (AppItem item) throws DatabaseError {
+	public override bool add_application (AppItem item, string arch = "current") throws DatabaseError {
 		bool ret;
 		try {
-			ret = base.add_application (item);
+			ret = base.add_application (item, arch);
 		} catch (Error e) { throw e; }
 		if (!ret)
 			return ret;
@@ -1045,13 +1044,9 @@ private class LocalDB : InternalDB {
  *
  * This class is used to operate on Listaller's repository cache
  */
-private class RemoteCacheDB : InternalDB {
+private class RepoCacheDB : InternalDB {
 
-	public RemoteCacheDB () {
-		string dbname;
-		var conf = new Config ();
-		dbname = Path.build_filename (conf.shared_repo_cache_dir (), "available.db", null);
-
+	public RepoCacheDB (string dbname) {
 		base (dbname, true);
 	}
 }

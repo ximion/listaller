@@ -63,9 +63,9 @@ internal abstract class Repo : MessageObject {
 
 	private string current_cindex_fname;
 
-	public Repo () {
+	public Repo (string origin) {
 		rsettings = new Listaller.Repo.Settings ();
-		cindex = new Listaller.Repo.ContentIndex ();
+		cindex = new Listaller.Repo.ContentIndex (origin);
 		current_cindex_fname = "";
 	}
 
@@ -122,12 +122,13 @@ internal class RepoRemote : Repo {
 	}
 
 	public RepoRemote (string url) {
+		base (url);
 		repo_url = url;
 
 		current_arch = system_machine_generic ();
 		var conf = new Config ();
 		tmpdir = conf.get_unique_tmp_dir ("repo");
-		cindex_indep = new Listaller.Repo.ContentIndex ();
+		cindex_indep = new Listaller.Repo.ContentIndex (url);
 	}
 
 	public void load_server_index () {

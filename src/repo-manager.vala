@@ -27,7 +27,7 @@ namespace Listaller.Repo {
 private class Manager : MessageObject {
 	private Repo.ListFile repo_list;
 	private IPK.RepoRemote[] repos;
-	private Repo.ContentCache cache;
+	private Repo.SoftwareCache cache;
 
 	private string cache_fname;
 
@@ -44,13 +44,12 @@ private class Manager : MessageObject {
 			repos += new IPK.RepoRemote (url);
 		}
 
-		cache_fname = Path.build_filename (conf.shared_repo_cache_dir (), "application-cache.list", null);
-		cache = new Repo.ContentCache ();
-		cache.open_file (cache_fname);
+		cache = new Repo.SoftwareCache (true);
 	}
 
 	public bool refresh_cache () {
-		var tmpCache = new Repo.ContentCache ();
+		// we write on a temporary db, in case something goes wrong
+		cache.prepare_safe_refresh ();
 
 		foreach (IPK.RepoRemote repo in repos) {
 			repo.load_server_index ();
@@ -59,17 +58,17 @@ private class Manager : MessageObject {
 			// arch-dependent apps
 			appList = repo.get_available_applications (false);
 			foreach (AppItem app in appList) {
-				tmpCache.update_application (app, Utils.system_machine_generic (), repo.url);
+				cache.update_application (app, Utils.system_machine_generic ());
 			}
 			// arch-independent apps
 			appList = repo.get_available_applications (true);
 			foreach (AppItem app in appList) {
-				tmpCache.update_application (app, "all", repo.url);
+				cache.update_application (app, "all");
 			}
 		}
 
-		cache = tmpCache;
-		cache.save_to_file (cache_fname, true);
+		// load the new cache
+		cache.finish_safe_refresh ();
 
 		//! TODO: Do proper error-handling in the code above!
 		return true;
@@ -79,7 +78,7 @@ private class Manager : MessageObject {
 		ArrayList<AppItem> res;
 
 		//! TODO: implement application filter!
-		res = cache.get_application_list ();
+		res = cache.get_applications_available ();
 
 		return res;
 	}
