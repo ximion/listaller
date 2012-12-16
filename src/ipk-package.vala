@@ -216,7 +216,7 @@ private class Package : MessageObject {
 			return false;
 		}
 
-		ret = create_dir_parents (dest);
+		ret = create_dir_structure (dest);
 		if (!ret) {
 			// Undo changes & emit error
 			rollback_installation ();

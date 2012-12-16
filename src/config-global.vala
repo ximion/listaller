@@ -79,8 +79,8 @@ internal class Config : Object {
 
 		// create some standard dirs which might not have been created already
 		if (Utils.is_root ()) {
-			Utils.create_dir_parents (sucachedir);
-			Utils.create_dir_parents (suworkdir);
+			Utils.create_dir_structure (sucachedir);
+			Utils.create_dir_structure (suworkdir);
 		}
 	}
 
@@ -103,7 +103,7 @@ internal class Config : Object {
 
 	public string shared_repo_cache_dir () {
 		string dir = Path.build_filename (sucachedir, "repo", null);
-		Utils.create_dir_parents (dir);
+		Utils.create_dir_structure (dir);
 		return dir;
 	}
 
@@ -155,7 +155,7 @@ internal class Config : Object {
 		string ret;
 		//! ret = Environment.get_tmp_dir ();
 		ret = Path.build_filename (tmpdir, "listaller");
-		Utils.create_dir_parents (ret);
+		Utils.create_dir_structure (ret);
 
 		return ret;
 	}

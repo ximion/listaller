@@ -107,7 +107,7 @@ private class AutoCompiler : Object {
 			return -1;
 		}
 		string builddir = Path.build_filename (srcdir, "build_%s".printf (Utils.system_osname_arch_generic ()), null);
-		Utils.create_dir_parents (builddir);
+		Utils.create_dir_structure (builddir);
 		string lastdir = Environment.get_current_dir ();
 		Environment.set_current_dir (builddir);
 

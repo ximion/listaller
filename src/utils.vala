@@ -185,7 +185,7 @@ private string system_machine_generic () {
 /**
  * Create directory structure
  */
-private bool create_dir_parents (string dirname) {
+private bool create_dir_structure (string dirname) {
 	File d = File.new_for_path (dirname);
 	try {
 		if (!d.query_exists ()) {

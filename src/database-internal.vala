@@ -905,7 +905,7 @@ private class LocalDB : InternalDB {
 	}
 
 	public override bool open_rw () throws DatabaseError {
-		create_dir_parents (regdir);
+		create_dir_structure (regdir);
 		bool ret;
 		try {
 			ret = base.open_rw ();
@@ -923,7 +923,7 @@ private class LocalDB : InternalDB {
 			return ret;
 
 		string metadir = Path.build_filename (regdir, item.idname, null);
-		create_dir_parents (metadir);
+		create_dir_structure (metadir);
 
 		// Save extra package properties
 		var data = new IPK.MetaFile ();

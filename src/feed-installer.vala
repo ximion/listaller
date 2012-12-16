@@ -177,7 +177,7 @@ private class FeedInstaller : MessageObject {
 				return false;
 		}
 		// Now extract it!
-		create_dir_parents (dest);
+		create_dir_structure (dest);
 		ret = extract_entry_to (ar, e, dest);
 		if ((!ret) && (Path.get_basename (fname) != ".")) {
 			// TODO

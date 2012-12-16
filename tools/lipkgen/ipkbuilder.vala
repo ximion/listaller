@@ -104,7 +104,7 @@ private class Builder : Object {
 		a.set_compression_xz ();
 		a.set_format_pax_restricted ();
 		// Open output
-		create_dir_parents (Path.build_filename (tmpdir, "data", null));
+		create_dir_structure (Path.build_filename (tmpdir, "data", null));
 		string apath = Path.build_filename (tmpdir, "data", "data-" + arch + ".tar.xz", null);
 		a.open_filename (apath);
 		VarSolver vs = new VarSolver (appInfo.idname);
@@ -483,8 +483,8 @@ private class Builder : Object {
 
 		Report.set_print_fatal_msg (false);
 
-		create_dir_parents (Path.build_filename (tmpdir, "control", null));
-		create_dir_parents (Path.build_filename (tmpdir, "data", null));
+		create_dir_structure (Path.build_filename (tmpdir, "control", null));
+		create_dir_structure (Path.build_filename (tmpdir, "data", null));
 
 		// Get application-id from IPK source control XML file
 		appInfo = ipkCDir.get_application ();

@@ -51,7 +51,7 @@ private class RepoLocal : Repo {
 
 		string canonical_pkgname = build_canonical_pkgname (app, arch);
 
-		ret = create_dir_parents (app_dir);
+		ret = create_dir_structure (app_dir);
 		if (!ret) {
 			Report.log_error ("Unable to create app-id directory.");
 			return false;
@@ -98,7 +98,7 @@ private class RepoLocal : Repo {
 
 	public bool add_package (string fname) {
 		bool ret = false;
-		create_dir_parents (repo_pool_dir);
+		create_dir_structure (repo_pool_dir);
 
 		var ipkp = new IPK.Package (fname);
 		ret = ipkp.initialize ();

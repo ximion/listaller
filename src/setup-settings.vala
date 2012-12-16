@@ -123,7 +123,7 @@ public class SetupSettings : Object {
 
 	private void touch_dir (string dirname, string warnmsg = "Error: %s") {
 		if ((shared_mode && Utils.is_root ()) || (!shared_mode)) {
-			Utils.create_dir_parents (dirname);
+			Utils.create_dir_structure (dirname);
 		}
 	}
 
