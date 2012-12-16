@@ -90,7 +90,7 @@ pk_listaller_appitem_from_pkid (const gchar *package_id)
 	listaller_app_item_set_idname (item, parts[0]);
 	listaller_app_item_set_version (item, parts[1]);
 	listaller_app_item_set_desktop_file (item, tmp[1]);
-	listaller_app_item_set_shared (item, TRUE);
+	listaller_app_item_set_state (item, LISTALLER_APP_STATE_INSTALLED_SHARED);
 
 	g_debug ("listaller: <appid> %s %s %s", parts[0], parts[1], tmp[1]);
 
