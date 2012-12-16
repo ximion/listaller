@@ -9,8 +9,9 @@ src/setup-settings.vala
 src/status.vala
 src/utils.vala
 src/application.vala
-src/database.vala
 src/database-internal.vala
+src/software-db.vala
+src/software-cache.vala
 src/key-manager.vala
 src/gpgex.vala
 src/signature.vala
