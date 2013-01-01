@@ -1,6 +1,6 @@
 /* task.vala -- Perform more complex app-management tasks
  *
- * Copyright (C) 2012 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2012-2013 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU Lesser General Public License Version 3
  *
@@ -33,16 +33,51 @@ namespace Listaller {
  * This class combines functionality from all three Listaller departments,
  * updater, installer and manager.
  */
-public class ManagerTask : Manager {
+public class Task : Manager {
 
 	/**
 	 * Create a new Listaller task
 	 *
 	 * @param shared_mode Whether we are in shared mode or not.
 	 */
-	public ManagerTask (bool shared_mode = true) {
+	public Task (bool shared_mode = true) {
 		base (shared_mode);
+	}
+	
+	private void pk_progress_cb (PackageKit.Progress progress, PackageKit.ProgressType type) {
+		if (type == PackageKit.ProgressType.PERCENTAGE)
+			change_progress (progress.percentage);
+		if (type == PackageKit.ProgressType.ITEM_PROGRESS)
+			change_item_progress (progress.item_progress.package_id, progress.item_progress.percentage);
+	}
+	
+	public bool refresh_repository_cache () {
+		bool ret = false;
+
+		if (is_root ()) {
+			var repoMgr = new Repo.Manager ();
+			ret = repoMgr.refresh_cache ();
+		} else {
+			var pktask = new PackageKit.Task ();
+			PackageKit.Results? pkres;
+
+			change_progress (0);
+			try {
+				pkres = pktask.refresh_cache_sync (false, null, pk_progress_cb);
+			} catch (Error e) {
+				emit_error (ErrorEnum.REFRESH_FAILED, e.message);
+				return false;
+			}
+
+			if (pkres.get_exit_code () != PackageKit.Exit.SUCCESS) {
+				PackageKit.Error error = pkres.get_error_code ();
+				emit_error (ErrorEnum.REFRESH_FAILED, error.get_details ());
+				return false;
+			}
+		}
+
+		return ret;
 	}
 }
 
-} // End of namespace
+} // End of namespace: Listaller

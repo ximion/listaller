@@ -209,8 +209,13 @@ internal abstract class ContentFile : Object {
 		if (s != "")
 			app.author = s;
 		s = data.get_value ("Description");
-		if (s != "")
-			app.description = s;
+
+		if (s != "") {
+			string[] desc_lines = s.split ("\n", 2);
+
+			app.summary = desc_lines[0];
+			app.description = desc_lines[1];
+		}
 
 		app.origin = repo_origin;
 

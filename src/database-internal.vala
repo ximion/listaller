@@ -145,7 +145,7 @@ private abstract class InternalDB : Object {
 
 	private bool locked;
 	private string dbname;
-	protected bool shared_db;
+	protected AppState db_type;
 	protected bool writeable;
 
 	private Sqlite.Statement insert_app;
@@ -153,11 +153,11 @@ private abstract class InternalDB : Object {
 
 	public signal void message (MessageItem message);
 
-	public InternalDB (string fname, bool shared_mode) {
+	public InternalDB (string fname, AppState dbtype) {
 		dbname = fname;
 
 		// Whether we fetch data from the "shared" or "private" application database
-		shared_db = shared_mode;
+		db_type = dbtype;
 		writeable = false;
 	}
 
@@ -215,7 +215,7 @@ private abstract class InternalDB : Object {
 		}
 		if (rc != Sqlite.OK) {
 			string msg = "Can't open database! (Message: %d, %s)".printf (rc, db.errmsg ());
-			stderr.printf (msg);
+			debug (msg);
 			throw new DatabaseError.ERROR (msg);
 		}
 
@@ -505,10 +505,8 @@ private abstract class InternalDB : Object {
 
 		item.install_time = stmt.column_int (AppRow.INST_TIME);
 		item.dependencies = stmt.column_text (AppRow.DEPS);
-		if (shared_db)
-			item.state = AppState.INSTALLED_SHARED;
-		else
-			item.state = AppState.INSTALLED_PRIVATE;
+		item.state = db_type;
+
 		item.origin = stmt.column_text (AppRow.ORIGIN);
 
 		return item;
@@ -898,7 +896,13 @@ private class LocalDB : InternalDB {
 		// The database filename
 		string dbfname = tmpSSettings.database_file ();
 
-		base (dbfname, shared_mode);
+		AppState dbstate;
+		if (shared_mode)
+			dbstate = AppState.INSTALLED_SHARED;
+		else
+			dbstate = AppState.INSTALLED_PRIVATE;
+
+		base (dbfname, dbstate);
 
 		// Path with additional data (e.g. the file-list or icons) which is not stored in the SQLite DB
 		regdir = Path.build_filename (tmpSSettings.appregister_dir (), "info", null);
@@ -956,7 +960,7 @@ private class LocalDB : InternalDB {
 				foreach (IPK.FileEntry fe in flist) {
 					if (fe.is_installed ()) {
 						string fname = fe.fname_installed;
-						if (!shared_db)
+						if (db_type == AppState.INSTALLED_PRIVATE)
 							fname = fold_user_dir (fname);
 						// store hash and filename in compact form
 						string hash = fe.hash;
@@ -991,7 +995,7 @@ private class LocalDB : InternalDB {
 					string[] parts = line.split (" ", 2);
 					string fname = parts[1];
 
-					if (!shared_db)
+					if (db_type == AppState.INSTALLED_PRIVATE)
 						fname = expand_user_dir (fname);
 
 					var fe = new IPK.FileEntry ();
@@ -1047,7 +1051,7 @@ private class LocalDB : InternalDB {
 private class RepoCacheDB : InternalDB {
 
 	public RepoCacheDB (string dbname) {
-		base (dbname, true);
+		base (dbname, AppState.AVAILABLE);
 	}
 }
 

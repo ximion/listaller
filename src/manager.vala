@@ -263,9 +263,9 @@ public class Manager : MessageObject {
 
 		// We only want to fetch dependencies from the correct database, so limit DB usage
 		if (item.state == AppState.INSTALLED_SHARED)
-			db.force_db = DBType.SHARED;
+			db.dbflags = DatabaseFlags.USE_SHARED_INSTALLED;
 		else
-			db.force_db = DBType.PRIVATE;
+			db.dbflags = DatabaseFlags.USE_PRIVATE_INSTALLED;
 
 		var tmpItem = db.get_application_by_idname (item.idname);
 		if (tmpItem == null)
@@ -318,9 +318,9 @@ public class Manager : MessageObject {
 
 		// We only want to fetch dependencies from the correct database, so limit DB usage
 		if (app.state == AppState.INSTALLED_SHARED)
-			db.force_db = DBType.SHARED;
+			db.dbflags = DatabaseFlags.USE_SHARED_INSTALLED;
 		else
-			db.force_db = DBType.PRIVATE;
+			db.dbflags = DatabaseFlags.USE_PRIVATE_INSTALLED;
 
 		// A new DepManager to resolve environment
 		DepManager depman = new DepManager (db);
@@ -337,34 +337,6 @@ public class Manager : MessageObject {
 		}
 
 		return paths;
-	}
-
-	public bool refresh_repository_cache () {
-		bool ret = false;
-
-		if (is_root ()) {
-			var repoMgr = new Repo.Manager ();
-			ret = repoMgr.refresh_cache ();
-		} else {
-			var pktask = new PackageKit.Task ();
-			PackageKit.Results? pkres;
-
-			change_progress (0);
-			try {
-				pkres = pktask.refresh_cache_sync (false, null, pk_progress_cb);
-			} catch (Error e) {
-				emit_error (ErrorEnum.REFRESH_FAILED, e.message);
-				return false;
-			}
-
-			if (pkres.get_exit_code () != PackageKit.Exit.SUCCESS) {
-				PackageKit.Error error = pkres.get_error_code ();
-				emit_error (ErrorEnum.REFRESH_FAILED, error.get_details ());
-				return false;
-			}
-		}
-
-		return ret;
 	}
 
 }

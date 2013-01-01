@@ -25,19 +25,37 @@ using Listaller.Utils;
 
 namespace Listaller {
 
-private enum DBType {
-	NONE,
-	PRIVATE,
-	SHARED;
+[Flags]
+private enum DatabaseFlags {
+	NONE = 0,
+	USE_PRIVATE_INSTALLED,
+	USE_SHARED_INSTALLED,
+	USE_AVAILABLE;
+
+	public inline bool is_all_set (DatabaseFlags flags) {
+		return (this & flags) == flags;
+	}
+
+	public inline bool is_any_set (DatabaseFlags flags) {
+		return (this & flags) != 0;
+	}
+
+        public inline DatabaseFlags set (DatabaseFlags mode) {
+		return (this | mode);
+	}
+
+	public inline DatabaseFlags unset (DatabaseFlags mode) {
+		return (this & ~mode);
+	}
 }
 
 private class SoftwareDB : MessageObject {
 	private LocalDB? db_shared;
 	private LocalDB? db_priv;
 
-	private RepoCacheDB db_available;
+	private Repo.SoftwareCache db_available;
 
-	public DBType force_db { get; set; }
+	public DatabaseFlags dbflags { get; set; }
 	public SetupSettings setup_settings { get; private set; }
 
 	public signal void application (AppItem appid);
@@ -47,7 +65,13 @@ private class SoftwareDB : MessageObject {
 
 		db_shared = null;
 		db_priv = null;
-		force_db = DBType.NONE;
+
+		// build default database flags
+		dbflags = DatabaseFlags.NONE;
+		dbflags = dbflags.set (DatabaseFlags.USE_PRIVATE_INSTALLED);
+		dbflags = dbflags.set (DatabaseFlags.USE_AVAILABLE);
+		if (include_shared)
+			dbflags = dbflags.set (DatabaseFlags.USE_SHARED_INSTALLED);
 
 		if (include_shared) {
 			db_shared = new LocalDB (true, setup_settings.test_mode);
@@ -70,6 +94,10 @@ private class SoftwareDB : MessageObject {
 			db_priv.message.connect ( (m) => { this.message (m); } );
 		if (db_shared != null)
 			db_shared.message.connect ( (m) => { this.message (m); } );
+
+		// open cache of software on remote sources
+		db_available = new Repo.SoftwareCache ();
+		db_available.message.connect ( (m) => { this.message (m); } );
 	}
 
 	private void emit_dberror (string details) {
@@ -83,7 +111,7 @@ private class SoftwareDB : MessageObject {
 			ret = false;
 		}
 
-		if (force_db == DBType.PRIVATE)
+		if (!dbflags.is_all_set (DatabaseFlags.USE_SHARED_INSTALLED))
 			return false;
 
 		/* If shared db does not exist AND we don't have root-access, opening the db will fail.
@@ -101,7 +129,7 @@ private class SoftwareDB : MessageObject {
 	}
 
 	private bool private_db_canbeused (bool error = false) {
-		if (force_db == DBType.SHARED)
+		if (!dbflags.is_all_set (DatabaseFlags.USE_PRIVATE_INSTALLED))
 			return false;
 
 		if (db_priv == null) {
@@ -125,7 +153,7 @@ private class SoftwareDB : MessageObject {
 					db_shared.open_r ();
 			}
 		} catch (Error e) {
-			emit_dberror (_("Unable to open database for read-only: %s").printf (e.message));
+			emit_dberror (_("Unable to open database read-only: %s").printf (e.message));
 			ret = false;
 		}
 		return ret;
@@ -364,6 +392,13 @@ private class SoftwareDB : MessageObject {
 			else
 				alist.add_all (db_shared.get_applications_all ());
 		}
+		if (dbflags.is_all_set (DatabaseFlags.USE_AVAILABLE)) {
+			if (alist == null)
+				alist = db_available.get_applications_available ();
+			else
+				alist.add_all (db_available.get_applications_available ());
+		}
+
 		if (alist == null)
 			return false;
 		_internal_emit_dbapps (one, ref alist);

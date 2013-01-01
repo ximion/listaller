@@ -28,12 +28,14 @@ namespace Listaller.Repo {
 /**
  * Access Listaller's remote repository cache
  */
-private class SoftwareCache : Object {
+private class SoftwareCache : MessageObject {
 	private RepoCacheDB cache_db;
 	private bool writeable;
 
 	private string dbname;
 	private string dbname_tmp;
+
+	private bool opened;
 
 	public SoftwareCache (bool open_write = false) {
 		var conf = new Config ();
@@ -42,13 +44,29 @@ private class SoftwareCache : Object {
 
 		cache_db = new RepoCacheDB (dbname);
 		writeable = open_write;
-		if (writeable)
-			cache_db.open_rw ();
-		else
-			cache_db.open_r ();
+
+		opened = false;
+		try {
+			if (writeable)
+				cache_db.open_rw ();
+			else
+				cache_db.open_r ();
+			opened = true;
+
+		} catch (Error e) {
+			// only if we fail write-opening the cache this is a problem
+			// (in other cases the cache might be unavailable/broken, which will automatically be fixed)
+			if (!writeable)
+				Report.log_info ("Unable to open software cache! Message: %s".printf (e.message));
+			else
+				critical ("Unable to open software cache! %s", e.message);
+		}
 	}
 
 	public void update_application (AppItem app, string arch) {
+		if (!opened)
+			return;
+
 		AppItem? tmpApp;
 
 		tmpApp = cache_db.get_application_by_idname (app.idname);
@@ -65,6 +83,8 @@ private class SoftwareCache : Object {
 	public void prepare_safe_refresh () {
 		if (!writeable)
 			critical ("Tried to refresh non-writeable software cache!");
+		if (!opened)
+			return;
 
 		// clear existing db, which might be left from a failed cache update
 		FileUtils.remove (dbname_tmp);
@@ -80,6 +100,8 @@ private class SoftwareCache : Object {
 	public void finish_safe_refresh () {
 		if (!writeable)
 			critical ("Tried to finish refresh of non-writeable software cache!");
+		if (!opened)
+			return;
 
 		cache_db = null;
 		if (FileUtils.test (dbname_tmp, FileTest.EXISTS)) {
@@ -97,6 +119,8 @@ private class SoftwareCache : Object {
 	public void abort_safe_refresh () {
 		if (!writeable)
 			critical ("Tried to abort refresh of non-writeable software cache!");
+		if (!opened)
+			return;
 
 		cache_db = null;
 		FileUtils.remove (dbname_tmp);
@@ -106,6 +130,9 @@ private class SoftwareCache : Object {
 	}
 
 	public ArrayList<AppItem>? get_applications_available () {
+		if (!opened)
+			return null;
+
 		return cache_db.get_applications_all ();
 	}
 }

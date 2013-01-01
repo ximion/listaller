@@ -149,16 +149,19 @@ public class LipaTool : Object {
 			lipa = lipaManager;
 
 			lipaManager.remove_application (value);
+			
 		} else if (o_mode_list) {
 			var lipaManager = new LipaManager ();
 			lipa = lipaManager;
 
 			lipaManager.list_applications (o_mode_list__all);
-		} if (o_mode_refresh) {
+			
+		} else if (o_mode_refresh) {
 			var lipaManager = new LipaManager ();
 			lipa = lipaManager;
 
 			lipaManager.refresh_cache ();
+			
 		} else {
 			print_nocommand_msg ();
 			exit_code = 0;

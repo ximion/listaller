@@ -82,10 +82,16 @@ gboolean
 pk_plugin_listaller_refresh_repos (PkPlugin *plugin)
 {
 	gboolean res;
+	ListallerTask *litask;
 
+	/* create new Listaller task */
+	litask = listaller_task_new (TRUE);
+	
 	/* run it */
-	res = listaller_manager_refresh_repository_cache (plugin->priv->mgr);
+	res = listaller_task_refresh_repository_cache (litask);
 
+	g_object_unref (litask);
+	
 	/* print warning if refresh fails */
 	if (!res) {
 		g_warning ("listaller: unable to update application data from repositories.");
