@@ -40,7 +40,8 @@ public class LipaManager : LipaModule {
 	private void manager_error_code_cb (ErrorItem error) {
 		// End progress-bar, if it is shown
 		show_progress = false;
-		progress_bar.end ();
+		if (!get_verbose_mode ())
+			progress_bar.end ();
 
 		stderr.printf ("%s\n", error.details);
 		error_code = (int) error.error;
@@ -57,8 +58,9 @@ public class LipaManager : LipaModule {
 		if (item.prog_type != ProgressEnum.MAIN_PROGRESS)
 			return;
 
-		if (show_progress)
-			progress_bar.set_percentage (value);
+		if (!get_verbose_mode ())
+			if (show_progress)
+				progress_bar.set_percentage (value);
 	}
 
 	private string app_ownership_str (AppItem app) {
@@ -110,14 +112,18 @@ public class LipaManager : LipaModule {
 		if (!ret)
 			return;
 
-		progress_bar.start (_("Removing"));
+		if (!get_verbose_mode ())
+			progress_bar.start (_("Removing"));
+
 		// Go!
 		ret = mgr_task.remove_application (app);
 		// On success, set everything to done
 		if (ret) {
-			progress_bar.set_percentage (100);
+			if (!get_verbose_mode ())
+				progress_bar.set_percentage (100);
 		}
-		progress_bar.end ();
+		if (!get_verbose_mode ())
+			progress_bar.end ();
 
 		if (ret) {
 			stdout.printf ("%s\n", _("Removal of %s completed successfully!").printf (app.full_name));
@@ -140,11 +146,14 @@ public class LipaManager : LipaModule {
 	public void refresh_cache () {
 		bool ret;
 
-		progress_bar.start (_("Updating package cache"));
+		if (!get_verbose_mode ())
+			progress_bar.start (_("Updating package cache"));
 		ret = mgr_task.refresh_repository_cache ();
-		if (ret)
+
+		if (!get_verbose_mode ()) {
 			progress_bar.set_percentage (100);
-		progress_bar.end ();
+			progress_bar.end ();
+		}
 	}
 
 	public override void terminate_action () {

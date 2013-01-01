@@ -103,6 +103,10 @@ public void set_verbose_mode (bool enabled) {
 	verbose_mode = enabled;
 }
 
+public bool get_verbose_mode () {
+	return verbose_mode;
+}
+
 public void set_console_mode (bool enabled) {
 	_console = enabled;
 }
