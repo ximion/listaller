@@ -51,13 +51,13 @@ public enum SecurityLevel {
 	public static SecurityLevel from_string (string str) {
 		string s = str.down ();
 		if (s == "high")
-			return LOW;
+			return HIGH;
 		if (s == "medium")
-			return LOW;
+			return MEDIUM;
 		if (s == "low")
 			return LOW;
 		if (s == "dangerous")
-			return LOW;
+			return DANGEROUS;
 
 		return LOW;
 	}
