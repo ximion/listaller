@@ -489,6 +489,8 @@ private class Builder : Object {
 		// Get application-id from IPK source control XML file
 		appInfo = ipkCDir.get_application ();
 
+		debug ("Building package for %s, version: %s (id: %s)", appInfo.full_name, appInfo.version, appInfo.idname);
+
 		// Build IPK control directory
 		ictrl.create_new (ipkCDir.get_doap_data (), ipkVersion);
 

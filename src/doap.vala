@@ -147,7 +147,7 @@ WHERE {
       ?project doap:release ?release .
       ?release doap:name ?name .
       ?release doap:revision ?revision .
-      ?release doap:created ?created
+      OPTIONAL { ?release doap:created ?created }
       OPTIONAL { ?release dc:description ?description }
 }
 ORDER BY DESC(?created)

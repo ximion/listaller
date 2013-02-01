@@ -76,6 +76,12 @@ variables will <em>always</em> have the value described here!</p>
 		application's desktop-file. Values for &lt;?&gt; can be 16, 24, 32, 48, 64, 128 or 256.</p></td>
 		<td><p><file>/usr/share/icons/hicolor/&lt;?&gt;x&lt;?&gt;/apps</file></p></td>   <td><p><file>~/.local/share/icons/hicolor/&lt;?&gt;x&lt;?&gt;/apps</file></p></td>
 	</tr>
+<!--	<tr>
+		<td><p><code>%MANUAL%/man&lt;?&gt;</code></p></td> <td><p>Directory for UNIX manpages</p></td>
+		<td><p><file>/usr/share/man</file></p></td>   <td><p><file>~/.appdata/&lt;appid&gt;/_man</file></p></td>
+	</tr>
+	-->
+	
 </table>
 
 </section>
