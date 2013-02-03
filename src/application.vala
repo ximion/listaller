@@ -486,11 +486,16 @@ public class AppItem : Object {
 		// To get the raw command, we remove the "runapp" call
 		if (cmd.has_prefix ("runapp ")) {
 			cmd = cmd.substring (7);
+			// remove quotation marks, if there are any
+			if ((cmd.has_prefix ("\"")) && (cmd.has_suffix ("\""))) {
+				cmd = cmd.substring (1, cmd.length -2);
+			}
 		}
 		if (subst_cmd) {
 			VarSolver vs = new VarSolver (idname);
 			cmd = vs.substitute_vars_auto (cmd, setup_settings);
 		}
+
 		return cmd;
 	}
 

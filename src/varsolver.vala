@@ -1,6 +1,6 @@
 /* varsolver.vala
  *
- * Copyright (C) 2011-2012 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2011-2013 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU Lesser General Public License Version 3
  *
@@ -310,15 +310,14 @@ private class VarSolver : Object {
 		}
 		return exe_name;
 	}
+
+	public static string autosubst_instvars (string varstr, string swName, IPK.InstallMode inst_mode = IPK.InstallMode.PRIVATE) {
+		VarSolver vs = new VarSolver (swName);
+		SetupSettings? ssettings = new SetupSettings (inst_mode);
+
+		return vs.substitute_vars_auto (varstr, ssettings);
+	}
 }
 
-private string autosubst_instvars (string varstr, string swName, SetupSettings? setup_settings = null) {
-	VarSolver vs = new VarSolver (swName);
-	SetupSettings? ssettings = setup_settings;
-		if (ssettings == null)
-			ssettings = new SetupSettings (IPK.InstallMode.PRIVATE);
-
- 	return vs.substitute_vars_auto (varstr, ssettings);
-}
 
 } // End of namespace

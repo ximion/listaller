@@ -32,6 +32,7 @@ public class RunApp : Object {
 		int exit_status;
 		try {
 			debug ("LD_PATH env is: %s", ld_env);
+			debug ("Command line: %s", commandLine);
 			Process.spawn_command_line_sync (commandLine, null, null, out exit_status);
 		} catch (Error e) {
 			stderr.printf ("Could not run: %s\n", e.message);

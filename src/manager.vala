@@ -1,6 +1,6 @@
 /* manager.vala - Manage installed applications (remove them / maintain their dependencies)
  *
- * Copyright (C) 2010-2012 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2010-2013 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU Lesser General Public License Version 3
  *
@@ -303,17 +303,24 @@ public class Manager : MessageObject {
 	}
 
 	public string get_app_ld_environment (AppItem app) {
+		// get basic library path
+		IPK.InstallMode inst_mode = IPK.InstallMode.PRIVATE;
+		if (app.state == AppState.INSTALLED_SHARED)
+			inst_mode = IPK.InstallMode.SHARED;
+		string paths = VarSolver.autosubst_instvars ("%LIB_PRIVATE%", app.idname, inst_mode);
+
 		string[] depStr = app.dependencies.split ("\n");
 		if (depStr.length <= 0) {
 			debug ("No dependencies set! Application was maybe not retrieved from software DB and therefore lacks the required data.");
-			debug ("Setting empty environment...");
-			return "";
+			debug ("Setting standard environment...");
+			return paths;
 		}
+
 
 		SoftwareDB db;
 		if (!init_db (out db, false)) {
 			debug ("Unable to open DB, app environment will be empty!");
-			return "";
+			return paths;
 		}
 
 		// We only want to fetch dependencies from the correct database, so limit DB usage
@@ -325,7 +332,6 @@ public class Manager : MessageObject {
 		// A new DepManager to resolve environment
 		DepManager depman = new DepManager (db);
 
-		string paths = "";
 
 		HashSet<IPK.Dependency> depList = depman.dependencies_from_idlist (depStr);
 
