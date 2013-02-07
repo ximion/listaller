@@ -154,10 +154,15 @@ public class LipaManager : LipaModule {
 		error_code = lipa_inst.error_code;
 	}
 
+	/**
+	 * FIXME: We need a proper method to filter apps & search for them.
+	 */
 	public void list_applications (bool all = false) {
-		string filter = "?";
-		if (all)
-			filter = "*";
+		AppState filter = AppState.UNKNOWN;
+		all = true;
+		if (all) {
+			filter = AppState.AVAILABLE | AppState.INSTALLED_SHARED | AppState.INSTALLED_PRIVATE;
+		}
 
 		show_progress = false;
 		li_mgr.filter_applications (filter);

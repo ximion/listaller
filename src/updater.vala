@@ -33,6 +33,7 @@ namespace Listaller {
 public class Updater : MessageObject {
 	private SetupSettings ssettings;
 	private Repo.Manager repo_mgr;
+	private Manager app_mgr;
 
 	public SetupSettings settings {
 		get { return ssettings; }
@@ -54,33 +55,16 @@ public class Updater : MessageObject {
 			ssettings.current_mode = IPK.InstallMode.SHARED;
 		else
 			ssettings.current_mode = IPK.InstallMode.PRIVATE;
+
+		repo_mgr = new Repo.Manager ();
+		connect_with_object (repo_mgr);
+
+		app_mgr = new Manager (shared_mode);
+		connect_with_object (app_mgr, ObjConnectFlags.IGNORE_PROGRESS);
 	}
 
 	private bool is_shared_mode () {
 		return ssettings.current_mode == IPK.InstallMode.SHARED;
-	}
-
-	private bool init_db (out SoftwareDB sdb, bool writeable = true) {
-		SoftwareDB db = new SoftwareDB (ssettings, true);
-		// Connect the database events with this application manager
-		connect_with_object (db, ObjConnectFlags.NONE);
-
-		sdb = db;
-		if (writeable) {
-			if (!db.open_write ()) {
-				emit_error (ErrorEnum.DATABASE_OPEN_FAILED,
-					    _("Unable to open software database for reading & writing!"));
-				return false;
-			}
-		} else {
-			if (!db.open_read ()) {
-				emit_error (ErrorEnum.DATABASE_OPEN_FAILED,
-					    _("Unable to open software database for reading only!"));
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	private void emit_update (AppItem old_app, AppItem new_app, IPK.Changelog changes) {
@@ -94,6 +78,12 @@ public class Updater : MessageObject {
 
 	public bool find_updates () {
 		//! TODO
+
+		// fetch all installed applications
+		ArrayList<AppItem> apps_installed;
+		AppState filter = AppState.INSTALLED_SHARED | AppState.INSTALLED_PRIVATE;
+		app_mgr.filter_applications (filter, out apps_installed);
+
 		return false;
 	}
 

@@ -378,25 +378,31 @@ private class SoftwareDB : MessageObject {
 		}
 	}
 
-	public bool find_all_applications (string filter, out ArrayList<AppItem> appList = null) {
+	public bool filter_applications (AppState filter, out ArrayList<AppItem> appList = null) {
 		ArrayList<AppItem> alist = new ArrayList<AppItem> ();
 
 		double one = 100d / get_applications_count ();
 
-		if (private_db_canbeused ()) {
-			alist = db_priv.get_applications_all ();
+		if (filter.is_all_set (AppState.INSTALLED_PRIVATE)) {
+			if (private_db_canbeused ()) {
+				alist = db_priv.get_applications_all ();
+			}
 		}
-		if (shared_db_canbeused ()) {
-			if (alist == null)
-				alist = db_shared.get_applications_all ();
-			else
-				alist.add_all (db_shared.get_applications_all ());
+		if (filter.is_all_set (AppState.INSTALLED_SHARED)) {
+			if (shared_db_canbeused ()) {
+				if (alist == null)
+					alist = db_shared.get_applications_all ();
+				else
+					alist.add_all (db_shared.get_applications_all ());
+			}
 		}
-		if (dbflags.is_all_set (DatabaseFlags.USE_AVAILABLE)) {
-			if (alist == null)
-				alist = db_available.get_applications_available ();
-			else
-				alist.add_all (db_available.get_applications_available ());
+		if (filter.is_all_set (AppState.AVAILABLE)) {
+			if (dbflags.is_all_set (DatabaseFlags.USE_AVAILABLE)) {
+				if (alist == null)
+					alist = db_available.get_applications_available ();
+				else
+					alist.add_all (db_available.get_applications_available ());
+			}
 		}
 
 		if (alist == null)

@@ -54,6 +54,22 @@ public enum AppState {
 				return ("unknown-status");
 		}
 	}
+
+	public inline bool is_all_set (AppState flags) {
+		return (this & flags) == flags;
+	}
+
+	public inline bool is_any_set (AppState flags) {
+		return (this & flags) != 0;
+	}
+
+        public inline AppState set (AppState mode) {
+		return (this | mode);
+	}
+
+	public inline AppState unset (AppState mode) {
+		return (this & ~mode);
+	}
 }
 
 /**

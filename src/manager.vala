@@ -92,12 +92,12 @@ public class Manager : MessageObject {
 		return true;
 	}
 
-	public bool filter_applications (string filter, out ArrayList<AppItem> appList = null) {
+	public bool filter_applications (AppState filter, out ArrayList<AppItem> app_list = null) {
 		SoftwareDB db;
 		if (!init_db (out db, false))
 			return false;
 
-		return db.filter_applications (filter, out appList);
+		return db.filter_applications (filter, out app_list);
 	}
 
 	/**
