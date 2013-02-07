@@ -36,6 +36,7 @@ public class LipaTool : Object {
 	private static bool o_verbose_mode = false;
 
 	private static bool o_mode_install = false;
+	private static bool o_mode_install_remote = false;
 	private static bool o_mode_remove = false;
 
 	private static bool o_mode_list = false;
@@ -56,6 +57,8 @@ public class LipaTool : Object {
 			N_("Activate verbose mode"), null },
 		{ "install", 'i', 0, OptionArg.NONE, ref o_mode_install,
 		N_("Install an IPK package"), null },
+		{ "install-remote", 0, 0, OptionArg.NONE, ref o_mode_install_remote,
+		N_("Install a remote IPK package"), null },
 		{ "remove", 'r', 0, OptionArg.NONE, ref o_mode_remove,
 		N_("Remove an application installed using Listaller"), null },
 		{ "list-apps", 'l', 0, OptionArg.NONE, ref o_mode_list,
@@ -138,6 +141,18 @@ public class LipaTool : Object {
 
 			lipaInstall.install_package (value);
 
+		} else if (o_mode_install_remote) {
+			if (value == null) {
+				stderr.printf (_("Missing parameter for 'install-remote' action: No IPK package-id specified.\n"));
+				exit_code = 4;
+				return;
+			}
+
+			var lipaManager = new LipaManager ();
+			lipa = lipaManager;
+
+			lipaManager._test_install_remote_app (value);
+
 		} else if (o_mode_remove) {
 			if (value == null) {
 				stderr.printf (_("Missing parameter for 'remove' action: No application-id or name specified.\n"));
@@ -149,19 +164,19 @@ public class LipaTool : Object {
 			lipa = lipaManager;
 
 			lipaManager.remove_application (value);
-			
+
 		} else if (o_mode_list) {
 			var lipaManager = new LipaManager ();
 			lipa = lipaManager;
 
 			lipaManager.list_applications (o_mode_list__all);
-			
+
 		} else if (o_mode_refresh) {
 			var lipaManager = new LipaManager ();
 			lipa = lipaManager;
 
 			lipaManager.refresh_cache ();
-			
+
 		} else {
 			print_nocommand_msg ();
 			exit_code = 0;

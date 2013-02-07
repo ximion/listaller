@@ -33,11 +33,11 @@ namespace Listaller {
  */
 public class Setup : MessageObject {
 	private SetupSettings setup_settings;
-	private string fname;
 	private IPK.Package ipkp;
 	private bool initialized;
 	private int inst_progress;
 	private int full_progress;
+	public string fname { get; private set; }
 
 	// Holds information about native packages this installation could replace
 	private string? pkgReplaces;

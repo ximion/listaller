@@ -202,8 +202,6 @@ internal class RepoRemote : Repo {
 		} else if (cindex_indep.application_exists (app)) {
 			arch = "all";
 		} else {
-			//! TODO: Emit Listaller error!
-
 			return null;
 		}
 

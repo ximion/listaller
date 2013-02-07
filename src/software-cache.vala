@@ -77,6 +77,10 @@ private class SoftwareCache : MessageObject {
 		cache_db.add_application (app, arch);
 	}
 
+	public AppItem? get_application_by_idname (string app_idname) {
+		return cache_db.get_application_by_idname (app_idname);
+	}
+
 	/**
 	 * This method will open a new tmp database for re-writing the cache
 	 */
@@ -134,6 +138,13 @@ private class SoftwareCache : MessageObject {
 			return null;
 
 		return cache_db.get_applications_all ();
+	}
+
+	/**
+	 * Return the architecture of the application with the given idname
+	 */
+	public string get_arch_for_app (string app_idname) {
+		return cache_db.get_arch_for_app (app_idname);
 	}
 }
 

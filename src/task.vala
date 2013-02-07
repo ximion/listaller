@@ -43,40 +43,18 @@ public class Task : Manager {
 	public Task (bool shared_mode = true) {
 		base (shared_mode);
 	}
-	
+
 	private void pk_progress_cb (PackageKit.Progress progress, PackageKit.ProgressType type) {
 		if (type == PackageKit.ProgressType.PERCENTAGE)
 			change_progress (progress.percentage);
 		if (type == PackageKit.ProgressType.ITEM_PROGRESS)
 			change_item_progress (progress.item_progress.package_id, progress.item_progress.percentage);
 	}
-	
-	public bool refresh_repository_cache () {
-		bool ret = false;
 
-		if (is_root ()) {
-			var repoMgr = new Repo.Manager ();
-			ret = repoMgr.refresh_cache ();
-		} else {
-			var pktask = new PackageKit.Task ();
-			PackageKit.Results? pkres;
 
-			change_progress (0);
-			try {
-				pkres = pktask.refresh_cache_sync (false, null, pk_progress_cb);
-			} catch (Error e) {
-				emit_error (ErrorEnum.REFRESH_FAILED, e.message);
-				return false;
-			}
-
-			if (pkres.get_exit_code () != PackageKit.Exit.SUCCESS) {
-				PackageKit.Error error = pkres.get_error_code ();
-				emit_error (ErrorEnum.REFRESH_FAILED, error.get_details ());
-				return false;
-			}
-		}
-
-		return ret;
+	public Setup? prepare_setup_for_app (string app_idname) {
+		var repoMgr = new Repo.Manager ();
+		return repoMgr.get_setup_for_remote_app (app_idname);
 	}
 }
 

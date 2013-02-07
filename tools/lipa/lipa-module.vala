@@ -30,7 +30,7 @@ public enum LipaRole {
 public abstract class LipaModule : Object {
 	protected bool use_shared_mode;
 
-	public int error_code { get; set; }
+	public int error_code { get; protected set; }
 	protected CmdProgressBar progress_bar;
 
 	public LipaModule () {

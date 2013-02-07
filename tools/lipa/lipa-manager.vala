@@ -35,6 +35,9 @@ public class LipaManager : LipaModule {
 		//! mgr_task.status_changed.connect (manager_status_changed);
 		mgr_task.progress.connect (manager_progress_cb);
 		mgr_task.application.connect (manager_new_application);
+
+		// we don't want duplicate messages
+		Report.set_print_fatal_msg (false);
 	}
 
 	private void manager_error_code_cb (ErrorItem error) {
@@ -81,7 +84,7 @@ public class LipaManager : LipaModule {
 		else
 			app_state_str = "[%s|%s]".printf (_("INSTALLED"), app_ownership_str (app));
 
-		stdout.printf ("%s %s -- %s\n", app_state_str, app.full_name, app.summary);
+		stdout.printf ("%s <%s> %s %s -- %s\n", app_state_str, app.idname, app.full_name, app.version, app.summary);
 	}
 
 	private void manager_new_application (AppItem app) {
@@ -131,6 +134,24 @@ public class LipaManager : LipaModule {
 			stdout.printf ("%s\n", _("Removal of %s failed!").printf (app.full_name));
 			error_code = 3;
 		}
+	}
+
+	/**
+	 * NOTE: This is experimental code at time.
+	 * As soon as it is sane, this method will get a better name.
+	 */
+	public void _test_install_remote_app (string app_idname) {
+		stdout.printf ("Downloading...\n");
+		Setup? inst = mgr_task.prepare_setup_for_app (app_idname);
+		if (inst == null) {
+			stdout.printf (_("Could not find application!"));
+		} else {
+			message (inst.fname);
+		}
+
+		var lipa_inst = new LipaInstaller ();
+		lipa_inst.run_setup (inst);
+		error_code = lipa_inst.error_code;
 	}
 
 	public void list_applications (bool all = false) {

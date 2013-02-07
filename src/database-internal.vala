@@ -512,13 +512,34 @@ private abstract class InternalDB : Object {
 		return item;
 	}
 
-	public AppItem? get_application_by_idname (string appIdName) throws DatabaseError {
+	public string? get_arch_for_app (string app_idname) {
 		Sqlite.Statement stmt;
 		try {
 			db_assert (db.prepare_v2 ("SELECT * FROM applications WHERE name=?", -1, out stmt),
 				   "prepare find app by idname statement");
 
-			db_assert (stmt.bind_text (1, appIdName), "bind value");
+			db_assert (stmt.bind_text (1, app_idname), "bind value");
+
+			int res = stmt.step ();
+			db_assert (res, "execute");
+			if (res != Sqlite.ROW)
+				return null;
+		} catch (Error e) {
+			throw new DatabaseError.ERROR (e.message);
+		}
+
+		string? arch = stmt.column_text (AppRow.ARCHITECTURE);
+
+		return arch;
+	}
+
+	public AppItem? get_application_by_idname (string app_idname) throws DatabaseError {
+		Sqlite.Statement stmt;
+		try {
+			db_assert (db.prepare_v2 ("SELECT * FROM applications WHERE name=?", -1, out stmt),
+				   "prepare find app by idname statement");
+
+			db_assert (stmt.bind_text (1, app_idname), "bind value");
 
 			int res = stmt.step ();
 			db_assert (res, "execute");

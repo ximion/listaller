@@ -27,6 +27,9 @@ public class LipaInstaller : LipaModule {
 
 	public LipaInstaller () {
 		base ();
+
+		// we don't want duplicate messages
+		Report.set_print_fatal_msg (false);
 	}
 
 	public void setup_error_code (ErrorItem error) {
@@ -64,11 +67,10 @@ public class LipaInstaller : LipaModule {
 		stdout.printf ("%s\n", message.details);
 	}
 
-	public void install_package (string ipkfname) {
+	public void run_setup (Setup inst) {
 		bool ret;
 		print ("Preparing... Please wait!\r");
 
-		inst = new Setup (ipkfname);
 		inst.message.connect (setup_message);
 		inst.status_changed.connect (setup_status_changed);
 		inst.progress.connect (setup_progress);
@@ -170,6 +172,11 @@ public class LipaInstaller : LipaModule {
 		}
 
 		inst = null;
+	}
+
+	public void install_package (string ipkfname) {
+		inst = new Setup (ipkfname);
+		run_setup (inst);
 	}
 
 	public override void terminate_action () {
