@@ -26,11 +26,12 @@ using Listaller.Utils;
 namespace Listaller {
 
 /**
- * Allows managing installed applications
+ * Allows managing Listaller applications
  *
  * This class allows managing installed applications as
  * well as performing maintainance tasks to keep applications
  * running.
+ * It also allows fetching applications from remote sources.
  */
 public class Manager : MessageObject {
 	private SetupSettings ssettings;
@@ -371,6 +372,11 @@ public class Manager : MessageObject {
 		}
 
 		return ret;
+	}
+
+	public Setup? prepare_setup_for_app (string app_idname) {
+		var repoMgr = new Repo.Manager ();
+		return repoMgr.get_setup_for_remote_app (app_idname);
 	}
 
 }
