@@ -74,8 +74,12 @@ private class Manager : MessageObject {
 		return true;
 	}
 
-	public ArrayList<AppItem> get_applications (string search = "") {
-		ArrayList<AppItem> res;
+	/**
+	 * Returns a HashMap of all installed applications.
+	 * Application idnames are mapped to their AppItem objects.
+	 */
+	public HashMap<string, AppItem> get_applications (string search = "") {
+		HashMap<string, AppItem> res;
 
 		//! TODO: implement application filter!
 		res = cache.get_applications_available ();

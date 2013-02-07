@@ -98,6 +98,14 @@ vala_add_executable (li-test-repo ${LIUNITTEST_SOURCES} tests-repository.vala
 )
 add_test(repo-test li-test-repo ${CMAKE_CURRENT_SOURCE_DIR})
 
+# Updater tests
+vala_add_executable (li-test-updater ${LIUNITTEST_SOURCES} tests-updater.vala
+				BASE_DIR ${lisrc}
+				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 listaller_internal
+				VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
+)
+add_test(updater-test li-test-updater ${CMAKE_CURRENT_SOURCE_DIR})
+
 # Dependency solver tests
 vala_add_executable (li-test-depmanager ${LIUNITTEST_SOURCES} tests-depmanager.vala
 				BASE_DIR ${lisrc}

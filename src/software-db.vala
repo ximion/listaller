@@ -398,10 +398,28 @@ private class SoftwareDB : MessageObject {
 		}
 		if (filter.is_all_set (AppState.AVAILABLE)) {
 			if (dbflags.is_all_set (DatabaseFlags.USE_AVAILABLE)) {
-				if (alist == null)
-					alist = db_available.get_applications_available ();
-				else
-					alist.add_all (db_available.get_applications_available ());
+				if (alist == null) {
+					ArrayList<AppItem> tmpList = null;
+					// generate a list of all installed applications
+					filter_applications (AppState.INSTALLED_PRIVATE | AppState.INSTALLED_SHARED, out tmpList);
+					// remove remote apps which are installed
+					HashMap<string, AppItem> apps_avail = db_available.get_applications_available ();
+					foreach (AppItem app in tmpList) {
+						apps_avail.remove (app.idname);
+					}
+					alist = new ArrayList<AppItem> ();
+					alist.add_all (apps_avail.values);
+
+				} else {
+					// if application is installed (even if in another version) it is no longer "available"
+					// therefore we remove all remote apps which are installed locally from the list
+					HashMap<string, AppItem> apps_avail = db_available.get_applications_available ();
+					foreach (AppItem app in alist) {
+						apps_avail.remove (app.idname);
+					}
+					alist.add_all (apps_avail.values);
+				}
+
 			}
 		}
 

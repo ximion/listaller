@@ -40,6 +40,8 @@ public class Updater : MessageObject {
 		set { ssettings = value; }
 	}
 
+	public ArrayList<UpdateItem> available_updates { get; private set; }
+
 	public signal void update (UpdateItem update);
 
 	/**
@@ -55,6 +57,8 @@ public class Updater : MessageObject {
 			ssettings.current_mode = IPK.InstallMode.SHARED;
 		else
 			ssettings.current_mode = IPK.InstallMode.PRIVATE;
+
+		available_updates = new ArrayList<UpdateItem> ();
 
 		repo_mgr = new Repo.Manager ();
 		connect_with_object (repo_mgr);
@@ -73,23 +77,51 @@ public class Updater : MessageObject {
 		item.new_app = new_app;
 		item.changelog = changes;
 
+		available_updates.add (item);
+
 		update (item);
 	}
 
-	public bool find_updates () {
-		//! TODO
-
+	/**
+	 * Find updates available for installed applications.
+	 */
+	public void find_updates () {
 		// fetch all installed applications
 		ArrayList<AppItem> apps_installed;
 		AppState filter = AppState.INSTALLED_SHARED | AppState.INSTALLED_PRIVATE;
 		app_mgr.filter_applications (filter, out apps_installed);
 
-		return false;
+		// fetch all available applications
+		HashMap<string, AppItem> apps_available = repo_mgr.get_applications ();
+
+		// clear list of available updates (will automatically be refilled)
+		available_updates.clear ();
+
+		foreach (AppItem app_i in apps_installed) {
+			AppItem? app_remote = null;
+			app_remote = apps_available.get (app_i.idname);
+			if (app_remote == null) {
+				debug ("No remote app for '%s' found.", app_i.idname);
+				continue;
+			}
+
+			// check if remote version is newer
+			if (compare_versions (app_i.version, app_remote.version) < 0) {
+				var changes = new IPK.Changelog ();
+				// TODO: set valid changelog data
+				emit_update (app_i, app_remote, changes);
+			}
+
+		}
 	}
 
 	public bool apply_updates (ArrayList<UpdateItem> update_list) {
-		//! TODO
+		// TODO
 		return false;
+	}
+
+	public bool apply_updates_all () {
+		return apply_updates (available_updates);
 	}
 
 }

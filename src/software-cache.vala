@@ -133,11 +133,21 @@ private class SoftwareCache : MessageObject {
 		cache_db.open_rw ();
 	}
 
-	public ArrayList<AppItem>? get_applications_available () {
+	public HashMap<string, AppItem>? get_applications_available () {
 		if (!opened)
 			return null;
 
-		return cache_db.get_applications_all ();
+		ArrayList<AppItem> apps_available_list = cache_db.get_applications_all ();
+		if (apps_available_list == null)
+			return null;
+
+		// build hash-map of available applications (large speed improvements when used later)
+		var apps_available = new HashMap<string, AppItem> ();
+		foreach (AppItem app in apps_available_list) {
+			apps_available.set (app.idname, app);
+		}
+
+		return apps_available;
 	}
 
 	/**
