@@ -1,6 +1,6 @@
 /* repo-utils.vala - Classes defining special files used in Listaller's IPK repositories
  *
- * Copyright (C) 2012 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2012-2013 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU Lesser General Public License Version 3
  *

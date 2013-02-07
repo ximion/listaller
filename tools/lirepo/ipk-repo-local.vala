@@ -1,6 +1,6 @@
-/* ipk-repo-local.vala -- Main file for Listaller repository tool
+/* ipk-repo-local.vala -- Manage a local Listaller repository
  *
- * Copyright (C) 2012 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2012-2013 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU General Public License Version 3
  *

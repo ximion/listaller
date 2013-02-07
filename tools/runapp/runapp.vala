@@ -1,6 +1,6 @@
 /* runapp.vala - Small wrapper to run Listaller-installed apps
  *
- * Copyright (C) 2010-2012 Matthias Klumpp
+ * Copyright (C) 2010-2013 Matthias Klumpp
  *
  * Licensed under the GNU General Public License Version 3
  *

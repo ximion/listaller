@@ -1,6 +1,6 @@
 /* ipk-control.vala - Describes data controlling the IPK setup process
  *
- * Copyright (C) 2010-2012 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2010-2013 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU Lesser General Public License Version 3
  *

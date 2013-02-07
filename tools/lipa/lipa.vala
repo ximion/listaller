@@ -1,6 +1,6 @@
 /* lipa.vala -- Listaller command-line tool (main unit)
  *
- * Copyright (C) 2010-2012 Matthias Klumpp
+ * Copyright (C) 2010-2013 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU General Public License Version 3
  *

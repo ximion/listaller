@@ -1,6 +1,6 @@
-/* lpkgutils.vala -- Helper routines for LiPkGen
+/* lpkgutils.vala -- Helper routines for LiPkgen
  *
- * Copyright (C) 2012 Matthias Klumpp
+ * Copyright (C) 2012-2013 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU General Public License Version 3
  *

@@ -1,6 +1,6 @@
 /* toolshared.vala -- Functions which are useful for all Listaller cmdline programs
  *
- * Copyright (C) 2010-2012 Matthias Klumpp
+ * Copyright (C) 2010-2013 Matthias Klumpp
  *
  * Licensed under the GNU General Public License Version 3
  *

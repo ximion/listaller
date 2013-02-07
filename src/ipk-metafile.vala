@@ -1,6 +1,6 @@
 /* ipk-metafile.vala - Work with IPK meta-info files
  *
- * Copyright (C) 2011-2012 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2011-2013 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU Lesser General Public License Version 3
  *

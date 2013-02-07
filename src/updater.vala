@@ -1,6 +1,6 @@
 /* updater.vala -- Update applications from IPK update repositories
  *
- * Copyright (C) 2012 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2012-2013 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU Lesser General Public License Version 3
  *
@@ -32,6 +32,7 @@ namespace Listaller {
  */
 public class Updater : MessageObject {
 	private SetupSettings ssettings;
+	private Repo.Manager repo_mgr;
 
 	public SetupSettings settings {
 		get { return ssettings; }

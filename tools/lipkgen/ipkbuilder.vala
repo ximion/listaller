@@ -1,6 +1,6 @@
-/* ipkbuilder.vala -- Build IPK packages
+/* ipkbuilder.vala -- Class which can assemble IPK packages
  *
- * Copyright (C) 2011-2012 Matthias Klumpp
+ * Copyright (C) 2011-2013 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU General Public License Version 3
  *
