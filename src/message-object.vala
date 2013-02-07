@@ -115,7 +115,7 @@ public abstract class MessageObject : Object {
 		error_hint_str = str;
 	}
 
-	protected void connect_with_object (MessageObject other_obj, ObjConnectFlags flags) {
+	protected void connect_with_object (MessageObject other_obj, ObjConnectFlags flags = ObjConnectFlags.NONE) {
 		if (!(ObjConnectFlags.IGNORE_ERROR_CODE in flags)) {
 			other_obj.error_code.connect ((error) => {
 				this.error_code (error);

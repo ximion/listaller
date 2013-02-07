@@ -92,12 +92,12 @@ public class Manager : MessageObject {
 		return true;
 	}
 
-	public bool find_applications (string filter, out ArrayList<AppItem> appList = null) {
+	public bool filter_applications (string filter, out ArrayList<AppItem> appList = null) {
 		SoftwareDB db;
 		if (!init_db (out db, false))
 			return false;
 
-		return db.find_all_applications (filter, out appList);
+		return db.filter_applications (filter, out appList);
 	}
 
 	/**
@@ -257,7 +257,7 @@ public class Manager : MessageObject {
 		return ret;
 	}
 
-	public bool refresh_appitem (ref AppItem item) {
+	public bool refresh_appitem_data (ref AppItem item) {
 		SoftwareDB db;
 		if (!init_db (out db, false))
 			return false;

@@ -22,19 +22,19 @@ using GLib;
 using Listaller;
 
 public class LipaManager : LipaModule {
-	private Listaller.Task mgr_task;
+	private Listaller.Manager li_mgr;
 	private bool show_progress;
 
 	public LipaManager () {
 		base ();
 		show_progress = true;
 
-		mgr_task = new Listaller.Task (use_shared_mode);
-		mgr_task.message.connect (manager_message_cb);
-		mgr_task.error_code.connect (manager_error_code_cb);
-		//! mgr_task.status_changed.connect (manager_status_changed);
-		mgr_task.progress.connect (manager_progress_cb);
-		mgr_task.application.connect (manager_new_application);
+		li_mgr = new Listaller.Manager (use_shared_mode);
+		li_mgr.message.connect (manager_message_cb);
+		li_mgr.error_code.connect (manager_error_code_cb);
+		//! li_mgr.status_changed.connect (manager_status_changed);
+		li_mgr.progress.connect (manager_progress_cb);
+		li_mgr.application.connect (manager_new_application);
 
 		// we don't want duplicate messages
 		Report.set_print_fatal_msg (false);
@@ -96,9 +96,9 @@ public class LipaManager : LipaModule {
 		AppItem? app = null;
 
 		// Try to find an application which matches the name the user throws at us
-		app = mgr_task.get_application_by_idname (app_identifier);
+		app = li_mgr.get_application_by_idname (app_identifier);
 		if (app == null) {
-			var appList = mgr_task.get_applications_by_fullname (app_identifier);
+			var appList = li_mgr.get_applications_by_fullname (app_identifier);
 			if ((appList == null) || (appList.size == 0)) {
 				stderr.printf (_("Could not find application which matches '%s'!\n"), app_identifier);
 				error_code = 8;
@@ -119,7 +119,7 @@ public class LipaManager : LipaModule {
 			progress_bar.start (_("Removing"));
 
 		// Go!
-		ret = mgr_task.remove_application (app);
+		ret = li_mgr.remove_application (app);
 		// On success, set everything to done
 		if (ret) {
 			if (!get_verbose_mode ())
@@ -142,7 +142,7 @@ public class LipaManager : LipaModule {
 	 */
 	public void _test_install_remote_app (string app_idname) {
 		stdout.printf ("Downloading...\n");
-		Setup? inst = mgr_task.prepare_setup_for_app (app_idname);
+		Setup? inst = li_mgr.prepare_setup_for_app (app_idname);
 		if (inst == null) {
 			stdout.printf (_("Could not find application!"));
 		} else {
@@ -160,7 +160,7 @@ public class LipaManager : LipaModule {
 			filter = "*";
 
 		show_progress = false;
-		mgr_task.find_applications (filter);
+		li_mgr.filter_applications (filter);
 		show_progress = true;
 	}
 
@@ -169,7 +169,7 @@ public class LipaManager : LipaModule {
 
 		if (!get_verbose_mode ())
 			progress_bar.start (_("Updating package cache"));
-		ret = mgr_task.refresh_repository_cache ();
+		ret = li_mgr.refresh_repository_cache ();
 
 		if (!get_verbose_mode ()) {
 			progress_bar.set_percentage (100);
@@ -178,7 +178,7 @@ public class LipaManager : LipaModule {
 	}
 
 	public override void terminate_action () {
-		if (mgr_task != null) {
+		if (li_mgr != null) {
 			critical ("Please don't kill the application, it could damage installed applications and produce unexpected behavior!");
 		}
 	}

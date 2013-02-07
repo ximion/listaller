@@ -90,7 +90,6 @@ set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
 	manager.vala
 	installer.vala
 	updater.vala
-	task.vala
 )
 
 list(APPEND VALA_INCLUDE_DIRS ${CMAKE_BINARY_DIR})
