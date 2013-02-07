@@ -159,7 +159,7 @@ pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 		app = pk_listaller_appitem_from_pkid (package_ids[i]);
 
 		/* update AppItem with database data */
-		listaller_manager_refresh_appitem (plugin->priv->mgr, &app);
+		listaller_manager_refresh_appitem_data (plugin->priv->mgr, &app);
 
 		description = listaller_app_item_get_description (app);
 		listaller_app_item_get_license (app, &license);
@@ -194,7 +194,7 @@ pk_listaller_get_filelist (PkPlugin *plugin, gchar **package_ids)
 		app = pk_listaller_appitem_from_pkid (package_ids[i]);
 
 		/* update AppItem with database data */
-		listaller_manager_refresh_appitem (plugin->priv->mgr, &app);
+		listaller_manager_refresh_appitem_data (plugin->priv->mgr, &app);
 
 		filelist = listaller_manager_get_application_filelist_as_string (plugin->priv->mgr, app);
 		if (filelist == NULL)
@@ -241,7 +241,7 @@ listaller_error_code_cb (GObject *sender, ListallerErrorItem *error, PkPlugin *p
 
 	/* emit */
 	pk_backend_job_error_code (plugin->job, PK_ERROR_ENUM_INTERNAL_ERROR,
-				listaller_error_item_get_details (error));
+				"%s", listaller_error_item_get_details (error));
 }
 
 static void
