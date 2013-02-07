@@ -377,13 +377,16 @@ private class MetaFile : Object {
 			} else {
 				content.insert (location, "%s: %s".printf (field, newValue[0]));
 				location++;
+
 				for (int i = 1; i < newValue.length; i++) {
-					if ((newValue[i] != null) && (newValue[i].strip () != ""))
+					if ((newValue[i] != null) && (newValue[i].strip () != "")) {
 						content.insert (location, " " + newValue[i]);
-					location++;
+						location++;
+					}
 				}
 			}
 		}
+
 		return true;
 	}
 

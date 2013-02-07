@@ -259,7 +259,6 @@ internal abstract class ContentFile : Object {
  * Access an IPK-repo content-index
  */
 internal class ContentIndex : ContentFile {
-	private MetaFile data;
 
 	public ContentIndex (string origin) {
 		base ();
@@ -267,6 +266,7 @@ internal class ContentIndex : ContentFile {
 	}
 
 	public void update_application (AppItem app) {
+		debug ("Updating index for app: %s", app.idname);
 		bool ret;
 		ret = open_data_block_for_application (app);
 		if (!ret)
