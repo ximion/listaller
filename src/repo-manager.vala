@@ -31,7 +31,7 @@ private class Manager : MessageObject {
 
 	private string cache_fname;
 
-	public Manager () {
+	public Manager (bool shared_mode = true) {
 		repo_list = new Repo.ListFile ();
 
 		var conf = new Config ();
@@ -44,7 +44,7 @@ private class Manager : MessageObject {
 			repos += new IPK.RepoRemote (url);
 		}
 
-		cache = new Repo.SoftwareCache (true);
+		cache = new Repo.SoftwareCache (shared_mode, true);
 	}
 
 	public bool refresh_cache () {

@@ -30,6 +30,7 @@ namespace Listaller {
  * Indicates if an application is installed (and in which mode
  * it was installed), or if it is in any other, different state.
  */
+[Flags]
 public enum AppState {
 	UNKNOWN,
 	INSTALLED_SHARED,
@@ -284,10 +285,19 @@ public class AppItem : Object {
 	}
 
 	public string to_string () {
-		return "[ (" + idname + ") "
-			+ "(" + version +") "
-			+ "! " + appid + " :: (" + full_name + ") "
-			+ "]";
+		string str_ownership;
+		if (state != AppState.INSTALLED_SHARED)
+			str_ownership = _("personal");
+		else
+			str_ownership = _("shared");
+
+		string app_state_str = "";
+		if (state == AppState.AVAILABLE)
+			app_state_str = "[%s]".printf (_("AVAILABLE"));
+		else
+			app_state_str = "[%s|%s]".printf (_("INSTALLED"), str_ownership);
+
+		return "%s %s (%s) :: %s -- %s".printf (app_state_str, idname, version, full_name, summary);
 	}
 
 	private void set_license_info (string lName, string lText) {

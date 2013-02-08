@@ -41,7 +41,7 @@ public class Manager : MessageObject {
 
 	public SetupSettings settings {
 		get { return ssettings; }
-		set { ssettings = value; }
+		internal set { ssettings = value; }
 	}
 
 	/**

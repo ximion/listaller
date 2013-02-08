@@ -37,10 +37,22 @@ private class SoftwareCache : MessageObject {
 
 	private bool opened;
 
-	public SoftwareCache (bool open_write = false) {
+	public SoftwareCache (bool shared_mode, bool open_write = false) {
 		var conf = new Config ();
-		dbname = Path.build_filename (conf.shared_repo_cache_dir (), "available.db", null);
-		dbname_tmp = Path.build_filename (conf.shared_repo_cache_dir (), "available_tmp.db", null);
+
+		string mpath;
+		if (shared_mode)
+			mpath = conf.shared_repo_cache_dir ();
+		else
+			mpath = conf.user_repo_cache_dir ();
+
+		if (__unittestmode) {
+			mpath = Path.build_filename (conf.tmp_dir (), "repo-cache", null);
+			Utils.create_dir_structure (mpath);
+		}
+
+		dbname = Path.build_filename (mpath, "available.db", null);
+		dbname_tmp = Path.build_filename (mpath, "available_tmp.db", null);
 
 		cache_db = new RepoCacheDB (dbname);
 		writeable = open_write;

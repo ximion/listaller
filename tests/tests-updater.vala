@@ -29,16 +29,18 @@ void msg (string s) {
 	stdout.printf (s + "\n");
 }
 
-void test_repo_message_cb (MessageItem item) {
+void test_upd_message_cb (MessageItem item) {
 	msg ("Received message:");
 	msg (" " + item.to_string ());
 	assert (item.mtype == MessageEnum.INFO);
 }
 
-void test_repo_error_code_cb (ErrorItem item) {
+void test_upd_error_code_cb (ErrorItem item) {
 	msg ("Received error:");
 	msg (" " + item.to_string ());
-	error (item.details);
+	// skip all permission-errors
+	if (item.error != ErrorEnum.OPERATION_NOT_ALLOWED)
+		error (item.details);
 }
 
 void print_app_arraylist (ArrayList<AppItem> appList, string label = "") {
@@ -53,14 +55,61 @@ void print_app_arraylist (ArrayList<AppItem> appList, string label = "") {
 	msg ("END");
 }
 
+void test_foobar_installation () {
+	bool ret;
+	string ipkfilename = Path.build_filename (datadir, "FooBar-1.0_%s.ipk".printf (Utils.system_machine_generic ()), null);
+
+	// Excludes stuff like PK dependency installing from testing
+	__unittestmode = true;
+	Report.set_print_fatal_msg (false);
+
+	Setup setup = new Setup (ipkfilename);
+	setup.error_code.connect (test_upd_error_code_cb);
+	setup.message.connect (test_upd_message_cb);
+
+	ret = setup.initialize ();
+	assert (ret == true);
+
+	ret = setup.set_install_mode (IPK.InstallMode.TEST);
+	assert (ret == true);
+
+	ret = setup.run_installation ();
+	assert (ret == true);
+}
+
+void test_manager_installed_apps () {
+	Manager mgr = new Manager ();
+	mgr.settings.current_mode = IPK.InstallMode.TEST;
+
+	ArrayList<AppItem> app_list;
+	mgr.filter_applications (AppState.INSTALLED_SHARED | AppState.INSTALLED_PRIVATE, out app_list);
+	print_app_arraylist (app_list, "Installed apps");
+	// we should have exactly 1 app installed (FooBar)
+	assert (app_list.size == 1);
+}
+
 void test_refresh_repo_cache () {
+	// refresh app cache
 	Repo.Manager repomgr = new Repo.Manager ();
 	repomgr.refresh_cache ();
+
+	// check new app info
+	Manager mgr = new Manager ();
+	mgr.settings.current_mode = IPK.InstallMode.TEST;
+
+	ArrayList<AppItem> app_list;
+	mgr.filter_applications (AppState.AVAILABLE, out app_list);
+	print_app_arraylist (app_list, "Available apps");
+	// we should now have more than one app
+	assert (app_list.size > 1);
 }
 
 void test_updater_available () {
 	Updater upd = new Updater (false);
+	upd.settings.current_mode = IPK.InstallMode.TEST;
 	upd.find_updates ();
+
+	message ("Found updates: %i", upd.available_updates.size);
 }
 
 int main (string[] args) {
@@ -75,6 +124,11 @@ int main (string[] args) {
 	set_verbose_mode (true);
 	add_log_domain ("LiTest");
 
+	// prepare updater environment
+	test_foobar_installation ();
+	test_manager_installed_apps ();
+
+	// perform updater tests
 	test_refresh_repo_cache ();
 	test_updater_available ();
 

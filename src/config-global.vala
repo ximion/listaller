@@ -107,6 +107,12 @@ internal class Config : Object {
 		return dir;
 	}
 
+	public string user_repo_cache_dir () {
+		string dir = Path.build_filename (user_data_dir (), "software", "cache", null);
+		Utils.create_dir_structure (dir);
+		return dir;
+	}
+
 	public string data_dir () {
 		return datadir;
 	}

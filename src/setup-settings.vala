@@ -92,7 +92,7 @@ public class SetupSettings : Object {
 	}
 
 	public bool test_mode {
-		get { return current_mode.is_all_set (IPK.InstallMode.TEST); }
+		get { return current_mode.is_all_set (IPK.InstallMode.TEST) || __unittestmode; }
 	}
 
 	/**
@@ -156,6 +156,15 @@ public class SetupSettings : Object {
 		return Path.build_filename (appregister_dir (), conf.database_filename (), null);
 	}
 
+	// this variable is required e.g. to unit-test the updater, since we cannot
+	// always recreate the registry location.
+	// we can also not always use a defined path, because we would otherwise interfere
+	// with other unit-tests
+	private static string _unittest_tmp_registerdir = null;
+
+	/**
+	 * Get software registry directory
+	 */
 	public string appregister_dir () {
 		string regdir;
 		if (shared_mode) {
@@ -165,7 +174,9 @@ public class SetupSettings : Object {
 		}
 		if (test_mode) {
 			// Point to our temporary dir
-			regdir = Path.build_filename (get_unique_install_tmp_dir (), "appreg", null);
+			if (_unittest_tmp_registerdir == null)
+				_unittest_tmp_registerdir = get_unique_install_tmp_dir ();
+			regdir = Path.build_filename (_unittest_tmp_registerdir, "appreg", null);
 		}
 
 		touch_dir (regdir, "Unable to create application database directory: %s");
