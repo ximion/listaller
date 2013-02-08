@@ -87,18 +87,9 @@ private class Manager : MessageObject {
 		return res;
 	}
 
-	public Setup? get_setup_for_remote_app (string app_idname) {
+	public Setup? get_setup_for_remote_app (AppItem app, string arch) {
 		string? fname = null;
-		AppItem? app = cache.get_application_by_idname (app_idname);
-		if (app == null) {
-			debug ("Application with id '%s' not found in cache!", app_idname);
-			return null;
-		}
-		string? arch = cache.get_arch_for_app (app.idname);
-		if (arch == null) {
-			critical ("Database inconsistent: Found application without valid arch in cache!");
-			return null;
-		}
+
 		string url = app.origin;
 		if (!url.has_prefix ("http://") && !url.has_prefix ("ftp://")) {
 			warning ("Found application, but origin does not match repo origin.");
@@ -115,6 +106,26 @@ private class Manager : MessageObject {
 		// No repo provides submitted app => no setup object
 		return null;
 	}
+
+	public string get_arch_for_app (AppItem app) {
+		return cache.get_arch_for_app (app.idname);
+	}
+
+	public Setup? get_setup_for_remote_app_by_id (string app_idname) {
+		AppItem? app = cache.get_application_by_idname (app_idname);
+		if (app == null) {
+			debug ("Application with id '%s' not found in cache!", app_idname);
+			return null;
+		}
+		string? arch = get_arch_for_app (app);
+		if (arch == null) {
+			critical ("Database inconsistent: Found application without valid arch in cache!");
+			return null;
+		}
+
+		return get_setup_for_remote_app (app, arch);
+	}
+
 }
 
 } // End of namespace: Listaller.Repo

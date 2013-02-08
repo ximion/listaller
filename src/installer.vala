@@ -396,6 +396,24 @@ public class Setup : MessageObject {
 		return res;
 	}
 
+	internal bool installation_allowed (out SecurityLevel minLevel, out SecurityLevel pkgLevel) {
+		// check if admin allowed to install a package of this security level
+		var conf = new Config ();
+		var sec = get_security_info ();
+		string? minSecLevel = conf.installer_get_str ("MinimumTrustLevel");
+		// choose "low" if no value was set
+		if (minSecLevel == null)
+			minSecLevel = "low";
+		var mSecLvl = SecurityLevel.from_string (minSecLevel);
+		var pkgSecLvl = sec.get_level ();
+		minLevel = mSecLvl;
+		pkgLevel = pkgSecLvl;
+		if (pkgSecLvl < mSecLvl) {
+			return false;
+		}
+
+		return true;
+	}
 	/**
 	 * Execute software installation
 	 *
@@ -419,20 +437,13 @@ public class Setup : MessageObject {
 			return false;
 		}
 
-		// check if admin allowed to install a package of this security level
-		var conf = new Config ();
-		var sec = get_security_info ();
-		string? minSecLevel = conf.installer_get_str ("MinimumTrustLevel");
-		// choose "low" if no value was set
-		if (minSecLevel == null)
-			minSecLevel = "low";
-		var mSecLvl = SecurityLevel.from_string (minSecLevel);
-		var pkgSecLvl = sec.get_level ();
-		if (pkgSecLvl < mSecLvl) {
+		SecurityLevel minSecLvl;
+		SecurityLevel packSecLvl;
+		if (!installation_allowed (out minSecLvl, out packSecLvl)) {
 			// we are not allowed to install this package!
 			emit_error (ErrorEnum.OPERATION_NOT_ALLOWED,
 				    _("You are not allowed to install this package, because it's security level is '%s' and you need at least a package with security-level '%s'.\n" +
-					"Please obtain this application from a safe source with good signature and try again!").printf (pkgSecLvl.to_string (), mSecLvl.to_string ()));
+					"Please obtain this application from a safe source with good signature and try again!").printf (packSecLvl.to_string (), minSecLvl.to_string ()));
 			if ((__unittestmode) && (settings.current_mode == IPK.InstallMode.TEST))
 			{
 				// if we're in unittestmode, we need to continue here

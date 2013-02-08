@@ -83,9 +83,12 @@ void test_manager_installed_apps () {
 
 	ArrayList<AppItem> app_list;
 	mgr.filter_applications (AppState.INSTALLED_SHARED | AppState.INSTALLED_PRIVATE, out app_list);
-	print_app_arraylist (app_list, "Installed apps");
+	print_app_arraylist (app_list, "Installed apps (pre-update)");
 	// we should have exactly 1 app installed (FooBar)
 	assert (app_list.size == 1);
+
+	// test version
+	assert (app_list[0].version == "1.0");
 }
 
 void test_refresh_repo_cache () {
@@ -104,13 +107,36 @@ void test_refresh_repo_cache () {
 	assert (app_list.size > 1);
 }
 
-void test_updater_available () {
+void test_updater_update () {
 	Updater upd = new Updater (false);
 	upd.settings.current_mode = IPK.InstallMode.TEST;
 	upd.find_updates ();
 
 	message ("Found updates: %i", upd.available_updates.size);
+	assert (upd.available_updates.size >= 1);
+
+	upd.apply_updates_all ();
+
+	foreach (UpdateItem item in upd.available_updates)
+		assert (item.completed == true);
+
+	upd.find_updates ();
+	assert (upd.available_updates.size == 0);
+
+	// now test installed apps *after* update (version should have been increased)
+	Manager mgr = new Manager ();
+	mgr.settings.current_mode = IPK.InstallMode.TEST;
+
+	ArrayList<AppItem> app_list;
+	mgr.filter_applications (AppState.INSTALLED_SHARED | AppState.INSTALLED_PRIVATE, out app_list);
+	print_app_arraylist (app_list, "Installed apps (post-update)");
+	// we should still have exactly 1 app installed
+	assert (app_list.size == 1);
+
+	// test version
+	assert (app_list[0].version == "1.1");
 }
+
 
 int main (string[] args) {
 	msg ("=== Running Updater Tests ===");
@@ -130,7 +156,7 @@ int main (string[] args) {
 
 	// perform updater tests
 	test_refresh_repo_cache ();
-	test_updater_available ();
+	test_updater_update ();
 
 	Test.run ();
 	return 0;

@@ -49,6 +49,7 @@ public enum ErrorEnum {
 	NATIVE_TRANSACTION_FAILED,
 	NETWORK_ERROR,
 	REFRESH_FAILED,
+	UPDATE_FAILED,
 	INTERNAL;
 
 	public string to_string () {
@@ -213,10 +214,14 @@ public class ProgressItem : Object {
 public class UpdateItem : Object {
 	public AppItem old_app { get; internal set; }
 	public AppItem new_app { get; internal set; }
+	public string architecture { get; internal set; }
 
 	public IPK.Changelog changelog { get; internal set; }
 
+	public bool completed { get; internal set; }
+
 	public UpdateItem () {
+		completed = false;
 	}
 }
 

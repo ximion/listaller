@@ -71,10 +71,11 @@ public class Updater : MessageObject {
 		return ssettings.current_mode == IPK.InstallMode.SHARED;
 	}
 
-	private void emit_update (AppItem old_app, AppItem new_app, IPK.Changelog changes) {
+	private void emit_update (AppItem old_app, AppItem new_app, string arch, IPK.Changelog changes) {
 		var item = new UpdateItem ();
 		item.old_app = old_app;
 		item.new_app = new_app;
+		item.architecture = arch;
 		item.changelog = changes;
 
 		available_updates.add (item);
@@ -109,17 +110,84 @@ public class Updater : MessageObject {
 			if (compare_versions (app_i.version, app_remote.version) < 0) {
 				var changes = new IPK.Changelog ();
 				// TODO: set valid changelog data
-				emit_update (app_i, app_remote, changes);
+				string arch = repo_mgr.get_arch_for_app (app_i);
+				emit_update (app_i, app_remote, arch, changes);
 			}
 
 		}
 	}
 
+	/**
+	 * Apply updates selected in update_list.
+	 *
+	 * @param: update_list A list containing valid UpdateItems
+	 */
 	public bool apply_updates (ArrayList<UpdateItem> update_list) {
-		// TODO
-		return false;
+		if (update_list.size == 0)
+			return true;
+		bool ret;
+
+		foreach (UpdateItem item in update_list) {
+			if (item.completed)
+				continue;
+
+			Setup? inst = repo_mgr.get_setup_for_remote_app (item.new_app, item.architecture);
+			if (inst == null) {
+				emit_error (ErrorEnum.UPDATE_FAILED,
+				    _("Update of application '%s' failed. Maybe the update information is out of date. Please refresh it and try again.").printf (item.old_app.full_name));
+				return false;
+			}
+
+			connect_with_object (inst);
+			ret = inst.initialize ();
+			if (!ret)
+				return false;
+
+			// set correct installation mode
+			IPK.InstallMode imode = IPK.InstallMode.SHARED;
+			if (item.old_app.state == AppState.INSTALLED_PRIVATE)
+				imode = IPK.InstallMode.PRIVATE;
+			if (__unittestmode)
+				imode = IPK.InstallMode.TEST;
+			inst.settings.current_mode = imode;
+			inst.set_install_mode (imode);
+
+			SecurityLevel minSecLvl;
+			SecurityLevel packSecLvl;
+			if (!inst.installation_allowed (out minSecLvl, out packSecLvl)) {
+				// we are not allowed to update this package!
+				emit_error (ErrorEnum.OPERATION_NOT_ALLOWED,
+				    _("You are not allowed to update the application! The security level of the update is '%s' and you need at least security-level '%s'.\n" +
+					"Please make sure you trusted this signature and that your system is not compromised!").printf (packSecLvl.to_string (), minSecLvl.to_string ()));
+				return false;
+			}
+
+			// remove old application so we can install the update
+			ret = app_mgr.remove_application (item.old_app);
+			if (!ret) {
+				emit_error (ErrorEnum.UPDATE_FAILED,
+				    _("Update of application '%s' failed. Unable to remove the old application.").printf (item.old_app.full_name));
+				return false;
+			}
+
+			// old app should be gone now, so we install the fresh version
+			ret = inst.run_installation ();
+			if (!ret) {
+				// FIXME: a better error message would be awesome ;-)
+				emit_error (ErrorEnum.UPDATE_FAILED,
+				    _("Update of application '%s' failed. Something bad happened. Please install the application again!").printf (item.old_app.full_name));
+				return false;
+			}
+
+			item.completed = true;
+		}
+
+		return true;
 	}
 
+	/**
+	 * Apply all available updates
+	 */
 	public bool apply_updates_all () {
 		return apply_updates (available_updates);
 	}

@@ -375,8 +375,8 @@ public class Manager : MessageObject {
 	}
 
 	public Setup? prepare_setup_for_app (string app_idname) {
-		var repoMgr = new Repo.Manager ();
-		return repoMgr.get_setup_for_remote_app (app_idname);
+		var repo_mgr = new Repo.Manager ();
+		return repo_mgr.get_setup_for_remote_app_by_id (app_idname);
 	}
 
 }
