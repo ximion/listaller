@@ -25,34 +25,6 @@ using Listaller.Utils;
 
 namespace Listaller {
 
-public class SoftwareItem : Object {
-	public string full_name { get; internal set; }
-	public string idname { get; internal set; }
-	public string version { get; internal set; }
-	public string architecture { get; internal set; }
-	public string origin { get; internal set; }
-
-	internal SoftwareItem (string idname, string version, string origin, string arch) {
-		this.idname = idname;
-		this.version = version;
-		this.origin = origin;
-		this.architecture = arch;
-
-		// if a full name is not set manually, we use the id-name
-		this.full_name = idname;
-	}
-
-	public AppItem to_appitem () {
-		AppItem app = new AppItem.blank ();
-		app.idname = idname;
-		app.version = version;
-		app.origin = origin;
-		app.full_name = full_name;
-
-		return app;
-	}
-}
-
 /**
  * All necessary methods to keep installed applications up-to-date
  *
@@ -99,11 +71,13 @@ public class Updater : MessageObject {
 		return ssettings.current_mode == IPK.InstallMode.SHARED;
 	}
 
-	private void emit_update (string sw_type, SoftwareItem sw_old, SoftwareItem sw_new, IPK.Changelog changes) {
+	private void emit_update (Type sw_type, Object sw_old, Object sw_new, string arch, IPK.Changelog changes) {
 		var item = new UpdateItem ();
+
+		item.sw_type = sw_type;
 		item.sw_old = sw_old;
 		item.sw_new = sw_new;
-		item.sw_type = sw_type;
+		item.architecture = arch;
 		item.changelog = changes;
 
 		available_updates.add (item);
@@ -112,15 +86,7 @@ public class Updater : MessageObject {
 	}
 
 	private void emit_update_app (AppItem app_old, AppItem app_new, string arch, IPK.Changelog changes) {
-		SoftwareItem switem_old;
-		SoftwareItem switem_new;
-
-		switem_old = new SoftwareItem (app_old.idname, app_old.version, app_old.origin, arch);
-		switem_old.full_name = app_old.full_name;
-		switem_new = new SoftwareItem (app_new.idname, app_new.version, app_new.origin, arch);
-		switem_new.full_name = app_new.full_name;
-
-		emit_update ("application", switem_old, switem_new, changes);
+		emit_update (app_old.get_type (), app_old, app_new, arch, changes);
 	}
 
 	/**
@@ -224,19 +190,19 @@ public class Updater : MessageObject {
 			if (item.completed)
 				continue;
 
-			if (item.sw_type == "application") {
-				ret = perform_application_update (item.sw_old.to_appitem (),
-							    item.sw_new.to_appitem (),
-							    item.sw_old.architecture);
+			if (item.sw_type == typeof (AppItem)) {
+				ret = perform_application_update (item.sw_old as AppItem,
+							    item.sw_new as AppItem,
+							    item.architecture);
 				if (!ret)
 					return false;
 				else
 					item.completed = true;
 
-			} else if (item.sw_type == "dependency") {
+			} else if (item.sw_type == typeof (IPK.Dependency)) {
 				// TODO
 			} else {
-				warning ("Found UpdateItem with invalid software type: %s", item.sw_type);
+				warning ("Found UpdateItem with invalid software type: %s", item.sw_type.name ());
 			}
 		}
 
