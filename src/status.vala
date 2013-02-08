@@ -212,9 +212,9 @@ public class ProgressItem : Object {
  * Return type describing a software update
  */
 public class UpdateItem : Object {
-	public AppItem old_app { get; internal set; }
-	public AppItem new_app { get; internal set; }
-	public string architecture { get; internal set; }
+	public SoftwareItem sw_old { get; internal set; }
+	public SoftwareItem sw_new { get; internal set; }
+	public string sw_type { get; internal set; }
 
 	public IPK.Changelog changelog { get; internal set; }
 

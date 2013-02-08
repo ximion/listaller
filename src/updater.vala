@@ -25,6 +25,34 @@ using Listaller.Utils;
 
 namespace Listaller {
 
+public class SoftwareItem : Object {
+	public string full_name { get; internal set; }
+	public string idname { get; internal set; }
+	public string version { get; internal set; }
+	public string architecture { get; internal set; }
+	public string origin { get; internal set; }
+
+	internal SoftwareItem (string idname, string version, string origin, string arch) {
+		this.idname = idname;
+		this.version = version;
+		this.origin = origin;
+		this.architecture = arch;
+
+		// if a full name is not set manually, we use the id-name
+		this.full_name = idname;
+	}
+
+	public AppItem to_appitem () {
+		AppItem app = new AppItem.blank ();
+		app.idname = idname;
+		app.version = version;
+		app.origin = origin;
+		app.full_name = full_name;
+
+		return app;
+	}
+}
+
 /**
  * All necessary methods to keep installed applications up-to-date
  *
@@ -71,16 +99,28 @@ public class Updater : MessageObject {
 		return ssettings.current_mode == IPK.InstallMode.SHARED;
 	}
 
-	private void emit_update (AppItem old_app, AppItem new_app, string arch, IPK.Changelog changes) {
+	private void emit_update (string sw_type, SoftwareItem sw_old, SoftwareItem sw_new, IPK.Changelog changes) {
 		var item = new UpdateItem ();
-		item.old_app = old_app;
-		item.new_app = new_app;
-		item.architecture = arch;
+		item.sw_old = sw_old;
+		item.sw_new = sw_new;
+		item.sw_type = sw_type;
 		item.changelog = changes;
 
 		available_updates.add (item);
 
 		update (item);
+	}
+
+	private void emit_update_app (AppItem app_old, AppItem app_new, string arch, IPK.Changelog changes) {
+		SoftwareItem switem_old;
+		SoftwareItem switem_new;
+
+		switem_old = new SoftwareItem (app_old.idname, app_old.version, app_old.origin, arch);
+		switem_old.full_name = app_old.full_name;
+		switem_new = new SoftwareItem (app_new.idname, app_new.version, app_new.origin, arch);
+		switem_new.full_name = app_new.full_name;
+
+		emit_update ("application", switem_old, switem_new, changes);
 	}
 
 	/**
@@ -111,10 +151,63 @@ public class Updater : MessageObject {
 				var changes = new IPK.Changelog ();
 				// TODO: set valid changelog data
 				string arch = repo_mgr.get_arch_for_app (app_i);
-				emit_update (app_i, app_remote, arch, changes);
+				emit_update_app (app_i, app_remote, arch, changes);
 			}
 
 		}
+	}
+
+	private bool perform_application_update (AppItem app_old, AppItem app_new, string arch) {
+		bool ret;
+		Setup? inst = repo_mgr.get_setup_for_remote_app (app_new, arch);
+		if (inst == null) {
+			emit_error (ErrorEnum.UPDATE_FAILED,
+				_("Update of application '%s' failed. Maybe the update information is out of date. Please refresh it and try again.").printf (app_old.full_name));
+			return false;
+		}
+
+		connect_with_object (inst);
+		ret = inst.initialize ();
+		if (!ret)
+			return false;
+
+		// set correct installation mode
+		IPK.InstallMode imode = IPK.InstallMode.SHARED;
+		if (app_old.state == AppState.INSTALLED_PRIVATE)
+			imode = IPK.InstallMode.PRIVATE;
+		if (__unittestmode)
+			imode = IPK.InstallMode.TEST;
+		inst.settings.current_mode = imode;
+		inst.set_install_mode (imode);
+
+		SecurityLevel minSecLvl;
+		SecurityLevel packSecLvl;
+		if (!inst.installation_allowed (out minSecLvl, out packSecLvl)) {
+			// we are not allowed to update this package!
+			emit_error (ErrorEnum.OPERATION_NOT_ALLOWED,
+				_("You are not allowed to update the application! The security level of the update is '%s' and you need at least security-level '%s'.\n" +
+				"Please make sure you trusted this signature and that your system is not compromised!").printf (packSecLvl.to_string (), minSecLvl.to_string ()));
+			return false;
+		}
+
+		// remove old application so we can install the update
+		ret = app_mgr.remove_application (app_old);
+		if (!ret) {
+			emit_error (ErrorEnum.UPDATE_FAILED,
+				_("Update of application '%s' failed. Unable to remove the old application.").printf (app_old.full_name));
+			return false;
+		}
+
+		// old app should be gone now, so we install the fresh version
+		ret = inst.run_installation ();
+		if (!ret) {
+			// FIXME: a better error message would be awesome ;-)
+			emit_error (ErrorEnum.UPDATE_FAILED,
+				_("Update of application '%s' failed. Something bad happened. Please install the application again!").printf (app_old.full_name));
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -131,55 +224,20 @@ public class Updater : MessageObject {
 			if (item.completed)
 				continue;
 
-			Setup? inst = repo_mgr.get_setup_for_remote_app (item.new_app, item.architecture);
-			if (inst == null) {
-				emit_error (ErrorEnum.UPDATE_FAILED,
-				    _("Update of application '%s' failed. Maybe the update information is out of date. Please refresh it and try again.").printf (item.old_app.full_name));
-				return false;
+			if (item.sw_type == "application") {
+				ret = perform_application_update (item.sw_old.to_appitem (),
+							    item.sw_new.to_appitem (),
+							    item.sw_old.architecture);
+				if (!ret)
+					return false;
+				else
+					item.completed = true;
+
+			} else if (item.sw_type == "dependency") {
+				// TODO
+			} else {
+				warning ("Found UpdateItem with invalid software type: %s", item.sw_type);
 			}
-
-			connect_with_object (inst);
-			ret = inst.initialize ();
-			if (!ret)
-				return false;
-
-			// set correct installation mode
-			IPK.InstallMode imode = IPK.InstallMode.SHARED;
-			if (item.old_app.state == AppState.INSTALLED_PRIVATE)
-				imode = IPK.InstallMode.PRIVATE;
-			if (__unittestmode)
-				imode = IPK.InstallMode.TEST;
-			inst.settings.current_mode = imode;
-			inst.set_install_mode (imode);
-
-			SecurityLevel minSecLvl;
-			SecurityLevel packSecLvl;
-			if (!inst.installation_allowed (out minSecLvl, out packSecLvl)) {
-				// we are not allowed to update this package!
-				emit_error (ErrorEnum.OPERATION_NOT_ALLOWED,
-				    _("You are not allowed to update the application! The security level of the update is '%s' and you need at least security-level '%s'.\n" +
-					"Please make sure you trusted this signature and that your system is not compromised!").printf (packSecLvl.to_string (), minSecLvl.to_string ()));
-				return false;
-			}
-
-			// remove old application so we can install the update
-			ret = app_mgr.remove_application (item.old_app);
-			if (!ret) {
-				emit_error (ErrorEnum.UPDATE_FAILED,
-				    _("Update of application '%s' failed. Unable to remove the old application.").printf (item.old_app.full_name));
-				return false;
-			}
-
-			// old app should be gone now, so we install the fresh version
-			ret = inst.run_installation ();
-			if (!ret) {
-				// FIXME: a better error message would be awesome ;-)
-				emit_error (ErrorEnum.UPDATE_FAILED,
-				    _("Update of application '%s' failed. Something bad happened. Please install the application again!").printf (item.old_app.full_name));
-				return false;
-			}
-
-			item.completed = true;
 		}
 
 		return true;
