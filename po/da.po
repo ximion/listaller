@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@freelists.org\n"
-"POT-Creation-Date: 2012-12-16 14:33+0100\n"
+"POT-Creation-Date: 2013-02-08 04:18+0100\n"
 "PO-Revision-Date: 2009-06-26 00:13+0000\n"
 "Last-Translator: Jimmy Frydkær Dürr <thewolf40@mailme.dk>\n"
 "Language-Team: Danish <da@li.org>\n"
@@ -18,12 +18,12 @@ msgstr ""
 "X-Launchpad-Export-Date: 2012-10-01 17:08+0000\n"
 "X-Generator: Launchpad (build 16061)\n"
 
-#: ../src/manager.vala:160
+#: ../src/manager.vala:161
 msgid ""
 "'%s' has no file-list registered. The software database might be broken."
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:112 ../tools/lipa/lipa-installer.vala:125
+#: ../tools/lipa/lipa-installer.vala:114 ../tools/lipa/lipa-installer.vala:127
 msgid "<<< Press ENTER to continue! >>>"
 msgstr ""
 
@@ -35,13 +35,17 @@ msgstr ""
 msgid "A lower version '%s' of this application has already been installed."
 msgstr ""
 
-#: ../tools/runapp/runapp.vala:69 ../tools/lipa/lipa.vala:56
+#: ../src/application.vala:296 ../tools/lipa/lipa-manager.vala:83
+msgid "AVAILABLE"
+msgstr ""
+
+#: ../tools/runapp/runapp.vala:70 ../tools/lipa/lipa.vala:57
 #: ../tools/lipkgen/lipkgen.vala:49 ../tools/depscan/depscan-tool.vala:41
 #: ../tools/likey/likey.vala:38
 msgid "Activate verbose mode"
 msgstr ""
 
-#: ../src/application.vala:369
+#: ../src/application.vala:395
 msgid "Application ID %s is invalid!"
 msgstr ""
 
@@ -85,11 +89,16 @@ msgstr ""
 msgid "Could not find IPK source files!"
 msgstr ""
 
-#: ../tools/lipa/lipa-manager.vala:91
+#: ../tools/lipa/lipa-manager.vala:103
 msgid "Could not find application which matches '%s'!\n"
 msgstr ""
 
-#: ../src/application.vala:414 ../src/varsetter.vala:45
+#: ../tools/lipa/lipa-manager.vala:147
+#, fuzzy
+msgid "Could not find application!"
+msgstr "Installér nyt program"
+
+#: ../src/application.vala:440 ../src/varsetter.vala:45
 msgid "Could not load desktop file values: %s"
 msgstr ""
 
@@ -103,7 +112,7 @@ msgstr ""
 msgid "Could not open IPK file! Error: %s"
 msgstr ""
 
-#: ../src/application.vala:455 ../src/application.vala:482
+#: ../src/application.vala:481 ../src/application.vala:508
 #: ../src/varsetter.vala:56
 msgid "Could not open desktop file: %s"
 msgstr ""
@@ -138,11 +147,11 @@ msgid ""
 "Could not read dependency archive! Archive might be damaged. Message: %s"
 msgstr ""
 
-#: ../src/manager.vala:169
+#: ../src/manager.vala:170
 msgid "Could not remove file %s!"
 msgstr ""
 
-#: ../src/manager.vala:154
+#: ../src/manager.vala:155
 msgid "Could not uninstall application %s. It is not installed."
 msgstr ""
 
@@ -172,7 +181,7 @@ msgstr ""
 msgid "Database unlocked"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:103
+#: ../tools/lipa/lipa-installer.vala:105
 msgid "Description:"
 msgstr ""
 
@@ -180,15 +189,15 @@ msgstr ""
 msgid "Details from PackageKit: %s"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:130
+#: ../tools/lipa/lipa-installer.vala:132
 msgid "Do you accept these terms and conditions?"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:155
+#: ../tools/lipa/lipa-installer.vala:157
 msgid "Do you want to install %s now?"
 msgstr ""
 
-#: ../tools/lipa/lipa-manager.vala:101
+#: ../tools/lipa/lipa-manager.vala:113
 msgid "Do you want to remove %s (%s) now?"
 msgstr ""
 
@@ -232,7 +241,7 @@ msgstr ""
 msgid "GPG-Sign the resulting package"
 msgstr ""
 
-#: ../tools/lipa/lipa-manager.vala:75
+#: ../src/application.vala:298 ../tools/lipa/lipa-manager.vala:85
 msgid "INSTALLED"
 msgstr ""
 
@@ -248,12 +257,17 @@ msgstr ""
 msgid "Import key with fingerprint FPR"
 msgstr ""
 
-#: ../tools/lipa/lipa.vala:58
+#: ../tools/lipa/lipa.vala:61
+#, fuzzy
+msgid "Install a remote IPK package"
+msgstr "Installér pakke?"
+
+#: ../tools/lipa/lipa.vala:59
 msgid "Install an IPK package"
 msgstr ""
 
 #: ../src/installer.vala:292 ../src/installer.vala:348
-#: ../tools/lipa/lipa-installer.vala:56
+#: ../tools/lipa/lipa-installer.vala:59
 msgid "Installation completed!"
 msgstr "Installation færdig!"
 
@@ -261,7 +275,7 @@ msgstr "Installation færdig!"
 msgid "Installation failed!"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:101
+#: ../tools/lipa/lipa-installer.vala:103
 msgid "Installation of %s"
 msgstr ""
 
@@ -269,7 +283,7 @@ msgstr ""
 msgid "Installation of native packages failed with message: %s"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:160
+#: ../tools/lipa/lipa-installer.vala:162
 msgid "Installing"
 msgstr ""
 
@@ -289,19 +303,19 @@ msgstr ""
 msgid "Key not found!"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:115
+#: ../tools/lipa/lipa-installer.vala:117
 msgid "License:"
 msgstr ""
 
-#: ../tools/lipa/lipa.vala:64
+#: ../tools/lipa/lipa.vala:67
 msgid "List all installed applications"
 msgstr ""
 
-#: ../tools/lipa/lipa.vala:62
+#: ../tools/lipa/lipa.vala:65
 msgid "List installed Listaller applications"
 msgstr ""
 
-#: ../tools/lipa/lipa.vala:71
+#: ../tools/lipa/lipa.vala:74
 msgid ""
 "Listaller command-line tool: No command specified.\n"
 "Run '%s --help' to see a list of available commands."
@@ -327,11 +341,16 @@ msgstr ""
 msgid "Medium security."
 msgstr ""
 
-#: ../tools/lipa/lipa.vala:131
+#: ../tools/lipa/lipa.vala:134
 msgid "Missing parameter for 'install' action: No IPK package specified.\n"
 msgstr ""
 
-#: ../tools/lipa/lipa.vala:143
+#: ../tools/lipa/lipa.vala:146
+msgid ""
+"Missing parameter for 'install-remote' action: No IPK package-id specified.\n"
+msgstr ""
+
+#: ../tools/lipa/lipa.vala:158
 msgid ""
 "Missing parameter for 'remove' action: No application-id or name specified.\n"
 msgstr ""
@@ -340,7 +359,7 @@ msgstr ""
 msgid "Never trust."
 msgstr ""
 
-#: ../tools/runapp/runapp.vala:106
+#: ../tools/runapp/runapp.vala:107
 msgid "No application specified!"
 msgstr ""
 
@@ -428,31 +447,31 @@ msgstr ""
 msgid "RFU"
 msgstr ""
 
-#: ../tools/lipa/lipa.vala:66
+#: ../tools/lipa/lipa.vala:69
 msgid "Refresh repository application cache"
 msgstr ""
 
-#: ../tools/lipa/lipa-manager.vala:116
+#: ../tools/lipa/lipa-manager.vala:132
 msgid "Removal of %s completed successfully!"
 msgstr ""
 
-#: ../tools/lipa/lipa-manager.vala:118
+#: ../tools/lipa/lipa-manager.vala:134
 msgid "Removal of %s failed!"
 msgstr ""
 
-#: ../src/manager.vala:182 ../src/manager.vala:225
+#: ../src/manager.vala:183 ../src/manager.vala:226
 msgid "Removal of %s finished."
 msgstr ""
 
-#: ../src/manager.vala:146
+#: ../src/manager.vala:147
 msgid "Removal of %s started."
 msgstr ""
 
-#: ../tools/lipa/lipa.vala:60
+#: ../tools/lipa/lipa.vala:63
 msgid "Remove an application installed using Listaller"
 msgstr ""
 
-#: ../tools/lipa/lipa-manager.vala:106
+#: ../tools/lipa/lipa-manager.vala:119
 msgid "Removing"
 msgstr ""
 
@@ -460,7 +479,7 @@ msgstr ""
 msgid "Resolving dependencies of '%s'."
 msgstr ""
 
-#: ../tools/runapp/runapp.vala:83 ../tools/lipa/lipa.vala:84
+#: ../tools/runapp/runapp.vala:84 ../tools/lipa/lipa.vala:87
 #: ../tools/lipkgen/lipkgen.vala:62 ../tools/appcompile/appcompile.vala:69
 #: ../tools/depscan/depscan-tool.vala:54 ../tools/likey/likey.vala:62
 msgid "Run '%s --help' to see a full list of available command line options.\n"
@@ -470,12 +489,12 @@ msgstr ""
 msgid "Running installation of %s"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:142 ../tools/lipa/lipa-installer.vala:144
-#: ../tools/lipa/lipa-installer.vala:146
+#: ../tools/lipa/lipa-installer.vala:144 ../tools/lipa/lipa-installer.vala:146
+#: ../tools/lipa/lipa-installer.vala:148
 msgid "Security is:"
 msgstr ""
 
-#: ../src/installer.vala:409
+#: ../src/installer.vala:427
 msgid "Setup has not been initialized!"
 msgstr ""
 
@@ -483,7 +502,7 @@ msgstr ""
 msgid "Should be safe to use."
 msgstr ""
 
-#: ../tools/runapp/runapp.vala:67 ../tools/lipa/lipa.vala:54
+#: ../tools/runapp/runapp.vala:68 ../tools/lipa/lipa.vala:55
 #: ../tools/lipkgen/lipkgen.vala:39 ../tools/appcompile/appcompile.vala:37
 #: ../tools/depscan/depscan-tool.vala:35 ../tools/likey/likey.vala:36
 msgid "Show the application's version"
@@ -536,7 +555,7 @@ msgstr ""
 msgid "Strip debug infos from files in install-target"
 msgstr ""
 
-#: ../src/installer.vala:418
+#: ../src/installer.vala:436
 msgid ""
 "The installer will only work with the %s operating system, but you use "
 "'%s'.\n"
@@ -594,20 +613,20 @@ msgstr ""
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
 
-#: ../src/software-db.vala:109
+#: ../src/software-db.vala:141
 msgid ""
 "Tried to perform action on private software database, but the database is "
 "not opened! (this should never happen!)"
 msgstr ""
 
-#: ../src/software-db.vala:98
+#: ../src/software-db.vala:130
 msgid ""
 "Tried to perform action on shared software database, but the database is not "
 "opened! (maybe a permission problem?)"
 msgstr ""
 
-#: ../src/database-internal.vala:423 ../src/database-internal.vala:761
-#: ../src/database-internal.vala:941
+#: ../src/database-internal.vala:423 ../src/database-internal.vala:779
+#: ../src/database-internal.vala:965
 msgid "Tried to write on readonly database! (This should never happen)"
 msgstr ""
 
@@ -627,28 +646,28 @@ msgstr ""
 msgid "Trust level is unknown"
 msgstr ""
 
-#: ../src/manager.vala:240
+#: ../src/manager.vala:241
 msgid ""
 "Trying to remove local application, but AppManager is in superuser mode!\n"
 "Setting AppManager to local mode now."
 msgstr ""
 
-#: ../src/manager.vala:238
+#: ../src/manager.vala:239
 msgid ""
 "Trying to remove shared application, but AppManager is not in superuser "
 "mode!\n"
 "Setting AppManager to superuse mode now."
 msgstr ""
 
-#: ../src/software-db.vala:406
+#: ../src/software-db.vala:474
 msgid "Unable to add a dependency to database: %s"
 msgstr ""
 
-#: ../src/software-db.vala:220
+#: ../src/software-db.vala:252
 msgid "Unable to add application file list to database: %s"
 msgstr ""
 
-#: ../src/software-db.vala:199
+#: ../src/software-db.vala:231
 msgid "Unable to add application to database: %s"
 msgstr ""
 
@@ -656,7 +675,7 @@ msgstr ""
 msgid "Unable to build package: %s"
 msgstr ""
 
-#: ../src/software-db.vala:256
+#: ../src/software-db.vala:288
 msgid "Unable to count applications: %s"
 msgstr ""
 
@@ -711,15 +730,15 @@ msgstr ""
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
 
-#: ../src/software-db.vala:275
+#: ../src/software-db.vala:307
 msgid "Unable to fetch application by id: %s"
 msgstr ""
 
-#: ../src/software-db.vala:297
+#: ../src/software-db.vala:329
 msgid "Unable to fetch application by name: %s"
 msgstr ""
 
-#: ../src/database-internal.vala:1005 ../src/software-db.vala:241
+#: ../src/database-internal.vala:1029 ../src/software-db.vala:273
 msgid "Unable to fetch application file list: %s"
 msgstr ""
 
@@ -741,19 +760,19 @@ msgstr ""
 msgid "Unable to get meta-information list: %s"
 msgstr ""
 
-#: ../src/software-db.vala:128
-msgid "Unable to open database for read-only: %s"
-msgstr ""
-
-#: ../src/software-db.vala:154
+#: ../src/software-db.vala:186
 msgid "Unable to open database for writing: %s"
 msgstr ""
 
-#: ../src/manager.vala:80
+#: ../src/software-db.vala:160
+msgid "Unable to open database read-only: %s"
+msgstr ""
+
+#: ../src/manager.vala:81
 msgid "Unable to open software database for reading & writing!"
 msgstr ""
 
-#: ../src/manager.vala:86
+#: ../src/manager.vala:87
 msgid "Unable to open software database for reading only!"
 msgstr ""
 
@@ -761,7 +780,7 @@ msgstr ""
 msgid "Unable to read package signature! Message: %s"
 msgstr ""
 
-#: ../src/software-db.vala:318
+#: ../src/software-db.vala:350
 msgid "Unable to remove application from database: %s"
 msgstr ""
 
@@ -769,11 +788,11 @@ msgstr ""
 msgid "Unable to save modified desktop-file! %s"
 msgstr ""
 
-#: ../src/software-db.vala:338
+#: ../src/software-db.vala:370
 msgid "Unable to search application database: %s"
 msgstr ""
 
-#: ../src/database-internal.vala:971
+#: ../src/database-internal.vala:995
 msgid "Unable to write application file list! Message: %s"
 msgstr ""
 
@@ -790,7 +809,24 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: ../tools/lipa/lipa-manager.vala:136
+#: ../src/updater.vala:137
+msgid ""
+"Update of application '%s' failed. Maybe the update information is out of "
+"date. Please refresh it and try again."
+msgstr ""
+
+#: ../src/updater.vala:178
+msgid ""
+"Update of application '%s' failed. Something bad happened. Please install "
+"the application again!"
+msgstr ""
+
+#: ../src/updater.vala:169
+msgid ""
+"Update of application '%s' failed. Unable to remove the old application."
+msgstr ""
+
+#: ../tools/lipa/lipa-manager.vala:176
 msgid "Updating package cache"
 msgstr ""
 
@@ -809,7 +845,7 @@ msgstr ""
 msgid "Validity is undefined"
 msgstr ""
 
-#: ../src/application.vala:357
+#: ../src/application.vala:383
 msgid "We don't know a desktop-file for application '%s'!"
 msgstr ""
 
@@ -817,7 +853,7 @@ msgstr ""
 msgid "XML file is not a valid ZI feed!"
 msgstr ""
 
-#: ../src/installer.vala:434
+#: ../src/installer.vala:445
 msgid ""
 "You are not allowed to install this package, because it's security level is "
 "'%s' and you need at least a package with security-level '%s'.\n"
@@ -825,7 +861,15 @@ msgid ""
 "try again!"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:133
+#: ../src/updater.vala:160
+msgid ""
+"You are not allowed to update the application! The security level of the "
+"update is '%s' and you need at least security-level '%s'.\n"
+"Please make sure you trusted this signature and that your system is not "
+"compromised!"
+msgstr ""
+
+#: ../tools/lipa/lipa-installer.vala:135
 msgid ""
 "You need to agree with the license to install & use the application. Exiting "
 "setup now."
@@ -883,11 +927,11 @@ msgstr ""
 msgid "okay"
 msgstr ""
 
-#: ../tools/lipa/lipa-manager.vala:67
+#: ../src/application.vala:290 ../tools/lipa/lipa-manager.vala:72
 msgid "personal"
 msgstr ""
 
-#: ../tools/lipa/lipa-manager.vala:69
+#: ../src/application.vala:292 ../tools/lipa/lipa-manager.vala:74
 msgid "shared"
 msgstr ""
 
@@ -1082,14 +1126,8 @@ msgstr ""
 #~ msgid "Install into my Home directory"
 #~ msgstr "Installér til min hjemmemappe"
 
-#~ msgid "Install new application"
-#~ msgstr "Installér nyt program"
-
 #~ msgid "Install now"
 #~ msgstr "Installér nu"
-
-#~ msgid "Install package?"
-#~ msgstr "Installér pakke?"
 
 #~ msgid "Install updates"
 #~ msgstr "Installér opdateringer"

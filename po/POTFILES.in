@@ -25,6 +25,7 @@ src/varsolver.vala
 src/varsetter.vala
 src/manager.vala
 src/installer.vala
+src/updater.vala
 src/dep-info.vala
 src/dep-manager.vala
 src/dep-installer.vala
