@@ -179,7 +179,7 @@ public class Updater : MessageObject {
 	/**
 	 * Apply updates selected in update_list.
 	 *
-	 * @param: update_list A list containing valid UpdateItems
+	 * @param update_list A list containing valid UpdateItems
 	 */
 	public bool apply_updates (ArrayList<UpdateItem> update_list) {
 		if (update_list.size == 0)
@@ -218,4 +218,4 @@ public class Updater : MessageObject {
 
 }
 
-} // End of namespace
+} // End of namespace: Listaller

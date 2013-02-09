@@ -303,6 +303,11 @@ public class Manager : MessageObject {
 		return res;
 	}
 
+	/**
+	 * Get the LD_LIBRARY_PATH environment for an application.
+	 *
+	 * @param app AppItem belonging to an Listaller-installed app
+	 */
 	public string get_app_ld_environment (AppItem app) {
 		// get basic library path
 		IPK.InstallMode inst_mode = IPK.InstallMode.PRIVATE;
@@ -346,6 +351,12 @@ public class Manager : MessageObject {
 		return paths;
 	}
 
+	/**
+	 * Update the 3rd-party remote application cache.
+	 * This will allow querying for new updates.
+	 *
+	 * @return TRUE if refresh was successful.
+	 */
 	public bool refresh_repository_cache () {
 		bool ret = false;
 
