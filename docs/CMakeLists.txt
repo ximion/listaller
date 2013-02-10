@@ -32,5 +32,6 @@ if (API_DOCS)
 		${CMAKE_CURRENT_SOURCE_DIR}/extract_docs.sh
 		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 	)
+	add_dependencies (documentation api-docs)
 	set_directory_properties (PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_CURRENT_SOURCE_DIR}/api)
 endif()

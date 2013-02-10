@@ -36,6 +36,9 @@ public errordomain ControlDataError {
 	UNKNOWN;
 }
 
+/**
+ * Generic IPK package control data
+ */
 public abstract class Control : Object {
 	internal DoapData doap;
 	internal MetaFile depData;
@@ -230,6 +233,9 @@ public abstract class Control : Object {
 	}
 }
 
+/**
+ * Control metadata of an IPK package
+ */
 public class PackControl : Control {
 	private string ipkVersion;
 	private string doapData;
@@ -374,6 +380,12 @@ public class PackControl : Control {
 
 }
 
+/**
+ * Data stored in an IPK-source control directory.
+ *
+ * This class is used by tools like lipkgen to extract data about a
+ * to-be-created IPK package from an IPK control directory.
+ */
 public class ControlDir : Control {
 	private string ctrlDir;
 	private string doapFile;

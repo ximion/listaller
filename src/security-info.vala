@@ -23,6 +23,9 @@ using Listaller;
 
 namespace Listaller {
 
+/**
+ * Simple indicator of package security
+ */
 public enum SecurityLevel {
 	DANGEROUS,
 	LOW,
@@ -63,6 +66,9 @@ public enum SecurityLevel {
 	}
 }
 
+/**
+ * Status of a package signature
+ */
 public enum SignStatus {
 	UNKNOWN,
 	VALID,
@@ -106,6 +112,9 @@ public enum SignStatus {
 	}
 }
 
+/**
+ * Trust level of a signature
+ */
 public enum SignTrust {
 	UNKNOWN,
 	BAD_VALUE,
@@ -145,6 +154,12 @@ public enum SignTrust {
 
 namespace Listaller.IPK {
 
+/**
+ * Simple package security information
+ *
+ * This class stores data which can be used to display meaningful information
+ * about the security level of a 3rd-party software package.
+ */
 public class SecurityInfo : Object {
 	private weak Package pack;
 

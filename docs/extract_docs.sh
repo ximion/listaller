@@ -3,7 +3,12 @@ set -e
 
 rm -rf ./api
 cd ../src
+
+SYSTEM_VAPI=$(echo /usr/share/vala-0.??/vapi)
+
+echo "Extracting source-code documentation..."
 valadoc -b . -o ../docs/api --vapidir=../vapi \
+	--vapidir=$SYSTEM_VAPI \
 	--pkg=config \
 	--pkg=gee-1.0 \
 	--pkg=gio-2.0 \

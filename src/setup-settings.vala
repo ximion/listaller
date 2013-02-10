@@ -24,6 +24,12 @@ using Listaller.Utils;
 
 namespace Listaller.IPK {
 
+/**
+ * Mode of a current installation.
+ *
+ * This class is also used to indicate installation modes
+ * supported by an IPK package.
+ */
 [Flags]
 public enum InstallMode {
 	NONE = 0,
