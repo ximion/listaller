@@ -78,7 +78,7 @@ public class Dependency: Object {
 			return _satisfied;
 		}
 		set {
-			if ((!__unittestmode) &&
+			if ((!Utils.__unittestmode) &&
 			    (idname != "") &&
 			    (!is_standardlib) &&
 			    (!has_installdata ()) &&

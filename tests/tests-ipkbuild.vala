@@ -107,16 +107,16 @@ int main (string[] args) {
 	string curdir = Environment.get_current_dir ();
 	Environment.set_current_dir (datadir);
 
-	Test.init (ref args);
-	set_console_mode (true);
-	set_verbose_mode (true);
-	add_log_domain ("LiTest");
+	var tenv = new TestEnvironment ("ipkbuild");
+	tenv.init (ref args);
+	tenv.create_environment ();
 
 	test_autocompile ();
 	Environment.set_current_dir (datadir);
 	test_lipkgen_build ();
 
-	Test.run ();
+	tenv.run ();
 	Environment.set_current_dir (curdir);
+
 	return 0;
 }

@@ -443,7 +443,7 @@ public class AppItem : Object {
 	}
 
 	private string get_desktop_filename_expanded () {
-		/* NOTE: Hopefully nobody will ever try to store a .desktop-file in $INST, because
+		/* NOTE: Hopefully nobody will ever try to store a .desktop-file in %INST%, because
 		 * this might cause problems with AppItem's which don't have the correct idname specified.
 		 * (Maybe limit this to %APP% only?)
 		 */

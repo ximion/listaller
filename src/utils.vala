@@ -22,9 +22,15 @@ using GLib;
 using Gee;
 using Listaller;
 
-internal static bool __unittestmode = false;
-
 namespace Listaller.Utils {
+
+/**
+ * Variable for internal use only!
+ * Indicates if we're running unit tests and disables certain
+ * checks which e.g. might require a working PackageKit.
+ * This var should be used as rarely as possible. (better don't use it at all)
+ */
+internal static bool __unittestmode = false;
 
 private ulong timeval_to_ms (TimeVal time_val) {
 	return (((ulong) time_val.tv_sec) * 1000) + (((ulong) time_val.tv_usec) / 1000);

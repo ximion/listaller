@@ -75,16 +75,15 @@ int main (string[] args) {
 	datadir = Path.build_filename (datadir, "testdata", null);
 	assert (FileUtils.test (datadir, FileTest.EXISTS) != false);
 
-	__unittestmode = true;
-
-	Test.init (ref args);
-	set_console_mode (true);
-	set_verbose_mode (true);
-	add_log_domain ("LiTest");
+	var tenv = new TestEnvironment ("signing");
+	tenv.init (ref args);
+	// NOTE We don't create the testing environment here, because we need the real one to test GPG
+	//      Maybe we can set-up a new GPG testing env later, but for now this test is better than none.
 
 	test_sign_working ();
 	test_sign_failing ();
 
-	Test.run ();
+	tenv.run ();
+
 	return 0;
 }

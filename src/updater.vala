@@ -141,7 +141,7 @@ public class Updater : MessageObject {
 		IPK.InstallMode imode = IPK.InstallMode.SHARED;
 		if (app_old.state == AppState.INSTALLED_PRIVATE)
 			imode = IPK.InstallMode.PRIVATE;
-		if (__unittestmode)
+		if (Utils.__unittestmode)
 			imode = IPK.InstallMode.TEST;
 		inst.settings.current_mode = imode;
 		inst.set_install_mode (imode);

@@ -14,7 +14,7 @@ pkg_check_modules(REDLAND REQUIRED redland>=0.4)
 pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2)
 #find_gir(PKGIR "packagekit-glib2" REQUIRED)
 
-set(LIUNITTEST_SOURCES
+set(LIUNITTEST_SOURCES testcommon.vala
 )
 
 link_libraries(${M_LIB}

@@ -149,8 +149,7 @@ public class SetupSettings : Object {
 	}
 
 	internal void invalidate_tmp_dir () {
-		debug (conf.tmp_dir ());
-		debug (uinsttmp);
+		debug ("Invalidating tmpdir %s, root tmp is %s", uinsttmp, conf.tmp_dir ());
 
 		// A little bit of additional security...
 		if (uinsttmp.has_prefix (conf.tmp_dir ()))

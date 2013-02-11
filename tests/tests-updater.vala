@@ -60,7 +60,6 @@ void test_foobar_installation () {
 	string ipkfilename = Path.build_filename (datadir, "FooBar-1.0_%s.ipk".printf (Utils.system_machine_generic ()), null);
 
 	// Excludes stuff like PK dependency installing from testing
-	__unittestmode = true;
 	Report.set_print_fatal_msg (false);
 
 	Setup setup = new Setup (ipkfilename);
@@ -145,10 +144,9 @@ int main (string[] args) {
 	datadir = Path.build_filename (datadir, "testdata", null);
 	assert (FileUtils.test (datadir, FileTest.EXISTS) != false);
 
-	Test.init (ref args);
-	set_console_mode (true);
-	set_verbose_mode (true);
-	add_log_domain ("LiTest");
+	var tenv = new TestEnvironment ("updater");
+	tenv.init (ref args);
+	tenv.create_environment ();
 
 	// prepare updater environment
 	test_foobar_installation ();
@@ -158,6 +156,7 @@ int main (string[] args) {
 	test_refresh_repo_cache ();
 	test_updater_update ();
 
-	Test.run ();
+	tenv.run ();
+
 	return 0;
 }

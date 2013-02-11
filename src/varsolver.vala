@@ -220,8 +220,12 @@ private class VarSolver : Object {
 		}
 		// Check for testmode
 		if (setup_settings.test_mode) {
-			res = Path.build_filename (setup_settings.get_unique_install_tmp_dir (), substitute_vars_id (s), null);
+			if (!s.has_prefix ("/"))
+				res = Path.build_filename (setup_settings.get_unique_install_tmp_dir (), substitute_vars_id (s), null);
+			else
+				res = substitute_vars_id (s);
 		}
+
 		return res;
 	}
 

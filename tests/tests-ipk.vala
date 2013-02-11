@@ -161,15 +161,15 @@ int main (string[] args) {
 	datadir = Path.build_filename (datadir, "testdata", null);
 	assert (FileUtils.test (datadir, FileTest.EXISTS) != false);
 
-	Test.init (ref args);
-	set_console_mode (true);
-	set_verbose_mode (true);
-	add_log_domain ("LiTest");
+	var tenv = new TestEnvironment ("ipkp");
+	tenv.init (ref args);
+	tenv.create_environment ();
 
 	test_ipk_packcontrol ();
 	test_ipk_filelist_file ();
 	test_ipk_package ();
 
-	Test.run ();
+	tenv.run ();
+
 	return 0;
 }
