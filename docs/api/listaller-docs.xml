@@ -38,18 +38,36 @@
     <xi:include href="xml/dep-info.xml"/>
 
   </chapter>
-  <chapter id="object-tree">
-    <title>Object Hierarchy</title>
-     <xi:include href="xml/tree_index.sgml"/>
-  </chapter>
-  <index id="api-index-full">
-    <title>API Index</title>
-    <xi:include href="xml/api-index-full.xml"><xi:fallback /></xi:include>
-  </index>
-  <index id="deprecated-api-index" role="deprecated">
-    <title>Index of deprecated API</title>
-    <xi:include href="xml/api-index-deprecated.xml"><xi:fallback /></xi:include>
-  </index>
+  <chapter id="more">
+    <title>More Information</title>
+      <chapter id="object-tree">
+         <title>Object Hierarchy</title>
+         <xi:include href="xml/tree_index.sgml"/>
+      </chapter>
+      <index id="api-index-full">
+          <title>API Index</title>
+          <xi:include href="xml/api-index-full.xml"><xi:fallback /></xi:include>
+      </index>
+      <index id="deprecated-api-index" role="deprecated">
+         <title>Index of deprecated API</title>
+         <xi:include href="xml/api-index-deprecated.xml"><xi:fallback /></xi:include>
+      </index>
 
-  <xi:include href="xml/annotation-glossary.xml"><xi:fallback /></xi:include>
+      <xi:include href="xml/annotation-glossary.xml"><xi:fallback /></xi:include>
+  </chapter>
+
+  <chapter id="manpages">
+    <title>Listaller Tools Manual Pages</title>
+     <xi:include href="../man/appcompile.1.xml"/>
+     <xi:include href="../man/depscan.1.xml"/>
+     <xi:include href="../man/lig++.1.xml"/>
+     <xi:include href="../man/ligcc.1.xml"/>
+     <xi:include href="../man/likey.1.xml"/>
+     <xi:include href="../man/lipa.1.xml"/>
+     <xi:include href="../man/lipkgen.1.xml"/>
+     <xi:include href="../man/relaytool.1.xml"/>
+     <xi:include href="../man/runapp.1.xml"/>
+  </chapter>
+
+
 </book>
