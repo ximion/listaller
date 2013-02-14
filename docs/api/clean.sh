@@ -1,0 +1,11 @@
+rm -rf ccomments/
+rm -rf cscan/
+rm -rf html/
+rm -f *.stamp
+rm -f *.txt
+rm -f *.args
+rm -f *.hierarchy
+rm -f *.interfaces
+rm -f *.prerequisites
+rm -f *.signals
+rm -f *.types

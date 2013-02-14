@@ -74,10 +74,10 @@ if (API_DOCS)
 			"--pkg=rdf-minimal" "--pkg=packagekit-glib2"
 			"--package-name=listaller"
 			"--package-version=${LISTALLER_VERSION}"
-			"--importdir=${CMAKE_SOURCE_DIR}/docs/pages"
 			"--importdir=${CMAKE_SOURCE_DIR}/docs/man"
 			${LISTALLER_LIB_SOURCES}
 			VERBATIM)
-	set_directory_properties (PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_CURRENT_SOURCE_DIR}/api)
+	set_directory_properties (PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_CURRENT_SOURCE_DIR}/api/html)
+	set_directory_properties (PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_CURRENT_SOURCE_DIR}/api/xml)
 
 endif()
