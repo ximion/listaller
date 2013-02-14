@@ -15,12 +15,31 @@ if (YELP_BUILD STREQUAL "")
 	message (FATAL_ERROR "yelp-build was not found! Please install the Yelp tools to continue!")
 endif (YELP_BUILD STREQUAL "")
 
+# build small listaller lib version string
+set(LISTALLER_LIB_VERSION "${LISTALLER_VERSION_MAJOR}.${LISTALLER_VERSION_MINOR}.${LISTALLER_VERSION_PATCH}")
+
+# find documentation sources
+file (GLOB_RECURSE LISTALLER_DOC_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/pages/*.page")
+
 add_custom_target (documentation
-	${CMAKE_CURRENT_SOURCE_DIR}/create_html.sh
-	DEPENDS pages/index.page
+	COMMAND "yelp-build" "html" "-o" "${CMAKE_CURRENT_SOURCE_DIR}/html"
+	${LISTALLER_DOC_SOURCES}
+	DEPENDS "pages/index.page"
+		"${CMAKE_BINARY_DIR}/src/listaller.h"
+		"${CMAKE_BINARY_DIR}/src/liblistaller-glib.so.${LISTALLER_LIB_VERSION}"
+		"${CMAKE_CURRENT_SOURCE_DIR}/html"
 	WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
+add_custom_command (OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/html
+		COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/html
+		VERBATIM)
 set_directory_properties (PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_CURRENT_SOURCE_DIR}/html)
+
+# we want to validate the document xml
+add_custom_command (TARGET documentation PRE_BUILD
+		COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/validate"
+		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+		VERBATIM)
 
 if (API_DOCS)
 	# find documentation tools
@@ -48,7 +67,7 @@ if (API_DOCS)
 			COMMAND "valadoc" "--force" "-b" "${CMAKE_SOURCE_DIR}/src" "-o" "${CMAKE_SOURCE_DIR}/docs/api"
 			"--vapidir=${CMAKE_SOURCE_DIR}/vapi" "--vapidir=${SYSTEM_VAPI_DIR}"
 			"-X" "${CMAKE_BINARY_DIR}/src/listaller.h" "-X" "-l"
-			"-X" "${CMAKE_BINARY_DIR}/liblistaller-glib.so.${LILIBS_FULL_VERSION}"
+			"-X" "${CMAKE_BINARY_DIR}/src/liblistaller-glib.so.${LISTALLER_LIB_VERSION}"
 			"--doclet" "gtkdoc"
 			"--pkg=config" "--pkg=gee-1.0" "--pkg=gio-2.0" "--pkg=libsoup-2.4"
 			"--pkg=sqlite3" "--pkg=libarchive" "--pkg=gpgme" "--pkg=libxml-2.0"
@@ -56,6 +75,7 @@ if (API_DOCS)
 			"--package-name=listaller"
 			"--package-version=${LISTALLER_VERSION}"
 			"--importdir=${CMAKE_SOURCE_DIR}/docs/pages"
+			"--importdir=${CMAKE_SOURCE_DIR}/docs/man"
 			${LISTALLER_LIB_SOURCES}
 			VERBATIM)
 	set_directory_properties (PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_CURRENT_SOURCE_DIR}/api)
