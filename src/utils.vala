@@ -22,6 +22,9 @@ using GLib;
 using Gee;
 using Listaller;
 
+/**
+ * Common utility functions used by Listaller
+ */
 namespace Listaller.Utils {
 
 /**
@@ -489,7 +492,11 @@ private string? real_path (string path)
 	return path;
 }
 
-public static string li_build_filename (string first_element, ...) {
+/**
+ * Builds a filename similar to g_build_filename, but this implementation
+ * resolves all relative ("../.") path statements to one coherent path string.
+ */
+public static string build_filename (string first_element, ...) {
 	string path = first_element;
 
 	var l = va_list ();

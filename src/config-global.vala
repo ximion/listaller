@@ -254,10 +254,14 @@ private bool find_library (string libname, Config conf) {
 
 } // End of namespace: Listaller
 
-public void li_enable_translation ()
-{
-	// Initialize localisation
-	Intl.bindtextdomain (PkgConfig.GETTEXT_PACKAGE, PkgConfig.LOCALEDIR);
-	Intl.bind_textdomain_codeset (PkgConfig.GETTEXT_PACKAGE, "UTF-8");
-	Intl.textdomain (PkgConfig.GETTEXT_PACKAGE);
-}
+namespace Listaller.Utils {
+
+	public void enable_translation ()
+	{
+		// Initialize localisation
+		Intl.bindtextdomain (PkgConfig.GETTEXT_PACKAGE, PkgConfig.LOCALEDIR);
+		Intl.bind_textdomain_codeset (PkgConfig.GETTEXT_PACKAGE, "UTF-8");
+		Intl.textdomain (PkgConfig.GETTEXT_PACKAGE);
+	}
+
+} // End of namespace: Listaller.Utils

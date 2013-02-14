@@ -150,7 +150,7 @@ private class PkResolver : PkListallerTask {
 	}
 
 	private PackageKit.PackageSack? pkit_pkgs_from_depfiles (IPK.Dependency dep) {
-		PackageKit.Bitfield filter = PackageKit.filter_bitfield_from_string ("arch;");
+		PackageKit.Bitfield filter = PackageKit.Filter.bitfield_from_string ("arch;");
 
 		// We only resolve libraries at time
 		// TODO: Resolve other dependencies too
@@ -289,7 +289,7 @@ private class PkResolver : PkListallerTask {
 	 * @return Resolved package-id or NULL, if none was found
 	 */
 	public string? find_package_name_for_file (string fname) throws PkError {
-		PackageKit.Bitfield filter = PackageKit.filter_bitfield_from_string ("installed;");
+		PackageKit.Bitfield filter = PackageKit.Filter.bitfield_from_string ("installed;");
 
 		PackageKit.Results? res = null;
 		PackageKit.PackageSack? sack;
@@ -327,7 +327,7 @@ private class PkResolver : PkListallerTask {
 		string[] packages = sack.get_ids ();
 
 		if ( (res.get_exit_code () != PackageKit.Exit.SUCCESS)) {
-			throw new PkError.TRANSACTION_FAILED (_("PackageKit transaction failed!\nExit message was: %s").printf (PackageKit.exit_enum_to_string (res.get_exit_code ())));
+			throw new PkError.TRANSACTION_FAILED (_("PackageKit transaction failed!\nExit message was: %s").printf (PackageKit.Exit.enum_to_string (res.get_exit_code ())));
 		}
 
 		return packages[0];

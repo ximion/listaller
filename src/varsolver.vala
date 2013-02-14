@@ -106,13 +106,13 @@ private class VarSolver : Object {
 		IPK.InstallMode x = tmp_ssettings.current_mode;
 		tmp_ssettings.current_mode = IPK.InstallMode.PRIVATE;
 
-		v = add_var ("SYS_LIB", "_sys_lib", li_build_filename (tmp_ssettings.depdata_dir (), "..", "_syslibs", null), conf.sys_libdir);
+		v = add_var ("SYS_LIB", "_sys_lib", Utils.build_filename (tmp_ssettings.depdata_dir (), "..", "_syslibs", null), conf.sys_libdir);
 		v.system_var = true;
-		v = add_var ("SYS_BIN", "_sys_bin", li_build_filename (tmp_ssettings.depdata_dir (), "..", "_sysbin", null), conf.sys_bindir);
+		v = add_var ("SYS_BIN", "_sys_bin", Utils.build_filename (tmp_ssettings.depdata_dir (), "..", "_sysbin", null), conf.sys_bindir);
 		v.system_var = true;
-		v = add_var ("SYS_SHARE", "_sys_lib", li_build_filename (tmp_ssettings.depdata_dir (), "..", "_sysshare", null), conf.sys_sharedir);
+		v = add_var ("SYS_SHARE", "_sys_lib", Utils.build_filename (tmp_ssettings.depdata_dir (), "..", "_sysshare", null), conf.sys_sharedir);
 		v.system_var = true;
-		v = add_var ("SYS_ETC", "_sys_lib", li_build_filename (tmp_ssettings.depdata_dir (), "..", "_sysetc", null), conf.sys_etcdir);
+		v = add_var ("SYS_ETC", "_sys_lib", Utils.build_filename (tmp_ssettings.depdata_dir (), "..", "_sysetc", null), conf.sys_etcdir);
 		v.system_var = true;
 
 		tmp_ssettings.current_mode = x;

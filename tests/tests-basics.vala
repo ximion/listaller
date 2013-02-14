@@ -100,7 +100,7 @@ void test_utils () {
 	s = real_path ("/usr/share/./listaller/data/../files");
 	assert (s == "/usr/share/listaller/files");
 
-	s = li_build_filename ("/usr/bin/", "..", "share", "listaller", ".", "test");
+	s = Utils.build_filename ("/usr/bin/", "..", "share", "listaller", ".", "test");
 	assert (s == "/usr/share/listaller/test");
 }
 
