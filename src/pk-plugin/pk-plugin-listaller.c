@@ -371,6 +371,71 @@ out:
 }
 
 /**
+ * pk_listaller_get_updates:
+ *
+ * Submit available Listaller software updates
+ *
+ * Return value: True if successful
+ **/
+static gboolean
+pk_listaller_get_updates (PkPlugin *plugin)
+{
+	gboolean ret = TRUE;
+	ListallerUpdater *upd;
+	GeeArrayList *available_updates;
+	ListallerUpdateItem *uitem;
+	ListallerAppItem *app;
+	ListallerIPKDependency *dep;
+	gchar *package_id;
+	GType swtype;
+	gpointer ptr;
+	guint i;
+
+	// create new update manager and connect it
+	upd = listaller_updater_new (TRUE);
+	g_signal_connect (upd, "error-code", G_CALLBACK (listaller_error_code_cb), plugin);
+	g_signal_connect (upd, "progress", G_CALLBACK (listaller_progress_cb), plugin);
+
+	// find available updates
+	listaller_updater_find_updates (upd);
+
+	// fetch found updates & emit them to frontend
+	available_updates = listaller_updater_get_available_updates (upd);
+
+	for (i = 0; i < gee_abstract_collection_get_size ((GeeAbstractCollection*) available_updates); i++) {
+		ptr = gee_abstract_list_get ((GeeAbstractList*) available_updates, i);
+		uitem = (ListallerUpdateItem*) ptr;
+
+		swtype = listaller_update_item_get_sw_type (uitem);
+		if (swtype == LISTALLER_TYPE_APP_ITEM) {
+			app = (ListallerAppItem*) listaller_update_item_get_sw_new (uitem);
+			package_id = pk_listaller_pkid_from_appitem (app);
+			if (package_id == NULL) {
+				g_warning ("listaller: Unable to build package-id from app-id!");
+				ret = FALSE;
+				continue;
+			}
+
+			g_debug ("Emitting update package: %s", package_id);
+			pk_backend_job_package (plugin->job, PK_INFO_ENUM_NORMAL,
+						package_id,
+						listaller_app_item_get_summary (app));
+			g_free (package_id);
+		} else if (swtype == LISTALLER_IPK_TYPE_DEPENDENCY) {
+			// TODO
+		} else {
+			g_warning ("Found UpdateItem with invalid software type: %s", g_type_name (swtype));
+		}
+
+	}
+
+out:
+	g_object_unref (upd);
+
+	return ret;
+}
+
+/**
  * pk_listaller_install_files:
  *
  * Install the IPK packages in file_paths
@@ -698,6 +763,16 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 			pk_plugin_skip_native_backend (plugin);
 
 		goto out;
+	}
+
+	if (role == PK_ROLE_ENUM_GET_UPDATES) {
+		pk_listaller_get_updates (plugin);
+
+		goto out;
+	}
+
+	if (role == PK_ROLE_ENUM_UPDATE_PACKAGES) {
+		// TODO
 	}
 
 out:
