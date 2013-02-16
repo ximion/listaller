@@ -696,11 +696,12 @@ private class Package : MessageObject {
 			if ((fe != null) && (!fe.is_installed ())) {
 				// File was found, so install it now
 				ret = install_entry_and_validate (fe, plar, e, vs);
-				prog++;
-				change_progress ((int) Math.round (one * prog));
 				// Stop on error
 				if (!ret)
 					break;
+
+				prog++;
+				change_progress ((int) Math.round (one * prog));
 			}
 		}
 

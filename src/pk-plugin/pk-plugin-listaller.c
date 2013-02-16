@@ -32,6 +32,7 @@ struct PkPluginPrivate {
 	ListallerSetupSettings	*setup_settings;
 	PkResults		*backend_results;
 	GMainLoop		*loop;
+	gboolean		error_set;
 };
 
 static void pk_plugin_reset_backend_job (PkPlugin *plugin);
@@ -234,6 +235,10 @@ listaller_error_code_cb (GObject *sender, ListallerErrorItem *error, PkPlugin *p
 	if (pk_backend_job_get_is_error_set (plugin->job))
 		return;
 
+	/* set error code to prevent other actions to continue, after the transaction has failed */
+	plugin->priv->error_set = TRUE;
+
+	/* we want this to be sent to PackageKit clients */
 	pk_plugin_reset_backend_job (plugin);
 
 	/* emit */
@@ -344,6 +349,8 @@ pk_listaller_install_file (PkPlugin *plugin, const gchar *filename)
 
 	/* install the application! */
 	ret = listaller_setup_run_installation (setup);
+	if (!ret)
+		goto out;
 
 	/* fetch installed application */
 	app = listaller_setup_get_current_application (setup);
@@ -360,11 +367,31 @@ pk_listaller_install_file (PkPlugin *plugin, const gchar *filename)
 	}
 	g_object_unref (app);
 
+out:
 	/* close setup */
 	g_object_unref (setup);
 
-out:
 	return ret;
+}
+
+/**
+ * pk_listaller_install_files:
+ *
+ * Install the IPK packages in file_paths
+ **/
+void
+pk_listaller_install_files (PkPlugin *plugin, gchar **filenames)
+{
+	gboolean ret = FALSE;
+	guint i;
+
+	for (i=0; filenames[i] != NULL; i++) {
+
+		g_debug ("listaller: Current path is: %s", filenames[i]);
+		ret = pk_listaller_install_file (plugin, filenames[i]);
+		if (!ret)
+			break;
+	}
 }
 
 /**
@@ -433,26 +460,6 @@ out:
 }
 
 /**
- * pk_listaller_install_files:
- *
- * Install the IPK packages in file_paths
- **/
-void
-pk_listaller_install_files (PkPlugin *plugin, gchar **filenames)
-{
-	gboolean ret = FALSE;
-	guint i;
-
-	for (i=0; filenames[i] != NULL; i++) {
-
-		g_debug ("listaller: Current path is: %s", filenames[i]);
-		ret = pk_listaller_install_file (plugin, filenames[i]);
-		if (!ret)
-			break;
-	}
-}
-
-/**
  * pk_plugin_backend_job_package_cb:
  **/
 static void
@@ -505,7 +512,7 @@ pk_plugin_backend_job_error_code_cb (PkBackendJob *job,
 
 	/* add to results */
 	pk_results_set_error_code (plugin->priv->backend_results, item);
-	g_debug ("Native backend failed with detail error message: %s", details);
+	g_debug ("Native backend failed with (detailed) error message: %s", details);
 
 	g_free (details);
 }
@@ -517,6 +524,11 @@ pk_plugin_backend_job_error_code_cb (PkBackendJob *job,
 static void
 pk_plugin_redirect_backend_signals (PkPlugin *plugin)
 {
+	if (plugin->priv->error_set == TRUE) {
+		g_debug ("don't redirecting backend signals: Listaller plugin encountered an error.");
+		return;
+	}
+
 	/* connect (used) backend signals to Listaller PkPlugin */
 	pk_backend_job_set_vfunc (plugin->job,
 				  PK_BACKEND_SIGNAL_FINISHED,
@@ -648,6 +660,8 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 
 	/* set the transaction */
 	plugin->priv->current_transaction = transaction;
+
+	plugin->priv->error_set = FALSE;
 
 	/* reset the native-backend job */
 	pk_plugin_reset_backend_job (plugin);
