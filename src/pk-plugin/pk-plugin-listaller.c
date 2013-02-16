@@ -34,7 +34,7 @@ struct PkPluginPrivate {
 	GMainLoop		*loop;
 };
 
-static void pk_plugin_restore_backend (PkPlugin *plugin);
+static void pk_plugin_reset_backend_job (PkPlugin *plugin);
 static void pk_plugin_redirect_backend_signals (PkPlugin *plugin);
 
 /**
@@ -43,15 +43,12 @@ static void pk_plugin_redirect_backend_signals (PkPlugin *plugin);
 void
 pk_plugin_reset (PkPlugin *plugin)
 {
-	/* reset the native backend */
-	pk_plugin_restore_backend (plugin);
-
 	/* recreate PkResults object */
 	g_object_unref (plugin->priv->backend_results);
 	plugin->priv->backend_results = pk_results_new ();
 
 	/* reset the job */
-	pk_backend_reset_job (plugin->backend, plugin->job);
+	pk_plugin_reset_backend_job (plugin);
 }
 
 /**
@@ -153,7 +150,7 @@ pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 	guint i;
 
 	g_debug ("listaller: running get_details ()");
-	pk_backend_job_reset (plugin->job);
+	pk_plugin_reset_backend_job (plugin);
 
 	for (i=0; package_ids[i] != NULL; i++) {
 		app = pk_listaller_appitem_from_pkid (package_ids[i]);
@@ -188,7 +185,7 @@ pk_listaller_get_filelist (PkPlugin *plugin, gchar **package_ids)
 	guint i;
 
 	g_debug ("listaller: running get_filelist ()");
-	pk_backend_job_reset (plugin->job);
+	pk_plugin_reset_backend_job (plugin);
 
 	for (i=0; package_ids[i] != NULL; i++) {
 		app = pk_listaller_appitem_from_pkid (package_ids[i]);
@@ -217,7 +214,7 @@ listaller_application_cb (GObject *sender, ListallerAppItem *item, PkPlugin *plu
 	}
 	g_debug ("listaller: new app found -> %s", listaller_app_item_get_appid (item));
 
-	pk_plugin_restore_backend (plugin);
+	pk_plugin_reset_backend_job (plugin);
 
 	/* emit */
 	pk_backend_job_package (plugin->job, PK_INFO_ENUM_INSTALLED, package_id,
@@ -237,7 +234,7 @@ listaller_error_code_cb (GObject *sender, ListallerErrorItem *error, PkPlugin *p
 	if (pk_backend_job_get_is_error_set (plugin->job))
 		return;
 
-	pk_plugin_restore_backend (plugin);
+	pk_plugin_reset_backend_job (plugin);
 
 	/* emit */
 	pk_backend_job_error_code (plugin->job, PK_ERROR_ENUM_INTERNAL_ERROR,
@@ -279,7 +276,7 @@ listaller_progress_cb (GObject *sender, ListallerProgressItem *item, PkPlugin *p
 	if (listaller_progress_item_get_prog_type (item) != LISTALLER_PROGRESS_ENUM_MAIN_PROGRESS)
 		return;
 
-	pk_plugin_restore_backend (plugin);
+	pk_plugin_reset_backend_job (plugin);
 
 	/* emit */
 	if (value > 0)
@@ -306,7 +303,7 @@ listaller_status_change_cb (GObject *sender, ListallerStatusItem *status, PkPlug
 
 	g_debug ("listaller: <status-info> %s", listaller_status_item_get_info (status));
 
-	pk_plugin_restore_backend (plugin);
+	pk_plugin_reset_backend_job (plugin);
 
 	/* emit */
 	if (pkstatus != PK_STATUS_ENUM_UNKNOWN)
@@ -536,13 +533,21 @@ pk_plugin_redirect_backend_signals (PkPlugin *plugin)
 }
 
 /**
- * pk_plugin_restore_backend:
+ * pk_plugin_reset_backend_job:
  *
+ * Reset the PkBackendJob used by the Listaller plugin and rewire
+ * it with the transaction again. (=> does some kind of "soft-reset")
  **/
 static void
-pk_plugin_restore_backend (PkPlugin *plugin)
+pk_plugin_reset_backend_job (PkPlugin *plugin)
 {
 	pk_backend_job_reset (plugin->job);
+
+	if (plugin->priv->current_transaction == NULL) {
+		g_critical ("No current transaction is set! Cannot reconnect backend job! (this is a bug)");
+		return;
+	}
+
 	/* connect backend-job to current backend again */
 	pk_transaction_signals_reset (plugin->priv->current_transaction,
 				     plugin->job);
@@ -582,7 +587,7 @@ pk_backend_job_request_whatprovides_cb (PkBitfield filters,
 	g_main_loop_run (plugin->priv->loop);
 
 	results = plugin->priv->backend_results;
-	pk_plugin_restore_backend (plugin);
+	pk_plugin_reset_backend_job (plugin);
 
 	g_debug ("Results exit code is %s", pk_exit_enum_to_string (pk_results_get_exit_code (results)));
 
@@ -617,7 +622,7 @@ pk_backend_job_request_installpackages_cb (PkBitfield transaction_flags,
 	g_main_loop_run (plugin->priv->loop);
 
 	results = plugin->priv->backend_results;
-	pk_plugin_restore_backend (plugin);
+	pk_plugin_reset_backend_job (plugin);
 
 	g_debug ("Results exit code is %s", pk_exit_enum_to_string (pk_results_get_exit_code (results)));
 
@@ -641,12 +646,12 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 
 	ListallerPkBackendProxy *pkbproxy;
 
-	/* reset the native-backend job */
-	pk_backend_job_reset (plugin->job);
-	pk_backend_job_set_status (plugin->job, PK_STATUS_ENUM_SETUP);
-
 	/* set the transaction */
 	plugin->priv->current_transaction = transaction;
+
+	/* reset the native-backend job */
+	pk_plugin_reset_backend_job (plugin);
+	pk_backend_job_set_status (plugin->job, PK_STATUS_ENUM_SETUP);
 
 	/* create a backend proxy and connect it, so Listaller can acces parts of PkBackend */
 	pkbproxy = listaller_pk_backend_proxy_new ();
