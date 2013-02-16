@@ -16,26 +16,31 @@
 
   <chapter>
     <title>Listaller API Reference</title>
-        <xi:include href="xml/application.xml"/>
-    <xi:include href="xml/utils.xml"/>
+
+    <xi:include href="xml/application.xml"/>
+    <xi:include href="xml/status.xml"/>
+
     <xi:include href="xml/updater.xml"/>
     <xi:include href="xml/manager.xml"/>
-    <xi:include href="xml/doap.xml"/>
-    <xi:include href="xml/status.xml"/>
     <xi:include href="xml/installer.xml"/>
-    <xi:include href="xml/security-info.xml"/>
+
     <xi:include href="xml/setup-settings.xml"/>
-    <xi:include href="xml/message-object.xml"/>
     <xi:include href="xml/key-manager.xml"/>
-    <xi:include href="xml/logging.xml"/>
-    <xi:include href="xml/ipk-changelog.xml"/>
-    <xi:include href="xml/reporting.xml"/>
-    <xi:include href="xml/database-internal.xml"/>
+
+    <xi:include href="xml/security-info.xml"/>
     <xi:include href="xml/ipk-control.xml"/>
-    <xi:include href="xml/version.xml"/>
-    <xi:include href="xml/pkit-tasks.xml"/>
-    <xi:include href="xml/config-global.xml"/>
     <xi:include href="xml/dep-info.xml"/>
+    <xi:include href="xml/ipk-changelog.xml"/>
+
+    <xi:include href="xml/message-object.xml"/>
+    <xi:include href="xml/database-internal.xml"/>
+    <xi:include href="xml/pkit-tasks.xml"/>
+
+    <xi:include href="xml/logging.xml"/>
+    <xi:include href="xml/reporting.xml"/>
+    <xi:include href="xml/utils.xml"/>
+    <xi:include href="xml/version.xml"/>
+    <xi:include href="xml/config-global.xml"/>
 
   </chapter>
   <chapter id="more">

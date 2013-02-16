@@ -22,7 +22,7 @@ using GLib;
 
 namespace Listaller {
 
-protected errordomain RdfError {
+private errordomain RdfError {
 	NO_RESULTS,
 	INVALID_PATH,
 	INVALID_QUERY;
@@ -223,4 +223,4 @@ WHERE {
 
 }
 
-} // End of namespace
+} // End of namespace: Listaller
