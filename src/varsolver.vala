@@ -23,13 +23,13 @@ using Gee;
 using Listaller;
 using Listaller.Utils;
 
+namespace Listaller {
+
 /**
  * A List of all allowed Listaller global variables (except for SYS_*)
  * is stored in docs/pages/directory-substvars.page
  * Please keep this document up-to-date!
  */
-
-namespace Listaller {
 
 private class Variable {
 	private string _var;

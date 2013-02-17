@@ -34,7 +34,6 @@
 
     <xi:include href="xml/message-object.xml"/>
     <xi:include href="xml/database-internal.xml"/>
-    <xi:include href="xml/pkit-tasks.xml"/>
 
     <xi:include href="xml/logging.xml"/>
     <xi:include href="xml/reporting.xml"/>
