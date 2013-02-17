@@ -106,9 +106,11 @@ public class Dependency: Object {
 		get {
 			if (_idname != "")
 				return _idname;
+
 			// Form unique dependency-id, if not already set
 			_idname = "%s-%s".printf (full_name, version);
 			_idname = _idname.down ().replace (" ", "_");
+
 			return _idname;
 		}
 		set {
@@ -334,6 +336,19 @@ public class Dependency: Object {
 	public string get_install_dir_for_setting (SetupSettings setup_setting) {
 		return Path.build_filename (setup_setting.depdata_dir (), idname, null);
 	}
+
+	/**
+	* Generate a PackageKit package-id for this dependency information
+	*/
+	public string build_pk_package_id () {
+		string package_id;
+		string unique_idname = "dep:%s".printf (idname);
+
+		package_id = PackageKit.Package.id_build (unique_idname, version, architecture, "local:listaller");
+
+		return package_id;
+	}
+
 }
 
 [CCode (has_target = false)]

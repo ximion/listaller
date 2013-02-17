@@ -429,6 +429,23 @@ public class AppItem : Object {
 
 	}
 
+	/**
+	* Generate a PackageKit package-id for this application
+	*/
+	public string build_pk_package_id () {
+		string data;
+		string package_id;
+		if (Utils.str_empty (desktop_file))
+			data = "local:listaller";
+		else
+			data = "local:listaller%" + desktop_file;
+
+		// FIXME: Handle architecture correctly
+		package_id = PackageKit.Package.id_build (idname, version, system_machine_generic (), data);
+
+		return package_id;
+	}
+
 	private string get_desktop_file_string (KeyFile dfile, string keyword) {
 		try {
 			if (dfile.has_key ("Desktop Entry", keyword)) {

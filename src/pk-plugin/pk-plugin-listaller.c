@@ -415,15 +415,15 @@ pk_listaller_get_updates (PkPlugin *plugin)
 	gpointer ptr;
 	guint i;
 
-	// create new update manager and connect it
+	/* create new update manager and connect it */
 	upd = listaller_updater_new (TRUE);
 	g_signal_connect (upd, "error-code", G_CALLBACK (listaller_error_code_cb), plugin);
 	g_signal_connect (upd, "progress", G_CALLBACK (listaller_progress_cb), plugin);
 
-	// find available updates
+	/* find available updates */
 	listaller_updater_find_updates (upd);
 
-	// fetch found updates & emit them to frontend
+	/* fetch found updates & emit them to frontend */
 	available_updates = listaller_updater_get_available_updates (upd);
 
 	for (i = 0; i < gee_abstract_collection_get_size ((GeeAbstractCollection*) available_updates); i++) {
@@ -454,6 +454,39 @@ pk_listaller_get_updates (PkPlugin *plugin)
 	}
 
 out:
+	g_object_unref (upd);
+
+	return ret;
+}
+
+/**
+ * pk_listaller_apply_updates:
+ *
+ * Apply selected Listaller software updates
+ *
+ * Return value: True if successful
+ **/
+static gboolean
+pk_listaller_apply_updates (PkPlugin *plugin, gchar** package_ids)
+{
+	gboolean ret = TRUE;
+	ListallerUpdater *upd;
+	GeeArrayList *selected_updates;
+
+	/* create new update manager and connect it */
+	upd = listaller_updater_new (TRUE);
+	g_signal_connect (upd, "error-code", G_CALLBACK (listaller_error_code_cb), plugin);
+	g_signal_connect (upd, "progress", G_CALLBACK (listaller_progress_cb), plugin);
+
+	/* find available updates */
+	listaller_updater_find_updates (upd);
+
+	/* call internal helper function to match selected updates */
+	selected_updates = listaller_get_update_items_from_package_id_list (upd, package_ids);
+
+	ret = listaller_updater_apply_updates (upd, selected_updates);
+
+	g_object_unref (selected_updates);
 	g_object_unref (upd);
 
 	return ret;
@@ -718,8 +751,8 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 		goto out;
 	}
 
-	//TODO: PK_ROLE_ENUM_GET_PACKAGES
-	//TODO: PK_ROLE_ENUM_RESOLVE
+	/* TODO: PK_ROLE_ENUM_GET_PACKAGES */
+	/* TODO: PK_ROLE_ENUM_RESOLVE */
 
 	if (role == PK_ROLE_ENUM_GET_DETAILS) {
 		package_ids = pk_transaction_get_package_ids (transaction);
@@ -791,7 +824,19 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 	}
 
 	if (role == PK_ROLE_ENUM_UPDATE_PACKAGES) {
-		// TODO
+		package_ids = pk_transaction_get_package_ids (transaction);
+		data = pk_transaction_filter_listaller_packages (transaction,
+							       package_ids);
+
+		if (data != NULL)
+			pk_listaller_apply_updates (plugin, data);
+
+		/* nothing more to process */
+		package_ids = pk_transaction_get_package_ids (transaction);
+		if (g_strv_length (package_ids) == 0)
+			pk_plugin_skip_native_backend (plugin);
+
+		goto out;
 	}
 
 out:

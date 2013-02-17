@@ -203,7 +203,7 @@ public class Manager : MessageObject {
 		PackageKit.Results? pkres;
 		pktask.background = false;
 
-		string pklipackage = app_item_build_pk_package_id (app);
+		string pklipackage = app.build_pk_package_id ();
 		change_progress (0);
 
 		try {

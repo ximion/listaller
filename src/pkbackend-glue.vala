@@ -19,6 +19,7 @@
  */
 
 using GLib;
+using Gee;
 
 namespace Listaller {
 
@@ -84,6 +85,49 @@ private PkBackendProxy? get_pk_backend () {
 	if (!Utils.is_root ())
 		return null;
 	return pkit_backend_proxy;
+}
+
+/**
+ * Simple function to find the right update elements to apply a Listaller update via
+ * our PackageKit plugin.
+ */
+internal ArrayList<UpdateItem> get_update_items_from_package_id_list (Updater updater,
+								[CCode (array_length = false, array_null_terminated = true)] string[] package_ids) {
+
+	string[] sw_ids = {};
+	foreach (string pkg in package_ids) {
+		string[] fields = PackageKit.Package.id_split (pkg);
+		sw_ids += fields[PackageKit.PACKAGE_ID_NAME];
+	}
+
+	ArrayList<UpdateItem> available_updates = updater.available_updates;
+	var res = new ArrayList<UpdateItem> ();
+
+	// TODO: ugly double-loops, maybe use a HashMap if this is too slow?
+	foreach (string swid in sw_ids) {
+		foreach (UpdateItem item in available_updates) {
+			if (item.sw_type == typeof (AppItem)) {
+				// we cannot handle a dependency entry
+				if (swid.has_prefix ("dep:"))
+					continue;
+
+				if ((item.sw_old as AppItem).idname == swid)
+					res.add (item);
+
+			} else if (item.sw_type == typeof (IPK.Dependency)) {
+				// we cannot handle an application entry
+				if (!swid.has_prefix ("dep:"))
+					continue;
+
+				string dep_id = swid.substring (4);
+
+				if ((item.sw_old as IPK.Dependency).idname == dep_id)
+					res.add (item);
+			}
+		}
+	}
+
+	return res;
 }
 
 #if 0
