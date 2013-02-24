@@ -8,7 +8,7 @@ find_package(GLIB2 REQUIRED)
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
 
-set(RUNAPP_SOURCES ${lisrc}/utils.vala
+set(DEPSCAN_SOURCES ${lisrc}/utils.vala
 		   ${lisrc}/logging.vala
 		   depscan-tool.vala
 		   depscan.vala
@@ -29,7 +29,7 @@ include_directories(${CMAKE_BINARY_DIR}
 
 add_definitions(${GEE_CFLAGS} ${GEE_CFLAGS_OTHER})
 
-vala_add_executable(depscan ${RUNAPP_SOURCES}
+vala_add_executable(depscan ${DEPSCAN_SOURCES}
 			PACKAGES config glib-2.0 posix gio-2.0 gee-1.0
 			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi)
 

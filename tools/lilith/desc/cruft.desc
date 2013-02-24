@@ -1,0 +1,258 @@
+Check-Name: cruft
+Type: source
+Info: This looks for cruft in IPK packages
+
+!! TODO: This is a copy from Debian, needs to be adjusted for Listaller.
+!!	 Also, give credit to the original authors somewhere.
+
+Tag: diff-contains-cvs-control-dir
+Severity: normal
+Certainty: certain
+Info: The Debian diff or native package contains files in a CVS directory.
+ These are usually artifacts of the revision control system used by the
+ Debian maintainer and not useful in a diff or native package.
+ <tt>dpkg-source</tt> will automatically exclude these if it is passed
+ <tt>-I</tt> or <tt>-i</tt> for native and non-native packages respectively.
+Ref: dpkg-source(1)
+
+Tag: source-contains-cvs-control-dir
+Severity: pedantic
+Certainty: certain
+Info: The upstream source contains a CVS directory.  It was most likely
+ included by accident since CVS directories usually don't belong in
+ releases.  When packaging a CVS snapshot, export from CVS rather than use
+ a checkout.  If an upstream release tarball contains CVS directories, you
+ usually should report this as a bug to upstream.
+
+Tag: diff-contains-svn-control-dir
+Severity: normal
+Certainty: certain
+Info: The Debian diff or native package contains files in an .svn
+ directory.  These are usually artifacts of the revision control system
+ used by the Debian maintainer and not useful in a diff or native package.
+ <tt>dpkg-source</tt> will automatically exclude these if it is passed
+ <tt>-I</tt> or <tt>-i</tt> for native and non-native packages respectively.
+Ref: dpkg-source(1)
+
+Tag: source-contains-svn-control-dir
+Severity: pedantic
+Certainty: certain
+Info: The upstream source contains an .svn directory.  It was most likely
+ included by accident since Subversion version control directories
+ usually don't belong in releases.  When packaging a Subversion snapshot,
+ export from subversion rather than checkout.  If an upstream release
+ tarball contains .svn directories, this should be reported as a bug to
+ upstream since it can double the size of the tarball to no purpose.
+
+Tag: diff-contains-bzr-control-dir
+Severity: normal
+Certainty: certain
+Info: The Debian diff or native package contains files in a .bzr
+ directory.  These are usually artifacts of the revision control system
+ used by the Debian maintainer and not useful in a diff or native package.
+ <tt>dpkg-source</tt> will automatically exclude these if it is passed
+ <tt>-I</tt> or <tt>-i</tt> for native and non-native packages respectively.
+Ref: dpkg-source(1)
+
+Tag: source-contains-bzr-control-dir
+Severity: pedantic
+Certainty: certain
+Info: The upstream source contains a .bzr directory. It was most likely
+ included by accident since bazaar-ng version control directories usually
+ don't belong in releases and may contain the entire repository.  When
+ packaging a bzr snapshot, use bzr export to create a clean tree.  If an
+ upstream release tarball contains .bzr directories, you should usually
+ report this as a bug upstream.
+
+Tag: diff-contains-arch-control-dir
+Severity: normal
+Certainty: certain
+Info: The Debian diff or native package contains files in an {arch} or
+ .arch-ids directory or a directory starting with <tt>,,</tt> (used by baz
+ for debugging traces).  These are usually artifacts of the revision
+ control system used by the Debian maintainer and not useful in a diff or
+ native package.  <tt>dpkg-source</tt> will automatically exclude these if
+ it is passed <tt>-I</tt> or <tt>-i</tt> for native and non-native
+ packages respectively.
+Ref: dpkg-source(1)
+
+Tag: source-contains-arch-control-dir
+Severity: pedantic
+Certainty: certain
+Info: The upstream source contains an {arch} or .arch-ids directory or a
+ directory starting with <tt>,,</tt> (used by baz for debugging traces).
+ It was most likely included by accident since Arch version control
+ directories usually don't belong in releases.  If an upstream release
+ tarball contains these directories, you should usually report this as a
+ bug upstream.
+
+Tag: diff-contains-git-control-dir
+Severity: normal
+Certainty: certain
+Info: The Debian diff or native package contains files in a .git
+ directory.  These are usually artifacts of the revision control system
+ used by the Debian maintainer and not useful in a diff or native package.
+ <tt>dpkg-source</tt> will automatically exclude these if it is passed
+ <tt>-I</tt> or <tt>-i</tt> for native and non-native packages respectively.
+Ref: dpkg-source(1)
+
+Tag: source-contains-git-control-dir
+Severity: pedantic
+Certainty: certain
+Info: The upstream source contains a .git directory. It was most likely
+ included by accident since git version control directories usually don't
+ belong in releases and may contain a complete copy of the repository.  If
+ an upstream release tarball contains .git directories, you should usually
+ report this as a bug upstream.
+
+Tag: diff-contains-hg-control-dir
+Severity: normal
+Certainty: certain
+Info: The Debian diff or native package contains files in a .hg
+ directory.  These are usually artifacts of the revision control system
+ used by the Debian maintainer and not useful in a diff or native package.
+ <tt>dpkg-source</tt> will automatically exclude these if it is passed
+ <tt>-I</tt> or <tt>-i</tt> for native and non-native packages respectively.
+Ref: dpkg-source(1)
+
+Tag: source-contains-hg-control-dir
+Severity: pedantic
+Certainty: certain
+Info: The upstream source contains a .hg directory. It was most likely
+ included by accident since hg version control directories usually don't
+ belong in releases and may contain a complete copy of the repository.  If
+ an upstream release tarball contains .hg directories, you should usually
+ report this as a bug upstream.
+
+Tag: diff-contains-bts-control-dir
+Severity: normal
+Certainty: certain
+Info: The Debian diff or native package contains files in a directory
+ used by a bug tracking system, which are not useful in a diff or native
+ package.  <tt>dpkg-source</tt> will automatically exclude these if it
+ is passed <tt>-I</tt> or <tt>-i</tt> for native and non-native packages
+ respectively.
+Ref: dpkg-source(1)
+
+Tag: diff-contains-quilt-control-dir
+Severity: normal
+Certainty: certain
+Info: The Debian diff or native package contains files in a directory
+ used by quilt, which are not useful in a diff or native package.
+ <tt>dpkg-source</tt> will automatically exclude these if it is passed
+ <tt>-I</tt> or <tt>-i</tt> for native and non-native packages
+ respectively.
+Ref: dpkg-source(1)
+
+Tag: source-contains-bts-control-dir
+Severity: pedantic
+Certainty: certain
+Info: The upstream source contains a directory used by a bug tracking
+ system. It was most likely included by accident since bug tracking system
+ directories usually don't belong in releases.
+
+Tag: diff-contains-svn-commit-file
+Severity: minor
+Certainty: certain
+Info: The Debian diff or native package contains an
+ <tt>svn-commit(.NNN).tmp</tt>, almost certainly a left-over from a failed
+ Subversion commit by the Debian package maintainer.
+
+Tag: source-contains-svn-commit-file
+Severity: pedantic
+Certainty: certain
+Info: The upstream source contains an <tt>svn-commit(.NNN).tmp</tt>,
+ almost certainly a left-over from a failed Subversion commit.  You may
+ want to report this as an upstream bug.
+
+Tag: diff-contains-svk-commit-file
+Severity: minor
+Certainty: certain
+Info: The Debian diff or native package contains an
+ <tt>svk-commitNNN.tmp</tt>, almost certainly a left-over from a failed
+ svk commit by the Debian package maintainer.
+
+Tag: source-contains-svk-commit-file
+Severity: pedantic
+Certainty: certain
+Info: The upstream source contains an <tt>svk-commitNNN.tmp</tt>,
+ almost certainly a left-over from a failed Subversion commit.  You may
+ want to report this as an upstream bug.
+
+Tag: diff-contains-arch-inventory-file
+Severity: normal
+Certainty: certain
+Info: The Debian diff or native package contains an
+ <tt>.arch-inventory</tt> file.  This is Arch metadata that should
+ normally not be distributed.
+
+Tag: source-contains-arch-inventory-file
+Severity: pedantic
+Certainty: certain
+Info: The upstream source contains an <tt>.arch-inventory</tt> file.  This
+ is Arch metadata that should normally not be distributed.  You may want
+ to report this as an upstream bug.
+
+Tag: diff-contains-hg-tags-file
+Severity: normal
+Certainty: certain
+Info: The Debian diff or native package contains an <tt>.hgtags</tt>
+ file.  This file is Mercurial metadata that should normally not be
+ distributed.  It stores hashes of tagged commits in a Mercurial
+ repository and isn't therefore useful without the repository.
+
+Tag: source-contains-hg-tags-file
+Severity: pedantic
+Certainty: certain
+Info: The upstream source contains an <tt>.hgtags</tt> file.  This file is
+ Mercurial metadata that should normally not be distributed.  It stores
+ hashes of tagged commits in a Mercurial repository and isn't therefore
+ useful without the repository.  You may want to report this as an
+ upstream bug.
+
+Tag: diff-contains-cvs-conflict-copy
+Severity: normal
+Certainty: certain
+info: The Debian diff or native package contains a CVS conflict copy.
+ These have file names like <tt>.#file.version</tt> and are generated by
+ CVS when a conflict was detected when merging local changes with updates
+ from a source repository.  They're useful only while resolving the
+ conflict and should not be included in the package.
+
+Tag: source-contains-cvs-conflict-copy
+Severity: pedantic
+Certainty: certain
+info: The upstream source contains a CVS conflict copy.  These have file
+ names like <tt>.#file.version</tt> and are generated by CVS when a
+ conflict was detected when merging local changes with updates from a
+ source repository.  They're useful only while resolving the conflict and
+ were probably included by accident.  You may want to report this as an
+ upstream bug.
+
+Tag: diff-contains-svn-conflict-file
+Severity: normal
+Certainty: certain
+info: The Debian diff or native package contains a file that looks like a
+ Subversion conflict file.  These are generated by Subversion when a
+ conflict was detected while merging local changes with updates from a
+ source repository.  Use <tt>svn resolved</tt> to remove them and clear
+ the Subversion conflict state after you have resolved the conflict.
+
+Tag: source-contains-svn-conflict-file
+Severity: pedantic
+Certainty: certain
+info: The upstream source contains a file that looks like a Subversion
+ conflict file.  These are generated by Subversion when a conflict was
+ detected while merging local changes with updates from a source
+ repository.  They're useful only while resolving the conflict and
+ were probably included by accident.  You may want to report this as an
+ upstream bug.
+
+Tag: diff-contains-patch-failure-file
+Severity: normal
+Certainty: possible
+Info: The Debian diff or native package contains a file that looks like
+ the files left behind by the <tt>patch</tt> utility when it cannot
+ completely apply a diff.  This may be left over from a patch applied by
+ the maintainer.  Normally such files should not be included in the
+ package.
