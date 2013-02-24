@@ -155,10 +155,11 @@ public enum SignTrust {
 namespace Listaller.IPK {
 
 /**
- * Simple package security information
+ * Package security information
  *
  * This class stores data which can be used to display meaningful information
  * about the security level of a 3rd-party software package.
+ * It provides information about the state of the package signature.
  */
 public class SecurityInfo : Object {
 	private weak Package pack;
@@ -173,6 +174,10 @@ public class SecurityInfo : Object {
 	internal SecurityInfo () {
 	}
 
+	/**
+	 * Returns a human-readable general security level, which
+	 * was determined for the associated package.
+	 */
 	public SecurityLevel get_level () {
 		debug ("SigStatus: %s | SigValidity: %s", signature_status.to_string (), signature_trustlevel.to_string ());
 

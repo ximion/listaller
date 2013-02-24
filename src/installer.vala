@@ -300,6 +300,16 @@ public class Setup : MessageObject {
 		return ret;
 	}
 
+	/**
+	 * Forcibly kills a running installation process.
+	 * You should never use this method, it might only be useful in command-line
+	 * applications, where you can catch an interrupt signal and tell the running
+	 * setup about it. It might be used on mobile devices if a setup is running and
+	 * the device is running out of power. (but best way in that case would be to
+	 * prevent an installation in the first place, if there is not enough energy left)
+	 * This function does some emergency cleanup and tries to make sure that nothing gets
+	 * corrupted.
+	 */
 	public void kill_installation_process () {
 		if (ipkp != null) {
 			// FIXME: We don't support this properly at time!'

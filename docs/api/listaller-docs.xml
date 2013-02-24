@@ -8,7 +8,7 @@
   <bookinfo>
     <title>Listaller Reference Manual</title>
     <releaseinfo>
-      for listaller 0.5.7.
+      for liblistaller-glib 0.5.x.
       The latest version of this documentation can be found on-line at
       <ulink role="online-location" url="http://listaller.tenstral.net/docs/api-doc.html">http://listaller.tenstral.net/</ulink>.
     </releaseinfo>

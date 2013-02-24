@@ -34,7 +34,7 @@ protected enum ObjConnectFlags {
  * Class providing basic message handling
  *
  * Base class for all Listaller classes which
- * want to send messages between each other.
+ * want to send messages to each other.
  * (Used e.g. for GUI stuff and in the public API)
  */
 public abstract class MessageObject : Object {
