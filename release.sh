@@ -38,12 +38,16 @@ fi
 rm -rf ./release-tar-tmp
 
 # check if we can build Listaller
-make clean all
+make clean all documentation
 
 mkdir -p ./release-tar-tmp
 git archive --prefix="Listaller-$LISTALLER_VERSION/" "$GIT_TAG^{tree}" | tar -x -C ./release-tar-tmp
 
 R_ROOT="./release-tar-tmp/Listaller-$LISTALLER_VERSION"
+
+# add precompiled documentation to the release tarball
+rm -r $R_ROOT/docs
+cp -dpr ./docs $R_ROOT/docs
 
 # cleanup files which should not go to the release tarball
 find ./release-tar-tmp -name .gitignore -type f -delete
