@@ -88,15 +88,11 @@ public class AppCompileTool : Object {
 		if (o_strip_files) {
 			Extra.AutoStrip strip = new Extra.AutoStrip (srcdir, targetdir);
 			exit_code = strip.strip_binaries ();
-			Report.log_info ("Stripped debug information from binaries.");
+			message ("Stripped debug information from binaries.");
 			return;
 		}
 		Extra.AutoCompiler acomp = new Extra.AutoCompiler (srcdir, targetdir);
 		exit_code = acomp.compile_software (cmp_arguments);
-
-		Report report = Report.get_instance ();
-		if (!report.is_empty ())
-			stdout.printf ("AppCompile Report:\n%s\n", report.to_string ());
 
 		return;
 	}

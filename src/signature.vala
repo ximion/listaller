@@ -174,7 +174,7 @@ private class GPGSignature : Object {
 			time_t t = (time_t) sig->exp_timestamp;
 			var time = new DateTime.from_unix_utc (t);
 
-			Report.log_warning ("Expired signature (since %s)".printf (time.format ("%Y-%m-%d")));
+			warning ("Expired signature (since %s)".printf (time.format ("%Y-%m-%d")));
 			sigstatus = SignStatus.SIG_EXPIRED;
 		} else if ((sig_estatus & GPGError.ErrorCode.NO_PUBKEY) > 0) {
 			sigstatus = SignStatus.NO_PUBKEY;
@@ -182,7 +182,7 @@ private class GPGSignature : Object {
 			sigstatus = SignStatus.UNKNOWN;
 			string msg = "Got unknown return status while processing signature: %s | %d".printf (sig_estatus.to_string (), sig_estatus);
 			if (__unittestmode)
-				Report.log_warning (msg);
+				message ("WARNING: %s", msg);
 			else
 				warning (msg);
 		}
@@ -200,19 +200,19 @@ private class GPGSignature : Object {
 		if (sig->status != GPGError.ErrorCode.NO_ERROR) {
 			string msg = "Unexpected signature status: %s".printf (sig->status.to_string ());
 			if (__unittestmode)
-				Report.log_warning (msg);
+				message ("WARNING: %s", msg);
 			else
 				warning (msg);
 			valid = false;
 		}
 
 		if (sig->wrong_key_usage) {
-			Report.log_warning ("Unexpectedly wrong key usage");
+			warning ("Unexpectedly wrong key usage");
 			return false;
 		}
 
 		if (sig->validity_reason != GPGError.ErrorCode.NO_ERROR) {
-			Report.log_error ("Unexpected validity reason: %s".printf (sig->validity_reason.to_string ()));
+			warning ("Unexpected validity reason: %s".printf (sig->validity_reason.to_string ()));
 			return false;
 		}
 

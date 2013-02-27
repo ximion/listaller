@@ -13,6 +13,7 @@ pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2>=0.8.4)
 
 set(LI_TOOLS_SHARED_SOURCES toolshared.vala
 			console-progress-bar.vala
+			reporting.vala
 )
 
 vala_precompile(tools-shared LI_TOOLS_SHARED_C ${LI_TOOLS_SHARED_SOURCES}

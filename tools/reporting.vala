@@ -68,7 +68,7 @@ public class Report : Object {
 	public Report () {
 		lines = new Array<string> ();
 		error_received = false;
-		print_fatal = true;
+		print_fatal = false; // NOTE: Changed to FALSE by default now
 
 		debug ("New Listaller Report handler created.");
 	}
@@ -95,15 +95,15 @@ public class Report : Object {
 			// written to the report aren't that crtical for program execution, we
 			// just use the CRITICAL level here
 			if (print_fatal)
-				log (G_LOG_DOMAIN, LogLevelFlags.LEVEL_CRITICAL, message);
+				log ("Report", LogLevelFlags.LEVEL_CRITICAL, message);
 		}
 		if (!print_fatal)
 			return;
 
 		if (mtype == ReportMessageType.CRITICAL)
-			log (G_LOG_DOMAIN, LogLevelFlags.LEVEL_CRITICAL, message);
+			log ("Report", LogLevelFlags.LEVEL_CRITICAL, message);
 		if (mtype == ReportMessageType.WARNING)
-			log (G_LOG_DOMAIN, LogLevelFlags.LEVEL_WARNING, message);
+			log ("Report", LogLevelFlags.LEVEL_WARNING, message);
 	}
 
 	public void add_info (string message) {

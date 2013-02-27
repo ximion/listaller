@@ -60,7 +60,7 @@ private class GPGSign : Object {
 				result.signatures->sig_class);
 			return false;
 		}
-		Report.log_info ("Signed with fingerprint: %s\n".printf (result->signatures->fpr));
+		message ("Package is signed. Signature fingerprint: %s\n".printf (result->signatures->fpr));
 		return true;
 	}
 

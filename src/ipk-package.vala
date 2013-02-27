@@ -489,7 +489,7 @@ private class Package : MessageObject {
 				if (e.pathname () == "_signature") {
 					ret = extract_entry_to (ar, e, wdir);
 					if (!ret) {
-						Report.log_warning (_("Unable to extract signature! Maybe package is not signed."));
+						warning (_("Unable to extract signature! Maybe package is not signed."));
 					}
 					break;
 				} else {
@@ -515,7 +515,7 @@ private class Package : MessageObject {
 				sig_text += line + "\n";
 			}
 		} catch (Error e) {
-			Report.log_error (_("Unable to read package signature! Message: %s").printf (e.message));
+			warning (_("Unable to read package signature! Message: %s").printf (e.message));
 			return null;
 		}
 

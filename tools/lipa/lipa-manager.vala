@@ -35,9 +35,6 @@ public class LipaManager : LipaModule {
 		//! li_mgr.status_changed.connect (manager_status_changed);
 		li_mgr.progress.connect (manager_progress_cb);
 		li_mgr.application.connect (manager_new_application);
-
-		// we don't want duplicate messages
-		Report.set_print_fatal_msg (false);
 	}
 
 	private void manager_error_code_cb (ErrorItem error) {

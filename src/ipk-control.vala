@@ -111,7 +111,7 @@ public abstract class Control : Object {
 	public void set_install_modes (InstallMode modes) {
 		string modesList = "";
 		if (modes == InstallMode.NONE) {
-			Report.log_error ("Tried to inject no install-modes in IPK control data. This should never happen and might be a bug in Listaller or your packaging. Defaulting to shared-only.");
+			critical ("Tried to inject no install-modes in IPK control data. This should never happen and might be a bug in Listaller or your packaging. Defaulting to shared-only.");
 			modes = InstallMode.SHARED;
 		}
 
@@ -159,7 +159,7 @@ public abstract class Control : Object {
 		}
 
 		if (retFlags == InstallMode.NONE) {
-			Report.log_error ("No install mode was set or settings are invalid. Please fix your IPK package! Defaulting to shared-only.");
+			warning ("No install mode was set or settings are invalid. Please fix your IPK package! Defaulting to shared-only.");
 			retFlags = InstallMode.SHARED;
 		}
 
@@ -248,7 +248,7 @@ public class PackControl : Control {
 		bool ret;
 		ret = open_packsetting (fPackSetting);
 		if (!ret) {
-			Report.log_error ("Unable to load pksetting... Temporary file was: %s".printf (fPackSetting));
+			error ("Unable to load pksetting... Temporary file was: %s".printf (fPackSetting));
 			return false;
 		}
 

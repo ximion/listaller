@@ -6,6 +6,7 @@ include("${VALA_USE_FILE}")
 
 set(LIPKGEN_SOURCES lipkgen.vala
 		lpkgutils.vala
+		${CMAKE_SOURCE_DIR}/tools/reporting.vala
 		prepare.vala
 		gpgsign.vala
 		depfind.vala

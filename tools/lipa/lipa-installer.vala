@@ -27,9 +27,6 @@ public class LipaInstaller : LipaModule {
 
 	public LipaInstaller () {
 		base ();
-
-		// we don't want duplicate messages
-		Report.set_print_fatal_msg (false);
 	}
 
 	public void setup_error_code (ErrorItem error) {

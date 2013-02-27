@@ -274,7 +274,7 @@ public class Dependency: Object {
 			return;
 		// We don't like file dependencies
 		if (ty == ComponentType.FILE)
-			Report.log_warning ("Resource %s depends on a file (%s), which is not supported at time.".printf (idname, list));
+			warning ("Resource %s depends on a file (%s), which is not supported at time.".printf (idname, list));
 
 		if (list.index_of ("\n") <= 0) {
 			add_component (list, ty);

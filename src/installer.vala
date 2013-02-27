@@ -463,20 +463,12 @@ public class Setup : MessageObject {
 			}
 		}
 
-		// NOTE: We use Listaller Reporting here!
-		Report report;
-
 		if ((!is_root ()) && (setup_settings.shared_mode == true)) {
 			ret = install_app_shared ();
-			report = Report.get_instance ();
-			stdout.printf ("%s\n", report.to_string ());
 			return ret;
 		}
 
 		ret = install_app_normal ();
-		report = Report.get_instance ();
-		if (!report.is_empty ())
-			stdout.printf ("%s\n", report.to_string ());
 
 		return ret;
 	}

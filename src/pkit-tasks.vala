@@ -167,7 +167,7 @@ private class PkResolver : PkListallerTask {
 
 		// we can't do anything if PK doesn't support WhatProvides
 		if (!supported (PackageKit.Role.WHAT_PROVIDES)) {
-			Report.log_warning (_("PackageKit backend does not support finding packages by stuff they provide - Installer was unable to use native packages to satisfy dependencies of this application."));
+			warning (_("PackageKit backend does not support finding packages by stuff they provide - Installer was unable to use native packages to satisfy dependencies of this application."));
 			return null;
 		}
 
@@ -209,7 +209,7 @@ private class PkResolver : PkListallerTask {
 		// If there are no files, consider this dependency as "installed"
 		// This is usually an ERROR and might indicate a broken package
 		if (!dep.has_components ()) {
-			Report.log_error ("Dependency %s has no components assigned!".printf (dep.full_name));
+			warning ("Dependency %s has no components assigned!".printf (dep.full_name));
 			dep.satisfied = true;
 			return true;
 		}
@@ -279,7 +279,7 @@ private class PkResolver : PkListallerTask {
 
 		// we can't do anything if PK doesn't support SearchFiles
 		if (!supported (PackageKit.Role.SEARCH_FILE)) {
-			Report.log_warning (_("PackageKit backend does not support searching for files - Installer was unable to use native packages to satisfy dependencies of this application."));
+			warning (_("PackageKit backend does not support searching for files - Installer was unable to use native packages to satisfy dependencies of this application."));
 			return null;
 		}
 

@@ -11,7 +11,6 @@ pkg_check_modules(GIO2 REQUIRED gio-2.0)
 
 set(LIBUILD_SOURCES ${lisrc}/utils.vala
 			${lisrc}/logging.vala
-			${lisrc}/reporting.vala
 			../lipkgen/lpkgutils.vala
 			acutils.vala
 			appcompile.vala

@@ -5,6 +5,7 @@ include("${VALA_USE_FILE}")
 
 set(LIREPO_SOURCES lirepo.vala
 		ipk-repo-local.vala
+		../reporting.vala
 )
 
 include_directories(${CMAKE_BINARY_DIR}

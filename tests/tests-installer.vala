@@ -49,9 +49,6 @@ void test_install_package () {
 
 	string ipkfilename = Path.build_filename (datadir, "FooBar-1.0_%s.ipk".printf (Utils.system_machine_generic ()), null);
 
-	// Excludes stuff like PK dependency installing from testing
-	Report.set_print_fatal_msg (false);
-
 	Setup setup = new Setup (ipkfilename);
 	setup.error_code.connect (test_setup_error_code_cb);
 	setup.message.connect (test_setup_message_cb);

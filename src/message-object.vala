@@ -78,9 +78,9 @@ public abstract class MessageObject : Object {
 		error_code (item);
 
 		if (error_hint_str == "")
-			Report.log_error (details);
+			GLib.message ("ERROR: %s", details);
 		else
-			Report.log_error ("[%s]:%s".printf (error_hint_str, details));
+			GLib.message ("ERROR: [%s]:%s", error_hint_str, details);
 	}
 
 	internal virtual void change_progress (int prog_value) {

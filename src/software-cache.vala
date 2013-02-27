@@ -69,7 +69,7 @@ private class SoftwareCache : MessageObject {
 			// only if we fail write-opening the cache this is a problem
 			// (in other cases the cache might be unavailable/broken, which will automatically be fixed)
 			if (!writeable)
-				Report.log_info ("Unable to open software cache! Message: %s".printf (e.message));
+				GLib.message ("Unable to open software cache! Message: %s", e.message);
 			else
 				critical ("Unable to open software cache! %s", e.message);
 		}

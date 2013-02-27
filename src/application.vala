@@ -454,7 +454,7 @@ public class AppItem : Object {
 				return "";
 			}
 		} catch (Error e) {
-			Report.log_warning (_("Could not load desktop file values: %s").printf (e.message));
+			message (_("Could not load desktop file values: %s").printf (e.message));
 			return "";
 		}
 	}

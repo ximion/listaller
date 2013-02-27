@@ -7,6 +7,7 @@ pkg_check_modules(GIO2 REQUIRED gio-2.0)
 set(LILITH_SOURCES lilith.vala
 		lilith-factory.vala
 		lilith-checkrunner.vala
+		../reporting.vala
 )
 
 link_libraries(${GLIB2_LIBRARIES}

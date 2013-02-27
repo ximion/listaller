@@ -12,7 +12,6 @@ set(LISTALLER_BASE_SOURCES ${lisrc}/logging.vala
 	${lisrc}/status.vala
 	${lisrc}/message-object.vala
 	${lisrc}/config-global.vala
-	${lisrc}/reporting.vala
 	${lisrc}/downloader.vala
 	${lisrc}/setup-settings.vala
 	${lisrc}/application.vala

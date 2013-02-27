@@ -33,7 +33,7 @@ namespace Listaller.Extra {
 					ret = Path.build_filename (Environment.get_current_dir (), ret, null);
 			}
 		} else {
-			Report.log_warning (_("Using user-defined install target: %s").printf (insttarget));
+			message (_("Using user-defined install target: %s"), insttarget);
 			ret = insttarget;
 		}
 		return ret;
