@@ -523,6 +523,9 @@ private class Builder : Object {
 		// Set information about replaced native packages
 		ictrl.set_replaces (ipkCDir.get_replaces ());
 
+		// Set other values
+		ictrl.user_accept_license = ipkCDir.user_accept_license;
+
 		// Set license...
 		ictrl.set_license_text (ipkCDir.get_application ().license.text);
 

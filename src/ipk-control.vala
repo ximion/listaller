@@ -87,6 +87,9 @@ public abstract class Control : Object {
 		packSetting.add_value ("Version", ipkV);
 	}
 
+	/**
+	 * Get architectures supported by this package
+	 */
 	public string get_architectures () {
 		string s = packSetting.get_value ("Architectures", false);
 		if (s == "")
@@ -95,10 +98,16 @@ public abstract class Control : Object {
 		return s;
 	}
 
+	/**
+	 * Set architectures supported by this package
+	 */
 	public void set_architectures (string archs) {
 		packSetting.add_value ("Architectures", archs);
 	}
 
+	/**
+	 * Get replaced native components for the package.
+	 */
 	public string get_replaces () {
 		string s = packSetting.get_value ("Replaces", false);
 		return s;
@@ -106,6 +115,28 @@ public abstract class Control : Object {
 
 	public void set_replaces (string repList) {
 		packSetting.add_value ("Replaces", repList);
+	}
+
+	/**
+	 * TRUE if user should manually accept the supplied license/eula.
+	 * FALSE if there is no need to do this.
+	 */
+	public bool user_accept_license {
+		get {
+			string s = packSetting.get_value ("UserAcceptLicense", false);
+			if (s == "yes")
+				return true;
+			return false;
+		}
+		set {
+			if (value)
+				packSetting.add_value ("UserAcceptLicense", "yes");
+			else {
+				string s = packSetting.get_value ("UserAcceptLicense", false);
+				if (s == "no")
+					packSetting.add_value ("UserAcceptLicense", "yes");
+			}
+		}
 	}
 
 	public void set_install_modes (InstallMode modes) {
