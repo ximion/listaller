@@ -2,6 +2,7 @@
 
 :: %INST%
 usr/local/bin/foo
+../../foo_testconf.conf
 :: %INST%/config
 usr/local/etc/foo-config
 :: %INST%/data
