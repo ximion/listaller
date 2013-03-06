@@ -108,7 +108,7 @@ internal class Config : Object {
 	}
 
 	public string user_repo_cache_dir () {
-		string dir = Path.build_filename (user_data_dir (), "software", "cache", null);
+		string dir = Path.build_filename (user_install_root (), "software", "cache", null);
 		Utils.create_dir_structure (dir);
 		return dir;
 	}
@@ -118,11 +118,7 @@ internal class Config : Object {
 	}
 
 	public string user_db_dir ()  {
-		return Path.build_filename (user_data_dir (), "software", null);
-	}
-
-	public string user_data_dir () {
-		return Environment.get_user_data_dir ();
+		return Path.build_filename (user_install_root (), "software", null);
 	}
 
 	public string shared_install_root () {
@@ -130,7 +126,7 @@ internal class Config : Object {
 	}
 
 	public string user_install_root () {
-		return Environment.get_user_data_dir ();
+		return Utils.get_user_data_dir ();
 	}
 
 	public string shared_icon_dir () {
@@ -138,7 +134,7 @@ internal class Config : Object {
 	}
 
 	public string user_icon_dir () {
-		return Path.build_filename (Environment.get_user_data_dir (), "icons", "hicolor", null);
+		return Path.build_filename (user_install_root (), "icons", "hicolor", null);
 	}
 
 	public string shared_pixmap_dir () {
@@ -146,7 +142,7 @@ internal class Config : Object {
 	}
 
 	public string user_pixmap_dir () {
-		return Path.build_filename (Environment.get_user_data_dir (), "icons", null);
+		return Path.build_filename (user_install_root (), "icons", null);
 	}
 
 	public string shared_applications_dir () {
@@ -154,7 +150,7 @@ internal class Config : Object {
 	}
 
 	public string user_applications_dir () {
-		return Path.build_filename (Environment.get_home_dir (), ".local", "share", "applications", null);
+		return Path.build_filename (Utils.get_home_dir (), ".local", "share", "applications", null);
 	}
 
 	public string tmp_dir () {

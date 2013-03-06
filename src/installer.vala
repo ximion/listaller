@@ -454,8 +454,7 @@ public class Setup : MessageObject {
 			emit_error (ErrorEnum.OPERATION_NOT_ALLOWED,
 				    _("You are not allowed to install this package, because it's security level is '%s' and you need at least a package with security-level '%s'.\n" +
 					"Please obtain this application from a safe source with good signature and try again!").printf (packSecLvl.to_string (), minSecLvl.to_string ()));
-			if ((__unittestmode) && (settings.current_mode == IPK.InstallMode.TEST))
-			{
+			if ((__unittestmode) && (settings.current_mode != IPK.InstallMode.SHARED)) {
 				// if we're in unittestmode, we need to continue here
 				debug ("We're in unit-testmode, so skipping this error.");
 			} else {

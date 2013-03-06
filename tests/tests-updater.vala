@@ -55,6 +55,8 @@ void print_app_arraylist (ArrayList<AppItem> appList, string label = "") {
 	msg ("END");
 }
 
+private string foobar_fake_config_ipath;
+
 void test_foobar_installation () {
 	bool ret;
 	string ipkfilename = Path.build_filename (datadir, "FooBar-1.0_%s.ipk".printf (Utils.system_machine_generic ()), null);
@@ -66,16 +68,22 @@ void test_foobar_installation () {
 	ret = setup.initialize ();
 	assert (ret == true);
 
-	ret = setup.set_install_mode (IPK.InstallMode.TEST);
+	ret = setup.set_install_mode (IPK.InstallMode.PRIVATE);
 	assert (ret == true);
 
 	ret = setup.run_installation ();
 	assert (ret == true);
+
+	AppItem? app = setup.get_current_application ();
+	assert (app != null);
+
+	var vs = new VarSolver (app.idname);
+	foobar_fake_config_ipath = vs.substitute_vars_auto ("%INST%/foo_testconf.conf", setup.settings);
 }
 
 void test_manager_installed_apps () {
 	Manager mgr = new Manager ();
-	mgr.settings.current_mode = IPK.InstallMode.TEST;
+	mgr.settings.current_mode = IPK.InstallMode.PRIVATE;
 
 	ArrayList<AppItem> app_list;
 	mgr.filter_applications (AppState.INSTALLED_SHARED | AppState.INSTALLED_PRIVATE, out app_list);
@@ -85,6 +93,13 @@ void test_manager_installed_apps () {
 
 	// test version
 	assert (app_list[0].version == "1.0");
+
+	// test example file
+	var fake_conf = new KeyFile ();
+	fake_conf.load_from_file (foobar_fake_config_ipath, KeyFileFlags.NONE);
+	string str = fake_conf.get_string ("Foobar", "Version");
+
+	assert (str == "1.0");
 }
 
 void test_refresh_repo_cache () {
@@ -94,7 +109,7 @@ void test_refresh_repo_cache () {
 
 	// check new app info
 	Manager mgr = new Manager ();
-	mgr.settings.current_mode = IPK.InstallMode.TEST;
+	mgr.settings.current_mode = IPK.InstallMode.PRIVATE;
 
 	ArrayList<AppItem> app_list;
 	mgr.filter_applications (AppState.AVAILABLE, out app_list);
@@ -105,7 +120,7 @@ void test_refresh_repo_cache () {
 
 void test_updater_update () {
 	Updater upd = new Updater (false);
-	upd.settings.current_mode = IPK.InstallMode.TEST;
+	upd.settings.current_mode = IPK.InstallMode.PRIVATE;
 	upd.find_updates ();
 
 	message ("Found updates: %i", upd.available_updates.size);
@@ -121,7 +136,7 @@ void test_updater_update () {
 
 	// now test installed apps *after* update (version should have been increased)
 	Manager mgr = new Manager ();
-	mgr.settings.current_mode = IPK.InstallMode.TEST;
+	mgr.settings.current_mode = IPK.InstallMode.PRIVATE;
 
 	ArrayList<AppItem> app_list;
 	mgr.filter_applications (AppState.INSTALLED_SHARED | AppState.INSTALLED_PRIVATE, out app_list);
@@ -130,7 +145,14 @@ void test_updater_update () {
 	assert (app_list.size == 1);
 
 	// test version
-	assert (app_list[0].version == "1.1");
+	assert (app_list[0].version == "1.2");
+
+	// test example file
+	var fake_conf = new KeyFile ();
+	fake_conf.load_from_file (foobar_fake_config_ipath, KeyFileFlags.NONE);
+	string str = fake_conf.get_string ("Foobar", "Version");
+
+	assert (str == "1.2");
 }
 
 
@@ -144,6 +166,7 @@ int main (string[] args) {
 	var tenv = new TestEnvironment ("updater");
 	tenv.init (ref args);
 	tenv.create_environment ();
+	tenv.listaller_set_unittestmode (true);
 
 	// prepare updater environment
 	test_foobar_installation ();

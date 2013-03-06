@@ -66,6 +66,10 @@ private class SoftwareDB : MessageObject {
 		db_shared = null;
 		db_priv = null;
 
+		// no shared db in unittestmode
+		if (Utils.__unittestmode)
+			include_shared = false;
+
 		// build default database flags
 		dbflags = DatabaseFlags.NONE;
 		dbflags = dbflags.set (DatabaseFlags.USE_PRIVATE_INSTALLED);
@@ -110,6 +114,10 @@ private class SoftwareDB : MessageObject {
 		if (db_shared == null) {
 			ret = false;
 		}
+
+		// no shared db in unittestmode
+		if (Utils.__unittestmode)
+			return false;
 
 		// no shared db when in testmode!
 		if (setup_settings.test_mode)
@@ -434,6 +442,7 @@ private class SoftwareDB : MessageObject {
 
 		if (alist == null)
 			return false;
+
 		_internal_emit_dbapps (one, ref alist);
 		appList = alist;
 

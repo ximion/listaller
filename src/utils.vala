@@ -376,7 +376,7 @@ private bool dir_is_empty (string dirname) {
 private string fold_user_dir (string? path) {
 	if ((path == null) || (path == ""))
 		return "";
-	string udir = Environment.get_home_dir ();
+	string udir = Utils.get_home_dir ();
 	if (!path.has_prefix (udir))
 		return path;
 
@@ -389,7 +389,7 @@ private string expand_user_dir (string path) {
 		return path;
 
 	string full_path = path.substring (1);
-	full_path = Path.build_filename (Environment.get_home_dir (), full_path, null);
+	full_path = Path.build_filename (Utils.get_home_dir (), full_path, null);
 	return full_path;
 }
 
@@ -532,6 +532,27 @@ internal string? load_file_to_string (string fname) throws IOError {
 		throw e;
 	}
 	return res;
+}
+
+/**
+ * Function to return the users HOME directory, while respecting
+ * environment variables.
+ * (Required for unit tests)
+ */
+private string get_home_dir () {
+	string? homedir = Environment.get_variable ("HOME");
+	if (homedir == null)
+		homedir = Environment.get_home_dir ();
+
+	return homedir;
+}
+
+private string get_user_data_dir () {
+	string? udatadir = Environment.get_variable ("XDG_DATA_HOME");
+	if (udatadir == null)
+		udatadir = Environment.get_user_data_dir ();
+
+	return udatadir;
 }
 
 private bool save_string_to_file (string fname, string data, bool overrideExisting = false) throws IOError {

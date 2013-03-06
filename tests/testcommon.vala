@@ -54,7 +54,15 @@ private class TestEnvironment {
 		tmp_home_cache_dir = Path.build_filename (tmp_home_dir, "cache", null);
 	}
 
+	private void clear_environment_variables () {
+		string[] vars = Environment.list_variables ();
+		foreach (string s in vars)
+			Environment.unset_variable (s);
+	}
+
 	public void create_environment () {
+		clear_environment_variables ();
+
 		// make sure directories exist
 		Listaller.Utils.create_dir_structure (tmp_home_dir);
 		Listaller.Utils.create_dir_structure (tmp_home_data_dir);
@@ -99,5 +107,14 @@ private class TestEnvironment {
 
 	public void add_func (string testpath, Callback test_funcvoid) {
 		Test.add_func ("/%s/%s".printf (test_env_name, testpath), test_funcvoid);
+	}
+
+	public void print_environment_vars () {
+		string[] vars = Environment.list_variables ();
+		string vars_str = "";
+		foreach (string s in vars)
+			vars_str += "%s = %s\n".printf (s, Environment.get_variable (s));
+
+		stdout.printf ("Environment: %s", vars_str);
 	}
 }

@@ -98,6 +98,11 @@ public class Updater : MessageObject {
 		AppState filter = AppState.INSTALLED_SHARED | AppState.INSTALLED_PRIVATE;
 		app_mgr.filter_applications (filter, out apps_installed);
 
+		if (apps_installed == null) {
+			critical ("Unable to fetch installed applications!");
+			return;
+		}
+
 		// fetch all available applications
 		HashMap<string, AppItem> apps_available = repo_mgr.get_applications ();
 
@@ -119,7 +124,6 @@ public class Updater : MessageObject {
 				string arch = repo_mgr.get_arch_for_app (app_i);
 				emit_update_app (app_i, app_remote, arch, changes);
 			}
-
 		}
 	}
 
@@ -141,8 +145,6 @@ public class Updater : MessageObject {
 		IPK.InstallMode imode = IPK.InstallMode.SHARED;
 		if (app_old.state == AppState.INSTALLED_PRIVATE)
 			imode = IPK.InstallMode.PRIVATE;
-		if (Utils.__unittestmode)
-			imode = IPK.InstallMode.TEST;
 		inst.settings.current_mode = imode;
 		inst.set_install_mode (imode);
 
@@ -150,10 +152,14 @@ public class Updater : MessageObject {
 		SecurityLevel packSecLvl;
 		if (!inst.installation_allowed (out minSecLvl, out packSecLvl)) {
 			// we are not allowed to update this package!
-			emit_error (ErrorEnum.OPERATION_NOT_ALLOWED,
-				_("You are not allowed to update the application! The security level of the update is '%s' and you need at least security-level '%s'.\n" +
-				"Please make sure you trusted this signature and that your system is not compromised!").printf (packSecLvl.to_string (), minSecLvl.to_string ()));
-			return false;
+			string message = _("You are not allowed to update the application! The security level of the update is '%s' and you need at least security-level '%s'.\n" +
+				"Please make sure you trusted this signature and that your system is not compromised!").printf (packSecLvl.to_string (), minSecLvl.to_string ());
+			if (Utils.__unittestmode) {
+				debug (message);
+			} else {
+				emit_error (ErrorEnum.OPERATION_NOT_ALLOWED, message);
+				return false;
+			}
 		}
 
 		// remove old application so we can install the update

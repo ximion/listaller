@@ -98,7 +98,7 @@ public class SetupSettings : Object {
 	}
 
 	public bool test_mode {
-		get { return current_mode.is_all_set (IPK.InstallMode.TEST) || __unittestmode; }
+		get { return current_mode.is_all_set (IPK.InstallMode.TEST); }
 	}
 
 	/**

@@ -80,7 +80,7 @@ private class VarSolver : Object {
 		conf = new Config ();
 
 		swName = softwareIdName;
-		if (swName == "")
+		if (Utils.str_empty (swName))
 			warning ("Using VarSolver without valid application-id or resource-id!");
 
 		// Build map of Listaller path variables
