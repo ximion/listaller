@@ -74,7 +74,6 @@ internal abstract class ContentFile : Object {
 		char buff[4096];
 		string cont_str = "";
 
-
 		// Now read all control stuff
 		var ar = new Archive.Read ();
 		ar.support_format_raw ();
@@ -272,14 +271,14 @@ internal class ContentIndex : ContentFile {
 		if (!ret)
 			data.reset ();
 
-		data.add_value ("Type", "application");
-		data.add_value ("ID", app.idname);
-		data.add_value ("Name", app.full_name);
-		data.add_value ("Version", app.version);
+		data.update_value ("Type", "application");
+		data.update_value ("ID", app.idname);
+		data.update_value ("Name", app.full_name);
+		data.update_value ("Version", app.version);
 		if (app.author != null)
-			data.add_value ("Author", app.author);
+			data.update_value ("Author", app.author);
 		if (app.description != null)
-			data.add_value ("Description", app.description);
+			data.update_value ("Description", app.description);
 	}
 }
 

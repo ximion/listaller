@@ -122,7 +122,7 @@ private class RepoLocal : Repo {
 		if (cindex.application_exists (app)) {
 			int j = cindex.compare_version (app);
 			if (j == 0) {
-				Report.log_error (_("The package you want to add already exists in the repository."));
+				Report.log_error (_("The package you want to add already exists in the repository (ID: %s, Version: %s).").printf (app.idname, app.version));
 				return false;
 			} else if (j < 0) {
 				Report.log_error (_("A newer version of the package you want to add is already present in the repository."));

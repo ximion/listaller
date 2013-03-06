@@ -324,7 +324,17 @@ private class MetaFile : Object {
 		return res;
 	}
 
-	public bool add_value (string field, string value, bool openNewBlock = false) {
+
+	/**
+	 * Add new value to index
+	 *
+	 * @param field Field name to add the value to
+	 * @param value The string value to be set
+	 * @param open_new_block TRUE if new block should be created, starting with this field/value pair. (Default: FALSE)
+	 *
+	 * @return TRUE on success.
+	 */
+	public bool add_value (string field, string value, bool open_new_block = false) {
 		if (field == "")
 			return false;
 		if (value == "")
@@ -333,7 +343,7 @@ private class MetaFile : Object {
 		// Prepare the value
 		string[] newValue = value.split ("\n");
 
-		if ((openNewBlock) || (content.size <= 0))
+		if ((open_new_block) || (content.size <= 0))
 			currentBlockId = -1;
 
 		if (currentBlockId < 0) {
@@ -390,7 +400,57 @@ private class MetaFile : Object {
 		return true;
 	}
 
-	public void _test_print () {
+	/**
+	 * Update a field value in the current opened block.
+	 * If the field does not yet exist, it will be created.
+	 *
+	 * @param field Field name
+	 * @param value Updated value for field
+	 *
+	 * @return TRUE on success.
+	 */
+	public bool update_value (string field, string value) {
+		if (content.size == 0) {
+			currentBlockId = -1;
+			return false;
+		}
+
+		var iter = content.list_iterator ();
+
+		if (!iter.first ())
+			return false;
+
+		bool remove_mlfield = false;
+		do {
+			if (iter.index () < currentBlockId)
+				continue;
+
+			string line = iter.get ();
+			if (remove_mlfield) {
+				// when in remove mode and we have a multiline field, remove all extra lines
+				// break if new field starts (removal completed)
+				if (line.has_prefix (" "))
+					iter.remove ();
+				else
+					break;
+			}
+
+			// if the line is empty, we are in front of a new block - stop processing there.
+			if (is_empty (line))
+				break;
+
+			if (line.down ().has_prefix (field.down () + ":")) {
+				iter.remove ();
+				remove_mlfield = true;
+			}
+		} while (iter.next ());
+
+		bool ret = add_value (field, value, false);
+
+		return ret;
+	}
+
+	internal void _test_print () {
 		foreach (string s in content) {
 			stdout.printf (s + "\n");
 		}
