@@ -3,6 +3,10 @@
 <info>
   <link type="guide" xref="index"/>
 
+  <link type="topic" xref="directory-variables"/>
+  <link type="topic" xref="package-settings"/>
+  <link type="topic" xref="filelist-spec"/>
+
   <desc>Information about the project and it's specifications</desc>
 </info>
 
