@@ -613,7 +613,7 @@ private abstract class InternalDB : Object {
 			res = stmt.step ();
 			db_assert (res, "execute");
 			if (res != Sqlite.ROW)
-				throw new DatabaseError.ERROR ("Did not receive ROW after selecting applications table.");
+				return null;
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (e.message);
 		}
