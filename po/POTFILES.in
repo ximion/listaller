@@ -3,7 +3,6 @@
 #
 # Listaller library sources
 src/logging.vala
-src/reporting.vala
 src/config-global.vala
 src/setup-settings.vala
 src/status.vala
@@ -34,6 +33,7 @@ src/feed-installer.vala
 src/zfeed.vala
 # Listaller tools
 tools/toolshared.vala
+tools/reporting.vala
 tools/console-progress-bar.vala
 tools/runapp/runapp.vala
 tools/lipa/lipa.vala

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@freelists.org\n"
-"POT-Creation-Date: 2013-02-08 04:18+0100\n"
+"POT-Creation-Date: 2013-03-07 00:07+0100\n"
 "PO-Revision-Date: 2012-10-01 00:17+0000\n"
 "Last-Translator: Matthias Klumpp <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Für '%s' ist keine Dateiliste registriert. Die Software-Datenbank ist "
 "eventuell beschädigt."
 
-#: ../tools/lipa/lipa-installer.vala:114 ../tools/lipa/lipa-installer.vala:127
+#: ../tools/lipa/lipa-installer.vala:111 ../tools/lipa/lipa-installer.vala:124
 msgid "<<< Press ENTER to continue! >>>"
 msgstr "<<< EINGABE drücken zum Fortfahren! >>>"
 
@@ -37,7 +37,7 @@ msgstr "Die neuere Version '%s' dieser Anwendung ist bereits installiert."
 msgid "A lower version '%s' of this application has already been installed."
 msgstr "Die ältere Version '%s' dieser Anwendung ist bereits installiert."
 
-#: ../src/application.vala:296 ../tools/lipa/lipa-manager.vala:83
+#: ../src/application.vala:296 ../tools/lipa/lipa-manager.vala:80
 msgid "AVAILABLE"
 msgstr ""
 
@@ -96,20 +96,20 @@ msgstr "Konnte Datei nicht extrahieren! Fehler: %s"
 msgid "Could not find IPK source files!"
 msgstr "Konnte IPK Quelldateien nicht finden!"
 
-#: ../tools/lipa/lipa-manager.vala:103
+#: ../tools/lipa/lipa-manager.vala:100
 msgid "Could not find application which matches '%s'!\n"
 msgstr "Konnte keine Anwendung finden, zu welcher '%s' passt!\n"
 
-#: ../tools/lipa/lipa-manager.vala:147
+#: ../tools/lipa/lipa-manager.vala:144
 #, fuzzy
 msgid "Could not find application!"
 msgstr "Konnte keine Anwendung finden, zu welcher '%s' passt!\n"
 
-#: ../src/application.vala:440 ../src/varsetter.vala:45
+#: ../src/application.vala:457 ../src/varsetter.vala:45
 msgid "Could not load desktop file values: %s"
 msgstr "Konnte Werte aus Desktop-Datei nicht laden: %s"
 
-#: ../src/pkit-tasks.vala:80
+#: ../src/pkit-tasks.vala:63
 msgid ""
 "Could not obtain a PkBackendProxy instance. Maybe the Listaller-PkPlugin is "
 "not installed or broken?"
@@ -121,7 +121,7 @@ msgstr ""
 msgid "Could not open IPK file! Error: %s"
 msgstr "Konnte IPK-Datei nicht öffnen! Fehler: %s"
 
-#: ../src/application.vala:481 ../src/application.vala:508
+#: ../src/application.vala:498 ../src/application.vala:525
 #: ../src/varsetter.vala:56
 msgid "Could not open desktop file: %s"
 msgstr "Konnte Desktop-Datei nicht öffnen: %s"
@@ -198,23 +198,23 @@ msgstr "Datenbank gesperrt"
 msgid "Database unlocked"
 msgstr "Datenbank entsperrt"
 
-#: ../tools/lipa/lipa-installer.vala:105
+#: ../tools/lipa/lipa-installer.vala:102
 msgid "Description:"
 msgstr "Beschreibung:"
 
-#: ../src/pkit-tasks.vala:209
+#: ../src/pkit-tasks.vala:192
 msgid "Details from PackageKit: %s"
 msgstr "Details von PackageKit: %s"
 
-#: ../tools/lipa/lipa-installer.vala:132
+#: ../tools/lipa/lipa-installer.vala:129
 msgid "Do you accept these terms and conditions?"
 msgstr "Akzeptieren Sie diese Bedingungen?"
 
-#: ../tools/lipa/lipa-installer.vala:157
+#: ../tools/lipa/lipa-installer.vala:154
 msgid "Do you want to install %s now?"
 msgstr "Möchsten Sie %s jetzt installieren?"
 
-#: ../tools/lipa/lipa-manager.vala:113
+#: ../tools/lipa/lipa-manager.vala:110
 msgid "Do you want to remove %s (%s) now?"
 msgstr "Möchten Sie %s (%s) jetzt entfernen?"
 
@@ -226,11 +226,11 @@ msgstr "FEHLER: %s"
 msgid "Enable verbose mode"
 msgstr "Ausführliche Meldungen aktivieren"
 
-#: ../src/utils.vala:232 ../src/utils.vala:265
+#: ../src/utils.vala:241 ../src/utils.vala:274
 msgid "Error while finding files in directory %s: %s"
 msgstr "Fehler beim Suchen von Dateien im Ordner %s: %s"
 
-#: ../src/ipk-control.vala:403 ../tools/depscan/depscan.vala:75
+#: ../src/ipk-control.vala:446 ../tools/depscan/depscan.vala:75
 msgid "Error: %s\n"
 msgstr "Fehler: %s\n"
 
@@ -258,7 +258,7 @@ msgstr ""
 msgid "GPG-Sign the resulting package"
 msgstr "Das fertige Paket mit GPG signieren."
 
-#: ../src/application.vala:298 ../tools/lipa/lipa-manager.vala:85
+#: ../src/application.vala:298 ../tools/lipa/lipa-manager.vala:82
 msgid "INSTALLED"
 msgstr "INSTALLIERT"
 
@@ -283,30 +283,30 @@ msgstr "Installiere ein IPK-Paket"
 msgid "Install an IPK package"
 msgstr "Installiere ein IPK-Paket"
 
-#: ../src/installer.vala:292 ../src/installer.vala:348
-#: ../tools/lipa/lipa-installer.vala:59
+#: ../src/installer.vala:292 ../src/installer.vala:358
+#: ../tools/lipa/lipa-installer.vala:56
 msgid "Installation completed!"
 msgstr "Installation abgeschlossen!"
 
-#: ../src/installer.vala:296 ../src/installer.vala:352
+#: ../src/installer.vala:296 ../src/installer.vala:362
 msgid "Installation failed!"
 msgstr "Installation fehlgeschlagen!"
 
-#: ../tools/lipa/lipa-installer.vala:103
+#: ../tools/lipa/lipa-installer.vala:100
 msgid "Installation of %s"
 msgstr "Installation von %s"
 
-#: ../src/pkit-tasks.vala:363 ../src/pkit-tasks.vala:380
+#: ../src/pkit-tasks.vala:346 ../src/pkit-tasks.vala:363
 msgid "Installation of native packages failed with message: %s"
 msgstr ""
 "Installation eines nativen Paketes ist mit folgender Nachricht "
 "fehlgeschlagen: %s"
 
-#: ../tools/lipa/lipa-installer.vala:162
+#: ../tools/lipa/lipa-installer.vala:159
 msgid "Installing"
 msgstr "Installieren..."
 
-#: ../src/pkit-tasks.vala:436
+#: ../src/pkit-tasks.vala:419
 msgid "Installing native packages: %s"
 msgstr "Installiere native Pakete: %s"
 
@@ -314,7 +314,7 @@ msgstr "Installiere native Pakete: %s"
 msgid "Key '%s' imported successfully!"
 msgstr "Schlüssel '%s' erfolgreich importiert!"
 
-#: ../src/security-info.vala:89
+#: ../src/security-info.vala:95
 msgid "Key is missing"
 msgstr "Schlüssel fehlt"
 
@@ -322,7 +322,7 @@ msgstr "Schlüssel fehlt"
 msgid "Key not found!"
 msgstr "Schlüssel nicht gefunden!"
 
-#: ../tools/lipa/lipa-installer.vala:117
+#: ../tools/lipa/lipa-installer.vala:114
 msgid "License:"
 msgstr "Lizenz:"
 
@@ -346,7 +346,7 @@ msgstr ""
 msgid "Lookup key which matches PATTERN"
 msgstr "Schlüssel nachschlagen, der auf MUSTER passt."
 
-#: ../src/security-info.vala:191
+#: ../src/security-info.vala:211
 msgid "Low security."
 msgstr "Geringe Sicherheit"
 
@@ -358,7 +358,7 @@ msgstr "Mache '%s' mit ihrem System bekannt."
 msgid "Malformed line in file listing: %s"
 msgstr "Falsch formatierte Zeile in Dateiliste: %s"
 
-#: ../src/security-info.vala:188
+#: ../src/security-info.vala:208
 msgid "Medium security."
 msgstr "Mittlere Sicherheit"
 
@@ -379,7 +379,7 @@ msgstr ""
 "Fehlender Parameter für 'remove' Aktion: Keine Anwendungs-ID oder Name "
 "angegeben!\n"
 
-#: ../src/security-info.vala:127
+#: ../src/security-info.vala:136
 msgid "Never trust."
 msgstr "Nicht vertrauenswürdig."
 
@@ -391,7 +391,7 @@ msgstr "Keine Anwendung definiert!"
 msgid "No path given!"
 msgstr "Kein Pfad angegeben!"
 
-#: ../src/ipk-package.vala:662 ../src/ipk-package.vala:734
+#: ../src/ipk-package.vala:662 ../src/ipk-package.vala:735
 msgid ""
 "No payload data archive has been registered! This might be a bug in this "
 "application, please report the issue!"
@@ -399,17 +399,17 @@ msgstr ""
 "Es wurde kein Datenarchiv registriert! Das ist vermutlich ein Fehler in der "
 "Anwendung, bitte melden Sie diesen Vorfall!"
 
-#: ../src/ipk-control.vala:422
+#: ../src/ipk-control.vala:465
 msgid "No valid DOAP data found in directory %s - Can't open control files."
 msgstr ""
 "Keine gültigen DOAP Daten im Verzeichnis %s gefunden! - Die Kontrolldateien "
 "können nicht geöffnet werden."
 
-#: ../src/security-info.vala:92
+#: ../src/security-info.vala:98
 msgid "One key has been revoked"
 msgstr "Ein Schlüssel wurde zurückgerufen."
 
-#: ../src/security-info.vala:86
+#: ../src/security-info.vala:92
 msgid "One key has expired"
 msgstr "Ein Schlüssel ist abgelaufen"
 
@@ -419,27 +419,28 @@ msgstr "MUSTER"
 
 #: ../src/varsolver.vala:176 ../src/varsolver.vala:191
 #: ../src/varsolver.vala:206
+#, fuzzy
 msgid ""
-"Package uses custom variables - usually this is not intentional, please "
+"Package uses custom variable: '%s' - usually this is not intentional, please "
 "contact the package author!"
 msgstr ""
 "Das Paket benutzt benutzerdefinierte Variablen - normalerweise ist dies "
 "nicht beabsichtigt, benachrichtigen Sie den Autor des Paketes!"
 
-#: ../src/pkit-tasks.vala:187
+#: ../src/pkit-tasks.vala:170
 msgid ""
 "PackageKit backend does not support finding packages by stuff they provide - "
 "Installer was unable to use native packages to satisfy dependencies of this "
 "application."
 msgstr ""
 
-#: ../src/pkit-tasks.vala:299
+#: ../src/pkit-tasks.vala:282
 msgid ""
 "PackageKit backend does not support searching for files - Installer was "
 "unable to use native packages to satisfy dependencies of this application."
 msgstr ""
 
-#: ../src/pkit-tasks.vala:330
+#: ../src/pkit-tasks.vala:313
 msgid ""
 "PackageKit transaction failed!\n"
 "Exit message was: %s"
@@ -463,7 +464,7 @@ msgstr "Bitte entfernen Sie die existierende version um fortzufahren!"
 msgid "Print machine-readable simple text"
 msgstr "Maschinenlesbaren, einfachen text ausgeben"
 
-#: ../src/security-info.vala:101
+#: ../src/security-info.vala:107
 msgid "Pubkey is missing"
 msgstr "Öffentlicher Schlüssel fehlt"
 
@@ -486,11 +487,11 @@ msgstr ""
 msgid "Refresh repository application cache"
 msgstr ""
 
-#: ../tools/lipa/lipa-manager.vala:132
+#: ../tools/lipa/lipa-manager.vala:129
 msgid "Removal of %s completed successfully!"
 msgstr "Das Entfernen von %s wurde erfolgreich abgeschlossen!"
 
-#: ../tools/lipa/lipa-manager.vala:134
+#: ../tools/lipa/lipa-manager.vala:131
 msgid "Removal of %s failed!"
 msgstr "Entfernen von %s fehlgeschlagen!"
 
@@ -506,7 +507,7 @@ msgstr "Entfernen von %s begonnen."
 msgid "Remove an application installed using Listaller"
 msgstr "Eine mit Listaller installierte Anwendung entfernen."
 
-#: ../tools/lipa/lipa-manager.vala:119
+#: ../tools/lipa/lipa-manager.vala:116
 msgid "Removing"
 msgstr "Entfernen ..."
 
@@ -526,16 +527,16 @@ msgstr ""
 msgid "Running installation of %s"
 msgstr "Führe installation von %s aus."
 
-#: ../tools/lipa/lipa-installer.vala:144 ../tools/lipa/lipa-installer.vala:146
-#: ../tools/lipa/lipa-installer.vala:148
+#: ../tools/lipa/lipa-installer.vala:141 ../tools/lipa/lipa-installer.vala:143
+#: ../tools/lipa/lipa-installer.vala:145
 msgid "Security is:"
 msgstr "Sicherheits-Level:"
 
-#: ../src/installer.vala:427
+#: ../src/installer.vala:437
 msgid "Setup has not been initialized!"
 msgstr "Setup wurde nicht initialisiert!"
 
-#: ../src/security-info.vala:185
+#: ../src/security-info.vala:205
 msgid "Should be safe to use."
 msgstr "Sollte gefahrlos verwendet werden können."
 
@@ -545,15 +546,15 @@ msgstr "Sollte gefahrlos verwendet werden können."
 msgid "Show the application's version"
 msgstr "Die Version der Anwendung anzeigen"
 
-#: ../src/security-info.vala:95
+#: ../src/security-info.vala:101
 msgid "Signature has expired"
 msgstr "Signatur ist abgelaufen."
 
-#: ../src/security-info.vala:98
+#: ../src/security-info.vala:104
 msgid "Signature is bad"
 msgstr "Signatur ist schlecht"
 
-#: ../src/security-info.vala:83
+#: ../src/security-info.vala:89
 msgid "Signature is fully valid"
 msgstr "Signatur ist voll gültig."
 
@@ -577,7 +578,7 @@ msgstr "Software-Installationspräfix"
 msgid "Software installation package"
 msgstr "Software Installationspaket"
 
-#: ../src/ipk-package.vala:760
+#: ../src/ipk-package.vala:761
 msgid ""
 "Some files of this package could not be installed, because they were not "
 "found in payload data.\n"
@@ -588,7 +589,7 @@ msgstr ""
 "Dieses IPK Paket ist vermutlich beschädigt, bitte holen Sie sich eine neue "
 "Kopie!"
 
-#: ../src/security-info.vala:80
+#: ../src/security-info.vala:86
 msgid "Status of this signature is unknown or package is not signed."
 msgstr ""
 "Status dieser Signatur ist unbekannt, oder das Paket ist nicht signiert."
@@ -597,7 +598,7 @@ msgstr ""
 msgid "Strip debug infos from files in install-target"
 msgstr "Debug-infos von Dateien im Installationsziel entfernen"
 
-#: ../src/installer.vala:436
+#: ../src/installer.vala:446
 msgid ""
 "The installer will only work with the %s operating system, but you use "
 "'%s'.\n"
@@ -624,7 +625,7 @@ msgstr ""
 "werden!\n"
 "Bitte holen Sie sich ein Paket welches für Ihr System gebaut wurde."
 
-#: ../src/security-info.vala:194
+#: ../src/security-info.vala:214
 msgid "This package could be dangerous!"
 msgstr "Dieses Paket könnte gefährlich sein!"
 
@@ -660,11 +661,11 @@ msgstr ""
 "Versuch, auf gesperrte Datenbank zuzugreifen! Das sollte nicht passieren. "
 "Nachricht: %s"
 
-#: ../src/ipk-package.vala:648 ../src/ipk-package.vala:721
+#: ../src/ipk-package.vala:648 ../src/ipk-package.vala:722
 msgid "Tried to perform action on invalid IPK package."
 msgstr "Versuch, Aktion auf ungültigem IPK-Paket auszuführen."
 
-#: ../src/software-db.vala:141
+#: ../src/software-db.vala:149
 msgid ""
 "Tried to perform action on private software database, but the database is "
 "not opened! (this should never happen!)"
@@ -672,7 +673,7 @@ msgstr ""
 "Versuch, eine Aktion auf der privaten datenbank auszuführen, die Datenbank "
 "ist jedoch nicht geöffnet! (das sollte nie passieren)"
 
-#: ../src/software-db.vala:130
+#: ../src/software-db.vala:138
 msgid ""
 "Tried to perform action on shared software database, but the database is not "
 "opened! (maybe a permission problem?)"
@@ -683,19 +684,19 @@ msgstr ""
 msgid "Tried to write on readonly database! (This should never happen)"
 msgstr ""
 
-#: ../src/security-info.vala:133
+#: ../src/security-info.vala:142
 msgid "Trust is full"
 msgstr "Volles Vertrauen"
 
-#: ../src/security-info.vala:130
+#: ../src/security-info.vala:139
 msgid "Trust is marginal"
 msgstr "Vertrauen ist gering"
 
-#: ../src/security-info.vala:136
+#: ../src/security-info.vala:145
 msgid "Trust is ultimate."
 msgstr "Vertrauen ist ultimativ"
 
-#: ../src/security-info.vala:121
+#: ../src/security-info.vala:130
 msgid "Trust level is unknown"
 msgstr "Vertrauensstufe ist unbekannt"
 
@@ -715,15 +716,15 @@ msgid ""
 "Setting AppManager to superuse mode now."
 msgstr ""
 
-#: ../src/software-db.vala:474
+#: ../src/software-db.vala:483
 msgid "Unable to add a dependency to database: %s"
 msgstr "Unfähig, eine Abhängigkeit zur Datenbank hinzuzufügen:%s"
 
-#: ../src/software-db.vala:252
+#: ../src/software-db.vala:260
 msgid "Unable to add application file list to database: %s"
 msgstr "Konnte dateiliste der Anwendung nicht zur Datenbank hinzufügen: %s"
 
-#: ../src/software-db.vala:231
+#: ../src/software-db.vala:239
 msgid "Unable to add application to database: %s"
 msgstr "Diese Anwendung konnte nicht zur Datenbank hinzugefügt werden: %s"
 
@@ -731,7 +732,7 @@ msgstr "Diese Anwendung konnte nicht zur Datenbank hinzugefügt werden: %s"
 msgid "Unable to build package: %s"
 msgstr "Konnte Paket nicht bauen: %s"
 
-#: ../src/software-db.vala:288
+#: ../src/software-db.vala:296
 msgid "Unable to count applications: %s"
 msgstr "Konnte Anwendungen nicht zählen: %s"
 
@@ -786,17 +787,17 @@ msgstr "Diese Datei konnte nicht entpackt werden: %s"
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
 
-#: ../src/software-db.vala:307
+#: ../src/software-db.vala:315
 msgid "Unable to fetch application by id: %s"
 msgstr ""
 "Dieses Programm konnte anhand seiner Identifikationsnummer nicht gefunden "
 "werden: %s"
 
-#: ../src/software-db.vala:329
+#: ../src/software-db.vala:337
 msgid "Unable to fetch application by name: %s"
 msgstr "Dieses Programm konnte anhand seines Namens nicht gefunden werden: %s"
 
-#: ../src/database-internal.vala:1029 ../src/software-db.vala:273
+#: ../src/database-internal.vala:1029 ../src/software-db.vala:281
 msgid "Unable to fetch application file list: %s"
 msgstr ""
 
@@ -806,7 +807,7 @@ msgid ""
 "architecture."
 msgstr ""
 
-#: ../src/pkit-tasks.vala:207
+#: ../src/pkit-tasks.vala:190
 msgid "Unable to find native package for '%s'!"
 msgstr "Konnte kein natives Paket für '%s' finden."
 
@@ -818,11 +819,11 @@ msgstr ""
 msgid "Unable to get meta-information list: %s"
 msgstr ""
 
-#: ../src/software-db.vala:186
+#: ../src/software-db.vala:194
 msgid "Unable to open database for writing: %s"
 msgstr ""
 
-#: ../src/software-db.vala:160
+#: ../src/software-db.vala:168
 #, fuzzy
 msgid "Unable to open database read-only: %s"
 msgstr "Konnte Datenbanktabellen nicht erstellen: %s"
@@ -839,7 +840,7 @@ msgstr ""
 msgid "Unable to read package signature! Message: %s"
 msgstr ""
 
-#: ../src/software-db.vala:350
+#: ../src/software-db.vala:358
 msgid "Unable to remove application from database: %s"
 msgstr ""
 
@@ -847,7 +848,7 @@ msgstr ""
 msgid "Unable to save modified desktop-file! %s"
 msgstr ""
 
-#: ../src/software-db.vala:370
+#: ../src/software-db.vala:378
 msgid "Unable to search application database: %s"
 msgstr "Konnte Anwendungsdatenbank nicht durchsuchen: %s"
 
@@ -868,7 +869,7 @@ msgstr ""
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: ../src/updater.vala:137
+#: ../src/updater.vala:135
 msgid ""
 "Update of application '%s' failed. Maybe the update information is out of "
 "date. Please refresh it and try again."
@@ -885,7 +886,7 @@ msgid ""
 "Update of application '%s' failed. Unable to remove the old application."
 msgstr ""
 
-#: ../tools/lipa/lipa-manager.vala:176
+#: ../tools/lipa/lipa-manager.vala:173
 msgid "Updating package cache"
 msgstr ""
 
@@ -900,7 +901,7 @@ msgid ""
 "Please obtain a new copy and try again."
 msgstr ""
 
-#: ../src/security-info.vala:124
+#: ../src/security-info.vala:133
 msgid "Validity is undefined"
 msgstr ""
 
@@ -912,7 +913,7 @@ msgstr "Die Desktop-Datei für die Anwendung '%s' ist unbekannt!"
 msgid "XML file is not a valid ZI feed!"
 msgstr ""
 
-#: ../src/installer.vala:445
+#: ../src/installer.vala:455
 msgid ""
 "You are not allowed to install this package, because it's security level is "
 "'%s' and you need at least a package with security-level '%s'.\n"
@@ -920,7 +921,7 @@ msgid ""
 "try again!"
 msgstr ""
 
-#: ../src/updater.vala:160
+#: ../src/updater.vala:155
 msgid ""
 "You are not allowed to update the application! The security level of the "
 "update is '%s' and you need at least security-level '%s'.\n"
@@ -928,7 +929,7 @@ msgid ""
 "compromised!"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:135
+#: ../tools/lipa/lipa-installer.vala:132
 msgid ""
 "You need to agree with the license to install & use the application. Exiting "
 "setup now."
@@ -954,7 +955,7 @@ msgstr "[Keine]"
 msgid "bad"
 msgstr "schlecht"
 
-#: ../src/security-info.vala:44
+#: ../src/security-info.vala:47
 msgid "dangerous"
 msgstr "gefährlich"
 
@@ -962,15 +963,15 @@ msgstr "gefährlich"
 msgid "error: %s"
 msgstr "Fehler: %s"
 
-#: ../src/security-info.vala:35
+#: ../src/security-info.vala:38
 msgid "high"
 msgstr "hoch"
 
-#: ../src/security-info.vala:41
+#: ../src/security-info.vala:44
 msgid "low"
 msgstr "niedrig"
 
-#: ../src/security-info.vala:38
+#: ../src/security-info.vala:41
 msgid "medium"
 msgstr "mittel"
 
@@ -986,11 +987,11 @@ msgstr "nein"
 msgid "okay"
 msgstr "in Ordnung"
 
-#: ../src/application.vala:290 ../tools/lipa/lipa-manager.vala:72
+#: ../src/application.vala:290 ../tools/lipa/lipa-manager.vala:69
 msgid "personal"
 msgstr "persönlich"
 
-#: ../src/application.vala:292 ../tools/lipa/lipa-manager.vala:74
+#: ../src/application.vala:292 ../tools/lipa/lipa-manager.vala:71
 msgid "shared"
 msgstr "gemeinsam"
 
