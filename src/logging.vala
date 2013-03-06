@@ -52,6 +52,16 @@ private static void li_log_handler_cb (string? log_domain, LogLevelFlags log_lev
 	if (log_domain == null)
 		log_domain = "";
 
+	string msg_text = message;
+
+	if (!verbose_mode) {
+		// remove the source-code information from output, when not in verbose mode
+		if (msg_text.index_of (".vala") > 0) {
+			string msg = msg_text;
+			msg_text = msg.substring (msg.index_of (":", msg.index_of (":") + 1) + 2);
+		}
+	}
+
 	// time header
 	var the_time = Time.local (time_t ());
 	the_time.strftime (str_time_buf, "%H:%M:%S");
@@ -60,9 +70,9 @@ private static void li_log_handler_cb (string? log_domain, LogLevelFlags log_lev
 	// don't colour the output
 	if (!_console) {
 		if (log_level == LogLevelFlags.LEVEL_DEBUG) {
-			stdout.printf ("%s\t%s\t%s\n", str_time, log_domain, message);
+			stdout.printf ("%s\t%s\t%s\n", str_time, log_domain, msg_text);
 		} else {
-			stdout.printf ("***\n%s\t%s\t%s\n***\n", str_time, log_domain, message);
+			stdout.printf ("***\n%s\t%s\t%s\n***\n", str_time, log_domain, msg_text);
 		}
 		return;
 	}
@@ -85,11 +95,11 @@ private static void li_log_handler_cb (string? log_domain, LogLevelFlags log_lev
 	if (log_level == LogLevelFlags.LEVEL_CRITICAL ||
 	    log_level == LogLevelFlags.LEVEL_WARNING ||
 	    log_level == LogLevelFlags.LEVEL_ERROR) {
-		stdout.printf ("%c[%dm%s\n%c[%dm", 0x1B, CONSOLE_RED, message, 0x1B, CONSOLE_RESET);
+		stdout.printf ("%c[%dm%s\n%c[%dm", 0x1B, CONSOLE_RED, msg_text, 0x1B, CONSOLE_RESET);
 		// stderr.printf ("%c[%dm%s%c[%dm %s\n", 0x1B, CONSOLE_RED, "[error]:", 0x1B, CONSOLE_RESET, msg);
 	} else {
 		// debug in standard colour
-		stdout.printf ("%c[%dm%s\n%c[%dm", 0x1B, CONSOLE_RESET, message, 0x1B, CONSOLE_RESET);
+		stdout.printf ("%c[%dm%s\n%c[%dm", 0x1B, CONSOLE_RESET, msg_text, 0x1B, CONSOLE_RESET);
 	}
 }
 
