@@ -28,10 +28,24 @@ public class RunApp : Object {
 		limgr = new Manager (true);
 	}
 
+	public void prepare_environment (string ld_env_add) {
+		string ld_env = "";
+		string? ld_env_existing = Environment.get_variable ("LD_LIBRARY_PATH");
+		if (ld_env_existing != null)
+			ld_env = "%s;%s".printf (ld_env_existing, ld_env_add);
+		else
+			ld_env = ld_env_add;
+
+		debug ("LD_PATH env is: %s", ld_env);
+		if (ld_env != "")
+			Environment.set_variable ("LD_LIBRARY_PATH", ld_env, true);
+	}
+
 	public int run_application (string commandLine, string ld_env) {
 		int exit_status;
 		try {
-			debug ("LD_PATH env is: %s", ld_env);
+			prepare_environment (ld_env);
+
 			debug ("Command line: %s", commandLine);
 			Process.spawn_command_line_sync (commandLine, null, null, out exit_status);
 		} catch (Error e) {
