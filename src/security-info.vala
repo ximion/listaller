@@ -198,7 +198,10 @@ public class SecurityInfo : Object {
 		return SecurityLevel.LOW;
 	}
 
-	public string get_level_as_string () {
+	/**
+	 * Get a sentence describing the security status of a package.
+	 */
+	public string get_level_as_sentence () {
 		SecurityLevel lev = get_level ();
 		switch (lev) {
 			case SecurityLevel.HIGH:
@@ -216,6 +219,15 @@ public class SecurityInfo : Object {
 			default:
 				return ("Security level is: [%d]").printf((int) this);
 		}
+	}
+
+	/**
+	 * Get a simple workd (such as "high" or "low") which describes the
+	 * security status of a package.
+	 */
+	public string get_level_as_string () {
+		SecurityLevel lev = get_level ();
+		return lev.to_string ();
 	}
 }
 
