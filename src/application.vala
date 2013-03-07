@@ -173,11 +173,11 @@ public class AppItem : Object {
 			if (_desktop_file.strip () == "")
 				return "";
 			string dfile = _desktop_file;
-			// Check if $APP prefix needs to be added
+			// Check if %APP% prefix needs to be added
 			if ( (!dfile.has_prefix ("%")) &&
 				(!dfile.has_prefix ("/")) &&
 				(!dfile.has_prefix ("~")) ) {
-				// If no exact path has been specified, we assume $APP
+				// If no exact path has been specified, we assume %APP%
 				dfile = Path.build_filename ("%APP%", dfile, null);
 			}
 			_desktop_file_prefix = fold_user_dir (dfile);

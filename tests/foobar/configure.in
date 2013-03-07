@@ -1,4 +1,5 @@
-AC_PREREQ(2.52)
+AC_PREREQ(2.56)
+AC_CONFIG_MACRO_DIR([m4])
 
 AC_INIT(foobar, 1.0.0)
 AC_CONFIG_SRCDIR(foo/main.c)

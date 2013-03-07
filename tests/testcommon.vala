@@ -60,8 +60,9 @@ private class TestEnvironment {
 			Environment.unset_variable (s);
 	}
 
-	public void create_environment () {
-		clear_environment_variables ();
+	public void create_environment (bool clear_standard_env = true) {
+		if (clear_standard_env)
+			clear_environment_variables ();
 
 		// make sure directories exist
 		Listaller.Utils.create_dir_structure (tmp_home_dir);

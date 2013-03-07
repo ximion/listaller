@@ -46,21 +46,27 @@ void run_command (string cmd) {
 	}
 }
 
+void test_cleanup_srcdir () {
+	// we can ignore all errors here, as the project might have not been built before
+	Environment.set_current_dir (foobar_srcdir);
+	Process.spawn_command_line_sync ("make distclean", null, null, null);
+}
+
 /*
  * Test the AutoCompile automatic software compiler tool
  */
 void test_autocompile () {
-	//! msg ("AppCompile tests");
+	msg ("AppCompile tests");
 
 	// Cleanup
-	delete_dir_recursive (Path.build_filename (foobar_srcdir, "ipkinstall", "installtarget", null));
+	test_cleanup_srcdir ();
+	delete_dir_recursive (Path.build_filename (foobar_srcdir, "ipkinstall", "inst_target", null));
 
-	/*!
 	Environment.set_current_dir (foobar_srcdir);
 
 	// Perform autocompile of FooBar sample app
 	string cmd = acomp_exec;
-	run_command (cmd); */
+	run_command (cmd);
 }
 
 /*
@@ -109,7 +115,7 @@ int main (string[] args) {
 
 	var tenv = new TestEnvironment ("ipkbuild");
 	tenv.init (ref args);
-	tenv.create_environment ();
+	tenv.create_environment (false);
 
 	test_autocompile ();
 	Environment.set_current_dir (datadir);

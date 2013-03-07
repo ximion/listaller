@@ -55,3 +55,4 @@ NEWS.new
 *.lai
 *.so
 foo/foo
+m4/
