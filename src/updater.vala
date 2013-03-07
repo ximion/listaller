@@ -152,8 +152,8 @@ public class Updater : MessageObject {
 		SecurityLevel packSecLvl;
 		if (!inst.installation_allowed (out minSecLvl, out packSecLvl)) {
 			// we are not allowed to update this package!
-			string message = _("You are not allowed to update the application! The security level of the update is '%s' and you need at least security-level '%s'.\n" +
-				"Please make sure you trusted this signature and that your system is not compromised!").printf (packSecLvl.to_string (), minSecLvl.to_string ());
+			string message = _("You are not allowed to update the application '%s'! The security level of the update is '%s' and you need at least security-level '%s'.\n" +
+				"Please make sure you trusted this signature and that your system is not compromised!").printf (app_old.idname, packSecLvl.to_string (), minSecLvl.to_string ());
 			if (Utils.__unittestmode) {
 				debug (message);
 			} else {

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@freelists.org\n"
-"POT-Creation-Date: 2013-03-07 00:07+0100\n"
+"POT-Creation-Date: 2013-03-07 20:34+0100\n"
 "PO-Revision-Date: 2012-10-01 00:02+0000\n"
 "Last-Translator: Konki <pavel.konkol@seznam.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -25,7 +25,7 @@ msgstr ""
 "'%s' nemá registrován žádný seznam souborů. Databáze softwaru může být "
 "poškozena."
 
-#: ../tools/lipa/lipa-installer.vala:111 ../tools/lipa/lipa-installer.vala:124
+#: ../tools/lipa/lipa-installer.vala:113 ../tools/lipa/lipa-installer.vala:126
 msgid "<<< Press ENTER to continue! >>>"
 msgstr ""
 
@@ -41,7 +41,7 @@ msgstr "Nižší verze '%s' této aplikace je již nainstalována."
 msgid "AVAILABLE"
 msgstr ""
 
-#: ../tools/runapp/runapp.vala:70 ../tools/lipa/lipa.vala:57
+#: ../tools/runapp/runapp.vala:84 ../tools/lipa/lipa.vala:57
 #: ../tools/lipkgen/lipkgen.vala:49 ../tools/depscan/depscan-tool.vala:41
 #: ../tools/likey/likey.vala:38
 msgid "Activate verbose mode"
@@ -201,11 +201,11 @@ msgstr "Popis:"
 msgid "Details from PackageKit: %s"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:129
+#: ../tools/lipa/lipa-installer.vala:131
 msgid "Do you accept these terms and conditions?"
 msgstr "Přijímate tyto podmínky?"
 
-#: ../tools/lipa/lipa-installer.vala:154
+#: ../tools/lipa/lipa-installer.vala:157
 msgid "Do you want to install %s now?"
 msgstr "Chcete nyní %s nainstalovat?"
 
@@ -295,7 +295,7 @@ msgstr "Instalace %s"
 msgid "Installation of native packages failed with message: %s"
 msgstr "Instalace nativních balíčků selhala se zprávou: %s"
 
-#: ../tools/lipa/lipa-installer.vala:159
+#: ../tools/lipa/lipa-installer.vala:162
 msgid "Installing"
 msgstr "Instalace"
 
@@ -315,7 +315,7 @@ msgstr ""
 msgid "Key not found!"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:114
+#: ../tools/lipa/lipa-installer.vala:116
 msgid "License:"
 msgstr "Licence:"
 
@@ -339,7 +339,7 @@ msgstr ""
 msgid "Lookup key which matches PATTERN"
 msgstr ""
 
-#: ../src/security-info.vala:211
+#: ../src/security-info.vala:214
 msgid "Low security."
 msgstr "Nízká bezpečnost."
 
@@ -351,7 +351,7 @@ msgstr "Seznamování '%s' s vaším systémem."
 msgid "Malformed line in file listing: %s"
 msgstr "Poškozený řádek ve výpisu souborů: %s"
 
-#: ../src/security-info.vala:208
+#: ../src/security-info.vala:211
 msgid "Medium security."
 msgstr "Střední zabezpečení."
 
@@ -376,7 +376,7 @@ msgstr ""
 msgid "Never trust."
 msgstr "Nikdy nevěřit."
 
-#: ../tools/runapp/runapp.vala:107
+#: ../tools/runapp/runapp.vala:121
 msgid "No application specified!"
 msgstr "Nezadána žádná aplikace!"
 
@@ -504,7 +504,7 @@ msgstr "Odstraňování"
 msgid "Resolving dependencies of '%s'."
 msgstr "Řešení závislostí '%s'."
 
-#: ../tools/runapp/runapp.vala:84 ../tools/lipa/lipa.vala:87
+#: ../tools/runapp/runapp.vala:98 ../tools/lipa/lipa.vala:87
 #: ../tools/lipkgen/lipkgen.vala:62 ../tools/appcompile/appcompile.vala:69
 #: ../tools/depscan/depscan-tool.vala:54 ../tools/likey/likey.vala:62
 msgid "Run '%s --help' to see a full list of available command line options.\n"
@@ -516,8 +516,8 @@ msgstr ""
 msgid "Running installation of %s"
 msgstr "Spouštění instalace %s"
 
-#: ../tools/lipa/lipa-installer.vala:141 ../tools/lipa/lipa-installer.vala:143
-#: ../tools/lipa/lipa-installer.vala:145
+#: ../tools/lipa/lipa-installer.vala:144 ../tools/lipa/lipa-installer.vala:146
+#: ../tools/lipa/lipa-installer.vala:148
 msgid "Security is:"
 msgstr "Bezpečnost je:"
 
@@ -525,11 +525,11 @@ msgstr "Bezpečnost je:"
 msgid "Setup has not been initialized!"
 msgstr "Instalace nebyla zavedena!"
 
-#: ../src/security-info.vala:205
+#: ../src/security-info.vala:208
 msgid "Should be safe to use."
 msgstr ""
 
-#: ../tools/runapp/runapp.vala:68 ../tools/lipa/lipa.vala:55
+#: ../tools/runapp/runapp.vala:82 ../tools/lipa/lipa.vala:55
 #: ../tools/lipkgen/lipkgen.vala:39 ../tools/appcompile/appcompile.vala:37
 #: ../tools/depscan/depscan-tool.vala:35 ../tools/likey/likey.vala:36
 msgid "Show the application's version"
@@ -610,7 +610,7 @@ msgstr ""
 "Tento balíček nelze nainstalovat na vaší architektuře systému (%s)!\n"
 "Prosím pořiďte si balíček, který byl sestaven pro váš stroj."
 
-#: ../src/security-info.vala:214
+#: ../src/security-info.vala:217
 msgid "This package could be dangerous!"
 msgstr "Tento balíček by mohl být nebezpečný!"
 
@@ -913,13 +913,13 @@ msgstr ""
 
 #: ../src/updater.vala:155
 msgid ""
-"You are not allowed to update the application! The security level of the "
-"update is '%s' and you need at least security-level '%s'.\n"
+"You are not allowed to update the application '%s'! The security level of "
+"the update is '%s' and you need at least security-level '%s'.\n"
 "Please make sure you trusted this signature and that your system is not "
 "compromised!"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:132
+#: ../tools/lipa/lipa-installer.vala:134
 msgid ""
 "You need to agree with the license to install & use the application. Exiting "
 "setup now."
