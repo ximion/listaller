@@ -100,37 +100,40 @@ public class LipaInstaller : LipaModule {
 		print ("==== %s ====\n\n", _("Installation of %s").printf (appID.full_name));
 
 		print ("%s\n\n%s\n", _("Description:"), appID.description);
-		string[] licenseLines = appID.license.text.split ("\n");
 
-		// save cursor in new position
-		//print ("%c7", 0x1B);
+		if (ipkmeta.user_accept_license) {
+			string[] licenseLines = appID.license.text.split ("\n");
 
-		bool clear_hint = false;
-		if (licenseLines.length > 1) {
-			// translations might have a different length
-			string clear_line = string.nfill (_("<<< Press ENTER to continue! >>>").length, ' ');
-			clear_line = "\r  %s  \r".printf (clear_line);
+			// save cursor in new position
+			//print ("%c7", 0x1B);
 
-			print ("%s\n\n", _("License:"));
-			for (int i = 0; i < licenseLines.length; i++) {
-				if (clear_hint) {
-					// clear the "press-enter"-link
-					stdout.printf (clear_line);
-					clear_hint = false;
+			bool clear_hint = false;
+			if (licenseLines.length > 1) {
+				// translations might have a different length
+				string clear_line = string.nfill (_("<<< Press ENTER to continue! >>>").length, ' ');
+				clear_line = "\r  %s  \r".printf (clear_line);
+
+				print ("%s\n\n", _("License:"));
+				for (int i = 0; i < licenseLines.length; i++) {
+					if (clear_hint) {
+						// clear the "press-enter"-link
+						stdout.printf (clear_line);
+						clear_hint = false;
+					}
+					stdout.printf ("%s\n", licenseLines[i]);
+					if ((i % 2) == 1) {
+						Posix.FILE? tty = console_get_tty ();
+						stdout.printf (" %s \r", _("<<< Press ENTER to continue! >>>"));
+						clear_hint = true;
+						console_wait_for_enter (tty);
+					}
 				}
-				stdout.printf ("%s\n", licenseLines[i]);
-				if ((i % 2) == 1) {
-					Posix.FILE? tty = console_get_tty ();
-					stdout.printf (" %s \r", _("<<< Press ENTER to continue! >>>"));
-					clear_hint = true;
-					console_wait_for_enter (tty);
+				ret = console_get_prompt (_("Do you accept these terms and conditions?"), false, true);
+				// if user doesn't agree to the license, we have to exit
+				if (!ret) {
+					stdout.printf ("%s\n", _("You need to agree with the license to install & use the application. Exiting setup now."));
+					return;
 				}
-			}
-			ret = console_get_prompt (_("Do you accept these terms and conditions?"), false, true);
-			// if user doesn't agree to the license, we have to exit
-			if (!ret) {
-				stdout.printf ("%s\n", _("You need to agree with the license to install & use the application. Exiting setup now."));
-				return;
 			}
 		}
 
@@ -164,7 +167,7 @@ public class LipaInstaller : LipaModule {
 		if (ret) {
 			print ("Installation of %s completed successfully!\n", app.full_name);
 		} else {
-			print ("Installation of %s failed!", app.full_name);
+			print ("Installation of %s failed!\n", app.full_name);
 			error_code = 3;
 		}
 
