@@ -83,7 +83,7 @@ set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
 	feed-installer.vala
 	signature.vala
 	key-manager.vala
-	repo-utils.vala
+	repo-data.vala
 	repo-list.vala
 	repo-manager.vala
 	manager.vala

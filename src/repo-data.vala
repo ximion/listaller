@@ -1,4 +1,4 @@
-/* repo-utils.vala - Classes defining special files used in Listaller's IPK repositories
+/* repo-data.vala - Classes defining special files used in Listaller's IPK repositories
  *
  * Copyright (C) 2012-2013 Matthias Klumpp <matthias@tenstral.net>
  *
