@@ -20,6 +20,7 @@
 
 #include <stdlib.h>
 #include <glib.h>
+#include <locale.h>
 #include <packagekit-glib2/packagekit.h>
 #include <plugin/packagekit-plugin.h>
 
@@ -696,6 +697,7 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 	gchar **package_ids;
 	gchar **data = NULL;
 	gchar **full_paths;
+	gchar *locale;
 
 	ListallerPkBackendProxy *pkbproxy;
 
@@ -747,6 +749,13 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 
 		goto out;
 	}
+
+	/* set locale so Listaller messages are translated */
+        if (locale = pk_backend_job_get_locale (plugin->job)) {
+            setenv ("LANGUAGE", locale, 1);
+            setenv ("LANG", locale, 1);
+        }
+        g_free (locale);
 
 	g_debug ("Processing transaction");
 
@@ -854,6 +863,9 @@ out:
 	listaller_set_backend_proxy (NULL);
 	g_object_unref (pkbproxy);
 	plugin->priv->current_transaction = NULL;
+
+	/* restore locale */
+	setlocale (LC_ALL, "C");
 }
 
 /**
