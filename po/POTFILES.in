@@ -20,6 +20,10 @@ src/ipk-metafile.vala
 src/ipk-control.vala
 src/ipk-filelist.vala
 src/ipk-package.vala
+src/ipk-repo.vala
+src/repo-data.vala
+src/repo-list.vala
+src/repo-manager.vala
 src/varsolver.vala
 src/varsetter.vala
 src/manager.vala
