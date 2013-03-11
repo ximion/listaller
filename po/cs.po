@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@freelists.org\n"
-"POT-Creation-Date: 2013-03-07 20:34+0100\n"
+"POT-Creation-Date: 2013-03-11 13:39+0100\n"
 "PO-Revision-Date: 2012-10-01 00:02+0000\n"
 "Last-Translator: Konki <pavel.konkol@seznam.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -743,6 +743,13 @@ msgstr "Nelze vytvořit soubor '%s'!"
 msgid "Unable to download feed %s. Message: %s"
 msgstr "Nelze stáhnout kanál %s. Zpráva: %s"
 
+#: ../src/ipk-repo.vala:192
+#, fuzzy
+msgid ""
+"Unable to download package for '%s'\n"
+"Error: %s"
+msgstr "Nelze najít nativní balíček pro '%s'!"
+
 #: ../src/ipk-package.vala:574
 msgid "Unable to extract IPK data!"
 msgstr "Nelze extrahovat data IPK!"
@@ -788,6 +795,13 @@ msgstr "Nelze získat aplikaci podle názvu: %s"
 msgid "Unable to fetch application file list: %s"
 msgstr "Nelze získat soubor seznamu aplikaci: %s"
 
+#: ../src/ipk-repo.vala:164
+#, fuzzy
+msgid ""
+"Unable to fetch repository contents for: '%s'\n"
+"Error: %s"
+msgstr "Nelze získat soubor seznamu aplikaci: %s"
+
 #: ../src/feed-installer.vala:238
 msgid ""
 "Unable to find a matching implementation of '%s' for your system/"
@@ -803,7 +817,7 @@ msgstr "Nelze najít nativní balíček pro '%s'!"
 msgid "Unable to find valid candidate to satisfy dependency '%s'!"
 msgstr "Nelze najít platného kandidáta k uspokojení závislosti '%s'!"
 
-#: ../src/ipk-metafile.vala:53
+#: ../src/ipk-metafile.vala:53 ../src/repo-list.vala:49
 msgid "Unable to get meta-information list: %s"
 msgstr "Nelze získat seznam metainformací: %s"
 
@@ -844,7 +858,7 @@ msgstr "Nelze hledat v databázi aplikace: %s"
 msgid "Unable to write application file list! Message: %s"
 msgstr "Nelze zapsat soubor seznam aplikace! Zpráva: %s"
 
-#: ../src/ipk-metafile.vala:135
+#: ../src/ipk-metafile.vala:135 ../src/repo-list.vala:95
 msgid "Unable to write meta information! Message: %s"
 msgstr "Nelze zapsat meta informace! Zpráva: %s"
 

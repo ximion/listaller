@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.4.00b\n"
 "Report-Msgid-Bugs-To: listaller@freelists.org\n"
-"POT-Creation-Date: 2013-03-07 20:34+0100\n"
+"POT-Creation-Date: 2013-03-11 13:39+0100\n"
 "PO-Revision-Date: 2011-02-22 22:07+0000\n"
 "Last-Translator: truri <Unknown>\n"
 "Language-Team: Albanian\n"
@@ -693,6 +693,12 @@ msgstr ""
 msgid "Unable to download feed %s. Message: %s"
 msgstr ""
 
+#: ../src/ipk-repo.vala:192
+msgid ""
+"Unable to download package for '%s'\n"
+"Error: %s"
+msgstr ""
+
 #: ../src/ipk-package.vala:574
 msgid "Unable to extract IPK data!"
 msgstr ""
@@ -736,6 +742,12 @@ msgstr ""
 msgid "Unable to fetch application file list: %s"
 msgstr ""
 
+#: ../src/ipk-repo.vala:164
+msgid ""
+"Unable to fetch repository contents for: '%s'\n"
+"Error: %s"
+msgstr ""
+
 #: ../src/feed-installer.vala:238
 msgid ""
 "Unable to find a matching implementation of '%s' for your system/"
@@ -750,7 +762,7 @@ msgstr ""
 msgid "Unable to find valid candidate to satisfy dependency '%s'!"
 msgstr ""
 
-#: ../src/ipk-metafile.vala:53
+#: ../src/ipk-metafile.vala:53 ../src/repo-list.vala:49
 msgid "Unable to get meta-information list: %s"
 msgstr ""
 
@@ -790,7 +802,7 @@ msgstr ""
 msgid "Unable to write application file list! Message: %s"
 msgstr ""
 
-#: ../src/ipk-metafile.vala:135
+#: ../src/ipk-metafile.vala:135 ../src/repo-list.vala:95
 msgid "Unable to write meta information! Message: %s"
 msgstr ""
 

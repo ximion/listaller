@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: listaller@freelists.org\n"
-"POT-Creation-Date: 2013-03-07 20:34+0100\n"
+"POT-Creation-Date: 2013-03-11 13:39+0100\n"
 "PO-Revision-Date: 2012-07-27 11:15+0000\n"
 "Last-Translator: Beluga <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -751,6 +751,13 @@ msgstr "Tiedoston '%s' luominen epäonnistui!"
 msgid "Unable to download feed %s. Message: %s"
 msgstr "Syötteen %s lataaminen epäonnistui. Viesti: %s"
 
+#: ../src/ipk-repo.vala:192
+#, fuzzy
+msgid ""
+"Unable to download package for '%s'\n"
+"Error: %s"
+msgstr "Paikallisen paketin haku kohteelle '%s' epäonnistui!"
+
 #: ../src/ipk-package.vala:574
 msgid "Unable to extract IPK data!"
 msgstr "IPK-datan purkaminen epäonnistui!"
@@ -798,6 +805,13 @@ msgstr "Sovelluksen hakeminen nimen avulla epäonnistui: %s"
 msgid "Unable to fetch application file list: %s"
 msgstr "Sovelluksen tiedostoluettelon hakeminen epäonnistui: %s"
 
+#: ../src/ipk-repo.vala:164
+#, fuzzy
+msgid ""
+"Unable to fetch repository contents for: '%s'\n"
+"Error: %s"
+msgstr "Sovelluksen tiedostoluettelon hakeminen epäonnistui: %s"
+
 #: ../src/feed-installer.vala:238
 msgid ""
 "Unable to find a matching implementation of '%s' for your system/"
@@ -814,7 +828,7 @@ msgstr "Paikallisen paketin haku kohteelle '%s' epäonnistui!"
 msgid "Unable to find valid candidate to satisfy dependency '%s'!"
 msgstr "Riippuvuutta '%s' ei voitu ratkaista!"
 
-#: ../src/ipk-metafile.vala:53
+#: ../src/ipk-metafile.vala:53 ../src/repo-list.vala:49
 msgid "Unable to get meta-information list: %s"
 msgstr "Metatietoluettelon %s haku epäonnistui"
 
@@ -857,7 +871,7 @@ msgstr "Haun tekeminen sovellustietokannasta epäonnistui: %s"
 msgid "Unable to write application file list! Message: %s"
 msgstr "Sovelluksen tiedostoluettelon kirjoittaminen epäonnistui! Viesti: %s"
 
-#: ../src/ipk-metafile.vala:135
+#: ../src/ipk-metafile.vala:135 ../src/repo-list.vala:95
 msgid "Unable to write meta information! Message: %s"
 msgstr "Metatietojen kirjoittaminen epäonnistui! Viesti: %s"
 
