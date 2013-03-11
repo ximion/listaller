@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<page id="repo-structure" type="topic" xmlns="http://projectmallard.org/1.0/">
+<info>
+	<link type="topic" xref="specifications"/>
+	<credit type="author">
+		<name>Matthias Klumpp</name>
+		<email>matthias@tenstral.net</email>
+		<years>2012-2013</years>
+	</credit>
+	<desc>Description of the structure of an IPK package repository</desc>
+</info>
+
+<title>Repository structure</title>
+<section id="overview">
+	<title>What is an IPK package repository?</title>
+
+	<p>IPK package repositories are online sources for Listaller packages. These sources can be used to provide updates for
+	installer applications, or to make Listaller-packaged applications available in the software management UIs of distributions.</p>
+	<p>Repositories can also be used to provide dependencies, to enhance the abilities for Listaller's dependency solver to satisfy a given
+	dependency.</p>
+</section>
+
+<section id="directories">
+	<title>Directory overview</title>
+	<p>Repositories consist of a directory structure, containing the following directories:</p>
+	<code><![CDATA[
+  /                                                 - root
+  |-- reposetting                                   - basic repository settings (MetaFile format)
+  |-- contents_amd64.xz                             - contents of this repository (MetaFile format), arch-specific
+  |-- contents_ix32.xz
+  |-- [apps]
+  |   |-- [pool]                                    - contains the package data
+  |   |   |-- [appid1]                              - directory named like project's application-id (using AppItem appid)
+  |   |   |   |-- changelog                         - software changelog
+  |   |   |   |-- appid1-1.4_amd64.ipk              - IPK package to install
+  |   |   |   |-- appid1-1.4_ix32.ipk
+  |   |   |   |-- (?)appid1.doap                    - optional: application DOAP data (RDF)
+  |   |   |   |-- [delta]                           - directory with package deltas
+  |   |   |   |   |-- [amd64]                       - architecture dir
+  |   |   |   |   |   |-- appid-1.0-to-1.4.deltaipk - deltaIPK packages
+  |   |   |   |   |   |-- ...
+  |   |   |   |   |-- [ix86]
+  |   |   |   |   |-- [all]                         - data for all architectures
+  |   |   |-- [appid2]
+  |   |-- [meta]                                    - directory for metadata (icons/AppStream info)
+  |-- [deps]
+  |   |-- [feeds]                                   - contains the dependency feed files
+  |   |-- [data]                                    - contains dependency-data (if necessary)
+  |   |   |-- [ix32]
+  |   |   |-- [amd64]
+  |   |   |-- [all]]]></code>
+
+	<p>This directory structure can be placed on a server and referenced via an URL.</p>
+	<p>Listaller provides the <cmd>lirepo</cmd> command-line tool to generate new (local) Listaller repositories, and to update them
+	with new software versions.</p>
+</section>
+
+</page>
