@@ -36,10 +36,8 @@
     <xi:include href="xml/database-internal.xml"/>
 
     <xi:include href="xml/logging.xml"/>
-    <xi:include href="xml/reporting.xml"/>
     <xi:include href="xml/utils.xml"/>
     <xi:include href="xml/version.xml"/>
-    <xi:include href="xml/config-global.xml"/>
 
   </chapter>
   <chapter id="more">
