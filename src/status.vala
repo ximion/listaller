@@ -26,6 +26,7 @@ namespace Listaller {
 
 public enum ErrorEnum {
 	INVALID,
+	INTERNAL,
 	SETUP_NOT_INITIALIZED,
 	IPK_LOADING_FAILED,
 	IPK_INCOMPLETE,
@@ -49,8 +50,7 @@ public enum ErrorEnum {
 	NATIVE_TRANSACTION_FAILED,
 	NETWORK_ERROR,
 	REFRESH_FAILED,
-	UPDATE_FAILED,
-	INTERNAL;
+	UPDATE_FAILED;
 
 	public string to_string () {
 		return ((int) this).to_string ();

@@ -276,16 +276,24 @@ static void
 listaller_progress_cb (GObject *sender, ListallerProgressItem *item, PkPlugin *plugin)
 {
 	gint value;
+	ListallerProgressEnum prog_type;
 	value = listaller_progress_item_get_value (item);
-
-	if (listaller_progress_item_get_prog_type (item) != LISTALLER_PROGRESS_ENUM_MAIN_PROGRESS)
-		return;
+	prog_type = listaller_progress_item_get_prog_type (item);
 
 	pk_plugin_reset_backend_job (plugin);
 
 	/* emit */
-	if (value > 0)
-		pk_backend_job_set_percentage (plugin->job, value);
+	if (prog_type == LISTALLER_PROGRESS_ENUM_MAIN_PROGRESS) {
+		if (value > 0)
+			pk_backend_job_set_percentage (plugin->job, value);
+	}
+
+	if (prog_type == LISTALLER_PROGRESS_ENUM_ITEM_PROGRESS) {
+		const gchar *item_id = listaller_progress_item_get_item_id (item);
+		// TODO: Implement better status handling
+		if (value > 0)
+			pk_backend_job_set_item_progress (plugin->job, item_id, PK_STATUS_ENUM_RUNNING, value);
+	}
 
 	pk_plugin_redirect_backend_signals (plugin);
 }

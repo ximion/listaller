@@ -160,9 +160,8 @@ internal class RepoRemote : Repo {
 				if (err_msg != error.message)
 					err_msg = "%s\n%s".printf (err_msg, error.message);
 
-				warning ("Unable to fetch repository contents for: '%s'\nError: %s", repo_url, err_msg);
-
-				//! TODO: Emit Listaller error type!
+				emit_error (ErrorEnum.NETWORK_ERROR,
+					    _("Unable to fetch repository contents for: '%s'\nError: %s").printf (repo_url, err_msg));
 
 				return;
 			}
@@ -182,12 +181,16 @@ internal class RepoRemote : Repo {
 		string fname = Path.build_filename (tmpdir, pkg_name, null);
 
 		var dl = new Downloader ();
+		dl.progress.connect ((step) => {
+			this.change_item_progress (app.build_pk_package_id (), step);
+		});
 
 		try {
 			dl.download_file_sync (url, fname);
 		} catch (Error e) {
-			warning (e.message);
-			//! TODO: Emit Listaller error!
+			emit_error (ErrorEnum.NETWORK_ERROR,
+					    _("Unable to download package for '%s'\nError: %s").printf (app.full_name, e.message));
+
 			return null;
 		}
 
