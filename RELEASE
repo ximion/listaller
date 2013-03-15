@@ -8,12 +8,12 @@ Listaller Release Notes
 
 2. Write NEWS entries for Listaller in the same format as usual.
 
-git shortlog LISTALLER_0_5_6.. | grep -i -v trivial | grep -v Merge > NEWS.new
+git shortlog LISTALLER_0_5_7.. | grep -i -v trivial | grep -v Merge > NEWS.new
 
 --------------------------------------------------------------------------------
-Version 0.5.7
+Version 0.5.8
 ~~~~~~~~~~~~~~
-Released: 2012-xx-xx
+Released: 2013-xx-xx
 
 Notes:
 
@@ -28,12 +28,12 @@ Bugfixes:
 
 4. Commit changes in Listaller git:
 
-git commit -a -m "Release version 0.5.7"
-git tag -s -f -m "Release 0.5.7" LISTALLER_0_5_7 <gpg password>
+git commit -a -m "Release version 0.5.8"
+git tag -s -f -m "Release 0.5.8" LISTALLER_0_5_8 <gpg password>
 git push --tags
 git push
 
-5. run './release.sh --version=0.5.7 --git-tag=LISTALLER_0_5_7 --sign'
+5. run './release.sh --version=0.5.8 --git-tag=LISTALLER_0_5_8 --sign'
 
 6. Upload tarball to Launchpad
 
