@@ -1,16 +1,82 @@
 Version 0.5.7
 ~~~~~~~~~~~~~~
- == Still in development ==
 
-Released: 2012-xx-xx
+Released: 2013-03-15
 
 Notes:
+  * /!\ Please note: We do NOT provide stable API/ABI in the 0.5.x series!
+        The 0.5.x series is not stable, we might change the specs at any time.
 
 Features:
+ * Updated default IPK dummy icons (Matthias Klumpp)
+ * relaytool: Add documentation (Matthias Klumpp)
+ * lirepo: Adjust to current repo draft (Matthias Klumpp)
+ * Remove old touch_dir() method (duplicated functionality) (Matthias Klumpp)
+ * lirepo: Add possibility to add new packages to the repo (Matthias Klumpp)
+ * repo: Don't allow multiarch-IPKs in repositories (Matthias Klumpp)
+ * repo: Allow adding new package versions & create package index per arch (Matthias Klumpp)
+ * lipkgen: Follow the specs in naming generated IPK packages (Matthias Klumpp)
+ * repo: Prepare RepoRemote to access remote repositories (Matthias Klumpp)
+ * repo: Allow downloading packages and add first self-tests (Matthias Klumpp)
+ * repo: Allow fetching available apps from remote repos (Matthias Klumpp)
+ * repo: Make Listaller build repository content cache (Matthias Klumpp)
+ * Create extra downloader class to handle HTTP and possibly other protocols later (Matthias Klumpp)
+ * Split databases into multiple classes (Matthias Klumpp)
+ * Migrate to new AppState application property (Matthias Klumpp)
+ * Make software origin a string (Matthias Klumpp)
+ * Implement SQLite available-applications cache (Matthias Klumpp)
+ * Make it possible to install packages from remote sources (Matthias Klumpp)
+ * Port remaining components to new API (Matthias Klumpp)
+ * Add new app-filter method to manager (Matthias Klumpp)
+ * updater: More support code & unit test (Matthias Klumpp)
+ * tests: Make Updater unit-testable (Matthias Klumpp)
+ * updater: Add stuff required to make updating dependencies possible (Matthias Klumpp)
+ * updater: Get rid of SoftwareItem (Matthias Klumpp)
+ * tests: Port to new testing infrastructure (Matthias Klumpp)
+ * plugin: Add get-updates support code (Matthias Klumpp)
+ * core: Kill Listaller reporting (Matthias Klumpp)
+ * tests: Include versioned file for update-testing in FooBar (Matthias Klumpp)
+ * tests: Greatly improve updater test and testing framework in general (Matthias Klumpp)
+ * Don't add source code hint to log messages when not in verbose mode (Matthias Klumpp)
+ * Allow fetching a package security level as sentence (Matthias Klumpp)
+ * updater: Improve error and message handling (Matthias Klumpp)
+ * lilith: Disable for next release (Matthias Klumpp)
+ * plugin: Make Listaller messages translated (Matthias Klumpp)
 
 Specs & Docs:
+ * docs: Add new pages for Appcompile/Depscan (Matthias Klumpp)
+ * docs: Add some more end-user howto (Matthias Klumpp)
+ * docs: Add packaging instructions (Matthias Klumpp)
+ * docs: Add simple note about architecture naming (Matthias Klumpp)
+ * docs: Add file-list spec (Matthias Klumpp)
+ * Updated repo spec to reflect the inclusion of dependencies (Matthias Klumpp)
+ * spec: Allow building packages even if release field does not contain a date (Matthias Klumpp)
+ * docs: Generate C docs by default (Matthias Klumpp)
+ * docs: Restructure documents and auto-generate them during build (Matthias Klumpp)
+ * spec: New control value to specify if an user has to accept a license (Matthias Klumpp)
 
 Bugfixes:
+ * Fix IPK icon-variable naming for 256x256 icons (Florian Höch)
+ * Check supported architecture in installer, not in package itself (Matthias Klumpp)
+ * installer: Always store hashes with filenames (Matthias Klumpp)
+ * lipa: Always wipe license-scroll hint, even when translated (Matthias Klumpp)
+ * lipkgen: Properly handle 0-byte files (don't treat them as missing) (Matthias Klumpp)
+ * tests: Make lipkgen test essential and add new arch:all dummy package (Matthias Klumpp)
+ * ipk: Prefer archdep dependency files, if there is any (Matthias Klumpp)
+ * Use libsoup to download files (Matthias Klumpp)
+ * Fix crash when object is accessed before it is constructed (Matthias Klumpp)
+ * plugin: Check for cancelled transaction before processing finished() (Matthias Klumpp)
+ * lipa: Don't show progres bar when in verbose mode (Matthias Klumpp)
+ * Fix Listaller refusing to install any package below SecLevel "low" (Matthias Klumpp)
+ * runapp: Correctly handle quotation marks & private libdir (Matthias Klumpp)
+ * lirepo: Fix crash when adding new app (Matthias Klumpp)
+ * pk-plugin: Adjust to latest PK API change (Matthias Klumpp)
+ * plugin: Fix interaction with PackageKit messages (Matthias Klumpp)
+ * Fix bug which prevented Listaller to show errors in some rare cases (Matthias Klumpp)
+ * Handle application updates via PK clients correctly (Matthias Klumpp)
+ * lirepo: Make adding new apps work again (Matthias Klumpp)
+ * tests: Fix FooBar building test (Matthias Klumpp)
+ * runapp: Fix environment before running an app (Matthias Klumpp)
 
 Version 0.5.6
 ~~~~~~~~~~~~~~
@@ -18,7 +84,7 @@ Released: 2012-10-01
 
 Notes:
   * /!\ Please note: We do NOT provide stable API/ABI in the 0.5.x series!
-        The 0.5.x series is experimental, we might change the specs at every time.
+        The 0.5.x series is experimental, we might change the specs at any time.
 
 Features:
   * Added Visual-LDD code
