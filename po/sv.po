@@ -1,22 +1,17 @@
-# Swedish translation for listaller
-# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
-# This file is distributed under the same license as the listaller package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@freelists.org\n"
 "POT-Creation-Date: 2013-03-11 13:39+0100\n"
 "PO-Revision-Date: 2012-04-13 02:33+0000\n"
-"Last-Translator: Matthias Klumpp <Unknown>\n"
+"Last-Translator: Matthias Klumpp <matthias@tenstral.net>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-10-01 17:08+0000\n"
-"X-Generator: Launchpad (build 16061)\n"
+"X-Launchpad-Export-Date: 2013-03-14 20:16+0000\n"
+"X-Generator: Launchpad (build 16532)\n"
 
 #: ../src/manager.vala:161
 msgid ""
@@ -94,9 +89,8 @@ msgid "Could not find application which matches '%s'!\n"
 msgstr ""
 
 #: ../tools/lipa/lipa-manager.vala:144
-#, fuzzy
 msgid "Could not find application!"
-msgstr "Installera ny applikation"
+msgstr ""
 
 #: ../src/application.vala:457 ../src/varsetter.vala:45
 msgid "Could not load desktop file values: %s"
@@ -968,244 +962,3 @@ msgstr ""
 #: ../src/signature.vala:129
 msgid "yes"
 msgstr ""
-
-#~ msgid "%f files will be changed."
-#~ msgstr "%f filer kommer att ändras."
-
-#~ msgid "Abort"
-#~ msgstr "Avbryt"
-
-#~ msgid "All"
-#~ msgstr "Allt"
-
-#~ msgid "Application uninstalled successfully!"
-#~ msgstr "Applikationens avinstallation lyckades!"
-
-#~ msgid "Back"
-#~ msgstr "Bakåt"
-
-#~ msgid "Category:"
-#~ msgstr "Kategori:"
-
-#~ msgid "Check for updates"
-#~ msgstr "Sök efter uppdateringar"
-
-#~ msgid "Close"
-#~ msgstr "Stäng"
-
-#~ msgid "Convert package?"
-#~ msgstr "Konvertera paket?"
-
-#~ msgid "Converting %p package..."
-#~ msgstr "Konverterar %p-paket..."
-
-#~ msgid "Delete source"
-#~ msgstr "Ta bort källa"
-
-#~ msgid "Details"
-#~ msgstr "Detaljer"
-
-#~ msgid "Development"
-#~ msgstr "Utveckling"
-
-#~ msgid "Display installation log"
-#~ msgstr "Visa installationslogg"
-
-#~ msgid "Do you really want to abort this download?"
-#~ msgstr "Vill du verkligen avbryta denna nerladdning?"
-
-#~ msgid "Do you really want to uninstall %a?"
-#~ msgstr "Vill du verkligen avinstallera %a?"
-
-#~ msgid "Education"
-#~ msgstr "Utbildning"
-
-#~ msgid "Enable Proxy-Server"
-#~ msgstr "Aktivera Proxy-server"
-
-#~ msgid "Error while extracting files!"
-#~ msgstr "Fel vid uppackning av filer"
-
-#~ msgid "Error while uninstalling!"
-#~ msgstr "Fel vid avinstallation!"
-
-#~ msgid "Filter:"
-#~ msgstr "Filter:"
-
-#~ msgid "Filtering..."
-#~ msgstr "Filtrerar..."
-
-#~ msgid "Finish"
-#~ msgstr "Avsluta"
-
-#~ msgid "Finished"
-#~ msgstr "Slutförd"
-
-#~ msgid "Games"
-#~ msgstr "Spel"
-
-#~ msgid "Graphic"
-#~ msgstr "Grafik"
-
-#~ msgid "I agree with the above terms and conditions"
-#~ msgstr "Jag samtycker med ovanstående villkor"
-
-#~ msgid "I don't agree"
-#~ msgstr "Jag samtycker inte"
-
-#~ msgid "Install now"
-#~ msgstr "Installera nu"
-
-#~ msgid "Install updates"
-#~ msgstr "Installera uppdateringar"
-
-#~ msgid "Installation"
-#~ msgstr "Installation"
-
-#~ msgid "Installation aborted."
-#~ msgstr "Installation avbruten."
-
-#~ msgid "Installation of %a"
-#~ msgstr "Installation av %a"
-
-#~ msgid "Loading..."
-#~ msgstr "Laddar..."
-
-#~ msgid "Multimedia"
-#~ msgstr "Multimedia"
-
-#~ msgid "Network"
-#~ msgstr "Nätverk"
-
-#~ msgid "Next"
-#~ msgstr "Nästa"
-
-#~ msgid "No information available!"
-#~ msgstr "Ingen information tillgänglig!"
-
-#~ msgid "Office"
-#~ msgstr "Kontor"
-
-#~ msgid "Other"
-#~ msgstr "Övrigt"
-
-#~ msgid "Password"
-#~ msgstr "Lösenord"
-
-#~ msgid "Phase 1/4: Resolving dependencies..."
-#~ msgstr "Fas 1/4: Löser beroenden..."
-
-#~ msgid "Phase 2/4: Installing files..."
-#~ msgstr "Fas 2/4: Installerar filer..."
-
-#~ msgid "Phase 3/4: Chmod new files..."
-#~ msgstr "Fas 3/4: Filrättigheter för nya filer..."
-
-#~ msgid "Phase 4/4: Registering application..."
-#~ msgstr "Fas 4/4: Registrerar applikation..."
-
-#~ msgid "Please read the following information carefully:"
-#~ msgstr "Läs följande information noggrant:"
-
-#~ msgid "Please wait."
-#~ msgstr "Var god vänta."
-
-#~ msgid "Press \"Finish\" to close."
-#~ msgstr "Tryck på \"Avsluta\" för att stänga."
-
-#~ msgid "Press \"Next\" to start the installation!"
-#~ msgstr "Tryck på \"Nästa\" för att starta installationen!"
-
-#~ msgid "Program description:"
-#~ msgstr "Programbeskrivning:"
-
-#~ msgid "Proxy-Settings"
-#~ msgstr "Proxy-inställningar"
-
-#~ msgid "Quit"
-#~ msgstr "Avsluta"
-
-#~ msgid "Ready."
-#~ msgstr "Redo."
-
-#~ msgid "Really remove?"
-#~ msgstr "Är du säker på att du vill ta bort?"
-
-#~ msgid "Running installation..."
-#~ msgstr "Kör installation..."
-
-#~ msgid "Select software you want to download and to install:"
-#~ msgstr "Välj vilken mjukvara du vill ladda ner och installera:"
-
-#~ msgid "Show"
-#~ msgstr "Visa"
-
-#~ msgid "Show:"
-#~ msgstr "Visa:"
-
-#~ msgid "Software license"
-#~ msgstr "Mjukvarulicens"
-
-#~ msgid "Success!"
-#~ msgstr "Lyckades!"
-
-#~ msgid "System"
-#~ msgstr "System"
-
-#~ msgid "The application %a was installed successfully!"
-#~ msgstr "Installationen av applikation %a lyckades!"
-
-#~ msgid "The application %a was not installed."
-#~ msgstr "Applikationen %a installerades inte."
-
-#~ msgid "The application will be updated to version %v"
-#~ msgstr "Applikationen kommera att uppdateras till version %v"
-
-#~ msgid "The installer will close now"
-#~ msgstr "Installatören kommer nu att stänga"
-
-#~ msgid "There are no updates available!"
-#~ msgstr "Den finns inga tillgängliga uppdateringar!"
-
-#~ msgid "This application is already installed"
-#~ msgstr "Applikationen är redan installerad"
-
-#~ msgid ""
-#~ "Unable to load the icon of %a. Please notify the developers of Listaller "
-#~ "or this application!"
-#~ msgstr ""
-#~ "Kan inte ladda ikonen för %a. Vänligen informera utvecklarna av Listaller "
-#~ "eller denna applikation!"
-
-#~ msgid "Uninstall"
-#~ msgstr "Avinstallera"
-
-#~ msgid "Uninstalling %a"
-#~ msgstr "Avinstallerar %a"
-
-#~ msgid "Uninstalling..."
-#~ msgstr "Avinstallerar..."
-
-#~ msgid "Update info:"
-#~ msgstr "Uppdateringsinformation:"
-
-#~ msgid "Update sources"
-#~ msgstr "Uppdateringskällor"
-
-#~ msgid "Username"
-#~ msgstr "Användarnamn"
-
-#~ msgid "Version"
-#~ msgstr "Version"
-
-#~ msgid "Waiting..."
-#~ msgstr "Väntar..."
-
-#~ msgid "Welcome to the installation of %a"
-#~ msgstr "Välkommen till installationen av %a"
-
-#~ msgid "Welcome!"
-#~ msgstr "Välkommen!"
-
-#~ msgid "Your Linux distribution is not supported by Listaller yet!"
-#~ msgstr "Din Linux-distribution stöds inte av Listaller än!"

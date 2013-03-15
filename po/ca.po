@@ -4,14 +4,14 @@ msgstr ""
 "Report-Msgid-Bugs-To: listaller@freelists.org\n"
 "POT-Creation-Date: 2013-03-11 13:39+0100\n"
 "PO-Revision-Date: 2010-04-05 21:07+0000\n"
-"Last-Translator: Matthias Klumpp <Unknown>\n"
+"Last-Translator: Matthias Klumpp <matthias@tenstral.net>\n"
 "Language-Team: \n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-10-01 17:08+0000\n"
-"X-Generator: Launchpad (build 16061)\n"
+"X-Launchpad-Export-Date: 2013-03-14 20:16+0000\n"
+"X-Generator: Launchpad (build 16532)\n"
 
 #: ../src/manager.vala:161
 msgid ""
@@ -960,9 +960,3 @@ msgstr ""
 #: ../src/signature.vala:129
 msgid "yes"
 msgstr ""
-
-#~ msgid "Abort"
-#~ msgstr "Avorta"
-
-#~ msgid "Filter:"
-#~ msgstr "Filtre:"

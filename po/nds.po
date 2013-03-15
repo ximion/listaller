@@ -1,22 +1,17 @@
-# German, Low translation for listaller
-# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
-# This file is distributed under the same license as the listaller package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: listaller\n"
 "Report-Msgid-Bugs-To: listaller@freelists.org\n"
 "POT-Creation-Date: 2013-03-11 13:39+0100\n"
 "PO-Revision-Date: 2009-12-07 22:05+0000\n"
-"Last-Translator: Matthias Klumpp <Unknown>\n"
+"Last-Translator: Matthias Klumpp <matthias@tenstral.net>\n"
 "Language-Team: German, Low <nds@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-10-01 17:08+0000\n"
-"X-Generator: Launchpad (build 16061)\n"
+"X-Launchpad-Export-Date: 2013-03-14 20:16+0000\n"
+"X-Generator: Launchpad (build 16532)\n"
 
 #: ../src/manager.vala:161
 msgid ""
@@ -965,67 +960,3 @@ msgstr ""
 #: ../src/signature.vala:129
 msgid "yes"
 msgstr ""
-
-#~ msgid "Abort"
-#~ msgstr "Afbreken"
-
-#~ msgid "Back"
-#~ msgstr "Torüch"
-
-#~ msgid "Display installation log"
-#~ msgstr "Zeige installation Log"
-
-#~ msgid "Finish"
-#~ msgstr "Fardig maken"
-
-#~ msgid "Install now"
-#~ msgstr "Jetzt installieren"
-
-#~ msgid "Installation aborted."
-#~ msgstr "Installation abgebrochen."
-
-#~ msgid "Loading aborted."
-#~ msgstr "Laden abgebrochen."
-
-#~ msgid "Next"
-#~ msgstr "Nächste"
-
-#~ msgid "Please read the following information carefully:"
-#~ msgstr "Bitte lesen sie die folgenden Informationen aufmerksam durch:"
-
-#~ msgid "Please wait."
-#~ msgstr "Bitte warten."
-
-#~ msgid "Press \"Finish\" to close."
-#~ msgstr "Drücken sie \"Fertig\" um zu schließen."
-
-#~ msgid "Press \"Next\" to start the installation!"
-#~ msgstr "Drücke \"Start\" um die Installation zu starten!"
-
-#~ msgid "Program description:"
-#~ msgstr "Programmbeschreibung"
-
-#~ msgid "Running installation..."
-#~ msgstr "Laufende installation..."
-
-#~ msgid "Software license"
-#~ msgstr "Software Lizenz"
-
-#~ msgid "The application %a was installed successfully!"
-#~ msgstr "Die Anwendung %a wurde erfolgreich installiert!"
-
-#~ msgid "The application %a was not installed."
-#~ msgstr "Die Anwendung %a wurde nicht installiert."
-
-#~ msgid "The installer will close now"
-#~ msgstr "Der installer schließt sich nun."
-
-#~ msgid "This application is already installed"
-#~ msgstr "Das Programm ist schon instaliert."
-
-#~ msgid "Welcome!"
-#~ msgstr "Willkamen!"
-
-#~ msgid "Your Linux distribution is not supported by Listaller yet!"
-#~ msgstr ""
-#~ "Im moment ist deine Linux Distribution nicht unterstützt bei Listaller!"

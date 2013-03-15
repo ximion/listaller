@@ -1,58 +1,58 @@
-# translation of lclstrconsts.po to
-# Valdas Jankūnas <zmuogs@gmail.com>, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: lclstrconsts\n"
 "Report-Msgid-Bugs-To: listaller@freelists.org\n"
 "POT-Creation-Date: 2013-03-11 13:39+0100\n"
-"PO-Revision-Date: 2009-05-06 13:37+0000\n"
-"Last-Translator: Valdas <zmogas@hotmail.com>\n"
+"PO-Revision-Date: 2013-02-09 09:04+0000\n"
+"Last-Translator: Mindaugas B. <Unknown>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-10-01 17:08+0000\n"
-"X-Generator: Launchpad (build 16061)\n"
+"X-Launchpad-Export-Date: 2013-03-14 20:16+0000\n"
+"X-Generator: Launchpad (build 16532)\n"
 
 #: ../src/manager.vala:161
 msgid ""
 "'%s' has no file-list registered. The software database might be broken."
 msgstr ""
+"„%s“ neturi registruotų failų sąrašo. Galbūt sugadinta programinės įrangos "
+"duomenų bazė."
 
 #: ../tools/lipa/lipa-installer.vala:113 ../tools/lipa/lipa-installer.vala:126
 msgid "<<< Press ENTER to continue! >>>"
-msgstr ""
+msgstr "<<< Norėdami tęsti, spauskite ĮVESTIES klavišą >>>"
 
 #: ../src/installer.vala:215
 msgid "A higher version '%s' of this application has already been installed."
-msgstr ""
+msgstr "Jau įdiegta naujesnė šios programos versija „%s“."
 
 #: ../src/installer.vala:213
 msgid "A lower version '%s' of this application has already been installed."
-msgstr ""
+msgstr "Jau įdiegta senesnė šios programos versija „%s“."
 
 #: ../src/application.vala:296 ../tools/lipa/lipa-manager.vala:80
 msgid "AVAILABLE"
-msgstr ""
+msgstr "PRIEINAMA"
 
 #: ../tools/runapp/runapp.vala:84 ../tools/lipa/lipa.vala:57
 #: ../tools/lipkgen/lipkgen.vala:49 ../tools/depscan/depscan-tool.vala:41
 #: ../tools/likey/likey.vala:38
 msgid "Activate verbose mode"
-msgstr ""
+msgstr "Rodyti išsamius pranešimus"
 
 #: ../src/application.vala:395
 msgid "Application ID %s is invalid!"
-msgstr ""
+msgstr "Netinkamas programos ID %s"
 
 #: ../tools/lipkgen/lipkgen.vala:41
 msgid "Build IPK package"
-msgstr ""
+msgstr "Kurti IPK paketą"
 
 #: ../src/installer.vala:249
 msgid "Copying files to their destination"
-msgstr ""
+msgstr "Failai kopijuojami į jų paskirties vietą"
 
 #: ../src/ipk-package.vala:317
 msgid ""
@@ -60,14 +60,17 @@ msgid ""
 "to perform this action?\n"
 "Error message was \"%s\"."
 msgstr ""
+"Nepavyksta nukopijuoti %s failo į jo paskirties vietą. Ar turite pakankamai "
+"leidimų tai daryti?\n"
+"Klaidos pranešimas: „%s“."
 
 #: ../src/ipk-filelist.vala:194
 msgid "Could not create file '%s'! File already exists."
-msgstr ""
+msgstr "Nepavyksta sukurtu „%s“. Failas jau yra."
 
 #: ../src/database-internal.vala:224
 msgid "Could not create software database!"
-msgstr ""
+msgstr "Nepavyksta sukurti programinės įrangos duomenų bazės!"
 
 #: ../src/ipk-package.vala:576
 msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
@@ -84,19 +87,19 @@ msgstr ""
 #. : IPk builder was unable to find IPK source scripts
 #: ../tools/lipkgen/ipkbuilder.vala:425 ../tools/lipkgen/prepare.vala:51
 msgid "Could not find IPK source files!"
-msgstr ""
+msgstr "Nepavyksta rasti IPK šaltinių failų!"
 
 #: ../tools/lipa/lipa-manager.vala:100
 msgid "Could not find application which matches '%s'!\n"
-msgstr ""
+msgstr "Nepavyksta rasti programos, kuri atitiktų „%s“!\n"
 
 #: ../tools/lipa/lipa-manager.vala:144
 msgid "Could not find application!"
-msgstr ""
+msgstr "Programa nerasta!"
 
 #: ../src/application.vala:457 ../src/varsetter.vala:45
 msgid "Could not load desktop file values: %s"
-msgstr ""
+msgstr "Nepavyko įkelti darbalaukio failo reikšmių: %s"
 
 #: ../src/pkit-tasks.vala:63
 msgid ""
@@ -155,7 +158,7 @@ msgstr ""
 #: ../tools/appcompile/appcompile.vala:39
 #: ../tools/appcompile/appcompile.vala:41
 msgid "DIRECTORY"
-msgstr ""
+msgstr "KATALOGAS"
 
 #: ../src/database-internal.vala:312
 msgid "Database action '%s' failed: %s"
@@ -171,7 +174,7 @@ msgstr ""
 
 #: ../src/database-internal.vala:123
 msgid "Database locked"
-msgstr ""
+msgstr "Duomenų bazė užrakinta"
 
 #: ../src/database-internal.vala:126
 msgid "Database unlocked"
@@ -179,7 +182,7 @@ msgstr ""
 
 #: ../tools/lipa/lipa-installer.vala:102
 msgid "Description:"
-msgstr ""
+msgstr "Aprašas:"
 
 #: ../src/pkit-tasks.vala:192
 msgid "Details from PackageKit: %s"
@@ -187,23 +190,23 @@ msgstr ""
 
 #: ../tools/lipa/lipa-installer.vala:131
 msgid "Do you accept these terms and conditions?"
-msgstr ""
+msgstr "Ar sutinkate su licencijos sąlygomis?"
 
 #: ../tools/lipa/lipa-installer.vala:157
 msgid "Do you want to install %s now?"
-msgstr ""
+msgstr "Dabar diegti %s ?"
 
 #: ../tools/lipa/lipa-manager.vala:110
 msgid "Do you want to remove %s (%s) now?"
-msgstr ""
+msgstr "Dabar pašalinti %s (%s)?"
 
 #: ../tools/depscan/depscan-tool.vala:68
 msgid "ERROR: %s"
-msgstr ""
+msgstr "KLAIDA: %s"
 
 #: ../tools/appcompile/appcompile.vala:45
 msgid "Enable verbose mode"
-msgstr ""
+msgstr "Įgalinti išsamius pranešimus"
 
 #: ../src/utils.vala:241 ../src/utils.vala:274
 msgid "Error while finding files in directory %s: %s"
@@ -211,7 +214,7 @@ msgstr ""
 
 #: ../src/ipk-control.vala:446 ../tools/depscan/depscan.vala:75
 msgid "Error: %s\n"
-msgstr ""
+msgstr "Klaida: %s\n"
 
 #: ../tools/likey/likey.vala:42
 msgid "FPR"
@@ -223,15 +226,15 @@ msgstr ""
 
 #: ../src/zfeed.vala:64
 msgid "File %s not found or permission denied!"
-msgstr ""
+msgstr "Failo „%“ nėra arba neturite leidimo prie jo prieiti."
 
 #: ../src/ipk-filelist.vala:142
 msgid "File '%s' doesn't exist."
-msgstr ""
+msgstr "Nėra failo „%“."
 
 #: ../src/varsetter.vala:88
 msgid "File does not exist!"
-msgstr ""
+msgstr "Failo nėra!"
 
 #: ../tools/lipkgen/lipkgen.vala:47
 msgid "GPG-Sign the resulting package"
@@ -239,7 +242,7 @@ msgstr ""
 
 #: ../src/application.vala:298 ../tools/lipa/lipa-manager.vala:82
 msgid "INSTALLED"
-msgstr ""
+msgstr "ĮDIEGTA"
 
 #: ../src/ipk-package.vala:413
 msgid "IPK package could not be found!"
@@ -264,15 +267,15 @@ msgstr ""
 #: ../src/installer.vala:292 ../src/installer.vala:358
 #: ../tools/lipa/lipa-installer.vala:56
 msgid "Installation completed!"
-msgstr ""
+msgstr "Diegimas baigtas!"
 
 #: ../src/installer.vala:296 ../src/installer.vala:362
 msgid "Installation failed!"
-msgstr ""
+msgstr "Nepavyko įdiegti!"
 
 #: ../tools/lipa/lipa-installer.vala:100
 msgid "Installation of %s"
-msgstr ""
+msgstr "%s diegimas"
 
 #: ../src/pkit-tasks.vala:346 ../src/pkit-tasks.vala:363
 msgid "Installation of native packages failed with message: %s"
@@ -280,7 +283,7 @@ msgstr ""
 
 #: ../tools/lipa/lipa-installer.vala:162
 msgid "Installing"
-msgstr ""
+msgstr "Diegiama"
 
 #: ../src/pkit-tasks.vala:419
 msgid "Installing native packages: %s"
@@ -292,19 +295,19 @@ msgstr ""
 
 #: ../src/security-info.vala:95
 msgid "Key is missing"
-msgstr ""
+msgstr "Trūksta rakto"
 
 #: ../src/key-manager.vala:213
 msgid "Key not found!"
-msgstr ""
+msgstr "Neradome rakto!"
 
 #: ../tools/lipa/lipa-installer.vala:116
 msgid "License:"
-msgstr ""
+msgstr "Licencija:"
 
 #: ../tools/lipa/lipa.vala:67
 msgid "List all installed applications"
-msgstr ""
+msgstr "Visos įdiegtos programos"
 
 #: ../tools/lipa/lipa.vala:65
 msgid "List installed Listaller applications"
@@ -962,9 +965,3 @@ msgstr ""
 #: ../src/signature.vala:129
 msgid "yes"
 msgstr ""
-
-#~ msgid "Abort"
-#~ msgstr "Nutraukti"
-
-#~ msgid "Filter:"
-#~ msgstr "Filtras:"
