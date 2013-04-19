@@ -128,9 +128,7 @@ add_custom_target (gir-compile
 	DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/Listaller-${LILIBS_VERSION}.gir
 	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
-
-#FIXME: GIR does not compile at time, so we disable this
-#add_dependencies (listaller-glib gir-compile)
+add_dependencies (listaller-glib gir-compile)
 
 add_definitions("-DI_KNOW_THE_PACKAGEKIT_GLIB2_API_IS_SUBJECT_TO_CHANGE"
 	"-DI_KNOW_THE_PACKAGEKIT_PLUGIN_API_IS_SUBJECT_TO_CHANGE"
@@ -193,6 +191,10 @@ install(FILES ${CMAKE_BINARY_DIR}/src/listaller-${LILIBS_VERSION}.vapi
 )
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Listaller-${LILIBS_VERSION}.gir
 	DESTINATION share/gir-1.0
+	COMPONENT headers
+)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Listaller-${LILIBS_VERSION}.typelib
+	DESTINATION lib/girepository-1.0
 	COMPONENT headers
 )
 
