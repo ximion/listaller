@@ -32,8 +32,29 @@ namespace Listaller.Dep {
  * It can also generate new components on the fly.
  */
 private class ComponentFactory : Object {
-	public ComponentFactory () {
+	private string system_components_dir;
 
+	public ArrayList<Dep.Framework> system_frameworks { get; private set; }
+	public ArrayList<Dep.Module> system_modules { get; private set; }
+
+	public ComponentFactory () {
+		system_components_dir = PkgConfig.DATADIR + "/listaller/components";
+	}
+
+	public void initialize () {
+		// TODO: Find system components/frameworks
+	}
+
+	public bool is_satisfied (Dep.Component dep, out string reason = null) {
+		// TODO: Check if component is satisfied
+	}
+
+	public Dep.Framework? get_framework (string name) {
+		return null;
+	}
+
+	public Dep.Module? get_module (string name) {
+		return null;
 	}
 }
 

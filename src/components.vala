@@ -25,6 +25,57 @@ using Listaller.Utils;
 namespace Listaller.Dep {
 
 /**
+ * Definition of common properties of a component
+ *
+ * Ancestor class for Framework and Module
+ */
+private abstract class Component : Object {
+	private string _full_name;
+	public string full_name {
+		get {
+			if (_full_name == "")
+				_full_name = _idname;
+			if (_full_name == "")
+				return "empty";
+			return _full_name;
+		}
+		internal set {
+			_full_name = value;
+		}
+	}
+
+	private string _idname;
+	public string idname {
+		get {
+			if (_idname != "")
+				return _idname;
+
+			// Form unique dependency-id, if not already set
+			_idname = "%s-%s".printf (full_name, version);
+			_idname = _idname.down ().replace (" ", "_");
+
+			return _idname;
+		}
+		set {
+			_idname = value;
+		}
+	}
+
+	public string summary { get; internal set; }
+	public string homepage { get; internal set; }
+	public string version { get; internal set; }
+
+	public string environment { get; internal set; }
+
+	public Component () {
+		version = "0";
+		idname = "";
+		environment = "";
+		_full_name = "";
+	}
+}
+
+/**
  * Definition of a framework dependency
  *
  * A framework is a (usually large) system component, such as the KDELibs
@@ -33,9 +84,9 @@ namespace Listaller.Dep {
  * The only way to satisfy this dependency is via the distribution's native package
  * manager.
  */
-private class Framework : Object {
+private class Framework : Component {
 	public Framework () {
-
+		base ();
 	}
 }
 
@@ -46,9 +97,9 @@ private class Framework : Object {
  * sources.
  * It often simply is a small library, iconset, etc.
  */
-private class Module : Object {
+private class Module : Component {
 	public Module () {
-
+		base ();
 	}
 }
 
