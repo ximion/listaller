@@ -19,6 +19,7 @@
  */
 
 using GLib;
+using Gee;
 using Listaller;
 using Listaller.Utils;
 
@@ -47,6 +48,8 @@ private class ComponentFactory : Object {
 
 	public bool is_satisfied (Dep.Component dep, out string reason = null) {
 		// TODO: Check if component is satisfied
+
+		return false;
 	}
 
 	public Dep.Framework? get_framework (string name) {

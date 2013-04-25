@@ -78,6 +78,8 @@ set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
 	ipk-changelog.vala
 	dep-manager.vala
 	dep-installer.vala
+	components.vala
+	component-factory.vala
 	pkbackend-glue.vala
 	pkit-tasks.vala
 	feed-installer.vala
