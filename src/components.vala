@@ -26,7 +26,7 @@ namespace Listaller.Dep {
 
 private errordomain ComponentError {
     VERSION_NOT_FOUND,
-    DIRECIVES_RESOLVE_FAILED,
+    DIRECTIVES_RESOLVE_FAILED,
     DIRECTIVES_INVALID
 }
 
@@ -72,7 +72,7 @@ private abstract class Component : Object {
 
 	public string environment { get; internal set; }
 
-	public bool installed { get; private set; }
+	public bool installed { get; internal set; }
 
 	protected string _version_raw;
 	private string _version_cache;
@@ -114,7 +114,7 @@ private abstract class Component : Object {
 				string cmd = get_directive_value (s);
 				Process.spawn_command_line_sync (cmd, out rawdata, null, out exit_status);
 				if (exit_status != 0)
-					throw new ComponentError.DIRECIVES_RESOLVE_FAILED ("Unable to resolve directives for %s: Command %s returned error-code %i.", full_name, cmd, exit_status);
+					throw new ComponentError.DIRECTIVES_RESOLVE_FAILED ("Unable to resolve directives for %s: Command %s returned error-code %i.", full_name, cmd, exit_status);
 			} else if (s.has_prefix ("envvar$ ")) {
 				int exit_status;
 				string varname = get_directive_value (s);
@@ -157,6 +157,20 @@ private abstract class Component : Object {
 
 		return res;
 	}
+
+	public virtual bool load_from_file (string fname) {
+		var data = new IPK.MetaFile ();
+		var ret = data.open_file (fname);
+		if (!ret)
+			return ret;
+
+		data.open_block_first ();
+		full_name = data.get_value ("Name");
+		idname = data.get_value ("ID");
+		_version_raw = data.get_value ("Version");
+
+		return true;
+	}
 }
 
 /**
@@ -173,18 +187,8 @@ private class Framework : Component {
 		base ();
 	}
 
-	public bool load_from_file (string fname) {
-		var data = new IPK.MetaFile ();
-		var ret = data.open_file (fname);
-		if (!ret)
-			return ret;
-
-		data.open_block_first ();
-		full_name = data.get_value ("Name");
-		idname = data.get_value ("ID");
-		_version_raw = data.get_value ("Version");
-
-		return true;
+	public override bool load_from_file (string fname) {
+		return base.load_from_file (fname);
 	}
 }
 
@@ -198,6 +202,10 @@ private class Framework : Component {
 private class Module : Component {
 	public Module () {
 		base ();
+	}
+
+	public override bool load_from_file (string fname) {
+		return base.load_from_file (fname);
 	}
 }
 
