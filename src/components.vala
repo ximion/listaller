@@ -1,6 +1,6 @@
 /* components.vala -- Defines component types to resolve dependencies
  *
- * Copyright (C) 2012-2013 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2011-2013 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU Lesser General Public License Version 3
  *
@@ -19,6 +19,7 @@
  */
 
 using GLib;
+using Gee;
 using Listaller;
 using Listaller.Utils;
 
@@ -28,6 +29,15 @@ private errordomain ComponentError {
     VERSION_NOT_FOUND,
     DIRECTIVES_RESOLVE_FAILED,
     DIRECTIVES_INVALID
+}
+
+public enum ItemType {
+	SHARED_LIB,
+	BINARY,
+	PYTHON,
+	PYTHON_2,
+	FILE,
+	UNKNOWN;
 }
 
 /**
@@ -77,10 +87,14 @@ private abstract class Component : Object {
 	protected string _version_raw;
 	private string _version_cache;
 
+	protected HashSet<string> item_list { get; set; } // Parts of this dependency (e.g. shlibs, python modules, files, etc.)
+
 	public Component () {
 		idname = "";
 		environment = "";
 		_full_name = "";
+
+		item_list = new HashSet<string> ();
 	}
 
 	protected bool contains_directive (string str) {
@@ -169,7 +183,135 @@ private abstract class Component : Object {
 		idname = data.get_value ("ID");
 		_version_raw = data.get_value ("Version");
 
+		// add item data for this component
+		add_item_list (ItemType.SHARED_LIB, data.get_value ("Libraries"));
+		add_item_list (ItemType.BINARY, data.get_value ("Binaries"));
+		add_item_list (ItemType.PYTHON, data.get_value ("Python"));
+		add_item_list (ItemType.PYTHON_2, data.get_value ("Python2"));
+		add_item_list (ItemType.FILE, data.get_value ("Files"));
+
 		return true;
+	}
+
+	/**
+	 * Add item as string (performing some checks if the string is valid)
+	 */
+	private bool _add_itemstr_save (string line) {
+		string[] item = line.split (":", 2);
+		if (item.length != 2) {
+			critical ("Component item string is invalid! (Error at: %s) %i", line, item.length);
+			return false;
+		}
+		item_list.add ("%s:%s".printf (item[0], item[1]));
+
+		return true;
+	}
+
+	/**
+	 * Set items for this components, using a serialized string as source
+	 */
+	internal void set_items_from_string (string str) {
+		if (str.index_of ("\n") < 0) {
+			_add_itemstr_save (str);
+			return;
+		}
+
+		string[]? lines = str.split ("\n");
+		if (lines == null)
+			return;
+		foreach (string s in lines) {
+			if (s != "")
+				if (!_add_itemstr_save (s))
+					return;
+		}
+	}
+
+	private static string get_item_type_idstr (ItemType tp) {
+		string idstr = "";
+		switch (tp) {
+			case ItemType.SHARED_LIB: idstr = "lib:%s";
+						  break;
+			case ItemType.BINARY: idstr = "bin:%s";
+						  break;
+			case ItemType.PYTHON: idstr = "python:%s";
+						  break;
+			case ItemType.PYTHON_2: idstr = "python2:%s";
+						  break;
+			default: idstr = "file:%s";
+				 break;
+		}
+
+		return idstr;
+	}
+
+	public void add_item (ItemType tp, string item_name) {
+		string str = get_item_type_idstr (tp).printf (item_name);
+		item_list.add (str);
+	}
+
+	public void add_item_list (ItemType ty, string list) {
+		if (list.strip () == "")
+			return;
+
+		// We don't like file requirements
+		if (ty == ItemType.FILE)
+			warning ("Component %s depends on a file (%s), which is not supported at time.".printf (idname, list));
+
+		if (list.index_of ("\n") <= 0) {
+			add_item (ty, list);
+			return;
+		}
+
+		string[] comp = list.split ("\n");
+		for (int i = 0; i < comp.length; i++) {
+			string s = comp[i].strip ();
+			if (s != "")
+				add_item (ty, s);
+		}
+
+	}
+
+	public bool has_item (string cname, ItemType tp) {
+		return item_list.contains (get_item_type_idstr (tp).printf (cname));
+	}
+
+	public bool has_items () {
+		return item_list.size > 0;
+	}
+
+	internal string get_items_by_type_as_str (ItemType tp) {
+		string res = "";
+		foreach (string s in item_list) {
+			if (item_get_type (s) == tp)
+				res += item_get_name (s) + "\n";
+		}
+
+		return res;
+	}
+
+	public static string item_get_name (string item_idstr) {
+		return item_idstr.substring (item_idstr.index_of (":") + 1).strip ();
+	}
+
+	public static ItemType item_get_type (string item_idstr) {
+		string tpid = item_idstr.substring (0, item_idstr.index_of (":")).strip ();
+		ItemType tp = ItemType.UNKNOWN;
+		switch (tpid) {
+			case "lib": tp = ItemType.SHARED_LIB;
+				    break;
+			case "bin": tp = ItemType.BINARY;
+				    break;
+			case "python": tp = ItemType.PYTHON;
+				    break;
+			case "python2": tp = ItemType.PYTHON_2;
+				    break;
+			case "file": tp = ItemType.FILE;
+				    break;
+			default: tp = ItemType.UNKNOWN;
+				    break;
+		}
+
+		return tp;
 	}
 }
 
@@ -200,6 +342,8 @@ private class Framework : Component {
  * It often simply is a small library, iconset, etc.
  */
 private class Module : Component {
+	public string dependencies { get; private set; }
+
 	public Module () {
 		base ();
 	}

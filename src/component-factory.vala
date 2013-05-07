@@ -83,11 +83,17 @@ private class ComponentFactory : Object {
 	}
 
 	private bool check_framework_installed (Dep.Framework cfrmw) {
+		if (cfrmw.installed)
+			return true;
+
 		// TODO
 		return false;
 	}
 
 	private bool check_module_installed (Dep.Module cmod, out string reason = null) {
+		if (cmod.installed)
+			return true;
+
 		// TODO
 		return false;
 	}
