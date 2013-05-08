@@ -98,30 +98,39 @@ private abstract class Component : Object {
 	}
 
 	protected bool contains_directive (string str) {
-		return ((str.index_of ("shell$") > 0) || (str.index_of ("prefix$") > 0) || (str.index_of ("envvar$") > 0));
+		return ((str.index_of ("shell$") >= 0) || (str.index_of ("textfile$") >= 0) || (str.index_of ("prefix$") >= 0) || (str.index_of ("envvar$") >= 0));
 	}
 
 	private string get_directive_value (string directive) {
 		string s = directive;
+		string res;
 		if (s.has_prefix ("shell$ "))
-			return s.substring (7);
+			res = s.substring (7);
 		else if (s.has_prefix ("envvar$ "))
-			return s.substring (8);
+			res = s.substring (8);
 		else if (s.has_prefix ("prefix$ "))
-			return s.substring (8);
+			res = s.substring (8);
 		else if (s.has_prefix ("textfile$ "))
-			return s.substring (10);
+			res = s.substring (10);
 		else if (s.has_prefix ("regex$ "))
-			return s.substring (7);
+			res = s.substring (7);
 		else
 			return s;
+
+		// remove quotes, if expression was quoted
+		if ((res.has_prefix ("\"")) && (res.has_suffix ("\"")))
+			res = res.substring (1, res.length-2);
+
+		return res;
 	}
 
 	protected string process_directives (string directive_str) throws ComponentError {
 		// first grab all data from shell commands and env vars
-		string rawdata = "";
+		string res = "";
 		string[] parts = directive_str.split ("\n");
+
 		foreach (string str in parts) {
+			string rawdata;
 			string s = str.strip ();
 			if (s.has_prefix ("shell$ ")) {
 				int exit_status;
@@ -129,26 +138,36 @@ private abstract class Component : Object {
 				Process.spawn_command_line_sync (cmd, out rawdata, null, out exit_status);
 				if (exit_status != 0)
 					throw new ComponentError.DIRECTIVES_RESOLVE_FAILED ("Unable to resolve directives for %s: Command %s returned error-code %i.", full_name, cmd, exit_status);
+				res = rawdata;
 			} else if (s.has_prefix ("envvar$ ")) {
 				int exit_status;
 				string varname = get_directive_value (s);
 				rawdata = Environment.get_variable (varname);
+				res = rawdata;
 			}
 		}
 		foreach (string str in parts) {
-			if (str.has_prefix ("prefix$")) {
+			str = str.strip ();
+			if (str.has_prefix ("prefix$ ")) {
 				// the prefix directive fetches the data after the given prefix
-				if (str_empty (rawdata))
+				if (str_empty (res))
 					throw new ComponentError.DIRECTIVES_INVALID ("Unable to resolve directives for %s: Get prefix-directive, but don't have valid data to apply it.", full_name);
 				string prefix = get_directive_value (str);
-				int i = rawdata.index_of (prefix) + prefix.length;
-				var res = rawdata.substring (i, rawdata.index_of ("\n", i));
+				if (res.index_of (prefix) < 0)
+					throw new ComponentError.DIRECTIVES_RESOLVE_FAILED ("Unable to get data prefixed with '%s' from raw data string '%s'.", prefix, res);
 
-				return res;
+				int i = res.index_of (prefix) + prefix.length;
+				if (res.index_of ("\n") < 0)
+					res = res.substring (i);
+				else
+					res = res.substring (i, res.index_of ("\n", i)-i);
 			}
 		}
 
-		return directive_str;
+		if (str_empty (res))
+			res = directive_str;
+
+		return res;
 	}
 
 	public string get_version () throws ComponentError {

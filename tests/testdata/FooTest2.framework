@@ -1,0 +1,7 @@
+ID: FooTest2
+Version: shell$ echo "MegaFoo: 1.0"
+ prefix$ "MegaFoo: "
+Binaries: bash
+ xdg-open
+ExtraLibSearchPath: %SYS_LIB%/kde4
+Libraries: libc6.so

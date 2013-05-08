@@ -185,6 +185,20 @@ void test_field () {
 	assert (flags.is_all_set (IPK.InstallMode.PRIVATE | IPK.InstallMode.SHARED) == false);
 }
 
+void test_components () {
+	bool ret;
+
+	var foo_frmw = new Dep.Framework ();
+	ret = foo_frmw.load_from_file (Path.build_filename (datadir, "FooTest2.framework", null));
+	assert (ret);
+
+	assert (foo_frmw.idname == "FooTest2");
+
+	foo_frmw.installed = true;
+	string version = foo_frmw.get_version ();
+	assert (version == "1.0");
+}
+
 void test_playground () {
 	var conf = new Listaller.Config ();
 
@@ -210,6 +224,7 @@ int main (string[] args) {
 	test_versions ();
 	test_metafile ();
 	test_doap ();
+	test_components ();
 	test_zfeeds ();
 	test_field ();
 	test_playground ();
