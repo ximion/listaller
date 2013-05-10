@@ -78,7 +78,11 @@ private abstract class Component : Object {
 	}
 
 	public string summary { get; internal set; }
+	public string description { get; internal set; }
 	public string homepage { get; internal set; }
+	public string author { get; internal set; }
+
+	public string architecture { get; internal set; } // e.g. amd64
 
 	public bool installed { get; internal set; }
 
@@ -188,6 +192,10 @@ private abstract class Component : Object {
 		return res;
 	}
 
+	public void set_version (string new_version) {
+		_version_cache = new_version;
+	}
+
 
 	protected virtual IPK.MetaFile? load_from_file_internal (string fname) {
 		var data = new IPK.MetaFile ();
@@ -249,6 +257,13 @@ private abstract class Component : Object {
 				if (!_add_itemstr_save (s))
 					return;
 		}
+	}
+
+	internal string get_items_as_string () {
+		string res = "";
+		foreach (string s in item_list)
+			res += s + "\n";
+		return res;
 	}
 
 	private static string get_item_type_idstr (ItemType tp) {
@@ -373,29 +388,38 @@ private class Module : Component {
 	private bool _installed;
 	public bool installed {
 		get {
-			return _satisfied;
+			return _installed;
 		}
 		set {
 			if ((!Utils.__unittestmode) &&
 			    (idname != "") &&
-			    (!is_standardlib) &&
 			    (!has_installdata ()) &&
 			    (feed_url == "")) {
 				warning ("Trying to set dependency %s to 'satisfied', although it is not a standardlib. (Reason: No install-data found!) - This usually is a packaging bug.", idname);
 			}
-			_satisfied = value;
+			_installed = value;
 		}
 	}
 
+	public string origin { get; internal set; }
 	public int64 install_time { get; internal set; }
 	public string environment { get; internal set; }
 
+	private HashSet<string> install_data { get; internal set; } // Items which were installed in order to satisfy this module dependency
+
 	public string feed_url { get; internal set; }
+
+	public HashSet<string> raw_itemlist {
+		get {
+			return item_list;
+		}
+	}
 
 	public Module () {
 		base ();
 		environment = "";
 		feed_url = "";
+		origin = "unknown";
 	}
 
 	protected override IPK.MetaFile? load_from_file_internal (string fname) {
@@ -412,6 +436,66 @@ private class Module : Component {
 		return feed_url != "";
 	}
 
+	public HashSet<string> get_installdata () {
+		return install_data;
+	}
+
+	public string get_installdata_as_string () {
+		string res = "";
+		foreach (string s in install_data)
+			res += s + "\n";
+		return res;
+	}
+
+	public bool has_installdata () {
+		if (install_data == null)
+			return false;
+		return install_data.size > 0;
+	}
+
+	internal bool add_installed_item (string sinstcomp) {
+		if (sinstcomp.index_of (":") <= 0)
+			warning ("Invalid install data set! This should never happen! (Data was %s)", sinstcomp);
+		return install_data.add (sinstcomp);
+	}
+
+	internal void clear_installdata () {
+		install_data.clear ();
+	}
+
+	private bool _add_itemstr_instdata_save (string line) {
+		string[] cmp = line.split (":", 2);
+		if (cmp.length != 2) {
+			critical ("Installdata string is invalid! (Error at: %s) %i", line, cmp.length);
+			return false;
+		}
+		add_installed_item ("%s:%s".printf (cmp[0], cmp[1]));
+		return true;
+	}
+
+	internal void set_installdata_from_string (string str) {
+		if (str.index_of ("\n") < 0) {
+			_add_itemstr_instdata_save (str);
+			return;
+		}
+
+		string[]? lines = str.split ("\n");
+		if (lines == null)
+			return;
+		foreach (string s in lines) {
+			if (s != "")
+				if (!_add_itemstr_instdata_save (s))
+					return;
+		}
+	}
+
+	/**
+	 * Get installation directory for this module, using the SettupSettings taken as argument
+	 */
+	public string get_install_dir_for_setting (SetupSettings setup_setting) {
+		return Path.build_filename (setup_setting.depdata_dir (), idname, null);
+	}
+
 	/**
 	* Generate a PackageKit package-id for this dependency information
 	*/
@@ -419,7 +503,10 @@ private class Module : Component {
 		string package_id;
 		string unique_idname = "dep:%s".printf (idname);
 
-		package_id = PackageKit.Package.id_build (unique_idname, version, architecture, "local:listaller");
+		package_id = PackageKit.Package.id_build (unique_idname,
+							  get_version (),
+							  architecture,
+							  "local:listaller");
 
 		return package_id;
 	}

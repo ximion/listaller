@@ -139,12 +139,10 @@ private class Feed : Object {
 
 	public void update_dependency_data (ref Dep.Module dep) {
 		dep.full_name = get_intf_info_str ("name");
-		dep.version = impl_version;
+		dep.set_version (impl_version);
 		dep.summary = get_intf_info_str ("summary");
 		dep.description = get_intf_info_str ("description");
 		dep.homepage = get_intf_info_str ("homepage");
-		// Execute this to rebuild dep-id (*very* important for unique dependency-ids!)
-		dep.regenerate_depid ();
 	}
 
 	public bool search_matching_dependency () {

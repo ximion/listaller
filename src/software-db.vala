@@ -449,15 +449,15 @@ private class SoftwareDB : MessageObject {
 		return true;
 	}
 
-	public bool set_application_dependencies (string appName, ArrayList<Dep.Module> deps) {
+	public bool set_application_dependencies (string appName, string dependencies_str) {
 		if (is_root ()) {
 			if (shared_db_canbeused (true))
-				return db_shared.set_application_dependencies (appName, deps);
+				return db_shared.set_application_dependencies (appName, dependencies_str);
 			else
 				return false;
 		} else {
 			if (private_db_canbeused (true))
-				return db_priv.set_application_dependencies (appName, deps);
+				return db_priv.set_application_dependencies (appName, dependencies_str);
 			else
 				return false;
 		}

@@ -30,6 +30,7 @@ private class DepInstaller : MessageObject {
 	private SoftwareDB db;
 	private DepManager depman;
 	private SetupSettings ssettings;
+	private ComponentFactory cfactory;
 
 	public DepInstaller (SoftwareDB lidb) {
 		base ();
@@ -59,20 +60,6 @@ private class DepInstaller : MessageObject {
 			  text));
 	}
 
-	private void preprocess_dependency_list (ref ArrayList<Dep.Module> depList) {
-		var newDepList = new ArrayList<Dep.Module> ();
-		// Update dependencies with distributor's system data
-		var di = new DepInfoGenerator ();
-		foreach (Dep.Module idep in depList) {
-			/* Update package dependencies with system data (which might add some additional information here, provided
-			 * by the distributor */
-			di.update_dependency_with_system_data (ref idep);
-
-			newDepList.add (idep);
-		}
-		depList = newDepList;
-	}
-
 	/* This method checks if the dependency is already there
 	 * Returns true if dependency could be resolved, means that it can be installed
 	 * via native packages. If it returns false, the dependency is not installable.
@@ -82,7 +69,7 @@ private class DepInstaller : MessageObject {
 			return true;
 
 		// First of all, check if the dependency is already there
-		if (depman.dependency_is_installed (ref dep))
+		if (depman.module_is_installed (ref dep))
 			return true;
 
 		// If we force feed-install and don't have a feed... This just can't work.
@@ -101,9 +88,9 @@ private class DepInstaller : MessageObject {
 		 */
 		ret = false;
 		Config conf = new Config ();
-		foreach (string cmp in dep.raw_complist) {
-			if (dep.component_get_type (cmp) == ComponentType.SHARED_LIB) {
-				string s = dep.component_get_name (cmp);
+		foreach (string cmp in dep.raw_itemlist) {
+			if (Dep.Component.item_get_type (cmp) == Dep.ItemType.SHARED_LIB) {
+				string s = dep.item_get_name (cmp);
 				ret = find_library (s, conf);
 				if (!ret) {
 					debug ("Library not found: %s", s);
@@ -116,9 +103,9 @@ private class DepInstaller : MessageObject {
 		// If all libraries were found, add them to installdata and exit
 		if (ret) {
 			dep.clear_installdata ();
-			foreach (string s in dep.raw_complist)
-				if (dep.component_get_type (s) == ComponentType.SHARED_LIB)
-					dep.add_installed_comp (s);
+			foreach (string s in dep.raw_itemlist)
+				if (dep.item_get_type (s) == Dep.ItemType.SHARED_LIB)
+					dep.add_installed_item (s);
 				dep.installed = true;
 			return true;
 		}
@@ -146,7 +133,7 @@ private class DepInstaller : MessageObject {
 		return true;
 	}
 
-	private bool install_dependency_internal (PkInstaller pkinst, FeedInstaller finst,
+	private bool install_module_dep_internal (PkInstaller pkinst, FeedInstaller finst,
 						  ref Dep.Module dep, bool force_feedinstall = false) {
 
 		bool ret;
@@ -188,56 +175,39 @@ private class DepInstaller : MessageObject {
 		return ret;
 	}
 
-	public bool install_dependency (ref Dep.Module dep, bool force_feedinstall = false) {
+	public bool install_dependencies (string dependencies_str, bool force_feedinstall = false) {
 		PkInstaller pkinst = new PkInstaller (ssettings);
 		pkinst.message.connect ( (m) => { this.message (m); } );
 
 		FeedInstaller finst = new FeedInstaller (ssettings);
 		finst.message.connect ( (m) => { this.message (m); } );
 
-		var di = new DepInfoGenerator ();
-		di.update_dependency_with_system_data (ref dep);
+		ArrayList<Dep.Module> req_mods;
+		string fail_reason;
 
-		bool ret = true;
-		if (!depman.dependency_is_installed (ref dep)) {
-			ret = install_dependency_internal (pkinst, finst, ref dep, force_feedinstall);
-
-			if ((ret) && (dep.installed))
-				db.add_dependency (dep);
+		bool ret = cfactory.can_be_installed (dependencies_str, out req_mods, out fail_reason);
+		if (!ret) {
+			emit_error (ErrorEnum.DEPENDENCY_MISSING, fail_reason);
+			return false;
 		}
 
-		return ret;
-	}
-
-	public bool install_dependencies (ref ArrayList<Dep.Module> depList, bool force_feedinstall = false) {
-		PkInstaller pkinst = new PkInstaller (ssettings);
-		pkinst.message.connect ( (m) => { this.message (m); } );
-
-		FeedInstaller finst = new FeedInstaller (ssettings);
-		finst.message.connect ( (m) => { this.message (m); } );
-
-		preprocess_dependency_list (ref depList);
-
-		bool ret = true;
-		foreach (Dep.Module dep in depList) {
-			debug ("Prepared dependency %s, satisfied: %i", dep.idname, (int) dep.installed);
+		foreach (Dep.Module dep_mod in req_mods) {
+			debug ("Prepared module dependency %s, satisfied: %i", dep_mod.idname, (int) dep_mod.installed);
 
 			ret = true;
-			if (!depman.dependency_is_installed (ref dep)) {
-				ret = install_dependency_internal (pkinst, finst, ref dep, force_feedinstall);
-				if ((ret) && (dep.installed))
-					db.add_dependency (dep);
+			if (!depman.module_is_installed (ref dep_mod)) {
+				ret = install_module_dep_internal (pkinst, finst, ref dep_mod, force_feedinstall);
+				if ((ret) && (dep_mod.installed))
+					db.add_dependency (dep_mod);
 			}
-
 			if (!ret)
 				break;
 		}
+
 		return ret;
 	}
 
 	internal bool dependencies_installable (ref ArrayList<Dep.Module> depList, bool force_feedinstall = false) {
-		preprocess_dependency_list (ref depList);
-
 		bool ret = true;
 		foreach (Dep.Module dep in depList) {
 			ret = find_dependency_internal (ref dep, force_feedinstall);

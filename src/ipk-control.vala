@@ -253,9 +253,6 @@ public class PackControl : Control {
 		ret = this.open_doap (doapData);
 		if (!ret)
 			return false;
-		ret = this.open_depinfo (fDeps);
-		if (!ret)
-			return false;
 
 		ipkVersion = this.get_ipk_version ();
 
@@ -281,7 +278,6 @@ public class PackControl : Control {
 
 		doapData = newDoapData;
 		doap = new DoapData ();
-		depData.clear ();
 		bool ret = this.open_doap (doapData);
 		if (ret)
 			ret = cache_appitem ();

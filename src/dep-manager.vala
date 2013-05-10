@@ -29,6 +29,7 @@ namespace Listaller {
 private class DepManager : MessageObject {
 	private SoftwareDB db;
 	private SetupSettings ssettings;
+	private ComponentFactory cfactory;
 
 	public DepManager (SoftwareDB lidb) {
 		base ();
@@ -40,25 +41,28 @@ private class DepManager : MessageObject {
 			error ("Listaller config was NULL in DepManager constructor!");
 			ssettings = new SetupSettings ();
 		}
+
+		cfactory = new ComponentFactory ();
 	}
 
 	public SoftwareDB get_sdb () {
 		return db;
 	}
 
-	public bool dependency_is_installed (ref Dep.Module dep) {
+	public bool module_is_installed (ref Dep.Module dep) {
 		Dep.Module? dbDep = db.get_dependency_by_id (dep.idname);
 		if (dbDep != null) {
 			debug ("Dependency with id [%s] is already installed :)", dep.idname);
 			dep = dbDep;
 			return true;
 		}
+
 		return false;
 	}
 
 	public string get_absolute_library_path (Dep.Module dep) {
 		// No components => no libraries
-		if (!dep.has_components ())
+		if (!dep.has_items ())
 			return "";
 
 		if (dep.environment != "") {
@@ -74,7 +78,7 @@ private class DepManager : MessageObject {
 		}
 
 		bool contains_libs = false;
-		foreach (string comp in dep.raw_complist) {
+		foreach (string comp in dep.raw_itemlist) {
 			if (Dep.Component.item_get_type (comp) == Dep.ItemType.SHARED_LIB) {
 				contains_libs = true;
 				break;

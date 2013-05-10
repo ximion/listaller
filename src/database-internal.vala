@@ -752,17 +752,9 @@ private abstract class InternalDB : Object {
 		return resList;
 	}
 
-	/**
-	 * FIXME; DEP_TRANSITION We need to ad a versioned dependency information here, instead of just adding raw
-	 * component data
-	 */
-	public bool set_application_dependencies (string appName, ArrayList<Dep.Component> deps) throws DatabaseError {
+	public bool set_application_dependencies (string appName, string depstr) throws DatabaseError {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("UPDATE applications SET dependencies=? WHERE name=?", -1, out stmt);
-
-		string depstr = "";
-		foreach (Dep.Component d in deps)
-			depstr += d.idname + "\n";
 
 		try {
 			db_assert (res, "update application deps (by name)");
@@ -793,7 +785,7 @@ private abstract class InternalDB : Object {
 
 			db_assert (insert_dep.bind_text (DepRow.FULLNAME +1, dep_mod.full_name), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.VERSION +1, dep_mod.version), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.VERSION +1, dep_mod.get_version ()), "bind value");
 
 			db_assert (insert_dep.bind_text (DepRow.DESCRIPTION +1, "%s\n\n%s".printf (dep_mod.summary, dep_mod.description)), "bind value");
 
@@ -809,7 +801,7 @@ private abstract class InternalDB : Object {
 
 			db_assert (insert_dep.bind_text (DepRow.PROVIDED_BY +1, dep_mod.get_installdata_as_string ()), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.COMPONENTS +1, dep_mod.get_componentdata_as_string ()), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.COMPONENTS +1, dep_mod.get_items_as_string ()), "bind value");
 
 			db_assert (insert_dep.bind_text (DepRow.ENVIRONMENT +1, dep_mod.environment), "bind value");
 
@@ -830,7 +822,7 @@ private abstract class InternalDB : Object {
 
 		dep.idname = stmt.column_text (DepRow.IDNAME);
 		dep.full_name = stmt.column_text (DepRow.FULLNAME);
-		dep.version = stmt.column_text (DepRow.VERSION);
+		dep.set_version (stmt.column_text (DepRow.VERSION));
 
 		string s = stmt.column_text (DepRow.DESCRIPTION);
 		string[] desc = s.split ("\n\n", 2);
@@ -846,7 +838,7 @@ private abstract class InternalDB : Object {
 		dep.author = stmt.column_text (DepRow.AUTHOR);
 		dep.install_time = stmt.column_int (DepRow.INST_TIME);
 		dep.architecture = stmt.column_text (DepRow.ARCHITECTURE);
-		dep.set_componentdata_from_string (stmt.column_text (DepRow.COMPONENTS));
+		dep.set_items_from_string (stmt.column_text (DepRow.COMPONENTS));
 		dep.set_installdata_from_string (stmt.column_text (DepRow.PROVIDED_BY));
 		dep.environment = stmt.column_text (DepRow.ENVIRONMENT);
 

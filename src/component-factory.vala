@@ -32,7 +32,7 @@ namespace Listaller.Dep {
  * and to check if their requirements are met.
  * It can also generate new components on the fly.
  */
-private class ComponentFactory : Object {
+internal class ComponentFactory : Object {
 	private string system_components_dir;
 
 	public HashMap<string, Dep.Framework> registered_frameworks { get; private set; }
@@ -79,6 +79,8 @@ private class ComponentFactory : Object {
 	 */
 	private bool version_comp_is_valid (string version_str) {
 		string vs = version_str;
+		if (vs == "")
+			return true;
 		return vs.has_prefix ("<< ") || vs.has_prefix (">> ") || vs.has_prefix ("<= ") || vs.has_prefix (">= ") || vs.has_prefix ("== ");
 	}
 
@@ -98,8 +100,21 @@ private class ComponentFactory : Object {
 		return false;
 	}
 
+	public bool framework_installed (string idname) {
+		if (registered_frameworks.has_key (idname)) {
+			Dep.Framework cfrmw = get_framework (idname);
+			check_framework_installed (cfrmw);
+			return cfrmw.installed;
+		}
+
+		return false;
+	}
+
 	public bool component_version_satisfied (string version, string reference_version, string relation) {
 		bool ret = false;
+		// always satisfied if no required version is set
+		if (reference_version == "")
+			return true;
 
 		int compare_result = compare_versions (version, reference_version);
 		switch (relation) {
@@ -129,7 +144,11 @@ private class ComponentFactory : Object {
 
 		bool ret = false;
 		// prepare our version
-		string[] vparts = version_comp.split (" ", 1);
+		string[] vparts;
+		if (version_comp == "")
+			vparts = { "", "" }; // if we don't care about the version, relation and version are empty strings
+		else
+			vparts = version_comp.split (" ", 1);
 		string required_version = vparts[1].strip ();
 		string required_version_relation = vparts[0].strip ();
 
@@ -216,13 +235,22 @@ private class ComponentFactory : Object {
 
 		required_modules = new ArrayList<Dep.Module> ();
 		foreach (string dep in deps) {
-			string[] parts = dep.split ("(", 1);
-			string name = parts[0].strip ();
-			string vcomp = parts[1].strip ();
-			if (vcomp.has_suffix (")"))
-				vcomp = vcomp.substring (0, vcomp.length-1);
-			else
-				error ("Invalid formatting for dependency line '%s'!", dependencies);
+			string name;
+			string vcomp;
+
+			if (dep.index_of ("(") > 0) {
+				// we have a version number, so extract it
+				string[] parts = dep.split ("(", 1);
+				name = parts[0].strip ();
+				vcomp = parts[1].strip ();
+				if (vcomp.has_suffix (")"))
+					vcomp = vcomp.substring (0, vcomp.length-1);
+				else
+					error ("Invalid formatting of dependency line '%s'!", dependencies);
+			} else {
+				name = dep;
+				vcomp = ""; // no version set, we ignore it
+			}
 
 			string s_reason;
 			Dep.Module dep_mod;

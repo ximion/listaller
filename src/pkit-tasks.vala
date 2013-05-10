@@ -141,20 +141,20 @@ private class PkResolver : PkListallerTask {
 		string[] python_modules = {};
 		string[] python2_modules = {};
 		string[] files = {};
-		foreach (string s in dep.raw_complist) {
-			var ctype = dep.component_get_type (s);
-			var cname = dep.component_get_name (s);
+		foreach (string s in dep.raw_itemlist) {
+			var ctype = dep.item_get_type (s);
+			var cname = dep.item_get_name (s);
 			switch (ctype) {
-				case ComponentType.SHARED_LIB:
+				case Dep.ItemType.SHARED_LIB:
 					if (cname.has_suffix (".*"))
 						cname = cname.replace (".*", "");
 					libs += cname;
 					break;
-				case ComponentType.PYTHON: python_modules += cname;
+				case Dep.ItemType.PYTHON: python_modules += cname;
 					break;
-				case ComponentType.PYTHON_2: python2_modules += cname;
+				case Dep.ItemType.PYTHON_2: python2_modules += cname;
 					break;
-				case ComponentType.FILE: files += cname;
+				case Dep.ItemType.FILE: files += cname;
 					break;
 				default: break;
 			}
@@ -208,7 +208,7 @@ private class PkResolver : PkListallerTask {
 
 		// If there are no files, consider this dependency as "installed"
 		// This is usually an ERROR and might indicate a broken package
-		if (!dep.has_components ()) {
+		if (!dep.has_items ()) {
 			warning ("Module dependency %s has no components assigned!".printf (dep.full_name));
 			dep.installed = true;
 			return true;
@@ -242,9 +242,9 @@ private class PkResolver : PkListallerTask {
 
 			ret = true;
 			if (pkg.get_info () == PackageKit.Info.INSTALLED)
-				dep.add_installed_comp ("pkg:" + pkg.get_id ());
+				dep.add_installed_item ("pkg:" + pkg.get_id ());
 			else
-				dep.add_installed_comp ("*pkg:" + pkg.get_id ());
+				dep.add_installed_item ("*pkg:" + pkg.get_id ());
 		}
 		if (!ret) {
 			dep.clear_installdata ();
