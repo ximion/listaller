@@ -52,7 +52,7 @@ internal class ComponentFactory : Object {
 		// process all framework data
 		if (framework_info_files != null) {
 			foreach (string fname in framework_info_files) {
-				var cfrmw = new Dep.Framework ();
+				var cfrmw = new Dep.Framework.blank ();
 				bool ret = cfrmw.load_from_file (fname);
 				if (ret)
 					registered_frameworks.set (cfrmw.idname, cfrmw);
@@ -64,7 +64,7 @@ internal class ComponentFactory : Object {
 		// process all module data
 		if (module_info_files != null) {
 			foreach (string fname in module_info_files) {
-				var cmod = new Dep.Module ();
+				var cmod = new Dep.Module.blank ();
 				bool ret = cmod.load_from_file (fname);
 				if (ret)
 					registered_modules.set (cmod.idname, cmod);

@@ -818,7 +818,7 @@ private abstract class InternalDB : Object {
 	}
 
 	private Dep.Module? retrieve_dependency (Sqlite.Statement stmt) {
-		var dep = new Dep.Module ();
+		var dep = new Dep.Module.blank ();
 
 		dep.idname = stmt.column_text (DepRow.IDNAME);
 		dep.full_name = stmt.column_text (DepRow.FULLNAME);

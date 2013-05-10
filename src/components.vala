@@ -91,8 +91,8 @@ private abstract class Component : Object {
 
 	protected HashSet<string> item_list { get; set; } // Parts of this dependency (e.g. shlibs, python modules, files, etc.)
 
-	public Component () {
-		idname = "";
+	public Component (string id_name) {
+		idname = id_name;
 		_full_name = "";
 
 		item_list = new HashSet<string> ();
@@ -366,8 +366,12 @@ private abstract class Component : Object {
  */
 private class Framework : Component {
 
-	public Framework () {
-		base ();
+	public Framework (string idname) {
+		base (idname);
+	}
+
+	public Framework.blank () {
+		base ("");
 	}
 
 	public override bool load_from_file (string fname) {
@@ -415,11 +419,15 @@ private class Module : Component {
 		}
 	}
 
-	public Module () {
-		base ();
+	public Module (string idname) {
+		base (idname);
 		environment = "";
 		feed_url = "";
 		origin = "unknown";
+	}
+
+	public Module.blank () {
+		base ("");
 	}
 
 	protected override IPK.MetaFile? load_from_file_internal (string fname) {

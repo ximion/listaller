@@ -50,39 +50,39 @@ void test_dependency_installer () {
 	DepInstaller depinst = new DepInstaller (sdb);
 
 	// Test 1
-	IPK.Dependency test1 = new IPK.Dependency ("Test:1.gee");
+	Dep.Module test1 = new Dep.Module ("Test:1.gee");
 	test1.feed_url = "http://services.sugarlabs.org/libgee";
-	//test1.add_component ("libgee.so.2", Dep.ComponentType.SHARED_LIB);
-	test1.add_component ("bladada.so.2", Dep.ComponentType.SHARED_LIB);
+	//test1.add_item ("libgee.so.2", Dep.ItemType.SHARED_LIB);
+	test1.add_item (Dep.ItemType.SHARED_LIB, "bladada.so.2");
 
-	ret = depinst.install_dependency (ref test1);
+	ret = depinst.install_existing_module_dependency (ref test1);
 	assert (ret == true);
-	assert (test1.satisfied == true);
+	assert (test1.installed == true);
 	debug (test1.full_name);
 	assert (test1.full_name == "libgee");
 
 	// Test 2
-	IPK.Dependency test2 = new IPK.Dependency ("Test:2.vorbis");
+	Dep.Module test2 = new Dep.Module ("Test:2.vorbis");
 	test2.feed_url = "http://services.sugarlabs.org/libvorbis";
-	//test2.add_component ("libvorbis.so.0", Dep.ComponentType.SHARED_LIB);
-	test2.add_component ("nobis.so.0", Dep.ComponentType.SHARED_LIB);
+	//test2.add_item ("libvorbis.so.0", Dep.ItemType.SHARED_LIB);
+	test2.add_item (Dep.ItemType.SHARED_LIB, "nobis.so.0");
 
-	ret = depinst.install_dependency (ref test2);
+	ret = depinst.install_existing_module_dependency (ref test2);
 
 	/* We already installed this in a previous test, but did no proper
 	 * registration. So this has to fail because unknown files would be overwritten.
 	 */
 	assert (ret == false);
-	assert (test2.satisfied == false);
+	assert (test2.installed == false);
 	assert (test2.full_name == "libvorbis");
 
 	// Test 3
 	// Look if dependency of test1 is still available :-P
-	test1.satisfied = false;
+	test1.installed = false;
 	test1.full_name = "";
-	ret = depinst.install_dependency (ref test1);
+	ret = depinst.install_existing_module_dependency (ref test1);
 	assert (ret == true);
-	assert (test1.satisfied == true);
+	assert (test1.installed == true);
 	assert (test1.full_name == "libgee");
 }
 
@@ -91,7 +91,7 @@ void test_dependency_manager () {
 
 	DepManager depman = new DepManager (sdb);
 
-	IPK.Dependency testA = depman.dependency_from_idname ("libgee-0.5.0-8");
+	Dep.Module testA = depman.dependency_from_idname ("libgee-0.5.0-8");
 	assert (testA != null);
 
 	string path = depman.get_absolute_library_path (testA);
@@ -106,7 +106,7 @@ void test_dependency_manager () {
 	assert (path == expectedPath);
 }
 
-void search_install_pkdep (Dep.PkInstaller pkinst, Dep.PkResolver pksolv, ref IPK.Dependency dep) {
+void search_install_pkdep (Dep.PkInstaller pkinst, Dep.PkResolver pksolv, ref Dep.Module dep) {
 	bool ret;
 	ret = pksolv.search_dep_packages (ref dep);
 	if (!ret) {
@@ -125,42 +125,42 @@ void test_packagekit_installer () {
 	bool ret = false;
 
 	// Build simple mp3gain dependency
-	ArrayList<IPK.Dependency> deplist = new ArrayList<IPK.Dependency> ();
-	IPK.Dependency depMp3Gain = new IPK.Dependency ("Mp3Gain");
-	depMp3Gain.add_component ("/usr/bin/mp3gain", Dep.ComponentType.BINARY);
+	ArrayList<Dep.Module> deplist = new ArrayList<Dep.Module> ();
+	Dep.Module depMp3Gain = new Dep.Module ("Mp3Gain");
+	depMp3Gain.add_item (Dep.ItemType.BINARY, "/usr/bin/mp3gain");
 
 	Dep.PkInstaller pkit = new Dep.PkInstaller (ssettings);
 	Dep.PkResolver pkslv = new Dep.PkResolver (ssettings);
 	pkit.message.connect (test_solver_message_cb);
 
 	search_install_pkdep (pkit, pkslv, ref depMp3Gain);
-	assert (depMp3Gain.satisfied == true);
+	assert (depMp3Gain.installed == true);
 
 	// Now something more advanced
-	IPK.Dependency crazy = new IPK.Dependency ("CrazyStuff");
-	crazy.add_component ("/bin/bash", Dep.ComponentType.BINARY);
-	crazy.add_component ("libpackagekit-glib2.so", Dep.ComponentType.SHARED_LIB);
-	crazy.add_component ("libc6.so", Dep.ComponentType.SHARED_LIB);
+	Dep.Module crazy = new Dep.Module ("CrazyStuff");
+	crazy.add_item (Dep.ItemType.BINARY, "/bin/bash");
+	crazy.add_item (Dep.ItemType.SHARED_LIB, "libpackagekit-glib2.so");
+	crazy.add_item (Dep.ItemType.SHARED_LIB, "libc6.so");
 
 	search_install_pkdep (pkit, pkslv, ref crazy);
-	assert (crazy.satisfied == true);
+	assert (crazy.installed == true);
 
 	// Now something which fails
-	IPK.Dependency fail = new IPK.Dependency ("Fail");
-	fail.add_component ("/run/chicken", Dep.ComponentType.UNKNOWN);
+	Dep.Module fail = new Dep.Module ("Fail");
+	fail.add_item (Dep.ItemType.UNKNOWN, "/run/chicken");
 	ret = pkslv.search_dep_packages (ref fail);
 	if (!ret) {
 		debug (pkit.last_error.details);
 		assert (ret == false);
 	}
-	assert (fail.satisfied == false);
+	assert (fail.installed == false);
 }
 
 void test_feed_installer () {
 	msg ("ZI Feed installer tests");
 	Dep.FeedInstaller finst = new Dep.FeedInstaller (ssettings);
 
-	IPK.Dependency test1 = new IPK.Dependency ("feedTest:1.vorb");
+	Dep.Module test1 = new Dep.Module ("feedTest:1.vorb");
 	test1.feed_url = "http://services.sugarlabs.org/libvorbis";
 
 	bool ret;
@@ -174,23 +174,22 @@ void test_feed_installer () {
 
 void test_depsolver () {
 	msg ("Dependency solver tests");
-	ArrayList<IPK.Dependency> deplist = new ArrayList<IPK.Dependency> ();
+	ArrayList<Dep.Module> deplist = new ArrayList<Dep.Module> ();
 
 	// Create a set of dependencies
-	IPK.Dependency dep1 = new IPK.Dependency ("Gee");
+	Dep.Module dep1 = new Dep.Module ("Gee");
 	dep1.feed_url = "http://services.sugarlabs.org/libgee";
 	deplist.add (dep1);
 
-	IPK.Dependency dep2 = new IPK.Dependency ("SDLMixer1.2");
+	Dep.Module dep2 = new Dep.Module ("SDLMixer1.2");
 	dep2.feed_url = "http://repo.roscidus.com/lib_rsl/sdl-mixer1.2";
 	deplist.add (dep2);
 
-	IPK.Dependency dep3 = new IPK.Dependency ("Mp3Gain");
-	dep3.add_component ("/usr/bin/mp3gain", Dep.ComponentType.BINARY);
-	dep3.is_standardlib = true;
+	Dep.Module dep3 = new Dep.Module ("Mp3Gain");
+	dep3.add_item (Dep.ItemType.BINARY, "/usr/bin/mp3gain");
 	deplist.add (dep3);
 
-	IPK.Dependency dep4 = new IPK.Dependency ("LibXml2");
+	Dep.Module dep4 = new Dep.Module ("LibXml2");
 	dep4.feed_url = "http://services.sugarlabs.org/libxml2";
 	deplist.add (dep4);
 

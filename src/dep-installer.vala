@@ -175,6 +175,27 @@ private class DepInstaller : MessageObject {
 		return ret;
 	}
 
+	/**
+	 * This method is useful for testing, and should be used for that
+	 * purpose internally.
+	 */
+	internal bool install_existing_module_dependency (ref Dep.Module dep_mod) {
+		PkInstaller pkinst = new PkInstaller (ssettings);
+		pkinst.message.connect ( (m) => { this.message (m); } );
+
+		FeedInstaller finst = new FeedInstaller (ssettings);
+		finst.message.connect ( (m) => { this.message (m); } );
+
+		bool ret = true;
+		if (!depman.module_is_installed (ref dep_mod)) {
+			ret = install_module_dep_internal (pkinst, finst, ref dep_mod);
+			if ((ret) && (dep_mod.installed))
+				db.add_dependency (dep_mod);
+		}
+
+		return ret;
+	}
+
 	public bool install_dependencies (string dependencies_str, bool force_feedinstall = false) {
 		PkInstaller pkinst = new PkInstaller (ssettings);
 		pkinst.message.connect ( (m) => { this.message (m); } );

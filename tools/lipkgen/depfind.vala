@@ -52,6 +52,8 @@ private class DepFind : Object {
 		return deplist;
 	}
 
+// FIXME: Restore this function and adapt it to new component/module system
+#if 0
 	public HashSet<IPK.Dependency> get_dependencies (ArrayList<IPK.Dependency>? deps = null) {
 		pkbuild_action ("Scanning for dependencies...");
 		var dinfo = new DepInfoGenerator ();
@@ -85,6 +87,7 @@ private class DepFind : Object {
 
 		return deplist;
 	}
-	}
+#endif
+}
 
 } // End of namespace

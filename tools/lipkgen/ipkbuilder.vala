@@ -494,7 +494,9 @@ private class Builder : Object {
 		// Build IPK control directory
 		ictrl.create_new (ipkCDir.get_doap_data (), ipkVersion);
 
-		ArrayList<IPK.Dependency> deps = ipkCDir.get_dependencies ();
+		string deps = ipkCDir.get_dependencies ();
+		// FIXME: Re-enable the automatic dependency search!
+		/*
 		if (ipkCDir.auto_dependency_search ()) {
 			DepFind df = new DepFind (real_path (Path.build_filename (srcdir, "..", null)));
 			var list = df.get_dependencies (deps);
@@ -508,7 +510,7 @@ private class Builder : Object {
 			}
 			//! TODO: Remove dependencies which match files installed by this package
 			deps.add_all (list);
-		}
+		} */
 		ictrl.set_dependencies (deps);
 
 		if (failed)
