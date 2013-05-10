@@ -80,8 +80,6 @@ private abstract class Component : Object {
 	public string summary { get; internal set; }
 	public string homepage { get; internal set; }
 
-	public string environment { get; internal set; }
-
 	public bool installed { get; internal set; }
 
 	protected string _version_raw;
@@ -91,7 +89,6 @@ private abstract class Component : Object {
 
 	public Component () {
 		idname = "";
-		environment = "";
 		_full_name = "";
 
 		item_list = new HashSet<string> ();
@@ -191,11 +188,12 @@ private abstract class Component : Object {
 		return res;
 	}
 
-	public virtual bool load_from_file (string fname) {
+
+	protected virtual IPK.MetaFile? load_from_file_internal (string fname) {
 		var data = new IPK.MetaFile ();
 		var ret = data.open_file (fname);
 		if (!ret)
-			return ret;
+			return null;
 
 		data.open_block_first ();
 		full_name = data.get_value ("Name");
@@ -208,6 +206,14 @@ private abstract class Component : Object {
 		add_item_list (ItemType.PYTHON, data.get_value ("Python"));
 		add_item_list (ItemType.PYTHON_2, data.get_value ("Python2"));
 		add_item_list (ItemType.FILE, data.get_value ("Files"));
+
+		return data;
+	}
+
+	public virtual bool load_from_file (string fname) {
+		IPK.MetaFile? data = load_from_file_internal (fname);
+		if (data == null)
+			return false;
 
 		return true;
 	}
@@ -344,6 +350,7 @@ private abstract class Component : Object {
  * manager.
  */
 private class Framework : Component {
+
 	public Framework () {
 		base ();
 	}
@@ -363,13 +370,76 @@ private class Framework : Component {
 private class Module : Component {
 	public string dependencies { get; private set; }
 
-	public Module () {
-		base ();
+	private bool _installed;
+	public bool installed {
+		get {
+			return _satisfied;
+		}
+		set {
+			if ((!Utils.__unittestmode) &&
+			    (idname != "") &&
+			    (!is_standardlib) &&
+			    (!has_installdata ()) &&
+			    (feed_url == "")) {
+				warning ("Trying to set dependency %s to 'satisfied', although it is not a standardlib. (Reason: No install-data found!) - This usually is a packaging bug.", idname);
+			}
+			_satisfied = value;
+		}
 	}
 
-	public override bool load_from_file (string fname) {
-		return base.load_from_file (fname);
+	public int64 install_time { get; internal set; }
+	public string environment { get; internal set; }
+
+	public string feed_url { get; internal set; }
+
+	public Module () {
+		base ();
+		environment = "";
+		feed_url = "";
 	}
+
+	protected override IPK.MetaFile? load_from_file_internal (string fname) {
+		IPK.MetaFile? data = base.load_from_file_internal (fname);
+		if (data == null)
+			return null;
+
+		feed_url = data.get_value ("Feed");
+
+		return data;
+	}
+
+	public bool has_feed () {
+		return feed_url != "";
+	}
+
+	/**
+	* Generate a PackageKit package-id for this dependency information
+	*/
+	public string build_pk_package_id () {
+		string package_id;
+		string unique_idname = "dep:%s".printf (idname);
+
+		package_id = PackageKit.Package.id_build (unique_idname, version, architecture, "local:listaller");
+
+		return package_id;
+	}
+}
+
+[CCode (has_target = false)]
+private static uint module_hash_func (Module dep_mod) {
+	string str = dep_mod.idname;
+	return str_hash (str);
+}
+
+[CCode (has_target = false)]
+private static bool module_equal_func (Module a, Module b) {
+	if (a.idname == b.idname)
+		return true;
+	return false;
+}
+
+private HashSet<Module> module_hashset_new () {
+	return new HashSet<Module> ((HashFunc) module_hash_func, (EqualFunc) module_equal_func);
 }
 
 } // End of namespace: Listaller.Dep

@@ -41,13 +41,11 @@ public errordomain ControlDataError {
  */
 public abstract class Control : Object {
 	internal DoapData doap;
-	internal MetaFile depData;
 	internal MetaFile packSetting;
 	protected AppItem? appItem;
 
 	internal Control () {
 		doap = new DoapData ();
-		depData = new MetaFile ();
 		packSetting = new MetaFile ();
 		appItem = null;
 	}
@@ -62,10 +60,6 @@ public abstract class Control : Object {
 			return false;
 		doap.add_file (fname);
 		return true;
-	}
-
-	protected bool open_depinfo (string depMetaFile) {
-		return depData.open_file (depMetaFile);
 	}
 
 	protected bool open_packsetting (string pksFName) {
@@ -208,43 +202,15 @@ public abstract class Control : Object {
 		return item;
 	}
 
-	public void set_dependencies (ArrayList<Dependency> list) {
+	public void set_dependencies (string dependencies_list) {
 		// Add the dependencies
-		foreach (Dependency dep in list) {
-			depData.reset ();
-
-			depData.add_value ("Name", dep.full_name);
-			depData.add_value ("ID", dep.idname);
-			// If we have a feed-url for this, add it
-			if (dep.feed_url != "")
-				depData.add_value ("Feed", dep.feed_url);
-			depData.add_value ("Libraries", dep.get_components_by_type_as_str (Dep.ComponentType.SHARED_LIB));
-			depData.add_value ("Binaries", dep.get_components_by_type_as_str (Dep.ComponentType.BINARY));
-			depData.add_value ("Python", dep.get_components_by_type_as_str (Dep.ComponentType.PYTHON));
-			depData.add_value ("Python2", dep.get_components_by_type_as_str (Dep.ComponentType.PYTHON_2));
-			depData.add_value ("Files", dep.get_components_by_type_as_str (Dep.ComponentType.FILE));
-		}
+		packSetting.add_value ("Requires", dependencies_list);
 	}
 
-	public ArrayList<Dependency> get_dependencies () {
-		ArrayList<Dependency> depList = new ArrayList<Dependency> ();
-		depData.reset ();
+	public string get_dependencies () {
+		string s = packSetting.get_value ("Requires", false);
 
-		while (depData.open_block_by_field ("id")) {
-			Dependency dep = new Dependency (depData.get_value ("id"));
-			dep.full_name = depData.get_value ("name");
-
-			string s = depData.get_value ("feed");
-			if (s.strip () != "")
-				dep.feed_url = s;
-			dep.add_component_list (Dep.ComponentType.SHARED_LIB, depData.get_value ("libraries"));
-			dep.add_component_list (Dep.ComponentType.BINARY, depData.get_value ("binaries"));
-			dep.add_component_list (Dep.ComponentType.PYTHON, depData.get_value ("python"));
-			dep.add_component_list (Dep.ComponentType.PYTHON_2, depData.get_value ("python2"));
-			dep.add_component_list (Dep.ComponentType.FILE, depData.get_value ("files"));
-			depList.add (dep);
-		}
-		return depList;
+		return s;
 	}
 
 	public bool set_license_text_from_file (string fname) {
@@ -340,9 +306,6 @@ public class PackControl : Control {
 
 	public bool save_to_dir (string dirPath) {
 		bool ret;
-		ret = depData.save_to_file (Path.build_filename (dirPath, "dependencies.list", null));
-		if (!ret)
-			return false;
 
 		ret = save_string_to_file (Path.build_filename (dirPath, this.appItem.idname + ".doap", null), doapData);
 		if (!ret)
@@ -359,7 +322,7 @@ public class PackControl : Control {
 	[CCode (array_length = false, array_null_terminated = true)]
 	public string[] get_files () {
 		string[] res;
-		res = { "dependencies.list", "pksetting" };
+		res = { "pksetting" };
 		res += this.appItem.idname + ".doap";
 		// Add license text
 		if (has_license_text ())
@@ -469,11 +432,6 @@ public class ControlDir : Control {
 			return false;
 		ctrlDir = dir;
 
-		string depInfoFName = Path.build_filename (ctrlDir, "dependencies.list", null);
-		if (FileUtils.test (depInfoFName, FileTest.EXISTS)) {
-			this.open_depinfo (depInfoFName);
-		}
-
 		// Open license text, if there is any...
 		string licenseTxtFName = Path.build_filename (ctrlDir, "license.txt", null);
 		if (FileUtils.test (licenseTxtFName, FileTest.EXISTS)) {
@@ -507,8 +465,9 @@ public class ControlDir : Control {
 	}
 
 	public bool save_control () {
-		bool ret;
-		ret = depData.save_to_file (Path.build_filename (ctrlDir, "dependencies.list", null));
+		bool ret = true;
+		// FIXME
+		//ret = depData.save_to_file (Path.build_filename (ctrlDir, "dependencies.list", null));
 		return ret;
 	}
 

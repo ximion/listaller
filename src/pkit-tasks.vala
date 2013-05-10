@@ -132,7 +132,7 @@ private class PkResolver : PkListallerTask {
 		return res;
 	}
 
-	private PackageKit.PackageSack? pkit_pkgs_from_depfiles (IPK.Dependency dep) {
+	private PackageKit.PackageSack? pkit_pkgs_from_depfiles (Dep.Module dep) {
 		PackageKit.Bitfield filter = PackageKit.Filter.bitfield_from_string ("arch;");
 
 		// We only resolve libraries at time
@@ -202,15 +202,15 @@ private class PkResolver : PkListallerTask {
 	/**
 	 * This method searches for dependency packages & stores them in dep.install_data
 	 */
-	public bool search_dep_packages (ref IPK.Dependency dep) {
+	public bool search_dep_packages (ref Dep.Module dep) {
 		bool ret = true;
 		reset ();
 
 		// If there are no files, consider this dependency as "installed"
 		// This is usually an ERROR and might indicate a broken package
 		if (!dep.has_components ()) {
-			warning ("Dependency %s has no components assigned!".printf (dep.full_name));
-			dep.satisfied = true;
+			warning ("Module dependency %s has no components assigned!".printf (dep.full_name));
+			dep.installed = true;
 			return true;
 		}
 
@@ -253,10 +253,10 @@ private class PkResolver : PkListallerTask {
 
 		/* Check if there are native packages which need to be installed.
 		 * If not, the dependency is already satified. */
-		dep.satisfied = true;
+		dep.installed = true;
 		foreach (string pkg in dep.get_installdata ()) {
 			if (pkg.has_prefix ("*pkg:")) {
-				dep.satisfied = false;
+				dep.installed = false;
 				break;
 			}
 		}
@@ -375,14 +375,14 @@ private class PkInstaller : PkListallerTask {
 	}
 
 	/* This method install a dependency if necessary */
-	public bool install_dependency (ref IPK.Dependency dep) {
+	public bool install_dependency (ref Dep.Module dep) {
 		bool ret = true;
 		// Just to be sure...
 		if (last_error != null)
 			return false;
 
 		// return if dependency is already satified
-		if (dep.satisfied)
+		if (dep.installed)
 			return true;
 
 		/* Exit if we have no install-data: No package can be installed, dependency is not satisfied.
@@ -393,7 +393,7 @@ private class PkInstaller : PkListallerTask {
 		/* We don't install dependencies via PK when unit tests are running.
 		 * Consider everything as satisfied. (unittests can modify this, of course) */
 		if (__unittestmode) {
-			dep.satisfied = true;
+			dep.installed = true;
 			return true;
 		}
 
@@ -411,7 +411,7 @@ private class PkInstaller : PkListallerTask {
 		/* If no elements need to be installed and everything is already there,
 		 * the dependency is satisfied and we can leave. */
 		if (pkgs[0] == null) {
-			dep.satisfied = true;
+			dep.installed = true;
 			return true;
 		}
 
@@ -419,7 +419,7 @@ private class PkInstaller : PkListallerTask {
 		emit_message (_("Installing native packages: %s").printf (strv_to_string (pkgs)));
 		ret = pkit_install_packages (pkgs);
 		if (ret) {
-			dep.satisfied = true;
+			dep.installed = true;
 			return true;
 		}
 

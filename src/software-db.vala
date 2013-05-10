@@ -449,7 +449,7 @@ private class SoftwareDB : MessageObject {
 		return true;
 	}
 
-	public bool set_application_dependencies (string appName, ArrayList<IPK.Dependency> deps) {
+	public bool set_application_dependencies (string appName, ArrayList<Dep.Module> deps) {
 		if (is_root ()) {
 			if (shared_db_canbeused (true))
 				return db_shared.set_application_dependencies (appName, deps);
@@ -465,7 +465,7 @@ private class SoftwareDB : MessageObject {
 
 	/* Dependency stuff */
 
-	public bool add_dependency (IPK.Dependency dep) {
+	public bool add_dependency (Dep.Module dep) {
 		bool ret = false;
 		try {
 			if (is_root ()) {
@@ -486,8 +486,8 @@ private class SoftwareDB : MessageObject {
 		return ret;
 	}
 
-	public IPK.Dependency? get_dependency_by_id (string depIdName) {
-		IPK.Dependency? dep = null;
+	public Dep.Module? get_dependency_by_id (string depIdName) {
+		Dep.Module? dep = null;
 		if (shared_db_canbeused ())
 			dep = db_shared.get_dependency_by_id (depIdName);
 

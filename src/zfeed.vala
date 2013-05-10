@@ -137,7 +137,7 @@ private class Feed : Object {
 		return get_xsubnode (interface_node (), name)->get_content ();
 	}
 
-	public void update_dependency_data (ref IPK.Dependency dep) {
+	public void update_dependency_data (ref Dep.Module dep) {
 		dep.full_name = get_intf_info_str ("name");
 		dep.version = impl_version;
 		dep.summary = get_intf_info_str ("summary");

@@ -50,7 +50,7 @@ private class DepInstaller : MessageObject {
 		depman.connect_with_object_all (this);
 	}
 
-	private void emit_depmissing_error (ErrorItem? inst_error, IPK.Dependency dep) {
+	private void emit_depmissing_error (ErrorItem? inst_error, Dep.Module dep) {
 		string text = "";
 		if (inst_error != null)
 			text = "\n\n%s".printf (inst_error.details);
@@ -59,20 +59,15 @@ private class DepInstaller : MessageObject {
 			  text));
 	}
 
-	private void preprocess_dependency_list (ref ArrayList<IPK.Dependency> depList) {
-		var newDepList = new ArrayList<IPK.Dependency> ();
+	private void preprocess_dependency_list (ref ArrayList<Dep.Module> depList) {
+		var newDepList = new ArrayList<Dep.Module> ();
 		// Update dependencies with distributor's system data
 		var di = new DepInfoGenerator ();
-		foreach (IPK.Dependency idep in depList) {
+		foreach (Dep.Module idep in depList) {
 			/* Update package dependencies with system data (which might add some additional information here, provided
 			 * by the distributor */
 			di.update_dependency_with_system_data (ref idep);
 
-			if (idep.is_standardlib) {
-				// If we have a system standard-lib, always consider it as installed
-				idep.satisfied = true;
-				continue;
-			}
 			newDepList.add (idep);
 		}
 		depList = newDepList;
@@ -82,8 +77,8 @@ private class DepInstaller : MessageObject {
 	 * Returns true if dependency could be resolved, means that it can be installed
 	 * via native packages. If it returns false, the dependency is not installable.
 	 */
-	private bool find_dependency_internal (ref IPK.Dependency dep, bool force_feedinstall = false) {
-		if (dep.satisfied)
+	private bool find_dependency_internal (ref Dep.Module dep, bool force_feedinstall = false) {
+		if (dep.installed)
 			return true;
 
 		// First of all, check if the dependency is already there
@@ -97,7 +92,7 @@ private class DepInstaller : MessageObject {
 		bool ret = true;
 
 		// Finish if the dependency is already satisfied
-		if (dep.satisfied)
+		if (dep.installed)
 			return true;
 
 		/* Search files using "find_library" before calling PackageKit to do this
@@ -124,7 +119,7 @@ private class DepInstaller : MessageObject {
 			foreach (string s in dep.raw_complist)
 				if (dep.component_get_type (s) == ComponentType.SHARED_LIB)
 					dep.add_installed_comp (s);
-				dep.satisfied = true;
+				dep.installed = true;
 			return true;
 		}
 
@@ -145,14 +140,14 @@ private class DepInstaller : MessageObject {
 		}
 
 		// All packages are already there
-		if (dep.satisfied)
+		if (dep.installed)
 			return true;
 
 		return true;
 	}
 
 	private bool install_dependency_internal (PkInstaller pkinst, FeedInstaller finst,
-						  ref IPK.Dependency dep, bool force_feedinstall = false) {
+						  ref Dep.Module dep, bool force_feedinstall = false) {
 
 		bool ret;
 		ret = find_dependency_internal (ref dep);
@@ -164,7 +159,7 @@ private class DepInstaller : MessageObject {
 		}
 
 		// If dependency is already satisfied, we don't need to run Pk on it
-		if (dep.satisfied)
+		if (dep.installed)
 			return true;
 
 		ErrorItem? error = null;
@@ -178,7 +173,7 @@ private class DepInstaller : MessageObject {
 		}
 
 		// Finish if the dependency is satisfied
-		if (dep.satisfied)
+		if (dep.installed)
 			return true;
 
 		// Now try to install from dependency-feed
@@ -193,7 +188,7 @@ private class DepInstaller : MessageObject {
 		return ret;
 	}
 
-	public bool install_dependency (ref IPK.Dependency dep, bool force_feedinstall = false) {
+	public bool install_dependency (ref Dep.Module dep, bool force_feedinstall = false) {
 		PkInstaller pkinst = new PkInstaller (ssettings);
 		pkinst.message.connect ( (m) => { this.message (m); } );
 
@@ -203,24 +198,18 @@ private class DepInstaller : MessageObject {
 		var di = new DepInfoGenerator ();
 		di.update_dependency_with_system_data (ref dep);
 
-		// If we have a system standard-lib (a minimal distribution dependency), consider it as installed
-		if (dep.is_standardlib) {
-			dep.satisfied = true;
-			return true;
-		}
-
 		bool ret = true;
 		if (!depman.dependency_is_installed (ref dep)) {
 			ret = install_dependency_internal (pkinst, finst, ref dep, force_feedinstall);
 
-			if ((ret) && (dep.satisfied))
+			if ((ret) && (dep.installed))
 				db.add_dependency (dep);
 		}
 
 		return ret;
 	}
 
-	public bool install_dependencies (ref ArrayList<IPK.Dependency> depList, bool force_feedinstall = false) {
+	public bool install_dependencies (ref ArrayList<Dep.Module> depList, bool force_feedinstall = false) {
 		PkInstaller pkinst = new PkInstaller (ssettings);
 		pkinst.message.connect ( (m) => { this.message (m); } );
 
@@ -230,19 +219,13 @@ private class DepInstaller : MessageObject {
 		preprocess_dependency_list (ref depList);
 
 		bool ret = true;
-		foreach (IPK.Dependency dep in depList) {
-			debug ("Prepared dependency %s, satisfied: %i, stdlib: %i", dep.idname,
-			       (int) dep.satisfied,
-			       (int) dep.is_standardlib);
-
-			// If this is a default lib, just continue
-			if (dep.is_standardlib)
-				continue;
+		foreach (Dep.Module dep in depList) {
+			debug ("Prepared dependency %s, satisfied: %i", dep.idname, (int) dep.installed);
 
 			ret = true;
 			if (!depman.dependency_is_installed (ref dep)) {
 				ret = install_dependency_internal (pkinst, finst, ref dep, force_feedinstall);
-				if ((ret) && (dep.satisfied))
+				if ((ret) && (dep.installed))
 					db.add_dependency (dep);
 			}
 
@@ -252,15 +235,11 @@ private class DepInstaller : MessageObject {
 		return ret;
 	}
 
-	internal bool dependencies_installable (ref ArrayList<IPK.Dependency> depList, bool force_feedinstall = false) {
+	internal bool dependencies_installable (ref ArrayList<Dep.Module> depList, bool force_feedinstall = false) {
 		preprocess_dependency_list (ref depList);
 
 		bool ret = true;
-		foreach (IPK.Dependency dep in depList) {
-			// If this is a default lib, just continue
-			if (dep.is_standardlib)
-				continue;
-
+		foreach (Dep.Module dep in depList) {
 			ret = find_dependency_internal (ref dep, force_feedinstall);
 			if (!ret)
 				break;

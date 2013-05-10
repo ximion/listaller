@@ -228,7 +228,7 @@ public class Setup : MessageObject {
 		emit_status (StatusEnum.RESOLVING_DEPENDENCIES,
 			     _("Resolving dependencies of '%s'.").printf (app.full_name));
 
-		Gee.ArrayList<IPK.Dependency> pkgDeps = ipkp.control.get_dependencies ();
+		string pkgDeps = ipkp.control.get_dependencies ();
 
 		// Construct new dependency manager
 		DepInstaller depinst = new DepInstaller (db);
@@ -236,7 +236,7 @@ public class Setup : MessageObject {
 		connect_with_object (depinst, ObjConnectFlags.IGNORE_PROGRESS);
 
 		// Install possibly missing dependencies
-		ret = depinst.install_dependencies (ref pkgDeps);
+		ret = depinst.install_dependencies (pkgDeps);
 		if (!ret) {
 			// If dependency installation failed, exit
 			return false;

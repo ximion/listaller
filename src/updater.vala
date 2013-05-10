@@ -205,7 +205,7 @@ public class Updater : MessageObject {
 				else
 					item.completed = true;
 
-			} else if (item.sw_type == typeof (IPK.Dependency)) {
+			} else if (item.sw_type == typeof (Dep.Module)) {
 				// TODO
 			} else {
 				warning ("Found UpdateItem with invalid software type: %s", item.sw_type.name ());

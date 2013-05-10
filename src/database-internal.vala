@@ -752,12 +752,16 @@ private abstract class InternalDB : Object {
 		return resList;
 	}
 
-	public bool set_application_dependencies (string appName, ArrayList<IPK.Dependency> deps) throws DatabaseError {
+	/**
+	 * FIXME; DEP_TRANSITION We need to ad a versioned dependency information here, instead of just adding raw
+	 * component data
+	 */
+	public bool set_application_dependencies (string appName, ArrayList<Dep.Component> deps) throws DatabaseError {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("UPDATE applications SET dependencies=? WHERE name=?", -1, out stmt);
 
 		string depstr = "";
-		foreach (IPK.Dependency d in deps)
+		foreach (Dep.Component d in deps)
 			depstr += d.idname + "\n";
 
 		try {
@@ -774,40 +778,40 @@ private abstract class InternalDB : Object {
 
 	/* Dependency stuff */
 
-	public bool add_dependency (IPK.Dependency dep) throws DatabaseError {
+	public bool add_dependency (Dep.Module dep_mod) throws DatabaseError {
 		if (!database_writeable ()) {
 			throw new DatabaseError.ERROR (_("Tried to write on readonly database! (This should never happen)"));
 		}
 
 		// Set install timestamp
 		DateTime dt = new DateTime.now_local ();
-		dep.install_time = dt.to_unix ();
+		dep_mod.install_time = dt.to_unix ();
 
 		try {
 			// Assign values
-			db_assert (insert_dep.bind_text (DepRow.IDNAME +1, dep.idname), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.IDNAME +1, dep_mod.idname), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.FULLNAME +1, dep.full_name), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.FULLNAME +1, dep_mod.full_name), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.VERSION +1, dep.version), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.VERSION +1, dep_mod.version), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.DESCRIPTION +1, "%s\n\n%s".printf (dep.summary, dep.description)), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.DESCRIPTION +1, "%s\n\n%s".printf (dep_mod.summary, dep_mod.description)), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.HOMEPAGE +1, dep.homepage), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.HOMEPAGE +1, dep_mod.homepage), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.AUTHOR +1, dep.author), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.AUTHOR +1, dep_mod.author), "bind value");
 
-			db_assert (insert_dep.bind_int64 (DepRow.INST_TIME +1, dep.install_time), "bind value");
+			db_assert (insert_dep.bind_int64 (DepRow.INST_TIME +1, dep_mod.install_time), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.ARCHITECTURE +1, dep.architecture), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.ARCHITECTURE +1, dep_mod.architecture), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.ORIGIN +1, dep.origin), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.ORIGIN +1, dep_mod.origin), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.PROVIDED_BY +1, dep.get_installdata_as_string ()), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.PROVIDED_BY +1, dep_mod.get_installdata_as_string ()), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.COMPONENTS +1, dep.get_componentdata_as_string ()), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.COMPONENTS +1, dep_mod.get_componentdata_as_string ()), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.ENVIRONMENT +1, dep.environment), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.ENVIRONMENT +1, dep_mod.environment), "bind value");
 
 			db_assert (insert_dep.bind_text (DepRow.DEPENDENCIES +1, ""), "bind value");
 
@@ -821,8 +825,8 @@ private abstract class InternalDB : Object {
 		return true;
 	}
 
-	private IPK.Dependency? retrieve_dependency (Sqlite.Statement stmt) {
-		IPK.Dependency dep = new IPK.Dependency.blank ();
+	private Dep.Module? retrieve_dependency (Sqlite.Statement stmt) {
+		var dep = new Dep.Module ();
 
 		dep.idname = stmt.column_text (DepRow.IDNAME);
 		dep.full_name = stmt.column_text (DepRow.FULLNAME);
@@ -847,12 +851,12 @@ private abstract class InternalDB : Object {
 		dep.environment = stmt.column_text (DepRow.ENVIRONMENT);
 
 		// Because dep is in the database already, it has to be satisfied
-		dep.satisfied = true;
+		dep.installed = true;
 
 		return dep;
 	}
 
-	public IPK.Dependency? get_dependency_by_id (string depIdName) {
+	public Dep.Module? get_dependency_by_id (string depIdName) {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("SELECT * FROM dependencies WHERE name=?", -1, out stmt);
 
@@ -868,7 +872,7 @@ private abstract class InternalDB : Object {
 			throw new DatabaseError.ERROR (e.message);
 		}
 
-		IPK.Dependency? dep = retrieve_dependency (stmt);
+		Dep.Module? dep = retrieve_dependency (stmt);
 		return dep;
 	}
 

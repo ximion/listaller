@@ -339,9 +339,9 @@ public class Manager : MessageObject {
 		DepManager depman = new DepManager (db);
 
 
-		HashSet<IPK.Dependency> depList = depman.dependencies_from_idlist (depStr);
+		HashSet<Dep.Module> depList = depman.dependencies_from_idlist (depStr);
 
-		foreach (IPK.Dependency dep in depList) {
+		foreach (Dep.Module dep in depList) {
 			// Now get paths for library, if possible (if dependency is a library)
 			string p = depman.get_absolute_library_path (dep);
 			if (p != "")

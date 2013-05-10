@@ -114,14 +114,14 @@ internal ArrayList<UpdateItem> get_update_items_from_package_id_list (Updater up
 				if ((item.sw_old as AppItem).idname == swid)
 					res.add (item);
 
-			} else if (item.sw_type == typeof (IPK.Dependency)) {
+			} else if (item.sw_type == typeof (Dep.Module)) {
 				// we cannot handle an application entry
 				if (!swid.has_prefix ("dep:"))
 					continue;
 
 				string dep_id = swid.substring (4);
 
-				if ((item.sw_old as IPK.Dependency).idname == dep_id)
+				if ((item.sw_old as Dep.Module).idname == dep_id)
 					res.add (item);
 			}
 		}

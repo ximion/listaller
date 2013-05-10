@@ -121,7 +121,7 @@ private class ComponentFactory : Object {
 		return false;
 	}
 
-	public bool is_satisfied (string idname, string version_comp, out string reason = null) {
+	private bool is_satisfied (string idname, string version_comp, out Dep.Module required_mod = null, out string reason = null) {
 		if (!version_comp_is_valid (version_comp)) {
 			warning ("Version compare string %s is not valid!", version_comp);
 			return false;
@@ -134,7 +134,7 @@ private class ComponentFactory : Object {
 		string required_version_relation = vparts[0].strip ();
 
 		if (registered_frameworks.has_key (idname)) {
-			Dep.Framework cfrmw = registered_frameworks.get (idname);
+			Dep.Framework cfrmw = get_framework (idname);
 			check_framework_installed (cfrmw);
 			if (!cfrmw.installed) {
 				reason = _("Framework %s is not installed! Please make it available to continue.").printf (cfrmw.full_name);
@@ -159,7 +159,7 @@ private class ComponentFactory : Object {
 
 		} else if (registered_modules.has_key (idname)) {
 			// TODO: Resolve module (installed? all dependencies installed?)
-			Dep.Module cmod = registered_modules.get (idname);
+			Dep.Module cmod = get_module (idname);
 			string ic_reason;
 			check_module_installed (cmod, out ic_reason);
 			if (!cmod.installed) {
@@ -181,20 +181,64 @@ private class ComponentFactory : Object {
 																										c_version,
 																										required_version,
 																										required_version_relation);
+			else
+				required_mod = cmod;
+
 			return ret;
 		} else {
-			debug ("No framework/module matching '%s' (v%s) found!", idname, version_comp);
+			reason = _("No framework/module matching '%s' (v%s) found!").printf (idname, version_comp);
 
 			return false;
 		}
 	}
 
 	public Dep.Framework? get_framework (string name) {
-		return null;
+		return registered_frameworks.get (name);
 	}
 
 	public Dep.Module? get_module (string name) {
-		return null;
+		return registered_modules.get (name);
+	}
+
+	/**
+	 * Determine if a package with the dependencies taken as function argument can be installed, and if not,
+	 * return the modules which require installation.
+	 *
+	 * @param dependencies An IPK package dependency line
+	 * @param required_modules Variable to store an ArrayList of required modules, in order to make the package installable
+	 * @param reason A reason why the given package cannot be installed, as localized string.
+	 *
+	 * @returns TRUE if there is a way to install this application, FALSE in any other case
+	 */
+	public bool can_be_installed (string dependencies, out ArrayList<Dep.Module> required_modules, out string reason = null) {
+		// a dependencies listing is comma-separated, so split it
+		string[] deps = dependencies.split(",");
+
+		required_modules = new ArrayList<Dep.Module> ();
+		foreach (string dep in deps) {
+			string[] parts = dep.split ("(", 1);
+			string name = parts[0].strip ();
+			string vcomp = parts[1].strip ();
+			if (vcomp.has_suffix (")"))
+				vcomp = vcomp.substring (0, vcomp.length-1);
+			else
+				error ("Invalid formatting for dependency line '%s'!", dependencies);
+
+			string s_reason;
+			Dep.Module dep_mod;
+			bool ret;
+			ret = is_satisfied (name, vcomp, out dep_mod, out s_reason);
+			if (!ret) {
+				// check if we have a module dependency, which can be satisfied
+				if (dep_mod == null) {
+					reason = s_reason;
+					return false;
+				}
+				required_modules.add (dep_mod);
+			}
+		}
+
+		return true;
 	}
 }
 

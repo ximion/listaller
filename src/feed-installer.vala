@@ -159,7 +159,7 @@ private class FeedInstaller : MessageObject {
 		return ret;
 	}
 
-	private bool extract_depfile (Archive.Read ar, Archive.Entry e, IPK.Dependency dep) {
+	private bool extract_depfile (Archive.Read ar, Archive.Entry e, Dep.Module dep) {
 		bool ret = true;
 
 		// Target dependency subdirectory (from DEP installation-var)
@@ -190,7 +190,7 @@ private class FeedInstaller : MessageObject {
 		return true;
 	}
 
-	private bool install_archive (string fname, IPK.Dependency dep) {
+	private bool install_archive (string fname, Dep.Module dep) {
 		if (!FileUtils.test (fname, FileTest.EXISTS))
 			return false;
 
@@ -215,7 +215,7 @@ private class FeedInstaller : MessageObject {
 		return ret;
 	}
 
-	public bool install_dependency (SoftwareDB db, ref IPK.Dependency dep) {
+	public bool install_dependency (SoftwareDB db, ref Dep.Module dep) {
 		if (dep.feed_url == "")
 			return false;
 
@@ -244,7 +244,7 @@ private class FeedInstaller : MessageObject {
 		feed.update_dependency_data (ref dep);
 
 		// Now check if a dependency with the new dependency-id is already installed
-		IPK.Dependency? dbDep = db.get_dependency_by_id (dep.idname);
+		Dep.Module? dbDep = db.get_dependency_by_id (dep.idname);
 		if (dbDep != null) {
 			debug ("Dependency with id [%s] is already installed :)", dep.idname);
 			dep = dbDep;
@@ -265,7 +265,7 @@ private class FeedInstaller : MessageObject {
 
 		// Yes! Feed installation completed, we can set this as satisfied!
 		dep.add_installed_comp ("feed:%s".printf (dep.feed_url));
-		dep.satisfied = true;
+		dep.installed = true;
 
 		return ret;
 	}
