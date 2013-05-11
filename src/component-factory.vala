@@ -148,7 +148,7 @@ internal class ComponentFactory : Object {
 		if (version_comp == "")
 			vparts = { "", "" }; // if we don't care about the version, relation and version are empty strings
 		else
-			vparts = version_comp.split (" ", 1);
+			vparts = version_comp.split (" ", 2);
 		string required_version = vparts[1].strip ();
 		string required_version_relation = vparts[0].strip ();
 
@@ -240,7 +240,7 @@ internal class ComponentFactory : Object {
 
 			if (dep.index_of ("(") > 0) {
 				// we have a version number, so extract it
-				string[] parts = dep.split ("(", 1);
+				string[] parts = dep.split ("(", 2);
 				name = parts[0].strip ();
 				vcomp = parts[1].strip ();
 				if (vcomp.has_suffix (")"))

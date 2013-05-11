@@ -139,6 +139,7 @@ private class Feed : Object {
 
 	public void update_dependency_data (ref Dep.Module dep) {
 		dep.full_name = get_intf_info_str ("name");
+		dep.idname = get_intf_info_str ("name").replace (" ", "");
 		dep.set_version (impl_version);
 		dep.summary = get_intf_info_str ("summary");
 		dep.description = get_intf_info_str ("description");

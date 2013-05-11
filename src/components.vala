@@ -172,14 +172,15 @@ private abstract class Component : Object {
 	}
 
 	public string get_version () throws ComponentError {
-		if (!installed)
-			throw new ComponentError.VERSION_NOT_FOUND ("Component %s is not installed, cannot retrieve version number!", full_name);
 		// maybe this component is unversioned?
 		if (_version_cache == "none")
 			return "";
 		// check if we have a cached string
 		if (!str_is_empty (_version_cache))
 			return _version_cache;
+
+		if (!installed)
+			throw new ComponentError.VERSION_NOT_FOUND ("Component %s is not installed, cannot retrieve version number!", full_name);
 
 		// process version directive, if necessary
 		if (!contains_directive (_version_raw))
@@ -216,6 +217,9 @@ private abstract class Component : Object {
 		if (!data.has_field ("Version"))
 			// if there is no version field, we can never determine the version, so this component is not versioned
 			_version_cache = "none";
+
+		if (data.get_value ("AlwaysInstalled") == "true")
+			installed = true;
 
 		// add item data for this component
 		add_item_list (ItemType.SHARED_LIB, data.get_value ("Libraries"));

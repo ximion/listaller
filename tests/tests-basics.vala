@@ -116,10 +116,13 @@ void test_zfeeds () {
 	/* Info: It is "libogg-0", because the version is set through "search_matching_dependency ()",
 	 * which we don't call here because the libogg feed does not provide implementations
 	 * for every platform out there. (This is a default-test, which should not fail, usually.) */
-	assert (dep_mod.idname == "libogg-0");
+	assert (dep_mod.idname == "libogg");
 
 	bool ret = feed.search_matching_dependency ();
 	assert (ret == true);
+
+	feed.update_dependency_data (ref dep_mod);
+	assert (dep_mod.get_version () == "1.1.4-1");
 
 	assert (feed.package_url != "");
 }
