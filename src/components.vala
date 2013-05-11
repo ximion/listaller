@@ -174,6 +174,9 @@ private abstract class Component : Object {
 	public string get_version () throws ComponentError {
 		if (!installed)
 			throw new ComponentError.VERSION_NOT_FOUND ("Component %s is not installed, cannot retrieve version number!", full_name);
+		// maybe this component is unversioned?
+		if (_version_cache == "none")
+			return "";
 		// check if we have a cached string
 		if (!str_empty (_version_cache))
 			return _version_cache;
@@ -189,6 +192,9 @@ private abstract class Component : Object {
 			throw e;
 		}
 
+		// linebreaks in version numbers are evil!
+		res = res.replace ("\n", "");
+
 		return res;
 	}
 
@@ -202,11 +208,14 @@ private abstract class Component : Object {
 		var ret = data.open_file (fname);
 		if (!ret)
 			return null;
-
 		data.open_block_first ();
+
 		full_name = data.get_value ("Name");
 		idname = data.get_value ("ID");
 		_version_raw = data.get_value ("Version");
+		if (!data.has_field ("Version"))
+			// if there is no version field, we can never determine the version, so this component is not versioned
+			_version_cache = "none";
 
 		// add item data for this component
 		add_item_list (ItemType.SHARED_LIB, data.get_value ("Libraries"));
@@ -218,7 +227,7 @@ private abstract class Component : Object {
 		return data;
 	}
 
-	public virtual bool load_from_file (string fname) {
+	public bool load_from_file (string fname) {
 		IPK.MetaFile? data = load_from_file_internal (fname);
 		if (data == null)
 			return false;
@@ -372,10 +381,6 @@ private class Framework : Component {
 
 	public Framework.blank () {
 		base ("");
-	}
-
-	public override bool load_from_file (string fname) {
-		return base.load_from_file (fname);
 	}
 }
 

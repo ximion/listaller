@@ -43,6 +43,7 @@ private class DepManager : MessageObject {
 		}
 
 		cfactory = new ComponentFactory ();
+		cfactory.initialize ();
 	}
 
 	public SoftwareDB get_sdb () {

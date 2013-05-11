@@ -1,0 +1,7 @@
+Name: Linux
+ID: linux
+Libraries: linux-gate.so.*
+           ld-linux.so.*
+           ld-linux-*
+           libselinux.so.*
+           linux-vdso.so.1

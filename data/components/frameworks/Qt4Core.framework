@@ -1,1 +1,8 @@
- 
+# The Qt4Core libraries
+
+ID: Qt4Core
+Version: shell$ pkg-config --modversion QtCore
+Binaries: kde4-config
+ kde-open
+Libraries: libQtCLucene.so.4
+ libQtCore.so.4

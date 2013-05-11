@@ -204,30 +204,31 @@ LIBUILD_NOTE_METADATA("libuild.version=" LIBUILD_VERSION);
 
 /* libuild generated symbol exclusion list */
 """);
-		var it = symbolMap.keys.iterator();
-		while(it.next())
+		var it = symbolMap.keys.iterator ();
+		while (it.next ())
 		{
 			// Remove all symbols which aren't obsoleted by newer versions
-			if(!symbolsNewerThanMinimum.contains(it.get()))
+			if(!symbolsNewerThanMinimum.contains (it.get ()))
 			{
 				continue;
 			}
 
-			var version = symbolMap.get(it.get());
-			string versionToUse = version.getString();
-			if(version.newerThan(minimumVersion))
+			var version = symbolMap.get (it.get ());
+			string versionToUse = version.getString ();
+			if(version.newerThan (minimumVersion))
 			{
-				versionToUse = "DONT_USE_THIS_VERSION_%s".printf(version.getString());
+				versionToUse = "DONT_USE_THIS_VERSION_%s".printf(version.getString ());
 			}
-			headerFile.append("__asm__(\".symver %s, %s@GLIBC_%s\");\n".printf(it.get(), it.get(), versionToUse));
+			headerFile.append ("__asm__(\".symver %s, %s@GLIBC_%s\");\n".printf(it.get (), it.get (), versionToUse));
 		}
-		FileUtils.set_contents(filename, headerFile.str);
+		FileUtils.set_contents (filename, headerFile.str);
 	}
 	catch(Error e)
 	{
-		warning("%s", e.message);
+		warning ("%s", e.message);
 		return 1;
 	}
-	stdout.printf(" OK\n");
+	stdout.printf (" OK\n");
+
 	return 0;
 }

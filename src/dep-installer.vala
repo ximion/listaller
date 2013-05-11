@@ -49,6 +49,9 @@ private class DepInstaller : MessageObject {
 		// Create a new dependency manager to fetch information about installed dependencies
 		depman = new DepManager (db);
 		depman.connect_with_object_all (this);
+
+		cfactory = new ComponentFactory ();
+		cfactory.initialize ();
 	}
 
 	private void emit_depmissing_error (ErrorItem? inst_error, Dep.Module dep) {

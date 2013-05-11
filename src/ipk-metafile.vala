@@ -225,6 +225,9 @@ private class MetaFile : Object {
 		return false;
 	}
 
+	/**
+	 * Open the first block found in our MetaFile
+	 */
 	public bool open_block_first () {
 		reset ();
 		var iter = content.list_iterator ();
@@ -240,17 +243,15 @@ private class MetaFile : Object {
 			if (!start)
 				continue;
 
-			currentBlockId = iter.index () - 1;
-
-			while (iter.has_previous ()) {
+			while (iter.has_next ()) {
 				line = iter.get ();
-				if (is_empty (line)) {
-					currentBlockId = iter.index () + 1;
+				if (!is_empty (line)) {
+					currentBlockId = iter.index ();
 					return true;
 				}
-				iter.previous ();
+				iter.next ();
 			}
-			return true;
+
 		} while (iter.next ());
 
 		return false;
@@ -322,6 +323,34 @@ private class MetaFile : Object {
 		} while (iter.next ());
 
 		return res;
+	}
+
+	public bool has_field (string field, bool respectOpenedBlock = true) {
+		bool ret = false;
+		var iter = content.list_iterator ();
+
+		if (!iter.first ())
+			return false;
+		do {
+			if (iter.index () < currentBlockId)
+				continue;
+
+			string line = iter.get ();
+
+			if (is_empty (line))
+				if (respectOpenedBlock)
+					break;
+				else
+					continue;
+
+			if (line.down ().has_prefix (field.down () + ":")) {
+				ret = true;
+				break;
+			}
+
+		} while (iter.next ());
+
+		return ret;
 	}
 
 

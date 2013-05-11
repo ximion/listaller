@@ -25,6 +25,7 @@ public class DepScanTool : Object {
 	private static bool o_show_version = false;
 	private static bool o_run_recursive = false;
 	private static bool o_simpletext = false;
+	private static bool o_components = false;
 	private static bool o_verbose_mode = false;
 	private static string o_input_path = null;
 
@@ -37,7 +38,9 @@ public class DepScanTool : Object {
 			N_("Use recursive mode"), null },
 		{ "simpletext", 0, 0, OptionArg.NONE, ref o_simpletext,
 			N_("Print machine-readable simple text"), null },
-		{ "verbose", 'r', 0, OptionArg.NONE, ref o_verbose_mode,
+		{ "components", 'c', 0, OptionArg.NONE, ref o_components,
+			N_("Print machine-readable simple text"), null },
+		{ "verbose", 0, 0, OptionArg.NONE, ref o_verbose_mode,
 			N_("Activate verbose mode"), null },
 		{ null }
 	};
@@ -81,7 +84,13 @@ public class DepScanTool : Object {
 			return;
 		}
 
-		DependencyScanner scan = new DependencyScanner (o_input_path, o_simpletext);
+		ScannerOutput omode = ScannerOutput.STANDARD;
+		if (o_simpletext)
+			omode = ScannerOutput.SIMPLE_TEXT;
+		else if (o_components)
+			omode = ScannerOutput.COMPONENTS;
+
+		DependencyScanner scan = new DependencyScanner (o_input_path, omode);
 		scan.recursive = o_run_recursive;
 		scan.compile_required_files_list ();
 	}

@@ -20,6 +20,7 @@
 
 using GLib;
 using Gee;
+using Listaller;
 
 public interface IDepScanEngine {
 	public abstract ArrayList<string> required_files ();
@@ -27,20 +28,21 @@ public interface IDepScanEngine {
 	public abstract bool fetch_required_files (string fname);
 }
 
+enum ScannerOutput {
+	STANDARD,
+	SIMPLE_TEXT,
+	COMPONENTS,
+	LAST;
+}
+
 private class DependencyScanner : Object {
 	private string targetdir;
-	private HashSet<string> requires;
-	private bool mtext;
+	private ScannerOutput output_format;
 	public bool recursive { get; set; }
 
-	public HashSet<string> required_files {
-		get { return requires; }
-	}
-
-	public DependencyScanner (string target_dir, bool simple_text = false) {
+	public DependencyScanner (string target_dir, ScannerOutput oformat = ScannerOutput.STANDARD) {
 		targetdir = target_dir;
-		mtext = simple_text;
-		requires = new HashSet<string> ();
+		output_format = oformat;
 	}
 
 	private ArrayList<string>? get_file_list (string dir) {
@@ -78,7 +80,7 @@ private class DependencyScanner : Object {
 		return list;
 	}
 
-	private void scan_engine_process (ArrayList<string> files, IDepScanEngine eng) {
+	private void scan_engine_process (ArrayList<string> files, IDepScanEngine eng, ref HashSet<string> required_items) {
 		foreach (string s in files) {
 			// skip all symlinks here, we don't want to check them (but we need them in the list, e.g. for lib symlinks)
 			if (FileUtils.test (s, FileTest.IS_SYMLINK))
@@ -86,14 +88,93 @@ private class DependencyScanner : Object {
 
 			if (eng.can_be_used (s))
 				if (eng.fetch_required_files (s)) {
-					requires.add_all (eng.required_files ());
+					required_items.add_all (eng.required_files ());
 				}
 		}
 	}
 
+	private ArrayList<string> get_scanner_output_default (HashSet<string> required_items) {
+		var res = new ArrayList<string> ();
+		foreach (string s in required_items) {
+				res.add (s);
+		}
+
+		return res;
+	}
+
+	private ArrayList<string> get_scanner_output_components (HashSet<string> required_items) {
+		var cfactory = new Dep.ComponentFactory ();
+		var comp_list = new HashMap<string, Dep.Component> ();
+		var res = new ArrayList<string> ();
+
+		cfactory.initialize ();
+		foreach (Dep.Framework frmw in cfactory.registered_frameworks.values) {
+			var iter = required_items.iterator ();
+			if (!iter.first ())
+				continue;
+			do {
+				string s = iter.get ();
+
+				Dep.ItemType itype = Dep.Component.item_get_type (s);
+				string iname = Dep.Component.item_get_name (s);
+
+				debug (iname);
+
+				if (frmw.has_item (iname, itype)) {
+					comp_list.set (frmw.idname, frmw);
+					iter.remove ();
+				}
+
+			} while (iter.next ());
+		}
+
+		foreach (Dep.Module cmod in cfactory.registered_modules.values) {
+			var iter = required_items.iterator ();
+			if (!iter.first ())
+				continue;
+			do {
+				string s = iter.get ();
+				Dep.ItemType itype = Dep.Component.item_get_type (s);
+				string iname = Dep.Component.item_get_name (s);
+
+				if (cmod.has_item (iname, itype)) {
+					comp_list.set (cmod.idname, cmod);
+					iter.remove ();
+				}
+
+			} while (iter.next ());
+		}
+
+		foreach (Dep.Component comp in comp_list.values) {
+			// pretend to be installed
+			// FIXME: don't use this hack and *really* determine if dependency was installed
+			comp.installed = true;
+
+			string version = "";
+			try {
+				version = comp.get_version ();
+			} catch (Error e) {
+				debug ("Unable to retrieve version for %s: %s", comp.idname, e.message);
+			}
+			if (version == "")
+				res.add (comp.idname);
+			else
+				res.add ("%s (>= %s)".printf (comp.idname, version));
+		}
+
+		if (required_items.size != 0) {
+			// Add stuff which we were unable to detect
+			res.add ("----");
+			res.add ("Dependencies not matching a (installed) component:");
+			res.add_all (required_items);
+		}
+
+		return res;
+	}
+
 	public bool compile_required_files_list () {
-		requires.clear ();
-		if (!mtext)
+		var required_items = new HashSet<string> ();
+		if (output_format == ScannerOutput.STANDARD)
 			stdout.printf ("%s\r", "Please wait...");
 		ArrayList<string> files;
 		if (FileUtils.test (targetdir, FileTest.IS_REGULAR)) {
@@ -106,14 +187,25 @@ private class DependencyScanner : Object {
 			return false;
 
 		// Process binaries
-		scan_engine_process (files, new DepscanLDD (files));
+		scan_engine_process (files, new DepscanLDD (files), ref required_items);
 
-		if (requires.size == 0) {
+		// do we have results?
+		if (required_items.size == 0) {
 			stdout.printf ("%s\n", "No dependencies found!");
-		} else {
-			foreach (string s in requires) {
-				stdout.printf (s + "\n");
-			}
+			return false;
+		}
+
+		// do transformations of the scanner output and receive it
+		ArrayList<string> scan_result;
+
+		if (output_format == ScannerOutput.COMPONENTS)
+			scan_result = get_scanner_output_components (required_items);
+		else
+			scan_result = get_scanner_output_default (required_items);
+
+		// print result
+		foreach (string s in scan_result) {
+			stdout.printf (s + "\n");
 		}
 
 		return true;
