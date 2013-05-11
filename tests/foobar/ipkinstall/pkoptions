@@ -2,6 +2,7 @@ Version: 1.1
 
 AutoFindDeps: true
 FilesRoot: %INSTDIR%
+Requires: FooDependency (>= 1.0)
 InstallModes: Shared
               Private
               Test

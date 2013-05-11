@@ -26,7 +26,7 @@ using Listaller.Utils;
 namespace Listaller.IPK {
 
 // We need at least an IPK 1.1 package to process it
-private static const string MINIMUM_IPK_SPEC_VERSION = "1.1";
+private static const string MINIMUM_IPK_SPEC_VERSION = "1.2";
 
 public errordomain ControlDataError {
 	NO_DOAP,
@@ -202,13 +202,32 @@ public abstract class Control : Object {
 		return item;
 	}
 
-	public void set_dependencies (string dependencies_list) {
+	public void set_dependencies (string dependencies_list, string arch) {
+		string dep_field = "Requires";
+		if ((!str_is_empty (arch)) && (arch != "all"))
+			dep_field = "Requires[%s]".printf (arch);
+
 		// Add the dependencies
-		packSetting.add_value ("Requires", dependencies_list);
+		packSetting.add_value (dep_field, dependencies_list);
 	}
 
-	public string get_dependencies () {
-		string s = packSetting.get_value ("Requires", false);
+	public string get_dependencies (string arch, bool arch_only = false) {
+		string dep_field_arch = "";
+		if ((!str_is_empty (arch)) && (arch != "all"))
+			dep_field_arch = "Requires[%s]".printf (arch);
+		string s = "";
+
+		// check if we only want the arch-specific field
+		if ((dep_field_arch == "") || (!arch_only))
+			if (packSetting.has_field ("Requires", false))
+				// fetch the arch-agnostic requires line
+				s = packSetting.get_value ("Requires", false);
+		if ((dep_field_arch != "") && (packSetting.has_field (dep_field_arch, false))) {
+			if (!str_is_empty (s))
+				s += ",";
+			s = packSetting.get_value (dep_field_arch, false);
+		}
+
 
 		return s;
 	}
@@ -241,7 +260,7 @@ public class PackControl : Control {
 		ipkVersion = "1.1";
 	}
 
-	public bool open_control (string fPackSetting, string fDoap, string fDeps) {
+	public bool open_control (string fPackSetting, string fDoap) {
 		bool ret;
 		ret = open_packsetting (fPackSetting);
 		if (!ret) {

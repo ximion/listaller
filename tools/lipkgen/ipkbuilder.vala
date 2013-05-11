@@ -288,7 +288,7 @@ private class Builder : Object {
 			string simple_appname = delete_chars (appInfo.full_name, {"(", ")", "[", "]", "#", " "});
 
 			// we do the arch split to prevent invalid archs from being added (this is much more failsafe)
-			string[] archs = ictrl.get_architectures ().split ("\n");
+			string[] archs = ictrl.get_architectures ().split (",");
 			string archs_str = "";
 			foreach (string s in archs) {
 				if (s == null)
@@ -494,25 +494,7 @@ private class Builder : Object {
 		// Build IPK control directory
 		ictrl.create_new (ipkCDir.get_doap_data (), ipkVersion);
 
-		string deps = ipkCDir.get_dependencies ();
-		// FIXME: Re-enable the automatic dependency search!
-		/*
-		if (ipkCDir.auto_dependency_search ()) {
-			DepFind df = new DepFind (real_path (Path.build_filename (srcdir, "..", null)));
-			var list = df.get_dependencies (deps);
-			foreach (IPK.Dependency d1 in list) {
-				foreach (IPK.Dependency d2 in deps) {
-					if (d1.full_name == d2.full_name) {
-						list.remove (d1);
-						break;
-					}
-				}
-			}
-			//! TODO: Remove dependencies which match files installed by this package
-			deps.add_all (list);
-		} */
-		ictrl.set_dependencies (deps);
-
+		// check if we have a failure already
 		if (failed)
 			return false;
 
@@ -520,7 +502,6 @@ private class Builder : Object {
 		ictrl.set_install_modes (ipkCDir.get_install_modes ());
 
 		// Set package setting information
-		 //! ictrl.set_architectures (ipkCDir.get_architectures ());
 
 		// Set information about replaced native packages
 		ictrl.set_replaces (ipkCDir.get_replaces ());
@@ -531,7 +512,7 @@ private class Builder : Object {
 		// Set license...
 		ictrl.set_license_text (ipkCDir.get_application ().license.text);
 
-		pkbuild_action ("Generating package...");
+		pkbuild_action ("Generating package payload...");
 
 		IPK.FileList flist = new IPK.FileList (false);
 		string archs = "";
@@ -549,7 +530,10 @@ private class Builder : Object {
 			if (arch == "current")
 				arch = arch_generic (system_machine ());
 			if (arch != "all")
-				archs = "%s%s\n".printf (archs, arch);
+				if (str_is_empty (archs))
+					archs = arch;
+				else
+					archs = "%s, %s".printf (archs, arch);
 
 			pkbuild_action ("Creating payload for architecture: %s".printf (arch));
 			// Add comment to IPK file-list
@@ -560,11 +544,43 @@ private class Builder : Object {
 				return false;
 		}
 
-		// No arch set, so all files have to be arch-independent
+		// No arch set, so all files have to be arch-independent / are one-arch only
 		if (archs == "")
 			archs = "all";
 		// We only set architectures we have install-files for
 		ictrl.set_architectures (archs);
+
+		pkbuild_action ("Processing dependencies...");
+
+		// add explicit arch-specific dependencies
+		string deps_arch = "";
+		string[] archs_list = archs.split (",");
+		foreach (string arch in archs_list) {
+			arch = arch.strip ();
+			if (!str_is_empty (deps_arch))
+				deps_arch += ",";
+			string s = ipkCDir.get_dependencies (arch, true);
+			deps_arch += s;
+			ictrl.set_dependencies (s, arch);
+		}
+
+		// process generic dependencies
+		string deps_all = ipkCDir.get_dependencies ("all", true);
+		if (ipkCDir.auto_dependency_search ()) {
+			DepFind df = new DepFind (real_path (Path.build_filename (srcdir, "..", null)));
+			string deps = "%s, %s".printf (deps_all, deps_arch);
+			var d_list = df.get_auto_dependencies (deps);
+			if (d_list != "")
+				if (deps_all == "")
+					deps_all = d_list;
+				else
+					deps_all = "%s, %s".printf (deps_all, d_list);
+		}
+		ictrl.set_dependencies (deps_all, "");
+		if (failed)
+			return false;
+
+		pkbuild_action ("Finalizing package...");
 
 		// Finalize control data
 		string tmp = Path.build_filename (tmpdir, "control", null);

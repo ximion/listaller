@@ -34,7 +34,7 @@ private class DepFind : Object {
 	public ArrayList<string>? get_dependency_list () {
 		string output;
 
-		string[] cmd = { "depscan", "-r", "--simpletext", "." };
+		string[] cmd = { "depscan", "-rc", "." };
 		try {
 			Process.spawn_sync (input_dir, cmd, null,
 					SpawnFlags.SEARCH_PATH, null, out output, null, null);
@@ -52,42 +52,39 @@ private class DepFind : Object {
 		return deplist;
 	}
 
-// FIXME: Restore this function and adapt it to new component/module system
-#if 0
-	public HashSet<IPK.Dependency> get_dependencies (ArrayList<IPK.Dependency>? deps = null) {
+	public string get_auto_dependencies (string? defined_deps = null) {
 		pkbuild_action ("Scanning for dependencies...");
-		var dinfo = new DepInfoGenerator ();
+		string deplist = "";
 
-		// Add more template dependencies to genrator
-		if (deps != null)
-			dinfo.add_dependencies (deps);
-
-		ArrayList<string> files = get_dependency_list ();
-		var deplist = dinfo.get_dependency_list_for_components (files);
-
-
-		// Remove default dependencies
-		//! Disabled at time, we want complete IPK package deps
-		/*
-		uint i = 0;
-		while (i < deplist.size) {
-			IPK.Dependency dep = deplist.get ((int) i);
-			if (dep.is_standardlib) {
-				deplist.remove (dep);
+		ArrayList<string> dependency_data = get_dependency_list ();
+		string unknown_deps = "";
+		bool have_unknown_deps = false;
+		foreach (string s in dependency_data) {
+			if (s.has_prefix ("----")) {
+				have_unknown_deps = true;
 				continue;
 			}
-			if (PatternSpec.match_simple ("libnvidia-*", dep.full_name)) {
-				deplist.remove (dep);
+			if (have_unknown_deps) {
+				unknown_deps = "%s%s\n".printf (unknown_deps, s);
 				continue;
 			}
+			// we don't add dependencies which were already defined by the user
+			if (defined_deps.index_of (s) >= 0)
+				continue;
 
-			i++;
+			if (deplist == "")
+				deplist = s;
+			else
+				deplist = "%s, %s".printf (deplist, s);
+
 		}
-		*/
+
+		if (unknown_deps != "") {
+			warning ("The packaged application has unknown dependencies: %s", unknown_deps);
+		}
 
 		return deplist;
 	}
-#endif
 }
 
 } // End of namespace

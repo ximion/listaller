@@ -107,7 +107,7 @@ private class RepoLocal : Repo {
 		AppItem app = ipkp.control.get_application ();
 
 		// we do the arch split to prevent invalid archs from being added (this is much more failsafe)
-		string[] archs = ipkp.control.get_architectures ().split ("\n");
+		string[] archs = ipkp.control.get_architectures ().split (",");
 		if (archs.length > 1) {
 			Report.log_error (_("You cannot add multiarch IPK packages to a repository!"));
 			return false;

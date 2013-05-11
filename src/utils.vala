@@ -60,8 +60,8 @@ private string string_replace (string str, string regex_str, string replace_str)
 	return res;
 }
 
-private bool str_empty (string? str) {
-	if ((str == "") || (str == null))
+private bool str_is_empty (string? str) {
+	if ((str == "") || (str == null) || (str == " "))
 		return true;
 	return false;
 }

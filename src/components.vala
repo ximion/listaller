@@ -151,7 +151,7 @@ private abstract class Component : Object {
 			str = str.strip ();
 			if (str.has_prefix ("prefix$ ")) {
 				// the prefix directive fetches the data after the given prefix
-				if (str_empty (res))
+				if (str_is_empty (res))
 					throw new ComponentError.DIRECTIVES_INVALID ("Unable to resolve directives for %s: Get prefix-directive, but don't have valid data to apply it.", full_name);
 				string prefix = get_directive_value (str);
 				if (res.index_of (prefix) < 0)
@@ -165,7 +165,7 @@ private abstract class Component : Object {
 			}
 		}
 
-		if (str_empty (res))
+		if (str_is_empty (res))
 			res = directive_str;
 
 		return res;
@@ -178,7 +178,7 @@ private abstract class Component : Object {
 		if (_version_cache == "none")
 			return "";
 		// check if we have a cached string
-		if (!str_empty (_version_cache))
+		if (!str_is_empty (_version_cache))
 			return _version_cache;
 
 		// process version directive, if necessary

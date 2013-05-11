@@ -188,7 +188,7 @@ public class Setup : MessageObject {
 
 		// Construct LiAppItem
 		AppItem app = ipkp.control.get_application ();
-		if (str_empty (origin))
+		if (str_is_empty (origin))
 			app.set_origin_local ();
 		app.dependencies = "?";
 		app.fast_check ();
@@ -228,7 +228,8 @@ public class Setup : MessageObject {
 		emit_status (StatusEnum.RESOLVING_DEPENDENCIES,
 			     _("Resolving dependencies of '%s'.").printf (app.full_name));
 
-		string pkgDeps = ipkp.control.get_dependencies ();
+		// get all dependencies for the current architecture and possibly generic dependencies
+		string pkgDeps = ipkp.control.get_dependencies (arch_generic (system_machine ()));
 
 		// Construct new dependency manager
 		DepInstaller depinst = new DepInstaller (db);

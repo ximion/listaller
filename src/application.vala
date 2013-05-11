@@ -435,7 +435,7 @@ public class AppItem : Object {
 	public string build_pk_package_id () {
 		string data;
 		string package_id;
-		if (Utils.str_empty (desktop_file))
+		if (Utils.str_is_empty (desktop_file))
 			data = "local:listaller";
 		else
 			data = "local:listaller%" + desktop_file;
