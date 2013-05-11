@@ -1,1 +1,7 @@
- 
+# Python scripting language, version 3
+
+ID: Python
+Version: $shell python3 --version
+ prefix$ "Python "
+Binaries: python3
+Libraries: libpython3.*

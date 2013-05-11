@@ -1,1 +1,7 @@
- 
+# Python scripting language, version 2
+
+ID: Python2
+Version: $shell python2 --version
+ prefix$ "Python "
+Binaries: python2
+Libraries: libpython2.*
