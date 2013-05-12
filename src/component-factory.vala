@@ -84,20 +84,58 @@ internal class ComponentFactory : Object {
 		return vs.has_prefix ("<< ") || vs.has_prefix (">> ") || vs.has_prefix ("<= ") || vs.has_prefix (">= ") || vs.has_prefix ("== ");
 	}
 
+	private bool check_component_library_items_installed (Dep.Component comp) {
+		/* Search files using "find_library" before calling PackageKit to do this
+		 * (this is a huge speed improvement)
+		 * This only works for library dependencies!
+		 */
+		bool ret = false;
+		Config conf = new Config ();
+		foreach (string sitem in comp.raw_itemlist) {
+			if (Dep.Component.item_get_type (sitem) == Dep.ItemType.SHARED_LIB) {
+				string s = Component.item_get_name (sitem);
+				ret = find_library (s, conf);
+				if (!ret) {
+					debug ("Library not found: %s", s);
+				}
+				if (!ret)
+					break;
+			}
+		}
+
+		return ret;
+	}
+
 	private bool check_framework_installed (Dep.Framework cfrmw) {
 		if (cfrmw.installed)
 			return true;
 
-		// TODO
-		return false;
+		bool ret;
+		ret = check_component_library_items_installed (cfrmw);
+
+		cfrmw.installed = ret;
+
+		return ret;
 	}
 
 	private bool check_module_installed (Dep.Module cmod, out string reason = null) {
 		if (cmod.installed)
 			return true;
 
-		// TODO
-		return false;
+		bool ret;
+		ret = check_component_library_items_installed (cmod);
+
+		// If all libraries were found, add them to installdata and exit
+		if (ret) {
+			cmod.clear_installdata ();
+			foreach (string s in cmod.raw_itemlist)
+				if (cmod.item_get_type (s) == Dep.ItemType.SHARED_LIB)
+					cmod.add_installed_item (s);
+				cmod.installed = true;
+			return true;
+		}
+
+		return ret;
 	}
 
 	public bool framework_installed (string idname) {
@@ -248,7 +286,7 @@ internal class ComponentFactory : Object {
 				else
 					error ("Invalid formatting of dependency line '%s'!", dependencies);
 			} else {
-				name = dep;
+				name = dep.strip ();
 				vcomp = ""; // no version set, we ignore it
 			}
 

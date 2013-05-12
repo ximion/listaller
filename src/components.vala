@@ -89,7 +89,13 @@ private abstract class Component : Object {
 	protected string _version_raw;
 	private string _version_cache;
 
-	protected HashSet<string> item_list { get; set; } // Parts of this dependency (e.g. shlibs, python modules, files, etc.)
+	protected HashSet<string> item_list { get; internal set; } // Parts of this dependency (e.g. shlibs, python modules, files, etc.)
+
+	public HashSet<string> raw_itemlist {
+		get {
+			return item_list;
+		}
+	}
 
 	public Component (string id_name) {
 		idname = id_name;
@@ -437,12 +443,6 @@ private class Module : Component {
 	private HashSet<string> install_data { get; internal set; } // Items which were installed in order to satisfy this module dependency
 
 	public string feed_url { get; internal set; }
-
-	public HashSet<string> raw_itemlist {
-		get {
-			return item_list;
-		}
-	}
 
 	public Module (string idname) {
 		base (idname);

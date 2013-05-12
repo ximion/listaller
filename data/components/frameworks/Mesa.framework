@@ -5,5 +5,6 @@ Name: Mesa3D
 ID: Mesa3D
 Libraries: libGL.so.*
            libGLU.so.*
+OptionalLibraries:
            libnvidia-tls.so.*
            libnvidia-glcore.so.*

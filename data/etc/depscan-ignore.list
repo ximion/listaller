@@ -1,0 +1,10 @@
+# Dependencies which should be ignored by depscan
+
+Libraries:
+ # OpenGL vendor stuff
+ libnvidia-tls.so.*
+ libnvidia-glcore.so.*
+
+Binaries:
+ sh
+ bash

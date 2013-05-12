@@ -85,34 +85,6 @@ private class DepInstaller : MessageObject {
 		if (dep.installed)
 			return true;
 
-		/* Search files using "find_library" before calling PackageKit to do this
-		 * (this is a huge speed improvement)
-		 * This only works for library dependencies!
-		 */
-		ret = false;
-		Config conf = new Config ();
-		foreach (string cmp in dep.raw_itemlist) {
-			if (Dep.Component.item_get_type (cmp) == Dep.ItemType.SHARED_LIB) {
-				string s = dep.item_get_name (cmp);
-				ret = find_library (s, conf);
-				if (!ret) {
-					debug ("Library not found: %s", s);
-				}
-				if (!ret)
-					break;
-			}
-		}
-
-		// If all libraries were found, add them to installdata and exit
-		if (ret) {
-			dep.clear_installdata ();
-			foreach (string s in dep.raw_itemlist)
-				if (dep.item_get_type (s) == Dep.ItemType.SHARED_LIB)
-					dep.add_installed_item (s);
-				dep.installed = true;
-			return true;
-		}
-
 		// If we do a feedinstall anyway, we don't need to solve native pkgs
 		if (force_feedinstall)
 			return true;
