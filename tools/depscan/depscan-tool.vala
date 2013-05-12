@@ -32,7 +32,7 @@ public class DepScanTool : Object {
 	public int exit_code { get; set; }
 
 	private const OptionEntry[] options = {
-		{ "version", 'v', 0, OptionArg.NONE, ref o_show_version,
+		{ "version", 0, 0, OptionArg.NONE, ref o_show_version,
 			N_("Show the application's version"), null },
 		{ "recursive", 'r', 0, OptionArg.NONE, ref o_run_recursive,
 			N_("Use recursive mode"), null },
@@ -40,7 +40,7 @@ public class DepScanTool : Object {
 			N_("Print machine-readable simple text"), null },
 		{ "components", 'c', 0, OptionArg.NONE, ref o_components,
 			N_("Print machine-readable simple text"), null },
-		{ "verbose", 0, 0, OptionArg.NONE, ref o_verbose_mode,
+		{ "verbose", 'v', 0, OptionArg.NONE, ref o_verbose_mode,
 			N_("Activate verbose mode"), null },
 		{ null }
 	};

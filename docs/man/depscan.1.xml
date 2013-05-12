@@ -15,7 +15,7 @@
 	<refentryinfo>
 	<title>Listaller Project</title>
 	<copyright>
-		<year>2009-2012</year>
+		<year>2009-2013</year>
 		<holder>Matthias Klumpp</holder>
 	</copyright>
 	<productname>Listaller Project</productname>
@@ -71,6 +71,14 @@
 		</varlistentry>
 
 		<varlistentry>
+			<term><option>-c</option></term>
+			<term><option>--components</option></term>
+			<listitem>
+				<para>Output dependencies as Listaller components (versioned, if version could be determined).</para>
+			</listitem>
+		</varlistentry>
+
+		<varlistentry>
 			<term><option>--version</option></term>
 			<listitem>
 				<para>Display version number of &package;</para>
@@ -78,9 +86,10 @@
 		</varlistentry>
 
 		<varlistentry>
+			<term><option>-v</option></term>
 			<term><option>--verbose</option></term>
 			<listitem>
-				<para>Turn on verbose mode (this can be used for debugging).</para>
+				<para>Turn on verbose mode (useful for debugging purposes).</para>
 			</listitem>
 		</varlistentry>
 
