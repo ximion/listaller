@@ -170,6 +170,8 @@ namespace PackageKit {
 		[NoAccessorMethod]
 		public uint network_state { get; set; }
 		[NoAccessorMethod]
+		public uint64 provides { get; set; }
+		[NoAccessorMethod]
 		public uint64 roles { get; set; }
 		[NoAccessorMethod]
 		public uint version_major { get; }

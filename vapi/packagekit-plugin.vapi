@@ -25,6 +25,7 @@ namespace PkPlugin {
 		public string[] get_mime_types ();
 		public unowned string get_name ();
 		public void get_packages (PkPlugin.BackendJob job, PackageKit.Bitfield filters);
+		public PackageKit.Bitfield get_provides ();
 		public void get_repo_list (PkPlugin.BackendJob job, PackageKit.Bitfield filters);
 		public void get_requires (PkPlugin.BackendJob job, PackageKit.Bitfield filters, string package_ids, bool recursive);
 		public PackageKit.Bitfield get_roles ();
