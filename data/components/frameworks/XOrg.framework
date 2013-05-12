@@ -1,0 +1,27 @@
+# X.org Xserver
+
+Name: Xorg
+ID: xorg
+Version: shell$ X -version
+ prefix$ "X.Org X Server "
+Binaries: X
+Libraries: libX11.so.*
+           libXext.so.*
+           libuuid.so.*
+           libxcb.so.*
+           libXau.so.*
+           libXdmcp.so.*
+           libXtst.so.*
+           libXi.so.*
+           libSM.so.*
+           libICE.so.*
+           libXcomposite.so.*
+           libXdamage.so.*
+           libXfixes.so.*
+           libXrender.so.*
+           libXinerama.so.*
+           libXrandr.so.*
+           libXcursor.so.*
+           libXft.so.*
+           libXt.so.*
+           libfreetype.so.*

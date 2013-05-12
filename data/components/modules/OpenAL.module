@@ -1,0 +1,5 @@
+# OpenAL audio library
+
+Name: OpenAL
+ID: openal
+Libraries: libopenal.so.*

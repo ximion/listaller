@@ -135,11 +135,17 @@ private abstract class Component : Object {
 			string s = str.strip ();
 			if (s.has_prefix ("shell$ ")) {
 				int exit_status;
+				string stderr;
 				string cmd = get_directive_value (s);
-				Process.spawn_command_line_sync (cmd, out rawdata, null, out exit_status);
+
+				Process.spawn_command_line_sync (cmd, out rawdata, out stderr, out exit_status);
 				if (exit_status != 0)
 					throw new ComponentError.DIRECTIVES_RESOLVE_FAILED ("Unable to resolve directives for %s: Command %s returned error-code %i.", full_name, cmd, exit_status);
 				res = rawdata;
+				// for some stupid reason, a few tools (such as the Xserver) print their versions to stderr
+				// this workaround reflects that fact - error has been catched through an exit code above
+				if (str_is_empty (res))
+					res = stderr;
 			} else if (s.has_prefix ("envvar$ ")) {
 				int exit_status;
 				string varname = get_directive_value (s);
@@ -152,7 +158,7 @@ private abstract class Component : Object {
 			if (str.has_prefix ("prefix$ ")) {
 				// the prefix directive fetches the data after the given prefix
 				if (str_is_empty (res))
-					throw new ComponentError.DIRECTIVES_INVALID ("Unable to resolve directives for %s: Get prefix-directive, but don't have valid data to apply it.", full_name);
+					throw new ComponentError.DIRECTIVES_INVALID ("Unable to resolve directives for %s: Get prefix-directive found, but don't have valid data to apply it.", full_name);
 				string prefix = get_directive_value (str);
 				if (res.index_of (prefix) < 0)
 					throw new ComponentError.DIRECTIVES_RESOLVE_FAILED ("Unable to get data prefixed with '%s' from raw data string '%s'.", prefix, res);
@@ -324,8 +330,18 @@ private abstract class Component : Object {
 
 	}
 
-	public bool has_item (string cname, ItemType tp) {
+	public bool has_item (ItemType tp, string cname) {
 		return item_list.contains (get_item_type_idstr (tp).printf (cname));
+	}
+
+	public bool has_matching_item (ItemType tp, string cname) {
+		string item_id = get_item_type_idstr (tp).printf (cname);
+		foreach (string s in item_list) {
+			if (PatternSpec.match_simple (s, item_id))
+				return true;
+		}
+
+		return false;
 	}
 
 	public bool has_items () {

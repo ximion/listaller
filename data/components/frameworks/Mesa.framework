@@ -1,0 +1,9 @@
+# The Mesa3D OpenGL implementation
+# OpenGL vendor libs are included here too, so depscan counts them as belonging to Mesa
+
+Name: Mesa3D
+ID: Mesa3D
+Libraries: libGL.so.*
+           libGLU.so.*
+           libnvidia-tls.so.*
+           libnvidia-glcore.so.*

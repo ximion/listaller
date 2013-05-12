@@ -1,0 +1,6 @@
+# LibTIFF library
+
+Name: LibTiff
+ID: libtiff4
+Version: 4
+Libraries: libtiff.so.4

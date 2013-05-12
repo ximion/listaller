@@ -118,9 +118,7 @@ private class DependencyScanner : Object {
 				Dep.ItemType itype = Dep.Component.item_get_type (s);
 				string iname = Dep.Component.item_get_name (s);
 
-				debug (iname);
-
-				if (frmw.has_item (iname, itype)) {
+				if (frmw.has_matching_item (itype, iname)) {
 					comp_list.set (frmw.idname, frmw);
 					iter.remove ();
 				}
@@ -137,7 +135,7 @@ private class DependencyScanner : Object {
 				Dep.ItemType itype = Dep.Component.item_get_type (s);
 				string iname = Dep.Component.item_get_name (s);
 
-				if (cmod.has_item (iname, itype)) {
+				if (cmod.has_matching_item (itype, iname)) {
 					comp_list.set (cmod.idname, cmod);
 					iter.remove ();
 				}
