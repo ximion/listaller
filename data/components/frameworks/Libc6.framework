@@ -1,5 +1,5 @@
-Name: Libc6
-ID: libc6
+Name: GNU C Library
+ID: Libc6
 Version: 6
 AlwaysInstalled: true
 Libraries: libc.so.6

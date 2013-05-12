@@ -1,5 +1,5 @@
 Name: Linux
-ID: linux
+ID: Linux
 AlwaysInstalled: true
 Libraries: linux-gate.so.*
            ld-linux.so.*

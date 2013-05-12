@@ -1,7 +1,7 @@
 # X.org Xserver
 
-Name: Xorg
-ID: xorg
+Name: Xorg XServer and applications
+ID: Xorg
 Version: shell$ X -version
  prefix$ "X.Org X Server "
 Binaries: X

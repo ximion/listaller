@@ -1,5 +1,6 @@
-ID: OggVorbis
+
 Name: OggVorbis
+ID: ogg-vorbis
 Feeds: http://services.sugarlabs.org/libogg
  http://services.sugarlabs.org/libvorbis
 Libraries: libogg.so.*
