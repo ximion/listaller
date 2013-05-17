@@ -49,7 +49,7 @@
 			This manual page documents briefly the <command>&package;</command> command.
 		</para>
 		<para>
-			<command>&package;</command> is a simple tool to control Listaller directly from
+			<command>&package;</command> is a simple tool to control Listaller using a
 			command-line interface. It allows modifying basic settings, installing new applications,
 			removing applications, requesting information about Listaller's database state
 			and performing other maintenance tasks.

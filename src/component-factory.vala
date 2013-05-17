@@ -74,6 +74,25 @@ internal class ComponentFactory : Object {
 		}
 	}
 
+	public void load_extra_modules (string module_dir) {
+		HashSet<string>? extra_module_info_files = find_files_matching (module_dir, "*.module");
+
+		// process additional module data
+		if (extra_module_info_files != null) {
+			foreach (string fname in extra_module_info_files) {
+				var cmod = new Dep.Module.blank ();
+				bool ret = cmod.load_from_file (fname);
+				// installed system modules take precendence before any additional modules
+				if (cmod.idname in registered_modules)
+					continue;
+				if (ret)
+					registered_modules.set (cmod.idname, cmod);
+				else
+					warning ("Unable to load data for module: %s", fname);
+			}
+		}
+	}
+
 	/**
 	 * Check for a valid version-compare string
 	 */

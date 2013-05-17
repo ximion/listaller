@@ -26,15 +26,17 @@ namespace Listaller {
 
 private class DepFind : Object {
 	private string input_dir;
+	private string module_dir;
 
-	public DepFind (string indir) {
+	public DepFind (string indir, string mod_dir) {
 		input_dir = indir;
+		module_dir = mod_dir;
 	}
 
 	public ArrayList<string>? get_dependency_list () {
 		string output;
 
-		string[] cmd = { "depscan", "-rc", "." };
+		string[] cmd = { "depscan", "-rc", "--include-modules=%s".printf (module_dir), "." };
 		try {
 			Process.spawn_sync (input_dir, cmd, null,
 					SpawnFlags.SEARCH_PATH, null, out output, null, null);

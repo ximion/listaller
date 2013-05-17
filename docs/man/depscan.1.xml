@@ -64,7 +64,7 @@
 		</varlistentry>
 
 		<varlistentry>
-			<term><option>--simpletext</option></term>
+			<term><option>--out-simpletext</option></term>
 			<listitem>
 				<para>Output simple, machine-readable text.</para>
 			</listitem>
@@ -72,7 +72,7 @@
 
 		<varlistentry>
 			<term><option>-c</option></term>
-			<term><option>--components</option></term>
+			<term><option>--out-components</option></term>
 			<listitem>
 				<para>Output dependencies as Listaller components (versioned, if version could be determined).</para>
 			</listitem>

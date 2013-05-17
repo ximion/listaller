@@ -5,3 +5,4 @@ FilesRoot: %INSTDIR%
 InstallModes: Shared
               Private
               Test
+Requires: extrastupid-module-dep (>= 1.2)

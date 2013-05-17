@@ -39,6 +39,7 @@ private class DependencyScanner : Object {
 	private string targetdir;
 	private ScannerOutput output_format;
 	public bool recursive { get; set; }
+	public string extra_modules_dir { get; set; }
 
 	public DependencyScanner (string target_dir, ScannerOutput oformat = ScannerOutput.STANDARD) {
 		targetdir = target_dir;
@@ -108,6 +109,8 @@ private class DependencyScanner : Object {
 		var res = new ArrayList<string> ();
 
 		cfactory.initialize ();
+		if (!Utils.str_is_empty (extra_modules_dir))
+			cfactory.load_extra_modules (extra_modules_dir);
 		foreach (Dep.Framework frmw in cfactory.registered_frameworks.values) {
 			var iter = required_items.iterator ();
 			if (!iter.first ())

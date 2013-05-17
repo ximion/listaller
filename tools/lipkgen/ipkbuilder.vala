@@ -247,7 +247,12 @@ private class Builder : Object {
 				ret = false;
 				break;
 			}
-			entry.set_pathname (Path.get_basename (fname));
+			string pathname = Path.get_basename (fname);
+			// simple hack, to always have all dependencies stored in a dependencies/ subdirectory
+			if ((fname.has_suffix (".module")) && (fname.index_of ("dependencies") >= 0))
+				pathname = Path.build_filename ("dependencies", pathname, null);
+
+			entry.set_pathname (pathname);
 			entry.copy_stat (st);
 			a.write_header (entry);
 			int fd = Posix.open (fname, Posix.O_RDONLY);
@@ -564,10 +569,12 @@ private class Builder : Object {
 			ictrl.set_dependencies (s, arch);
 		}
 
+		string extra_mod_dir = Path.build_filename (srcdir, "dependencies", null);
+
 		// process generic dependencies
 		string deps_all = ipkCDir.get_dependencies ("all", true);
 		if (ipkCDir.auto_dependency_search ()) {
-			DepFind df = new DepFind (real_path (Path.build_filename (srcdir, "..", null)));
+			DepFind df = new DepFind (real_path (Path.build_filename (srcdir, "..", null)), extra_mod_dir);
 			string deps = "%s, %s".printf (deps_all, deps_arch);
 			var d_list = df.get_auto_dependencies (deps);
 			if (d_list != "")
@@ -590,6 +597,30 @@ private class Builder : Object {
 		string[] files = ictrl.get_files ();
 		for (int i = 0; files[i] != null; i++) {
 			ctrlfiles.add (Path.build_filename (tmp, files[i], null));
+		}
+
+		// store dependency data, if we need it
+		string pkg_depfiles_dir = Path.build_filename (tmp, "dependencies", null);
+		create_dir_structure (pkg_depfiles_dir);
+		var cfactory = new Dep.ComponentFactory ();
+		cfactory.initialize ();
+		HashSet<string>? mod_info_files = find_files_matching (extra_mod_dir, "*.module");
+
+		if (mod_info_files != null) {
+			foreach (string fname in mod_info_files) {
+				var cmod = new Dep.Module.blank ();
+				bool l_ret = cmod.load_from_file (fname);
+				// installed system modules take precendence before any additional modules
+				if (cmod.idname in cfactory.registered_modules)
+					continue;
+				if (l_ret) {
+					string pkg_depfile = Path.build_filename (pkg_depfiles_dir, Path.get_basename (fname));
+					copy_file (fname, pkg_depfile);
+					ctrlfiles.add (pkg_depfile);
+				} else {
+					warning ("Unable to load data for module: %s", fname);
+				}
+			}
 		}
 
 		ret = write_ipk_control_data ();

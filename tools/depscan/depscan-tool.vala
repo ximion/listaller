@@ -28,6 +28,7 @@ public class DepScanTool : Object {
 	private static bool o_components = false;
 	private static bool o_verbose_mode = false;
 	private static string o_input_path = null;
+	private static string o_extra_modules_dir = null;
 
 	public int exit_code { get; set; }
 
@@ -36,10 +37,12 @@ public class DepScanTool : Object {
 			N_("Show the application's version"), null },
 		{ "recursive", 'r', 0, OptionArg.NONE, ref o_run_recursive,
 			N_("Use recursive mode"), null },
-		{ "simpletext", 0, 0, OptionArg.NONE, ref o_simpletext,
+		{ "out-simpletext", 0, 0, OptionArg.NONE, ref o_simpletext,
 			N_("Print machine-readable simple text"), null },
-		{ "components", 'c', 0, OptionArg.NONE, ref o_components,
+		{ "out-components", 'c', 0, OptionArg.NONE, ref o_components,
 			N_("Print machine-readable simple text"), null },
+		{ "include-modules", 0, 0, OptionArg.STRING, ref o_extra_modules_dir,
+			N_("Define an additional directory with module definitions"), null },
 		{ "verbose", 'v', 0, OptionArg.NONE, ref o_verbose_mode,
 			N_("Activate verbose mode"), null },
 		{ null }
@@ -78,7 +81,7 @@ public class DepScanTool : Object {
 			stdout.printf ("depscan helper, version: %s\n", PkgConfig.VERSION);
 			return;
 		}
-		if ((o_input_path == null) || (o_input_path == "")) {
+		if (Listaller.Utils.str_is_empty (o_input_path)) {
 			stdout.printf (_("No path given!") + "\n");
 			exit_code = 2;
 			return;
@@ -92,6 +95,7 @@ public class DepScanTool : Object {
 
 		DependencyScanner scan = new DependencyScanner (o_input_path, omode);
 		scan.recursive = o_run_recursive;
+		scan.extra_modules_dir = o_extra_modules_dir;
 		scan.compile_required_files_list ();
 	}
 
