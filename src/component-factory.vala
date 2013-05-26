@@ -239,8 +239,10 @@ internal class ComponentFactory : Object {
 			Dep.Module cmod = get_module (idname);
 			string ic_reason;
 			check_module_installed (cmod, out ic_reason);
+
 			if (!cmod.installed) {
 				reason = ic_reason;
+				required_mod = cmod;
 				return false;
 			}
 
@@ -253,15 +255,15 @@ internal class ComponentFactory : Object {
 			}
 
 			ret = component_version_satisfied (c_version, required_version, required_version_relation);
-			if (!ret)
+			if (!ret) {
 				reason = _("Module %s is only available in version %s, while a version %s %s is required. This software can not be installed, please notify the original author about it.").printf (cmod.full_name,
 																										c_version,
 																										required_version,
 																										required_version_relation);
-			else
 				required_mod = cmod;
+			}
 
-			return ret;
+			return true;
 		} else {
 			reason = _("No framework/module matching '%s' (v%s) found!").printf (idname, version_comp);
 
