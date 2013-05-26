@@ -210,6 +210,9 @@ private bool create_dir_structure (string dirname) {
 
 private HashSet<string>? find_files_matching (string dir, string pattern, bool recursive = false) {
 	var list = new HashSet<string> ();
+	// if we don't have a directory to search, just return nothing
+	if (!FileUtils.test (dir, FileTest.IS_DIR))
+		return list;
 	try {
 		var directory = File.new_for_path (real_path (dir));
 

@@ -30,7 +30,6 @@ private class DepInstaller : MessageObject {
 	private SoftwareDB db;
 	private DepManager depman;
 	private SetupSettings ssettings;
-	private ComponentFactory cfactory;
 
 	public DepInstaller (SoftwareDB lidb) {
 		base ();
@@ -49,9 +48,6 @@ private class DepInstaller : MessageObject {
 		// Create a new dependency manager to fetch information about installed dependencies
 		depman = new DepManager (db);
 		depman.connect_with_object_all (this);
-
-		cfactory = new ComponentFactory ();
-		cfactory.initialize ();
 	}
 
 	private void emit_depmissing_error (ErrorItem? inst_error, Dep.Module dep) {
@@ -171,7 +167,16 @@ private class DepInstaller : MessageObject {
 		return ret;
 	}
 
-	public bool install_dependencies (string dependencies_str, bool force_feedinstall = false) {
+	/**
+	 * Install dependencies from a dependency-string of an IPK package.
+	 * @param dependencies_str Dependency-information as string (comma-separated)
+	 * @param cfactory The ComponentFactory instance which belongs to the given package, or an empty, initialized system ComponentFactory
+	 * @param force_feedinstall Enforce installation of ZeroInstall feeds, defaults to FALSE
+	 * The function emits an error signal on the DepInstaller instance on failure.
+	 *
+	 * @returns TRUE if there were no errors.
+	 */
+	public bool install_dependencies (string dependencies_str, ComponentFactory cfactory, bool force_feedinstall = false) {
 		PkInstaller pkinst = new PkInstaller (ssettings);
 		pkinst.message.connect ( (m) => { this.message (m); } );
 
@@ -215,4 +220,4 @@ private class DepInstaller : MessageObject {
 
 }
 
-} // End of namespace Listaller
+} // End of namespace: Listaller

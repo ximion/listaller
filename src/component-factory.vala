@@ -103,7 +103,7 @@ internal class ComponentFactory : Object {
 		return vs.has_prefix ("<< ") || vs.has_prefix (">> ") || vs.has_prefix ("<= ") || vs.has_prefix (">= ") || vs.has_prefix ("== ");
 	}
 
-	private bool check_component_library_items_installed (Dep.Component comp) {
+	private bool check_component_library_items_installed (Dep.Component comp, out string explanation = null) {
 		/* Search files using "find_library" before calling PackageKit to do this
 		 * (this is a huge speed improvement)
 		 * This only works for library dependencies!
@@ -116,9 +116,9 @@ internal class ComponentFactory : Object {
 				ret = find_library (s, conf);
 				if (!ret) {
 					debug ("Library not found: %s", s);
-				}
-				if (!ret)
+					explanation = _("Library %s was not found").printf (s);
 					break;
+				}
 			}
 		}
 
@@ -142,7 +142,7 @@ internal class ComponentFactory : Object {
 			return true;
 
 		bool ret;
-		ret = check_component_library_items_installed (cmod);
+		ret = check_component_library_items_installed (cmod, out reason);
 
 		// If all libraries were found, add them to installdata and exit
 		if (ret) {
@@ -196,6 +196,7 @@ internal class ComponentFactory : Object {
 	private bool is_satisfied (string idname, string version_comp, out Dep.Module required_mod = null, out string reason = null) {
 		if (!version_comp_is_valid (version_comp)) {
 			warning ("Version compare string %s is not valid!", version_comp);
+			reason = "Invalid version-compare string! (This is a serious packaging bug)";
 			return false;
 		}
 

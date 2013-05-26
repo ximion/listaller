@@ -231,7 +231,7 @@ public class AppItem : Object {
 		set { _origin = value; }
 	}
 
-	public string dependencies {
+	public string dependencies_str {
 		get { return _dependencies; }
 		set { _dependencies = value; }
 	}

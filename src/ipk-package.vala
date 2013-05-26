@@ -99,6 +99,10 @@ private class Package : MessageObject {
 		string archFListName = "";
 		string currentArch = arch_generic (system_machine ());
 
+		// set up directory for extra dependency files
+		string wdir_depdir = Path.build_filename (wdir, "dependencies", null);
+		create_dir_structure (wdir_depdir);
+
 		while (ar.next_header (out e) == Result.OK) {
 			string pName = e.pathname ();
 			if (pName.has_suffix (".doap")) {
@@ -106,7 +110,6 @@ private class Package : MessageObject {
 					if (ret)
 						doapFileName = pName;
 			} else {
-
 				switch (pName) {
 					case "pksetting":
 						ret = extract_entry_to (ar, e, wdir);
@@ -119,6 +122,7 @@ private class Package : MessageObject {
 						break;
 					default:
 						if (pName.has_prefix ("files-")) {
+							// extract filelists
 							string arch = pName.substring (6, pName.last_index_of (".") - 6);
 
 							if (arch == currentArch) {
@@ -127,6 +131,10 @@ private class Package : MessageObject {
 								archFListName = pName;
 								break;
 							}
+						} else if (pName.has_prefix ("dependencies/")) {
+							// extract additional module dependencies
+							ret = extract_entry_to (ar, e, wdir_depdir);
+							break;
 						}
 						ar.read_data_skip ();
 						break;
@@ -768,6 +776,16 @@ private class Package : MessageObject {
 		}
 		return true;
 	}
+
+	public Dep.ComponentFactory get_component_factory () {
+		string wdir_depdir = Path.build_filename (wdir, "dependencies", null);
+
+		var cfactory = new Dep.ComponentFactory ();
+		cfactory.initialize ();
+		cfactory.load_extra_modules (wdir_depdir);
+
+		return cfactory;
+	}
 }
 
-} // End of namespace
+} // End of namespace: Listaller.IPK

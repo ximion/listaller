@@ -315,7 +315,7 @@ public class Manager : MessageObject {
 			inst_mode = IPK.InstallMode.SHARED;
 		string paths = VarSolver.autosubst_instvars ("%LIB_PRIVATE%", app.idname, inst_mode);
 
-		string[] depStr = app.dependencies.split ("\n");
+		string[] depStr = app.dependencies_str.split (",");
 		if (depStr.length <= 0) {
 			debug ("No dependencies set! Application was maybe not retrieved from software DB and therefore lacks the required data.");
 			debug ("Setting standard environment...");

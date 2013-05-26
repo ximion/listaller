@@ -190,7 +190,7 @@ public class Setup : MessageObject {
 		AppItem app = ipkp.control.get_application ();
 		if (str_is_empty (origin))
 			app.set_origin_local ();
-		app.dependencies = "?";
+		app.dependencies_str = "?";
 		app.fast_check ();
 		// This is required to only check the shared db for this application
 		if (is_root ())
@@ -229,7 +229,8 @@ public class Setup : MessageObject {
 			     _("Resolving dependencies of '%s'.").printf (app.full_name));
 
 		// get all dependencies for the current architecture and possibly generic dependencies
-		string pkgDeps = ipkp.control.get_dependencies (arch_generic (system_machine ()));
+		string pkg_dep_info = ipkp.control.get_dependencies (arch_generic (system_machine ()));
+		Dep.ComponentFactory cfactory = ipkp.get_component_factory ();
 
 		// Construct new dependency manager
 		DepInstaller depinst = new DepInstaller (db);
@@ -237,7 +238,7 @@ public class Setup : MessageObject {
 		connect_with_object (depinst, ObjConnectFlags.IGNORE_PROGRESS);
 
 		// Install possibly missing dependencies
-		ret = depinst.install_dependencies (pkgDeps);
+		ret = depinst.install_dependencies (pkg_dep_info, cfactory);
 		if (!ret) {
 			// If dependency installation failed, exit
 			return false;
@@ -276,7 +277,7 @@ public class Setup : MessageObject {
 		}
 
 		// Link the dependency idNames to this application
-		ret = db.set_application_dependencies (app.idname, pkgDeps);
+		ret = db.set_application_dependencies (app.idname, pkg_dep_info);
 		if (!ret) {
 			return false;
 		}

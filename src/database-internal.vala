@@ -454,7 +454,7 @@ private abstract class InternalDB : Object {
 
 			db_assert (insert_app.bind_int64 (AppRow.INST_TIME +1, item.install_time), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.DEPS +1, item.dependencies), "assign value");
+			db_assert (insert_app.bind_text (AppRow.DEPS +1, item.dependencies_str), "assign value");
 
 			db_assert (insert_app.step (), "execute app insert");
 
@@ -504,7 +504,7 @@ private abstract class InternalDB : Object {
 		}
 
 		item.install_time = stmt.column_int (AppRow.INST_TIME);
-		item.dependencies = stmt.column_text (AppRow.DEPS);
+		item.dependencies_str = stmt.column_text (AppRow.DEPS);
 		item.state = db_type;
 
 		item.origin = stmt.column_text (AppRow.ORIGIN);
