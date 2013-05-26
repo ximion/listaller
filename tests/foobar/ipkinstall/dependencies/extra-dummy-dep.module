@@ -1,0 +1,5 @@
+# A simple dummy dependency
+
+Name: Dummy Module Dependency (on Listaller itself)
+ID: dummy-module-dep-listallertest
+Libraries: liblistaller-glib.so

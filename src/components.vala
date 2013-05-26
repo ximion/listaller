@@ -208,6 +208,9 @@ private abstract class Component : Object {
 		// linebreaks in version numbers are evil!
 		res = res.replace ("\n", "");
 
+		if (res == "")
+			warning ("No version found for component '%s'.", idname);
+
 		return res;
 	}
 
@@ -449,10 +452,15 @@ private class Module : Component {
 		environment = "";
 		feed_url = "";
 		origin = "unknown";
+		install_data = new HashSet<string> ();
 	}
 
 	public Module.blank () {
 		base ("");
+		environment = "";
+		feed_url = "";
+		origin = "unknown";
+		install_data = new HashSet<string> ();
 	}
 
 	protected override IPK.MetaFile? load_from_file_internal (string fname) {

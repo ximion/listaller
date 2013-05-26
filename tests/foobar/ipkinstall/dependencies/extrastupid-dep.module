@@ -1,5 +1,0 @@
-# A simple dummy dependency
-
-Name: Extra-Stupid Module Dependency
-ID: extrastupid-module-dep
-Libraries: libsample.so.1

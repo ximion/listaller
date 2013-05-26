@@ -172,6 +172,9 @@ internal class ComponentFactory : Object {
 		// always satisfied if no required version is set
 		if (reference_version == "")
 			return true;
+		// no version found, but reference-version set? => version can never be satisfied
+		if (version == "")
+			return false;
 
 		int compare_result = compare_versions (version, reference_version);
 		switch (relation) {
