@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="depdesc-spec">
+<info>
+	<link type="topic" xref="specifications"/>
+
+	<credit type="author">
+		<name>Matthias Klumpp</name>
+		<email>matthias@tenstral.net</email>
+		<years>2012</years>
+	</credit>
+
+	<desc>Description of dependency handling in Listaller</desc>
+</info>
+
+<title>Dependencies in Listaller</title>
+
+<section id="rationale">
+<title>Rationale</title>
+
+	<p>Listaller distinguishes between so-called <em>Framework</em>-dependencies and <em>Module</em>-dependencies to simplify dependency-solving and to reflect the
+	organization of packages on a Linux system.</p>
+
+	<p>While Frameworks are provided by the distributor and are hard-wired into the system, Modules can be installed by Listaller from 3rd-party sources.</p>
+	<p>In an ideal world, packages only depend on Frameworks, but currently it might sometimes be necessary to pull Modules from 3rd-party sources (of course Listaller will
+	query the distribution's package database for the Module-dependency, before pulling it from somewhere else).</p>
+
+	<p>Modules and Frameworks are described in small textfiles, which are shipped with Listaller. Module dependencies may also be present in Listaller packages.
+	If some description files are missing, please file a bug report against Listaller, requesting inclusion by default.</p>
+</section>
+
+<section id="filesystem-location">
+<title>Dependency description locations</title>
+
+	<p>Listaller stores the information about possible default dependencies on the filesystem, usually in <file>/usr/share/listaller/components/</file>.</p>
+	<p>The Framework dependencies are stored in <file>frameworks/</file>, while the Module dependencies are store it <file>modules/</file>. The components associated with the
+	Framework/Module info don't have to be present, since the description files contain all information how to install them.</p>
+	<p>The Modules defined in the system's <file>modules/</file> folder override all Modules defined in Listaller packages which have the same name. Frameworks are never shipped
+	in Listaller packages.</p>
+</section>
+
+<section id="schema">
+<title>Description file schema</title>
+	<p>Framework and Module files are simple textfiles with the file extensions <file>.framework</file> or <file>.module</file>, depending on their type. The file contents
+	are similar, but some elements are specific for Franeworks or Modules, e.g. only modules can have an element of the type <code>Feed</code>.</p>
+	<p>A Framework file may look like this:</p>
+	<code><![CDATA[# The KDE4 base libraries
+
+ID: KDELibs4
+Version: shell$ kde4-config --version
+ prefix$ "KDE: "
+Binaries: kde4-config
+ kde-open
+ExtraLibSearchPath: %SYS_LIB%/kde4
+Libraries: kio_file.so
+ libkdeui.so.5
+ libsoprano.so.4
+ libthreadweaver.so.4
+ libsolid.so.4]]></code>
+	<p>The <code>ID</code> element defines an unique identifier for this component. Frameworks IDs start with an upper-cased letter, while Modules are lower-cased.</p>
+
+	<note style="warning">
+		<p>The documentation is not yet complete. You may want to help extending it.</p>
+	</note>
+</section>
+
+<section id="default-frameworks">
+<title>Frameworks</title>
+<p>Currently, the following <em>Framework</em> dependencies are shipped with Listaller by default, and packagers can reference them (the list shows their IDs):</p>
+	<terms>
+		<item>
+			<title>GNOME3</title>
+			<p>The GNOME-3 platform libraries.</p>
+		</item>
+		<item>
+			<title>GTK+3</title>
+			<p>The GTK+3 GUI toolkit libraries.</p>
+		</item>
+		<item>
+			<title>JRE7</title>
+			<p>The Java Runtime Environment version 7.</p>
+		</item>
+		<item>
+			<title>KDELibs4</title>
+			<p>The KDE libraries from the KDE project.</p>
+		</item>
+		<item>
+			<title>Libc6</title>
+			<p>The GNU standard C library.</p>
+		</item>
+		<item>
+			<title>Linux</title>
+			<p>Meta-framework, indicating that the software was built for GNU/Linux.</p>
+		</item>
+		<item>
+			<title>Mesa</title>
+			<p>The Mesa-3D libraries.</p>
+		</item>
+		<item>
+			<title>Python2</title>
+			<p>The Python2 scripting language.</p>
+		</item>
+		<item>
+			<title>Python</title>
+			<p>The Python3 scripting language.</p>
+		</item>
+		<item>
+			<title>Qt4Core</title>
+			<p>The core libraries of the Qt4 toolkit.</p>
+		</item>
+		<item>
+			<title>Xorg</title>
+			<p>The X.org X11 server.</p>
+		</item>
+	</terms>
+</section>
+
+</page>
