@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "Listaller.ent">
+%BOOK_ENTITIES;
+]>
+
+<section id="sect-Listaller-Enduser-AppInstaller">
+	<title>Installing IPK packages</title>
+	<para>Learn how you can install an IPK package.</para>
+
+	<section id="enduser-appinstall-install-ipk-gui">
+		<title>Installing packages (GUI method)</title>
+
+		<para>
+			Installing Listaller packages is really easy. Just make sure you have Listaller installed,
+			then follow the steps below.
+		</para>
+
+		<procedure>
+			<step>
+				<para>Download an IPK package or get it from somewhere else.</para>
+			</step>
+			<step>
+				<para>
+					Open the IPK-package with your PackageKit package installer (Apper or GNOME-PackageKit).
+					If a Listaller frontent is installed, simply double/single-clicking the package file should already
+					launch the right application.
+				</para>
+			</step>
+			<step>
+				<para>After the package is opened, just follow the instructions on screen to install it.</para>
+			</step>
+			<step>
+				<para>
+					The application is now installed. You should be able to launch it via you application-menu. (Plasma, GNOME-Shell, KRunner, …)
+					If there have been problems making the setup work for you, please file a bug against Listaller so we can fix it.
+				</para>
+			</step>
+		</procedure>
+
+		<para>
+			Listaller uses a system based on GPG-keys and some other values to check if a package can be trusted, as 3rd-party applications
+			can come from any source and it is not certain that they won't contain malicious software.
+		</para>
+		<para>
+			The system administrator has set a minimum trust level for packages. If your package is below this level, you will not be able to
+			install the package. By default, unsigned packages can never be installed without lowering the minimum security level.
+		</para>
+
+		<para>
+			If you have troubles installing an application because of this, you can temporarily change the minimum trust in Listaller's config file,
+			or speak to your system administrator.
+		</para>
+	</section>
+
+	<section id="enduser-appinstall-install-ipk-cli">
+		<title>Installing packages (CLI method)</title>
+
+		<para>
+			There are many ways to install an IPK package via the command line. We encourage you to use the <command>lipa</command> application, which is shipped with Listaller,
+			but you could also use <command>pkcon</command>, the PackageKit command-line tool.
+		</para>
+
+		<section id="enduser-appinstall-lipa">
+			<title>Install using lipa</title>
+				<para>
+					To install the package using <command>lipa</command>, just use the following command:
+				</para>
+			<screen>
+				[earth@sun] <userinput>lipa --install <filename>./packagename_version.ipk</filename></userinput>
+			</screen>
+
+			<para><command>lipa</command> will then guide you through the rest of the installation process.</para>
+		</section>
+		<section id="enduser-appinstall-pkcon">
+			<title>Install using pkcon</title>
+			<warning>
+				<para>
+					You should generally prefer using <command>lipa</command> over <command>pkcon</command>, since <command>lipa</command> was specially designed for
+					use with Listaller, while <command>pkcon</command> is just a command-line PackageKit client, which does not support stuff like Listaller's
+					signature-checking, licenses or private installations.
+				</para>
+			</warning>
+
+			<para>To install the package using <command>pkcon</command>, you can just do the same as you would do when installing a native distribution package:</para>
+			<screen>
+				[earth@sun] <userinput>pkcon install-local <filename>./packagename_version.ipk</filename></userinput>
+			</screen>
+
+			<para>PackageKit will then perform a <emphasis>shared</emphasis> installation of the Listaller package.</para>
+
+		</section>
+	</section>
+</section>

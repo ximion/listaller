@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "Listaller.ent">
+%BOOK_ENTITIES;
+]>
+
+<section id="sect-Listaller-Packaging-Howto">
+	<title>Building Listaller Packages</title>
+
+	<para>
+		The following instructions will help you creating cross-distro IPK packages for your own application.
+		Please note that Listaller is designed to install applications, so IPK packages will only install <emphasis>applications</emphasis>.
+		Packaging shared libraries using IPK packages is a very bad idea, and although it might be possible, we don't want shared libs packaged
+		in IPK packages. If you have a shared library, you can create a native distribution package and distribute it as DEB/RPM.
+	</para>
+
+	<section id="packaging-howto-prepare">
+		<title>Prepare your application</title>
+
+		<para>
+			Your application needs to meet some special requirements to be installed on a wide variety of different Linux distributions.
+			(E.g. it must be relocatable) You can read the application development documents for more information
+			on this step (see <xref linkend="chap-Listaller-App-Development" />).
+		</para>
+	</section>
+	<section id="packaging-howto-packaging-dir">
+		<title>Set up the packaging info dir</title>
+
+		<para>
+			To create a Listaller IPK package, you first need to create a directory containing information about your application and how
+			to build it. The directory should be at toplevel of your source tree (but it does not have to be there) and it should be named
+			<filename>ipkinstall</filename>. The directory has to contain a <filename>pkoptions</filename> file, which defines some options for the package build,
+			e.g. if Listaller should try to find dependencies automatically. A minimalistic <filename>pkoptions</filename>-file might look like this one:</para>
+			<programlisting language="Debian Control">
+<![CDATA[Version: 1.1
+
+AutoFindDeps: true]]>
+			</programlisting>
+
+			<para>The <literal>Version</literal> field should reflect the IPK standard version this package will be build for and NOT the version of your application.</para>
+			<para>
+				Other files in the IPK source directory are DOAP data for your application (<filename>appname.doap</filename>), a list of files which should be
+				installed (<filename>files-current.list</filename>), a Makefile containing rules how to build your app from source (<filename>build.rules</filename>)
+				and a file describing the dependencies of your application (<filename>dependencies.list</filename>).
+				All files except for the Makefile and the dependency list are required and have to be present. In the following sections
+				we will show you the basic stuff you can do with these files and how you create them.
+			</para>
+	</section>
+
+	<section id="packaging-howto-doap-data">
+		<title>Create DOAP data</title>
+
+		<para>
+			Listaller uses <ulink url="https://github.com/edumbill/doap/wiki/">DOAP</ulink> to fetch information about your project.
+			You should already have a DOAP description of your project. (it is required e.g. for all GNOME projects and many other projects use it already)
+		</para>
+		<para>
+			If you don't have DOAP data already, you can generate it, e.g. using <ulink url="http://crschmidt.net/semweb/doapamatic/">DOAP-A-Matic</ulink> or another tool.
+			For more information about DOAP, you can read <ulink url="http://www.oss-watch.ac.uk/resources/doap.xml">this document</ulink>.
+		</para>
+		<para>
+			After you generated the data, save it as <filename>*appname*.doap</filename> in your IPK source dir, where <code>*appname*</code>
+			should be replaced with the name of your application in lowercase. Other options are linking the DOAP file to your IPK source-dir
+			or writing a script which auto-generates the sourcedir when you want to build the IPK package.
+			(if you don't want to store the DOAP data in the IPK-src dir)
+		</para>
+
+	</section>
+
+	<section id="packaging-howto-filelist">
+		<title>Create file listings</title>
+
+		<para>
+			Now you need to write a list of the files your application wants to install, so Listaller can add them to the package and copy them
+			to the right locations, when the setup is executed. IPK packages support multiarch setups, so you can define files which have to be
+			installed by architecture, using <filename>files-*arch*.list</filename> file-lists, where <code>*arch*</code> is the architecture these files
+			belong to. (e.g. ix86, amd64, …) If <code>*arch*</code> is <code>all</code>, files in this file-list will get installed on all
+			architectures.
+		</para>
+
+		<para>
+			You can also make Listaller pick the current system architecture and create a package for it. This is usefull if you don't package binary
+			data which is already there, but instead build an IPK package from source. In this case, the file-list needs to be named <filename>files-current.list</filename>.
+			Files mentioned in this listing will get installed on the current architecture. This is the most common case when building an IPK package.
+		</para>
+
+		<para>An IPK file-list can look like this:</para>
+		<programlisting language="Debian Control">
+<![CDATA[# IPK file list for FooBar
+
+:: %APP%
+FooBar.desktop
+:: %INST%
+foo-bar
+*.html
+*.txt
+:: %INST%/data
+data/*
+:: %ICON-16%
+icons/16x16.png foobar.png
+:: %ICON-32%
+icons/32x32.png foobar.png
+:: %ICON-64%
+icons/64x64.png foobar.png
+:: %ICON-128%
+icons/128x128.png foobar.png]]>
+		</programlisting>
+		<para>
+			Lines starting with a <emphasis>::</emphasis> define the destination directory on the target machine. You should always use a Listaller directory
+			variable there. Absolute paths are possible, but will lower the trust level for your package and will make private package installations impossible.
+			You should in general not use absolute paths. After defining the target directory, you can add a list files which should be installed
+			there, relatively to your source directory. Wildcards are allowed in filenames.
+		</para>
+		<note>
+			<para>
+				By default, Listaller uss the directory below <filename>ipkinstall</filename> as source-directory, but you can change this setting
+				by using the <code>FilesRoot</code> field in <filename>pkoptions</filename>
+			</para>
+		</note>
+	</section>
+
+	<section id="packaging-howto-finetuning">
+		<title>Some finetuning</title>
+
+		<para>Do some manual tweaks if needed.</para>
+
+		<warning>
+			<para>The documentation is not yet complete. You may want to help extending it.</para>
+		</warning>
+
+	</section>
+
+	<section id="packaging-howto-build">
+		<title>Build the package</title>
+
+		<para>
+			You are now ready to build your IPK package! Just make sure Listaller's command-line tools are installed, then change to the
+			directory below the <filename>ipkinstall</filename> dir and execute:
+		</para>
+		<screen>
+			[earth@sun/foobar] <userinput>lipkgen -b</userinput>
+		</screen>
+
+		<para>
+			The build tool should now create an IPK package in the directory below your current dir, which contains all things needed to run
+			your application.
+		</para>
+		<para>
+			We strongly encourage you to sign your package with your public GPG key. If you don't sign it, Listaller will consider the package
+			as dangerous and GUIs might show a warning message when users want to install the package. To sign the package, just append
+			<userinput>–sign</userinput> to the build options:
+		</para>
+		<screen>
+			[earth@sun/foobar] <userinput>lipkgen -b --sign</userinput>
+		</screen>
+
+		<para>
+			There are also some other flags you can apply to modify the behaviour of <command>lipkgen</command>. If you are interested, you can read the
+			manpage. Usually the extra options should not be needed.
+		</para>
+	</section>
+
+	<section id="packaging-howto-distribute">
+		<title>Distribute the package</title>
+
+		<para>
+			You can now publish your (signed) package anywhere on the web and have users install it using Listaller.
+			Later, you might want to set-up and update-source for your software, so all users stay up-to-date.
+		</para>
+	</section>
+</section>

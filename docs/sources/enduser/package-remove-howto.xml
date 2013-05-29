@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "Listaller.ent">
+%BOOK_ENTITIES;
+]>
+
+<section id="sect-Listaller-Enduser-AppRemoval">
+	<title>Removing IPK packages</title>
+		<para>Information how you can remove a Listaller application.</para>
+
+	<section id="enduser-remove-ipk">
+		<title>Removing packages</title>
+
+		<warning>
+			<para>The documentation is not yet complete. You may want to help extending it.</para>
+		</warning>
+
+		<para>
+			If you want to uninstall the software, you can use any PackageKit frontend to remove it,
+			if you installed the application in “shared mode” as superuser.
+			Otherwise, you need a Listaller-tool to remove it, e.g. limanager-gtk on GNOME. Just click uninstall and you're done.
+		</para>
+		<para>
+			The <command>lipa</command> CLI tool is also able to remove Listaller packages, just use the <userinput>--remove</userinput> option
+			instead of <userinput>--install</userinput>, and specify the application name or ID.
+		</para>
+	</section>
+</section>

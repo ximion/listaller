@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "Listaller.ent">
+%BOOK_ENTITIES;
+]>
+
+<section id="sect-Listaller-Packaging-Appcompile">
+	<title>Appcompile</title>
+		<para>
+			Appcompile is a helper program to build applications from source-code.
+			It will automatically detect the build-system, configure it (applying the necessary
+			flags and custom ones), then build the applicatio and install it into a user-defined directory,
+			so Listaller can use the binaries to generate an IPK package.
+		</para>
+
+	<section id="appcompile-whatis">
+		<title>What is Appcompile?</title>
+		<para>Appcompile is a helper program to build applications from source-code.
+		It will automatically detect the build-system, configure it (applying the necessary flags and custom ones),
+		then build the applicatio and install it into a user-defined directory, so Listaller can use the binaries to
+		generate an IPK package.</para>
+		<para>Using Appcompile is completely optional, it is not required to build IPK packages. However, in many cases it
+		might simplify build-scripts a lot.</para>
+	</section>
+
+	<section id="howto">
+		<title>How to use Appcompile?</title>
+		<warning>
+			<para>The documentation is not yet complete. You may want to help extending it.</para>
+		</warning>
+	</section>
+</section>

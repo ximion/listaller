@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "Listaller.ent">
+%BOOK_ENTITIES;
+]>
+
+<section id="sect-Listaller-Packaging-Depscan">
+	<title>Depscan - Scan for software dependencies</title>
+
+	<para>
+		Depscan scans ELF executables' library dependencies and generates a nice report for you.
+		This makes it easier to find out what your software's, dependencies are. Listaller uses this tool at
+		build-time to generate the automatic dependency-list, but you may use it as well to find out why an application
+		has dependency X.
+	</para>
+
+	<section id="depscan-whatis">
+		<title>What is Depscan?</title>
+
+		<para>
+			Depscan scans ELF executables library dependencies and generates a nice dependency report for you.
+			This makes it easier to find out what your software's, dependencies are.
+		</para>
+		<para>
+			Listaller uses this tool at build-time to generate the automatic dependency-list,
+			but you may use it as well to find out why an application has dependency X.
+			It will also show you immediately if you are using <literal>Franmeworks</literal> which are present on the system,
+			or if you use <literal>Modules</literal> which can not be satisfied automatically.
+		</para>
+		<para>
+			Depscan will later be extended to support dependency-detection for other languages, e.g. Python/Ruby too.
+		</para>
+	</section>
+	<section id="depscan-howto">
+		<title>How to use Depscan?</title>
+
+		<warning>
+			<para>The documentation is not yet complete. You may want to help extending it.</para>
+		</warning>
+	</section>
+</section>

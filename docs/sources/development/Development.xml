@@ -12,5 +12,8 @@
 	</para>
 
 	<xi:include href="relocatable-apps.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="ligcc.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="relaytool.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<!-- <xi:include href="appcompile.xml" xmlns:xi="http://www.w3.org/2001/XInclude" /> -->
 
 </chapter>

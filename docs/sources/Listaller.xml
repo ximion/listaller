@@ -6,6 +6,9 @@
 <book>
 	<xi:include href="Book_Info.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="Preface.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="enduser/Enduser.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="development/Development.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="packaging/Packaging.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+
 	<index />
 </book>

@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "Listaller.ent">
+%BOOK_ENTITIES;
+]>
+
+<section id="sect-Listaller-App-Development-Ligcc">
+	<title>The Ligcc tools</title>
+
+	<para>
+		Unlike Windows, Linux generally does not support "build on newer, run on older"
+		development. In other words, the process of compiling the same program on an older system
+		and a newer system can produce different binaries with different requirements.
+	</para>
+
+	<section id="ligcc-whatis">
+		<title>What is ligcc?</title>
+
+		<para>Ligcc is a wrapper around gcc. It allows you to create more portable executables by doing three things:</para>
+		<itemizedlist>
+			<listitem>
+				<para>
+					Forces the linker to link against older glibc symbols. Users who are using an older version of glibc will no
+					longer get <screen>undefined symbol GLIBC_2.4 in /lib/libc.so</screen>-style error messages.
+				</para>
+			</listitem>
+			<listitem>
+				<para>Allows you to easily statically link to any other library.</para>
+			</listitem>
+			<listitem>
+				<para>
+					Automatically removes bogus dependencies. For example, your program uses libfoo. libfoo uses libpng internally,
+					but your app does not. Yet the pkg-config file for libfoo specifies <code>-lfoo -lpng</code> is linker parameters. And tadaa
+					- you now have a bogus dependency on libpng! Ligcc automatically removes the -lpng for you if your app doesn't use libpng
+					directly.
+				</para>
+				<important>
+					<para>
+						It is recommended that you use binutils 2.15.94 or later to compile programs, recent versions of
+						ld support the <userinput>–as-needed</userinput> argument, which does a much better job than our own dependency stripper,
+						and is faster too.
+					</para>
+				</important>
+			</listitem>
+			<listitem>
+				<para>
+					Add <filename>$ORIGIN/../lib</filename> to the binary's library search path. <filename>$ORIGIN</filename> is the directory in which the
+					binary exists. This ensures that your binary can find its library dependencies if they are placed in the <filename>'lib'</filename> folder
+					under the same prefix. You can drop any dependency library you want in <filename>$PREFIX/lib/</filename>. Your binary can find those libraries
+					without messing with <filename>$LD_LIBRARY_PATH</filename>.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					If you set <filename>$LIBUILD_PROJECTNAME</filename>, ligcc will also add <filename>$ORIGIN/../lib/$LIBUILD_PROJECTNAME</filename> to
+					the library search path.
+				</para>
+			</listitem>
+		</itemizedlist>
+	</section>
+
+	<section id="ligcc-howto">
+		<title>How to use ligcc?</title>
+
+		<para>Use ligcc just like how you use gcc:</para>
+		<example>
+			<title>Using ligcc</title>
+			<screen>
+				[earth@sun] ligcc foo.c -o foo
+				[earth@sun] lig++ bar.cpp -o bar
+			</screen>
+		</example>
+
+		<para>Recommended way:</para>
+		<programlisting language="Bash">
+<![CDATA[export CC=ligcc
+export CXX=lig++
+./configure
+make]]>
+		</programlisting>
+		<para>or</para>
+		<programlisting language="Bash">make CC=ligcc CXX=lig++</programlisting>
+
+		<para>There are several environment variables that change ligcc's behavior:</para>
+
+		<variablelist>
+			<title>ligcc environment variables</title>
+			<varlistentry>
+				<term><literal>LIBUILD_PATH</literal></term>
+				<listitem>
+					<para>
+						Use this as the include dir for the ligcc headers. Default value: <filename>$PREFIX/include/libuild</filename>
+						(where <filename>$PREFIX</filename> is the prefix in which libuild is installed)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>LIBUILD_CC</literal></term>
+				<listitem>
+					<para>Use the specified C compiler. Default value: <command>gcc</command></para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>LIBUILD_CXX1</literal></term>
+				<listitem>
+					<para>Use the specified C++ compiler. Default value: <command>g++</command></para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>LIBUILD_STATIC_X</literal></term>
+				<listitem>
+					<para>If set to 1, then libuild will statically link some X extension libraries.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>LIBUILD_BOGUS_DEPS</literal></term>
+				<listitem>
+					<para>Specify a list of whitespace-seperated bogus library dependencies (like: X11 ICE png).
+					These libraries will not be linked against. This option is useful if you want to specify bogus dependencies manually
+					because the automatic bogus dependency stripper doesn't work correctly for your project (see below).</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>LIBUILD_DISABLE_BOGUS_DETECTOR</literal></term>
+				<listitem>
+					<para>
+						If set to 1, disables the automatic bogus dependency stripper. This is useful when linking to libraries don't have correct
+						<literal>DT_NEEDED</literal> entries, like GTK 1.2. GTK 1.2 uses <filename>libX11.so</filename> internally, but it's not linked with
+						<userinput>-lX11</userinput>. Instead, <command>gtk-config –libs</command> returns <userinput>-lgtk -lX11</userinput> or something.
+						If your app doesn't use xlib internally, then our bogus dependency stripper will strip the <userinput>-lX11</userinput> argument.
+						Linking will then fail.
+					</para>
+					<para>
+						The built-in bogus dependency stripper is not used if you have a recent version of binutils, which supports
+						<command>ld –as-needed</command> (it'll use binutil's native support for bogus dependency stripping instead).
+						So you should get use a recent version of binutils if your ld doesn't already support that argument.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>LIBUILD_NOT_BOGUS</literal></term>
+				<listitem>
+					<para>If you want to use the automatic bogus dependency dectector anyway (using <command>ld –asneeded</command>), then you can specify a list
+					of dependencies here that are not bogus with this environment variable. Example:</para>
+					<programlisting language="Bash">export LIBUILD_NOT_BOGUS="X11 ICE png"</programlisting>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>LIBUILD_STATIC</literal></term>
+				<listitem>
+					<para>Specify a list of whitespace-seperated libraries to statically link to (like: <userinput>popt z</userinput>). You can also explicitly
+					specify a filename to the static library. Examples:</para>
+					<programlisting language="Bash">
+<![CDATA[export LIBUILD_STATIC="popt z"
+export LIBUILD_STATIC="popt=/usr/lib/libpopt.a"]]>
+					</programlisting>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>LIBUILD_STATIC_LIBGCC</literal></term>
+				<listitem>
+					<para>If set to 1, link all binaries with <userinput>-static-libgcc</userinput>. See the gcc info page for more info about this option.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>LIBUILD_PROJECTNAME</literal></term>
+				<listitem>
+					<para>If non-empty, ligcc will add <filename>$ORIGIN/../lib/$LIBUILD_PROJECTNAME</filename> to the library search path.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>LIBUILD_INCLUDE</literal></term>
+				<listitem>
+					<para>Prepend the specified directory to the compiler's header search path. The compiler will search this directory first,
+					before searching any other directory. This is useful in combination with the older GTK headers package.
+					You can specify multiple directories, seperated by a <userinput>:</userinput>, just like the <filename>$PATH</filename> environment
+					variable. If the order of the -I flags is important for your application, you can replace paths by using <userinput>/old/path=/new/path</userinput>.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>LIBUILD_RESOLVE_LIBPATH</literal></term>
+				<listitem>
+					<para>A space-seperated list of (Perl) regular expressions which specify the libraries whose path must be resolved into absolute paths.</para>
+					<para>Internally, ligcc reorders the linking arguments that are to be passed to gcc (for various reasons).
+					This can cause problems when linking certain static libraries (for example, static WxWidgets libraries).
+					But that can be worked around by using full path names for static libraries (e.g. turning <userinput>-lfoo</userinput> parameters into
+					<filename>/usr/lib/full-path-to/foo.a</filename>).</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</section>
+</section>

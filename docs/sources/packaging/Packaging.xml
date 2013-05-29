@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "Listaller.ent">
+%BOOK_ENTITIES;
+]>
+<chapter id="chap-Listaller-Packaging">
+	<title>Packaging</title>
+	<para>
+		Creating Listaller packages and cross-distro applications is easy. Just follow the instructions below and read the documents.
+	</para>
+
+	<xi:include href="packaging-instructions.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="appcompile.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="depscan.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+
+</chapter>
