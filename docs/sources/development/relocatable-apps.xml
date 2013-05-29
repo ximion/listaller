@@ -1,0 +1,442 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "Listaller.ent">
+%BOOK_ENTITIES;
+]>
+
+<section id="sect-Listaller-Test_Chapter-Test_Section_2">
+	<title>Guide to making relocatable applications</title>
+	<section id="problem">
+		<title>The problem</title>
+
+		<para>
+			Listaller supports relocation. This means that a package can be
+			installed to any location, like how Win32 installers let you choose a
+			directory.
+			However, most applications are not relocatable. The paths where in they
+			search for data files are usually hardd at compile time.
+		</para>
+		<para>
+			On Win32, applications and libraries are easily relocatable because
+			applications and DLLs can use <code>GetModuleFilename()</code> to obtain
+			their full path.
+		</para>
+		<para>
+			On Linux however, no easy mechanisms exist. There is no function
+			equivalent to <code>GetModuleFilename()</code>.
+			For executables, you can still find your full location by resolving the symlink <filename>/proc/self/exe</filename>,
+			but that won't work for libraries.
+		</para>
+	</section>
+
+	<section id="solution">
+		<title>The solution</title>
+
+		<para>
+			This is why we have developed <application>BinReloc</application>.
+			BinReloc provides an easy-to-use API that uses dynamic linker and kernel
+			magic to find out the full path of your application or library.
+		</para>
+
+		<itemizedlist>
+			<title>Highlights</title>
+			<listitem><para>It can be statically included in your project.</para></listitem>
+			<listitem><para>It's small, only about 20 KB of C source code (I suspect it's only
+			about 10 KB if you remove all the inline documentation comments).</para></listitem>
+			<listitem><para>It has absolutely no dependancies other than libc.</para></listitem>
+			<listitem><para>It's <emphasis>public domain</emphasis>, which means you can do anything you want with the code, including relicensing it under a different license.</para></listitem>
+			<listitem><para>Portability to other operating systems will not be affected: BinReloc will fallback to hardcoded paths if it's running
+			on an operating system which has no executable relocation features.
+			You can also completely disable BinReloc with one simple macro, making your program behave exactly like
+			when you were using hardcoded paths.</para></listitem>
+			<listitem><para>There are two versions of BinReloc: a plain C version, and glib version which even has a glib-style API.</para></listitem>
+		</itemizedlist>
+
+		<note>
+			<title>Tip for KDE developers</title>
+			<para>As of April 21 2004, BinReloc-like functionality has been added to the KDE-libs, in the
+			<code>KStandardDirs</code> class. If your application uses <code>KStandardDirs</code>
+			to lookup data files, your application will be automatically relocatable, so using BinReloc is not necessary.
+			Libraries however will not benefit from this, and must use BinReloc directly.</para>
+		</note>
+
+	</section>
+
+	<section id="helloworld">
+		<title>Hello World!</title>
+
+		<para>
+			Let's begin with a BinReloc "Hello World" tutorial. We will use the <emphasis>plain C</emphasis> version of BinReloc.
+			The glib version's API is only slightly different from the plain C API, so don't worry about the API differences.
+			In this tutorial, our imaginary developer, Joe, will show you everything he does when writing the <application>Hello World</application> program.</para>
+
+		<procedure>
+			<step><para>Generate BinReloc source files</para>
+				<para>Joe <ulink url="http://listaller.tenstral.net">downloads the BinReloc SDK</ulink> from the <emphasis>Listaller Tools</emphasis> section of the download page.
+				He extracts the archive in his home folder. A folder called <filename>binreloc-2.0</filename> appears.</para>
+
+				<programlisting language="Bash"><![CDATA[[joe@localhost /home/joe]$ tar xzf binreloc-2.0.tar.gz
+[joe@localhost /home/joe]$ cd binreloc-2.0</div>]]>
+				</programlisting>
+
+				<para>Joe's Hello World program doesn't use glib, so he wants the plain C version of BinReloc.
+				Joe runs the following commands to generate the BinReloc source files:</para>
+				<programlisting language="Bash"><![CDATA[[joe@localhost /home/joe/binreloc-2.0]$ ./generate.pl normal
+Source code written to 'binreloc.c'
+Header written to 'binreloc.h'
+[joe@localhost /home/joe/binreloc-2.0]$ mkdir ~/helloworld
+[joe@localhost /home/joe/binreloc-2.0]$ mv binreloc.c binreloc.h ~/helloworld/</div>]]>
+				</programlisting>
+			</step>
+
+			<step><para>Write the program</para>
+				<para>Now that Joe has generated the BinReloc source files, he continues with writing a Hello World program:</para>
+				<programlisting language="C++"><![CDATA[#include <stdio.h>
+#include "binreloc.h"
+#ifndef NULL
+    #define NULL ((void *) 0)
+#endif
+
+int main () {
+    BrInitError error;
+
+    if (br_init (&error) == 0 &amp;&amp; error != BR_INIT_ERROR_DISABLED) {
+        printf ("Warning: BinReloc failed to initialize (error code %d)\n", error);
+        printf ("Will fallback to hardcoded default path.\n");
+    }
+
+    printf ("The full path of this application is: %s\n", br_find_exe ("default fallback path"));
+    return 0;
+}]]>
+				</programlisting>
+				<para>He saves this file as <filename>/home/joe/helloworld/hello.c</filename>.</para>
+			</step>
+
+			<step><para>Compile &amp; run</para>
+				<para>Now it is time to compile &amp; run the program:</para>
+				<programlisting language="Bash"><![CDATA[[joe@localhost /home/joe/helloworld]$ gcc -DENABLE_BINRELOC hello.c binreloc.c -o hello
+[joe@localhost /home/joe/helloworld]$ ./hello
+The full path of this application is: /home/joe/helloworld/hello]]>
+				</programlisting>
+				<para>Yes, it's this easy!</para>
+
+				<note>
+					<title>How to disable BinReloc</title>
+				<para>
+					The <code>-DENABLE_BINRELOC</code> argument enables BinReloc support. BinReloc is only enabled if this macro is defined.
+					Let's take a look at what happens if the macro is not defined:
+				</para>
+				<programlisting language="Bash"><![CDATA[[joe@localhost /home/joe/helloworld]$ gcc hello.c binreloc.c -o hello
+[joe@localhost /home/joe/helloworld]$ ./hello
+The full path of this application is: default fallback path]]>
+				</programlisting>
+
+				</note>
+			</step>
+		</procedure>
+	</section>
+
+
+
+	<section id="init">
+		<title>Initialization</title>
+
+		<para>
+			BinReloc <emphasis>must</emphasis> be initialize by calling one of the BinReloc initialization functions:
+		</para>
+
+		<para>
+			If you're using BinReloc in an application, then call <code>br_init()</code>. The definition is:
+		</para>
+		<programlisting language="Bash"><![CDATA[int br_init (BrInitError *error);]]></programlisting>
+		<para>
+			This function returns 1 on success, and 0 if BinReloc failed to initialize.
+			If BinReloc failed to initialize, then the error code will be stored in <code>error</code>.
+			The following error codes are available:
+		</para>
+		<programlisting language="Bash"><![CDATA[typedef enum {
+        /* Cannot allocate memory. */
+        BR_INIT_ERROR_NOMEM,
+        /* Unable to open /proc/self/maps; see errno for details. */
+        BR_INIT_ERROR_OPEN_MAPS,
+        /* Unable to read from /proc/self/maps; see errno for details. */
+        BR_INIT_ERROR_READ_MAPS,
+        /* The file format of /proc/self/maps is invalid; kernel bug? */
+        BR_INIT_ERROR_INVALID_MAPS,
+        /* BinReloc is disabled. */
+        BR_INIT_ERROR_DISABLED
+} BrInitError;
+]]>
+		</programlisting>
+		<para>
+			If you're using BinReloc in a library, then call <code>br_init_lib()</code>. The definition is:
+			<code>int br_init_lib (BrInitError *error);</code>
+		</para>
+		<para>This function returns 1 on success, and 0 if BinReloc failed to initialize.</para>
+		<para>
+			If you don't initialize BinReloc, or if initialization failed, then all BinReloc functions will return
+			the fallback paths, so even if initialization failed, it's not fatal. Initialization will fail
+			if BinReloc is disabled (because <code>ENABLE_BINRELOC</code> is not defined), or because the application
+			is running on a platform which doesn't support relocating executables (non-Linux platforms).
+		</para>
+	</section>
+
+
+	<section id="basic">
+		<title>Basic usage</title>
+
+		<para>There are more functions besides <code>br_find_exe()</code>. Here is a list of all relocation functions:</para>
+		<table frame="all">
+			<title>Relocation functions</title>
+			<tgroup cols='2' colsep='1' rowsep='1'>
+			<thead>
+				<row>
+					<entry>Function</entry>
+					<entry>Returns</entry>
+				</row>
+			</thead>
+			<tbody>
+				<row>
+					<entry><para><code>br_find_exe()</code></para></entry>
+					<entry><para>The full path of your application or library.</para></entry>
+				</row>
+				<row>
+					<entry><para><code>br_find_exe_dir()</code></para></entry>
+					<entry><para>The folder in which your application or library is located.</para></entry>
+				</row>
+				<row>
+					<entry><para><code>br_find_prefix()</code></para></entry>
+					<entry>
+						<para>
+							The prefix in which your application or library is located.
+							This function assumes that your binary is located
+							inside an FHS-compatible directory structure (<filename>$prefix/bin/</filename> or <filename>$prefix/lib/</filename>). Examples:
+						</para>
+						<itemizedlist>
+							<listitem><para>Your binary is <filename>/usr/bin/foo</filename>. It will return <filename>/usr</filename>.</para></listitem>
+							<listitem><para>Your library is <filename>/usr/local/lib/libfoo.so</filename>. It will return <filename>/usr/local</filename>.</para></listitem>
+							<listitem><para>Your binary is <filename>/Applications/CoolApp2040XP/CoolApp</filename>. It will return <filename>/Applications"</filename>.</para></listitem>
+						</itemizedlist>
+						<para>So basically, it returns <emphasis>dirname(executable_filename) + "/.."</emphasis></para>
+					</entry>
+				</row>
+				<row>
+					<entry><para><code>br_find_bin_dir()</code></para></entry>
+					<entry><para>PREFIX + "/bin"</para></entry>
+				</row>
+				<row>
+					<entry><para><code>br_find_sbin_dir()</code></para></entry>
+					<entry><para>PREFIX + "/sbin"</para></entry>
+				</row>
+				<row>
+					<entry><para><code>br_find_data_dir()</code></para></entry>
+					<entry><para>PREFIX + "/share"</para></entry>
+				</row>
+				<row>
+					<entry><para><code>br_find_locale_dir()</code></para></entry>
+					<entry><para>PREFIX + "/locale"</para></entry>
+				</row>
+				<row>
+					<entry><para><code>br_find_lib_dir()</code></para></entry>
+					<entry><para>PREFIX + "/lib"</para></entry>
+				</row>
+				<row>
+					<entry><para><code>br_find_libexec_dir()</code></para></entry>
+					<entry><para>PREFIX + "/libexec"</para></entry>
+				</row>
+				<row>
+					<entry><para><code>br_find_etc_dir()</code></para></entry>
+					<entry><para>PREFIX + "/etc"</para></entry>
+				</row>
+			</tbody>
+		</tgroup>
+		</table>
+
+		<para>
+			All functions in the above table are declared like this:
+			<code>char *br_find_something (const char *default_path);</code>
+		</para>
+		<para>
+			<code>default_path</code> is used as fallback: if the BinReloc isn't initialized, or failed to initialize,
+			then a copy of default_path will be returned. Or if the default_path is NULL, NULL will be returned.
+		</para>
+
+		<warning>
+			<para>
+				Note that the return values of all of the above functions must be freed
+				when no longer necessary, except if the return value is NULL.
+			</para>
+		</warning>
+
+		<para>
+			<emphasis>All</emphasis> BinReloc functions have inline documentation! So just take a look at <filename>binreloc.c</filename> if you need more info about a certain function.
+		</para>
+
+	</section>
+
+	<section id="glib">
+		<title>GLib-style API</title>
+
+		<para>
+			There's also a BinReloc version with a glib-style API. Generating this version is just like generating the normal version:
+		</para>
+		<programlisting language="Bash"><![CDATA[[joe@localhost /home/joe/binreloc-2.0]$ ./generate.pl glib
+Source code written to 'binreloc.c'
+Header written to 'binreloc.h']]>
+		</programlisting>
+
+		<para>
+			The API is almost identical to the plain C version, except that it uses glib-style names and glib data types, such as GError.
+			See <ulink url="http://listaller.tenstral.net">the full API reference</ulink>.
+		</para>
+	</section>
+
+	<section id="utility">
+		<title>Useful utility functions</title>
+
+		<para>
+			The plain C version of BinReloc provides some utility functions for modifying strings and paths,
+			because many applications will need such functionality. The GLib version doesn't contain these utility functions
+			because GLib already has its own utility functions. Note that these utility functions are fully portable, and can be used
+			even when BinReloc is not enabled/initialized.
+		</para>
+		<programlisting language="C">char *br_strcat (const char *str1, const char *str2);</programlisting>
+		<itemizedlist>
+			<listitem><para>str1: A string.</para></listitem>
+			<listitem><para>str2: Another string.</para></listitem>
+			<listitem><para>Returns: A newly-allocated string. This string should be freed when no longer needed.</para></listitem>
+		</itemizedlist>
+		<para>Concatenate str1 and str2 to a newly allocated string.</para>
+		<para>Example:</para>
+		<programlisting language="C"><![CDATA[char *datafile;
+
+datafile = br_strcat ("/usr", "/foo/mydata.txt");
+load_data_file (datafile);
+free (datafile);</pre>
+]]>
+		</programlisting>
+	</section>
+
+	<section id="autoconf">
+		<title>Autoconf/Automake build system integration</title>
+
+		<para>
+			Most Autoconf/Automake projects use macros that define a hardcoded path.
+			Let's take a look at this piece of code as example.
+		</para>
+
+		<para>In <filename>Makefile.am</filename>:</para>
+		<programlisting><![CDATA[INCLUDES = $(LIBGLADE_CFLAGS) \
+           -DDATADIR=\"$(datadir)\"
+
+bin_PROGRAMS = foo
+foo_SOURCES = main.c]]>
+		</programlisting>
+
+		<para>In <filename>main.c</filename>:</para>
+		<programlisting language="C">xml = glade_xml_new (DATADIR "/foobar/glade/main.glade", NULL, NULL);</programlisting>
+
+		<para>How to use BinReloc:</para>
+		<procedure>
+			<step>
+				<para>
+					Use the special BinReloc Autoconf Macro (<filename>binreloc.m4</filename>). This file can be found in
+					the <ulink url="http://listaller.tenstral.net">BinReloc SDK</ulink>.
+				</para>
+				<para>
+					Append the contents of <filename>binreloc.m4</filename> to <filename>acinclude.m4</filename> (which is in the same
+					folder as <filename>configure.in</filename>). Create <filename>acinclude.m4</filename> if it doesn't exist.
+				</para>
+				<para>
+					In <filename>configure.in</filename>, put the command <code>AM_BINRELOC</code> somewhere.
+				</para>
+				<para>
+					The <literal>AM_BINRELOC</literal> macro checks whether BinReloc should be enabled (whether the system supports the feature,
+					whether the user explicitly disabled it, etc). The variable <code>$br_cv_binreloc</code>
+					will be set to 'yes' if BinReloc is enabled, or 'no' otherwise.
+				</para>
+			</step>
+			<step>
+				<para>Copy <filename>binreloc.c</filename> and <filename>binreloc.h</filename> to your source code directory.</para>
+			</step>
+			<step>
+				<para>Add <code>BINRELOC_CFLAGS</code> and <filename>binreloc.c/binreloc.h</filename> to <filename>Makefile.am</filename>:</para>
+				<programlisting>
+<![CDATA[AM_CPPFLAGS = $(BINRELOC_CFLAGS)
+...
+foo_SOURCES = main.c <span class="highlight">\
+              binreloc.h \
+              binreloc.c]]>
+				</programlisting>
+			</step>
+			<step>
+				<para>At the beginning of <filename>main.c</filename>, add:</para>
+				<programlisting language="C">#include "binreloc.h"</programlisting>
+				<para>
+					Somewhere in <filename>main.c</filename>:
+				</para>
+				<programlisting language="C">
+<![CDATA[gchar *dir, *file;
+
+gbr_init (NULL);
+dir = br_find_data_dir (DEFAULT_DATA_DIR);
+file = g_strdup_printf ("%s/foobar/glade/main.glade", dir);
+g_free (dir);
+
+xml = glade_xml_new (file, NULL, NULL);
+g_free (file);]]>
+				</programlisting>
+			</step>
+		</procedure>
+
+		<para>
+			And that was it! Your configure script will now have a <emphasis>--enable-binreloc=[yes/no/auto]</emphasis> option.
+			The default value for this option is <emphasis>--enable-binreloc=auto</emphasis>, which will automatically check whether BinReloc support is
+			desired. It does so by checking for the following things:
+		</para>
+		<itemizedlist>
+			<listitem><para>Whether <filename>/proc/self/maps</filename> is available.</para></listitem>
+			<listitem><para>Whether the user told configure to use a different location for a specific directory, such as by passing <emphasis>--bindir=/foo/bin</emphasis>.</para></listitem>
+		</itemizedlist>
+		<para>Users can always disable BinReloc manually by passing <emphasis>--disable-binreloc</emphasis> to the <emphasis>configure</emphasis> script.</para>
+	</section>
+
+	<section id="kde">
+		<title>KDE integration</title>
+
+		<note>
+			<title>Note to KDE developers</title>
+			<para>
+				As of April 21 2004, BinReloc-like functionality has been added to the KDE-libs, in the
+				<code>KStandardDirs</code> class. If your <emphasis>application</emphasis> uses <code>KStandardDirs</code>
+				to lookup data files, your application will be automatically relocatable, so using BinReloc is not necessary.
+				Libraries however will not benefit from this, and must use BinReloc directly.
+			</para>
+		</note>
+
+		<para>In your program's initialization function, add the following code:</para>
+		<programlisting language="C++"><![CDATA[KGlobal::dirs()->addPrefix(br_find_prefix(DEFAULT_PREFIX));]]></programlisting>
+		<para>
+			Make sure you use <code>KGlobal::dirs()</code> to lookup data files througout your entire program.
+			If you create new instances of <code>KStandardDirs</code>, you need the re-add the prefix.
+		</para>
+
+		<para>
+			If you want to use <code>KIconLoader</code> to load icons from whever your program is installed, add this:
+		</para>
+		<programlisting language="C++"><![CDATA[KGlobal::iconLoader()->addAppDir(br_find_data_dir(DEFAULT_DATA_DIR));]]></programlisting>
+	</section>
+
+	<section id="api">
+		<title>Full API reference</title>
+
+		<para>... will be available very soon!</para>
+	</section>
+
+	<section id="more">
+		<title>More examples</title>
+		<para>
+			The <filename>contrib/binreloc/tests</filename> folder in the Listaller source tarball contains more examples about how to use BinReloc.
+		</para>
+	</section>
+</section>

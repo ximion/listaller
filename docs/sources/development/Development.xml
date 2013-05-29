@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "Listaller.ent">
+%BOOK_ENTITIES;
+]>
+<chapter id="chap-Listaller-App-Development">
+	<title>Developing Listaller-ready applications</title>
+	<para>
+		We created several standalone tools, the libuild programs, that are designed to help Linux developers write
+		better software that runs on a wider variety of distributions. Most of them are independent of Listaller itself:
+		you can use them even if you don't provide your software using the rest of our software.
+	</para>
+
+	<xi:include href="relocatable-apps.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+
+</chapter>

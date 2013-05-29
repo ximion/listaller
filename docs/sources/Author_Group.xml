@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE authorgroup PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "Listaller.ent">
+%BOOK_ENTITIES;
+]>
+<authorgroup>
+	<author>
+		<firstname>Matthias</firstname>
+		<surname>Klumpp</surname>
+		<!-- <affiliation>
+			<orgname>Debian Project</orgname>
+		</affiliation> -->
+		<email>matthias@tenstral.net</email>
+	</author>
+	<author>
+		<firstname>The Autopackage Team</firstname>
+	</author>
+</authorgroup>
