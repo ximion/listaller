@@ -8,7 +8,7 @@
 	<subtitle>3rd-party software installer</subtitle>
 	<productname>Listaller</productname>
 	<productnumber>0.5.8</productnumber>
-	<edition>0</edition>
+	<edition>1</edition>
 	<pubsnumber>0</pubsnumber>
 	<abstract>
 		<para>
@@ -22,6 +22,6 @@
 			</imageobject>
 		</inlinemediaobject>
 	</corpauthor>
-	<xi:include href="Common_Content/Legal_Notice.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="Legal_Notice.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="Author_Group.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 </bookinfo>

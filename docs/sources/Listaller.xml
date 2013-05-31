@@ -2,13 +2,19 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
 <!ENTITY % BOOK_ENTITIES SYSTEM "Listaller.ent">
 %BOOK_ENTITIES;
+<!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
 ]>
+
 <book>
 	<xi:include href="Book_Info.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="Preface.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="enduser/Enduser.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="development/Development.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="packaging/Packaging.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="specs/Specifications.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+
+	<xi:include href="Manpages.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<!-- <xi:include href="APIDoc.xml" xmlns:xi="http://www.w3.org/2001/XInclude" /> -->
 
 	<index />
 </book>

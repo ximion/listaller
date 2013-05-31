@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "Listaller.ent">
+%BOOK_ENTITIES;
+]>
+
+<section id="sect-Listaller-Specs-DepTypes">
+	<title>Dependency types</title>
+	<para>Description of dependency separation and handling in Listaller</para>
+
+	<section id="spec-deptypes-rationale">
+		<title>Rationale</title>
+
+		<para>
+			Listaller distinguishes between so-called <emphasis>Framework</emphasis>-dependencies and <emphasis>Module</emphasis>-dependencies to simplify dependency-solving and to reflect the
+			organization of packages on a Linux system.
+		</para>
+		<para>
+			While Frameworks are provided by the distributor and are hard-wired into the system, Modules can be installed by Listaller from 3rd-party sources.
+		</para>
+		<para>
+			In an ideal world, packages only depend on Frameworks, but currently it might sometimes be necessary to pull Modules from 3rd-party sources (of course Listaller will
+			query the distribution's package database for the Module-dependency, before pulling it from somewhere else).
+		</para>
+		<para>
+			Modules and Frameworks are described in small textfiles, which are shipped with Listaller. Module dependencies may also be present in Listaller packages.
+			If some description files are missing, please file a bug report against Listaller, requesting inclusion by default.
+		</para>
+	</section>
+
+	<section id="spec-deptypes-filesystem-location">
+		<title>Dependency description locations</title>
+
+		<para>
+			Listaller stores the information about possible default dependencies on the filesystem, usually in <filename>/usr/share/listaller/components/</filename>.
+		</para>
+		<para>
+			The Framework dependencies are stored in <filename>frameworks/</filename>, while the Module dependencies are placed in <filename>modules/</filename>. The components associated with the
+			Framework/Module info don't have to be present, since the description files contain all information how to install them.
+		</para>
+		<para>
+			The Modules defined in the system's <filename>modules/</filename> folder override all Modules defined in Listaller packages which have the same name. Frameworks are never shipped
+			in Listaller packages.
+		</para>
+	</section>
+
+	<section id="spec-deptypes-schema">
+		<title>Description file schema</title>
+		<para>
+			Framework and Module files are simple textfiles with the file extensions <filename>.framework</filename> or <filename>.module</filename>, depending on their type. The file contents
+			are similar, but some elements are specific for Franeworks or Modules, e.g. only modules can have an element of the type <code>Feed</code>.
+		</para>
+		<para>A Framework file may look like this:</para>
+		<programlisting language="Debian Control">
+<![CDATA[# The KDE4 base libraries
+
+ID: KDELibs4
+Version: shell$ kde4-config --version
+ prefix$ "KDE: "
+Binaries: kde4-config
+ kde-open
+ExtraLibSearchPath: %SYS_LIB%/kde4
+Libraries: kio_file.so
+ libkdeui.so.5
+ libsoprano.so.4
+ libthreadweaver.so.4
+ libsolid.so.4]]>
+		</programlisting>
+		<para>
+			The <code>ID</code> element defines an unique identifier for this component. Frameworks IDs start with an upper-cased letter, while Modules are lower-cased.
+		</para>
+
+		<warning>
+			<para>The documentation is not yet complete. You may want to help extending it.</para>
+		</warning>
+	</section>
+
+	<section id="spec-deptypes-default-frameworks">
+		<title>Frameworks</title>
+		<para>Currently, the following <emphasis>Framework</emphasis> dependencies are shipped with Listaller by default, and packagers can reference them (the list shows their IDs):</para>
+
+		<variablelist>
+			<title>Default frameworks</title>
+			<varlistentry>
+				<term><literal>GNOME3</literal></term>
+				<listitem>
+					<para>The GNOME-3 platform libraries.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>GTK+3</literal></term>
+				<listitem>
+					<para>The GTK+3 GUI toolkit libraries.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>JRE7</literal></term>
+				<listitem>
+					<para>The Java Runtime Environment version 7.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>KDELibs4</literal></term>
+				<listitem>
+					<para>The KDE libraries from the KDE project.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>Libc6</literal></term>
+				<listitem>
+					<para>The GNU standard C library.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>Linux</literal></term>
+				<listitem>
+					<para>Meta-framework, indicating that the software was built for GNU/Linux.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>Mesa</literal></term>
+				<listitem>
+					<para>The Mesa-3D libraries.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>Python2</literal></term>
+				<listitem>
+					<para>The Python2 scripting language.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>Python</literal></term>
+				<listitem>
+					<para>The Python3 scripting language.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>Qt4Core</literal></term>
+				<listitem>
+					<para>The core libraries of the Qt4 toolkit.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>Xorg</literal></term>
+				<listitem>
+					<para>The X.org X11 server.</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</section>
+</section>

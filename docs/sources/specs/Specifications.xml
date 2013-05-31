@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "Listaller.ent">
+%BOOK_ENTITIES;
+]>
+<chapter id="chap-Listaller-Specs">
+	<title>Specifications</title>
+	<para>
+		Listaller uses various file-formats and many specifications. Here you can find a description of them.
+	</para>
+	<para>
+		You can also learn about the idea of Listaller and the project plan.
+	</para>
+
+	<xi:include href="architecture-naming.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="directory-substvars.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="dependency-types.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="package-settings.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="ipk-filelist.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="repository-structure.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+
+</chapter>

@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "Listaller.ent">
+%BOOK_ENTITIES;
+]>
+
+<chapter id="chap-Listaller-ManualPages">
+	<title>Manual pages</title>
+
+	<xi:include href="../../../man/appcompile.1.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+	<xi:include href="../../../man/depscan.1.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+	<xi:include href="../../../man/lig++.1.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+	<xi:include href="../../../man/ligcc.1.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+	<xi:include href="../../../man/likey.1.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+	<xi:include href="../../../man/lipa.1.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+	<xi:include href="../../../man/lipkgen.1.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+	<xi:include href="../../../man/relaytool.1.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+	<xi:include href="../../../man/runapp.1.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+ </chapter>

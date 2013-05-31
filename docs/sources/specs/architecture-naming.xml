@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "Listaller.ent">
+%BOOK_ENTITIES;
+]>
+
+<section id="sect-Listaller-Specs-ArchNaming">
+	<title>Architecture naming policy</title>
+	<para>How Listaller treats architecture names</para>
+
+	<section id="spec-archnaming-why">
+		<title>What are architecture names?</title>
+
+		<para>Architecture names are strings like "x86_64" or "i686" which define the system-architecture of the current computer.</para>
+		<para>
+			Compiled programs can only run on the architecture they are built for. Therefore Listaller packages also need to be arch-specific.
+			Unfortunately, there are quite a few architecture names around, e.g. for 64bit-PCs the vendor-neutral name "x86_64" or "amd64".
+			For historical and compatibility reasons, Listaller uses the naming conventions described below.
+		</para>
+	</section>
+
+	<section id="spec-archnaming-archnames">
+		<title>Architecture names</title>
+
+		<para>
+			Listaller uses the output string of the <command>uname -m</command>
+			command for nearly all architectures, except for 32bit-PC and 64bit-PC architectures.
+		</para>
+		<para>
+			For AMD's 64bit architecture, with the name "x86_64" or "amd64", we use the vendor-name
+			<emphasis>amd64</emphasis>. Listaller will only use and recognize this name.
+		</para>
+		<para>
+			For Intel's x86 architecture (names like "i386, "i486", "i686", ...) we use the name
+			<emphasis>ix86</emphasis>. No other names are processed.
+		</para>
+		<para>For any other architecture, no special name changes are applied and we use the name which is exposed by the Linux kernel.</para>
+	</section>
+</section>

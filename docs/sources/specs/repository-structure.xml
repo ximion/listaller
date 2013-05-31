@@ -1,29 +1,32 @@
-<?xml version="1.0" ?>
-<page id="repo-structure" type="topic" xmlns="http://projectmallard.org/1.0/">
-<info>
-	<link type="topic" xref="specifications"/>
-	<credit type="author">
-		<name>Matthias Klumpp</name>
-		<email>matthias@tenstral.net</email>
-		<years>2012-2013</years>
-	</credit>
-	<desc>Description of the structure of an IPK package repository</desc>
-</info>
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "Listaller.ent">
+%BOOK_ENTITIES;
+]>
 
-<title>Repository structure</title>
-<section id="overview">
-	<title>What is an IPK package repository?</title>
+<section id="sect-Listaller-Specs-IPKRepo">
+	<title>IPK repository structure</title>
 
-	<p>IPK package repositories are online sources for Listaller packages. These sources can be used to provide updates for
-	installer applications, or to make Listaller-packaged applications available in the software management UIs of distributions.</p>
-	<p>Repositories can also be used to provide dependencies, to enhance the abilities for Listaller's dependency solver to satisfy a given
-	dependency.</p>
-</section>
+	<para>Description of the structure of an IPK package repository</para>
 
-<section id="directories">
-	<title>Directory overview</title>
-	<p>Repositories consist of a directory structure, containing the following directories:</p>
-	<code><![CDATA[
+	<section id="overview">
+		<title>What is an IPK package repository?</title>
+
+		<para>
+			IPK package repositories are online sources for Listaller packages. These sources can be used to provide updates for
+			installer applications, or to make Listaller-packaged applications available in the software management UIs of distributions.
+		</para>
+		<para>
+			Repositories can also be used to provide dependencies, to enhance the abilities for Listaller's dependency solver to satisfy a given
+			dependency.
+		</para>
+	</section>
+
+	<section id="spec-repo-directories">
+		<title>Directory overview</title>
+		<para>Repositories consist of a directory structure, containing the following directories:</para>
+		<programlisting>
+<![CDATA[
   /                                                 - root
   |-- reposetting                                   - basic repository settings (MetaFile format)
   |-- contents_amd64.xz                             - contents of this repository (MetaFile format), arch-specific
@@ -48,11 +51,13 @@
   |   |-- [data]                                    - contains dependency-data (if necessary)
   |   |   |-- [ix32]
   |   |   |-- [amd64]
-  |   |   |-- [all]]]></code>
+  |   |   |-- [all]]]>
+		</programlisting>
 
-	<p>This directory structure can be placed on a server and referenced via an URL.</p>
-	<p>Listaller provides the <cmd>lirepo</cmd> command-line tool to generate new (local) Listaller repositories, and to update them
-	with new software versions.</p>
+		<para>This directory structure can be placed on a server and referenced via an URL.</para>
+		<para>
+			Listaller provides the <command>lirepo</command> command-line tool to generate new (local) Listaller repositories, and to update them
+			with new software versions.
+		</para>
+	</section>
 </section>
-
-</page>
