@@ -10,7 +10,7 @@
 
 	<para>
 		A reference of Listaller's public API can be fount in the
-		<ulink url="http://listaller.tenstral.net/docs/apidoc/">API reference pages</ulink>.
+		<ulink url="http://listaller.tenstral.net/docs/api/html/">API reference pages</ulink>.
 	</para>
 
 	<!--  Both documentations should some time be merged, but currently Publican doesn't like the GTKDoc docboon-->
