@@ -9,37 +9,48 @@ if (XMLTO STREQUAL "")
 endif (XMLTO STREQUAL "")
 
 # Find required tools
-find_program (YELP_BUILD yelp-build)
-mark_as_advanced (YELP_BUILD)
-if (YELP_BUILD STREQUAL "")
-	message (FATAL_ERROR "yelp-build was not found! Please install the Yelp tools to continue!")
-endif (YELP_BUILD STREQUAL "")
+find_program (PUBLICAN publican)
+mark_as_advanced (PUBLICAN)
+if (PUBLICAN STREQUAL "")
+	message (FATAL_ERROR "Publican was not found! Please install the it to continue!")
+endif (PUBLICAN STREQUAL "")
 
 # build small listaller lib version string
 set(LISTALLER_LIB_VERSION "${LISTALLER_VERSION_MAJOR}.${LISTALLER_VERSION_MINOR}.${LISTALLER_VERSION_PATCH}")
 
-# find documentation sources
-file (GLOB_RECURSE LISTALLER_DOC_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/pages/*.page")
-
-add_custom_target (documentation
-	COMMAND "yelp-build" "html" "-o" "${CMAKE_CURRENT_SOURCE_DIR}/html"
-	${LISTALLER_DOC_SOURCES}
-	DEPENDS "pages/index.page"
-		"${CMAKE_BINARY_DIR}/src/listaller.h"
+# we need to assemble our documentation build-directory before we can built it
+add_custom_target (assemble-docs
+	COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/prepare-docbuild.sh" "source_dir=${CMAKE_CURRENT_SOURCE_DIR}" "build_dir=${CMAKE_BINARY_DIR}/docbuild"
+	DEPENDS "publican.cfg"
+		"sources/"
+		"${CMAKE_BINARY_DIR}/docbuild/"
 		"${CMAKE_BINARY_DIR}/src/liblistaller-glib.so.${LISTALLER_LIB_VERSION}"
-		"${CMAKE_CURRENT_SOURCE_DIR}/html"
+	WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+	VERBATIM
+)
+
+# the actual target to build all documentation
+add_custom_target (documentation
+	COMMAND ${PUBLICAN} "build" "--langs=en-US" "--publish" "--formats=html"
+	DEPENDS "publican.cfg"
+		"${CMAKE_BINARY_DIR}/docbuild/publican.cfg"
+		assemble-docs
+	WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/docbuild/
+)
+add_custom_command (OUTPUT "${CMAKE_BINARY_DIR}/docbuild/"
+		COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_BINARY_DIR}/docbuild"
+		VERBATIM
+)
+
+set_directory_properties (PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_CURRENT_SOURCE_DIR}/html)
+set_directory_properties (PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_BINARY_DIR}/docbuild)
+
+# a target to export documentation html to the source tree (useful when building the tarballs)
+add_custom_target (documentation-htmlexport
+	COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_BINARY_DIR}/docbuild/Listaller-Docs/en-US/html/" "${CMAKE_CURRENT_SOURCE_DIR}/html"
+	DEPENDS documentation
 	WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
-add_custom_command (OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/html
-		COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/html
-		VERBATIM)
-set_directory_properties (PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_CURRENT_SOURCE_DIR}/html)
-
-# we want to validate the document xml
-add_custom_command (TARGET documentation PRE_BUILD
-		COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/validate"
-		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-		VERBATIM)
 
 if (API_DOCS)
 	# find documentation tools

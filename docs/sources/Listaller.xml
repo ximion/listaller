@@ -14,7 +14,7 @@
 	<xi:include href="specs/Specifications.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 
 	<xi:include href="Manpages.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<!-- <xi:include href="APIDoc.xml" xmlns:xi="http://www.w3.org/2001/XInclude" /> -->
+	<xi:include href="APIDoc.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 
 	<index />
 </book>

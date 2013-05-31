@@ -23,6 +23,9 @@ l10n-maintain:
 documentation:
 	$(MAKE) -C ./build documentation
 
+documentation-htmlexport:
+	$(MAKE) -C ./build documentation-htmlexport
+
 clean:
 	$(MAKE) -C ./build clean
 

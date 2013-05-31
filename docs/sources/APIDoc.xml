@@ -6,48 +6,13 @@
 ]>
 
 <chapter id="chap-Listaller-API">
-    <title>Listaller API Reference</title>
-    <para>Hello!</para>
+	<title>Listaller API Reference</title>
 
-    <xi:include href="../../../api/xml/application.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-    <xi:include href="../../../api/xml/status.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+	<para>
+		A reference of Listaller's public API can be fount in the
+		<ulink url="http://listaller.tenstral.net/docs/apidoc/">API reference pages</ulink>.
+	</para>
 
-    <xi:include href="../../../api/xml/updater.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-    <xi:include href="../../../api/xml/manager.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-    <xi:include href="../../../api/xml/installer.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-
-    <xi:include href="../../../api/xml/setup-settings.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-    <xi:include href="../../../api/xml/key-manager.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-
-    <xi:include href="../../../api/xml/security-info.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-    <xi:include href="../../../api/xml/ipk-control.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-    <xi:include href="../../../api/xml/ipk-changelog.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-
-    <xi:include href="../../../api/xml/message-object.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-    <xi:include href="../../../api/xml/database-internal.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-
-    <xi:include href="../../../api/xml/logging.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-    <xi:include href="../../../api/xml/utils.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-    <xi:include href="../../../api/xml/version.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-
-    <chapter id="listaller-api-more">
-    <title>More Information</title>
-      <chapter id="object-tree">
-         <title>Object Hierarchy</title>
-         <xi:include href="../../../api/xml/tree_index.sgml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-      </chapter>
-      <index id="api-index-full">
-          <title>API Index</title>
-	  <xi:include href="../../../api/xml/api-index-full.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-      </index>
-      <index id="deprecated-api-index" role="deprecated">
-         <title>Index of deprecated API</title>
-	 <xi:include href="../../../api/xml/api-index-deprecated.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-      </index>
-
-      <xi:include href="../../../api/xml/annotation-glossary.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
-  </chapter>
+	<!--  Both documentations should some time be merged, but currently Publican doesn't like the GTKDoc docboon-->
 
 </chapter>
-
-
