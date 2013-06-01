@@ -108,7 +108,7 @@ internal class ComponentFactory : Object {
 		 * (this is a huge speed improvement)
 		 * This only works for library dependencies!
 		 */
-		bool ret = false;
+		bool ret = true;
 		Config conf = new Config ();
 		foreach (string sitem in comp.raw_itemlist) {
 			if (Dep.Component.item_get_type (sitem) == Dep.ItemType.SHARED_LIB) {
@@ -129,7 +129,7 @@ internal class ComponentFactory : Object {
 		string[] bin_dirs = {"/usr/bin", "/usr/sbin", "/sbin", "/bin"}; // constant! (no const stmt, since some C compilers have issues with the resulting C code)
 
 		// Check if binaries are present
-		bool ret = false;
+		bool ret = true;
 		foreach (string sitem in comp.raw_itemlist) {
 			if (Dep.Component.item_get_type (sitem) == Dep.ItemType.BINARY) {
 				string s = Component.item_get_name (sitem);
