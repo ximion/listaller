@@ -180,6 +180,7 @@ private class PkResolver : PkListallerTask {
 			new_res  = find_package_providing_component (filter, PackageKit.Provides.PYTHON, python_modules, ref result_sack);
 		if (new_res != null)
 			res = new_res;
+
 		// TODO: Implement Python3-handling in PK, if necessary!
 		if (res.get_exit_code () == PackageKit.Exit.SUCCESS)
 			new_res  = find_package_providing_component (filter, PackageKit.Provides.PYTHON, python2_modules, ref result_sack);

@@ -59,9 +59,11 @@ private class DepInstaller : MessageObject {
 			  text));
 	}
 
-	/* This method checks if the dependency is already there
-	 * Returns true if dependency could be resolved, means that it can be installed
-	 * via native packages. If it returns false, the dependency is not installable.
+	/**
+	 * This method checks if the dependency is already there
+	 *
+	 * @returns TRUE if dependency could be resolved, means that it can be installed
+	 * via native packages. If it returns FALSE, the dependency is not installable.
 	 */
 	private bool find_dependency_internal (ref Dep.Module dep, bool force_feedinstall = false) {
 		if (dep.installed)
@@ -90,6 +92,8 @@ private class DepInstaller : MessageObject {
 		connect_with_object (pksolv, ObjConnectFlags.PROGRESS_TO_SUBPROGRESS);
 
 		ret = pksolv.search_dep_packages (ref dep);
+
+		// TODO: Implement & call all other solvers, to determine if this dependency can be satisfied
 
 		// If we don't have a feed AND can't install a native package we're doomed. :P
 		// The dependency cannot be solved then.
@@ -147,30 +151,10 @@ private class DepInstaller : MessageObject {
 	}
 
 	/**
-	 * This method is useful for testing, and should be used for that
-	 * purpose internally.
-	 */
-	internal bool install_existing_module_dependency (ref Dep.Module dep_mod) {
-		PkInstaller pkinst = new PkInstaller (ssettings);
-		pkinst.message.connect ( (m) => { this.message (m); } );
-
-		FeedInstaller finst = new FeedInstaller (ssettings);
-		finst.message.connect ( (m) => { this.message (m); } );
-
-		bool ret = true;
-		if (!depman.module_is_installed (ref dep_mod)) {
-			ret = install_module_dep_internal (pkinst, finst, ref dep_mod);
-			if ((ret) && (dep_mod.installed))
-				db.add_dependency (dep_mod);
-		}
-
-		return ret;
-	}
-
-	/**
 	 * Install dependencies from a dependency-string of an IPK package.
+	 *
 	 * @param dependencies_str Dependency-information as string (comma-separated)
-	 * @param cfactory The ComponentFactory instance which belongs to the given package, or an empty, initialized system ComponentFactory
+	 * @param cfactory The ComponentFactory instance which belongs to the given package, or an empty, initialized ComponentFactory instance
 	 * @param force_feedinstall Enforce installation of ZeroInstall feeds, defaults to FALSE
 	 * The function emits an error signal on the DepInstaller instance on failure.
 	 *
@@ -208,9 +192,35 @@ private class DepInstaller : MessageObject {
 		return ret;
 	}
 
-	internal bool dependencies_installable (ref ArrayList<Dep.Module> depList, bool force_feedinstall = false) {
+	/**
+	 * This method is useful for testing, and should only be used for that
+	 * purpose internally.
+	 */
+	internal bool install_existing_module_dependency (ref Dep.Module dep_mod) {
+		PkInstaller pkinst = new PkInstaller (ssettings);
+		pkinst.message.connect ( (m) => { this.message (m); } );
+
+		FeedInstaller finst = new FeedInstaller (ssettings);
+		finst.message.connect ( (m) => { this.message (m); } );
+
 		bool ret = true;
-		foreach (Dep.Module dep in depList) {
+		if (!depman.module_is_installed (ref dep_mod)) {
+			ret = install_module_dep_internal (pkinst, finst, ref dep_mod);
+			if ((ret) && (dep_mod.installed))
+				db.add_dependency (dep_mod);
+		}
+
+		return ret;
+	}
+
+	/**
+	 * This function is currently only used for testing purposes.
+	 *
+	 * @returns TRUE if dependencies in dep_list are installable.
+	 */
+	internal bool dependencies_installable (ref ArrayList<Dep.Module> dep_list, bool force_feedinstall = false) {
+		bool ret = true;
+		foreach (Dep.Module dep in dep_list) {
 			ret = find_dependency_internal (ref dep, force_feedinstall);
 			if (!ret)
 				break;
