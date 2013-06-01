@@ -52,8 +52,8 @@ private const string DATABASE = ""
 		+ "architecture TEXT NOT NULL, "
 		+ "origin TEXT NOT NULL, "
 		+ "install_time INTEGER, "
-		+ "provided_by TEXT NOT NULL, "
-		+ "components TEXT NOT NULL, "
+		+ "items_installed TEXT NOT NULL, "
+		+ "items TEXT NOT NULL, "
 		+ "environment TEXT, "
 		+ "dependencies TEXT"
 		+ ");" +
@@ -62,7 +62,7 @@ private const string DATABASE = ""
 private const string appcols = "name, full_name, version, desktop_file, author, publisher, categories, " +
 			"description, homepage, architecture, origin, install_time, dependencies";
 private const string depcols = "name, full_name, version, description, author, homepage, architecture, " +
-			"origin, install_time, provided_by, components, environment, dependencies";
+			"origin, install_time, items_installed, items, environment, dependencies";
 
 private enum AppRow {
 	IDNAME = 0,
@@ -90,8 +90,8 @@ private enum DepRow {
 	ARCHITECTURE = 6,
 	ORIGIN = 7,
 	INST_TIME = 8,
-	PROVIDED_BY = 9,
-	COMPONENTS = 10,
+	ITEMS_INSTALLED = 9,
+	ITEMS = 10,
 	ENVIRONMENT = 11,
 	DEPENDENCIES = 12;
 }
@@ -799,9 +799,9 @@ private abstract class InternalDB : Object {
 
 			db_assert (insert_dep.bind_text (DepRow.ORIGIN +1, dep_mod.origin), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.PROVIDED_BY +1, dep_mod.get_installdata_as_string ()), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.ITEMS_INSTALLED +1, dep_mod.get_installdata_as_string ()), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.COMPONENTS +1, dep_mod.get_items_as_string ()), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.ITEMS +1, dep_mod.get_items_as_string ()), "bind value");
 
 			db_assert (insert_dep.bind_text (DepRow.ENVIRONMENT +1, dep_mod.environment), "bind value");
 
@@ -838,8 +838,8 @@ private abstract class InternalDB : Object {
 		dep.author = stmt.column_text (DepRow.AUTHOR);
 		dep.install_time = stmt.column_int (DepRow.INST_TIME);
 		dep.architecture = stmt.column_text (DepRow.ARCHITECTURE);
-		dep.set_items_from_string (stmt.column_text (DepRow.COMPONENTS));
-		dep.set_installdata_from_string (stmt.column_text (DepRow.PROVIDED_BY));
+		dep.set_items_from_string (stmt.column_text (DepRow.ITEMS));
+		dep.set_installdata_from_string (stmt.column_text (DepRow.ITEMS_INSTALLED));
 		dep.environment = stmt.column_text (DepRow.ENVIRONMENT);
 
 		// Because dep is in the database already, it has to be satisfied
@@ -898,6 +898,8 @@ private abstract class InternalDB : Object {
  */
 private class LocalDB : InternalDB {
 	private string regdir;
+	private string regdir_apps;
+	private string regdir_deps;
 
 	public LocalDB (bool shared_mode, bool testmode = false) {
 		// Create internal dummy configuration to fetch required data
