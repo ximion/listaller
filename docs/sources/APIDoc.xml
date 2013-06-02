@@ -12,6 +12,10 @@
 		A reference of Listaller's public API can be fount in the
 		<ulink url="http://listaller.tenstral.net/docs/api/html/">API reference pages</ulink>.
 	</para>
+	<para>
+		If you want to look at the PackageKit API, look at
+		<ulink url="http://www.packagekit.org/gtk-doc/">the PackageKit reference manual</ulink>.
+	</para>
 
 	<!--  Both documentations should some time be merged, but currently Publican doesn't like the GTKDoc docboon-->
 

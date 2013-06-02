@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "Listaller.ent">
+%BOOK_ENTITIES;
+]>
+<chapter id="chap-Listaller-Design">
+	<title>Project Goals</title>
+	<para>
+		This is a brief summary of the Listaller project goals. For the Listaller specifications, please see <xref  linkend="chap-Listaller-Specs"/>
+	</para>
+
+	<para>
+		Listaller's design goal is to create an installer solution which is able to install software on multiple distributions by using just one package.
+		It is no replacement for the package management system of a Linux distribution (like Debian or Fedora), it is merely designed to install additional
+		3rd-party applications which are not part of the main distribution repositories and do not require tight system integration.
+		Dependencies of software installed with Listaller should therefore be kept minimal, to simplify installations.
+	</para>
+	<para>
+		The main target audience for Listaller are GUI desktop users who want to install graphical applications (= software which provides a XDG application desktop file).
+		But Listaller is not limited to that, it might also be used to install non-gui stuff on servers, although this case is rarely used at time.
+	</para>
+	<para>
+		Listaller is developed with the following goals in mind:
+		<itemizedlist>
+			<listitem><para>
+				System Integration: Software installed with Listaller should integrate well with the operating system, while not interfering with it.
+				Listaller applications should be manageable using the general software management tools which the user already knows. Situations where an user has
+				to open one tool to manage just a subset of his/her applications must be avoided.
+				We also give distributors all necessary tools to make Listaller working for their distribution and integrate it nicely into the system and adjust it to
+				the individual dustribution policies (as long as these changes do not break distro-interoperability).
+			</para></listitem>
+			<listitem><para>
+				Cross-Distro: Listaller should work on all distributions, software packaged as Listaller IPK package should be installable on every distribution, as long
+				as it's dependencies are satisfyable. People creating IPK packages should be able to target the whole audience of Linux users, not just a single distribution.
+			</para></listitem>
+			<listitem><para>
+				Security: Installing 3rd-party applications which were not checked by the distributor might be a security issue. We therefore give the administrator an option to shut
+				off 3rd-party installs or limit them to some users. Also, Listaller should display meaningful information to help the user in making a decision to trust the application which
+				is pending install, or to reject it. IPK packages can and should be signed. Listaller should run 3rd-party applications in a sandbox by default.
+			</para></listitem>
+			<listitem><para>
+				Simplification: Creating Listaller packages should be as easy as possible. IPK packages are built on existing standards, like DOAP, which makes it simple to use existing data
+				for packaging. Also, there should not be corner-cases which cause an installation to fail, so package definitions should be straighforward and script-less, which also increases security.
+				All complexity should be handled by functions built-in Listaller.
+			</para></listitem>
+			<listitem><para>
+				Developer Tools: We provide tools for developers to make their applications work on many distributions and to minimize the dependencies of an application.
+			</para></listitem>
+		</itemizedlist>
+		(This list might be extended or changed if necessary)
+	</para>
+	<para>
+		Listaller is designed to work well with <ulink url="http://www.packagekit.org/">PackageKit</ulink> and <ulink url="http://www.freedesktop.org/wiki/Distributions/AppStream/">AppSteam</ulink> to
+		provide a great and user-friendly application-centric software management on Linux distributions.
+		PackageKit is a dependency of Listaller, while AppStream is optional for it's use, but recommended.
+	</para>
+
+</chapter>
