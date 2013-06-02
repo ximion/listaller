@@ -11,7 +11,7 @@
 
 	<para>
 		Listaller's design goal is to create an installer solution which is able to install software on multiple distributions by using just one package.
-		It is no replacement for the package management system of a Linux distribution (like Debian or Fedora), it is merely designed to install additional
+		It is no replacement for the package management system of a Linux distribution (like Debian, Fedora, OpenSUSE, ...), it is merely designed to install additional
 		3rd-party applications which are not part of the main distribution repositories and do not require tight system integration.
 		Dependencies of software installed with Listaller should therefore be kept minimal, to simplify installations.
 	</para>
