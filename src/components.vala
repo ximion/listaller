@@ -531,6 +531,14 @@ private class Module : Component {
 	}
 
 	/**
+	 * Check if the Module is installed, and update it's status if it has been
+	 * installed
+	 */
+	public void update_installed_status () {
+		installed = install_data.size == item_list.size;
+	}
+
+	/**
 	 * Get installation directory for this module, using the SettupSettings taken as argument
 	 */
 	public string get_install_dir_for_setting (SetupSettings setup_setting) {

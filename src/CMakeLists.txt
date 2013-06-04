@@ -71,6 +71,11 @@ pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2>=0.8.6)
 pkg_check_modules(PACKAGEKIT_PLUGIN REQUIRED packagekit-plugin)
 #find_gir(PKGIR "PackageKitGlib-1.0" REQUIRED)
 
+set(COMPONENT_SOLVER_SOURCES
+	solvers/abstract-solver.vala
+	solvers/basic-solver.vala
+)
+
 set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
 	zfeed.vala
 	ipk-repo.vala
@@ -90,6 +95,7 @@ set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
 	manager.vala
 	installer.vala
 	updater.vala
+	${COMPONENT_SOLVER_SOURCES}
 )
 
 list(APPEND VALA_INCLUDE_DIRS ${CMAKE_BINARY_DIR})

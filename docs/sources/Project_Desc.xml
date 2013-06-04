@@ -3,7 +3,7 @@
 <!ENTITY % BOOK_ENTITIES SYSTEM "Listaller.ent">
 %BOOK_ENTITIES;
 ]>
-<chapter id="chap-Listaller-Design">
+<chapter id="chap-Listaller-Goals">
 	<title>Project Goals</title>
 	<para>
 		This is a brief summary of the Listaller project goals. For the Listaller specifications, please see <xref  linkend="chap-Listaller-Specs"/>

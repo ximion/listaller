@@ -103,52 +103,32 @@ internal class ComponentFactory : Object {
 		return vs.has_prefix ("<< ") || vs.has_prefix (">> ") || vs.has_prefix ("<= ") || vs.has_prefix (">= ") || vs.has_prefix ("== ");
 	}
 
-	private bool check_component_library_items_installed (Dep.Component comp, out string explanation = null) {
-		/* Search files using "find_library" before calling PackageKit to do this
-		 * (this is a huge speed improvement)
-		 * This only works for library dependencies!
-		 */
-		bool ret = true;
-		Config conf = new Config ();
-		foreach (string sitem in comp.raw_itemlist) {
-			if (Dep.Component.item_get_type (sitem) == Dep.ItemType.SHARED_LIB) {
-				string s = Component.item_get_name (sitem);
-				ret = find_library (s, conf);
-				if (!ret) {
-					debug ("Library not found: %s", s);
-					explanation = _("Library %s was not found").printf (s);
-					break;
-				}
-			}
-		}
+	/**
+	 * Function which runs the solver methods on dependencies, to
+	 * determine if they are installed and if not.
+	 */
+	private bool run_solver_framework (AbstractSolver depsolver, Dep.Framework cfrmw) {
+		if (!depsolver.usable (cfrmw))
+			return true;
+		bool ret;
+		string reason;
+		ret = depsolver.check_framework_items_installed (cfrmw, out reason);
+		if (!ret)
+			warning ("Framework '%s' could not be found, reason: %s", cfrmw.full_name, reason);
 
 		return ret;
 	}
 
-	private bool check_component_binary_items_installed (Dep.Component comp, out string explanation = null) {
-		string[] bin_dirs = {"/usr/bin", "/usr/sbin", "/sbin", "/bin"}; // constant! (no const stmt, since some C compilers have issues with the resulting C code)
-
-		// Check if binaries are present
-		bool ret = true;
-		foreach (string sitem in comp.raw_itemlist) {
-			if (Dep.Component.item_get_type (sitem) == Dep.ItemType.BINARY) {
-				string s = Component.item_get_name (sitem);
-				if (s.has_prefix ("/")) {
-					ret = FileUtils.test (s, FileTest.EXISTS);
-				} else {
-					foreach (string prefix in bin_dirs) {
-						ret = FileUtils.test (Path.build_filename (prefix, s, null), FileTest.EXISTS);
-						if (ret)
-							break;
-					}
-				}
-				if (!ret) {
-					debug ("Binary not found: %s", s);
-					explanation = _("Binary %s was not found").printf (s);
-					break;
-				}
-			}
-		}
+	/**
+	 * Function which runs the solver methods on dependencies, to
+	 * determine if they are installed and if not and which parts are missing
+	 * to satisfy a dependency.
+	 */
+	private bool run_solver_module (AbstractSolver depsolver, Dep.Module cmod, out string reason) {
+		if (!depsolver.usable (cmod))
+			return true;
+		bool ret;
+		ret = depsolver.check_module_items_installed (cmod, out reason);
 
 		return ret;
 	}
@@ -156,18 +136,12 @@ internal class ComponentFactory : Object {
 	private bool check_framework_installed (Dep.Framework cfrmw) {
 		if (cfrmw.installed)
 			return true;
-
-		// asume not-installed framework
-		cfrmw.installed = false;
-
 		bool ret;
-		string explanation;
-		ret = check_component_library_items_installed (cfrmw, out explanation);
+		string reason;
+
+		ret = run_solver_framework (new BasicSolver (), cfrmw);
 		if (!ret)
 			return false;
-		ret = check_component_binary_items_installed (cfrmw, out explanation);
-
-		cfrmw.installed = ret;
 
 		return ret;
 	}
@@ -177,33 +151,14 @@ internal class ComponentFactory : Object {
 			return true;
 
 		bool ret;
-		ret = check_component_library_items_installed (cmod, out reason);
+		ret = run_solver_module (new BasicSolver (), cmod, out reason);
 		if (!ret)
 			return false;
-		ret = check_component_binary_items_installed (cmod, out reason);
+		cmod.update_installed_status ();
+		if ((!cmod.installed) && (reason == null))
+			critical ("Module '%s' is not installed, but we don't know a reason why, since no resolver has failed. This is usually a bug in a resolver, please fix it!", cmod.full_name);
 
-		// If all libraries/binaries were found, add them to installdata and exit
-		if (ret) {
-			cmod.clear_installdata ();
-			foreach (string s in cmod.raw_itemlist) {
-				switch (cmod.item_get_type (s)) {
-					case Dep.ItemType.SHARED_LIB:
-					case Dep.ItemType.BINARY:
-						cmod.add_installed_item (s);
-						break;
-					default:
-						// we have an unknown dependency, so this Module is not satisfied!
-						reason = "Dependency %s was not found!".printf (s);
-						cmod.installed = false;
-						return false;
-				}
-			}
-
-			cmod.installed = true;
-			return true;
-		}
-
-		return ret;
+		return cmod.installed;
 	}
 
 	public bool framework_installed (string idname) {
