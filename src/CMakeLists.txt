@@ -75,6 +75,7 @@ set(COMPONENT_SOLVER_SOURCES
 	solvers/abstract-solver.vala
 	solvers/basic-solver.vala
 	solvers/pkit-solver.vala
+	solvers/python-solver.vala
 )
 
 set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
