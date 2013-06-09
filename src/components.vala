@@ -84,7 +84,8 @@ private abstract class Component : Object {
 
 	public string architecture { get; internal set; } // e.g. amd64
 
-	public bool installed { get; internal set; }
+	protected bool _installed;
+	public bool installed { get { return _installed; } internal set { _installed = value; } }
 
 	protected string _version_raw;
 	private string _version_cache;
@@ -423,7 +424,6 @@ private class Framework : Component {
 private class Module : Component {
 	public string dependencies { get; private set; }
 
-	private bool _installed;
 	public bool installed {
 		get {
 			return _installed;
@@ -535,6 +535,7 @@ private class Module : Component {
 	 * installed
 	 */
 	public void update_installed_status () {
+		debug ("InstData-Size: %i -- IteList-Size: %i", install_data.size, item_list.size);
 		installed = install_data.size == item_list.size;
 	}
 

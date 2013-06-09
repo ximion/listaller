@@ -780,7 +780,7 @@ private class Package : MessageObject {
 	public Dep.ComponentFactory get_component_factory () {
 		string wdir_depdir = Path.build_filename (wdir, "dependencies", null);
 
-		var cfactory = new Dep.ComponentFactory ();
+		var cfactory = new Dep.ComponentFactory (setup_settings);
 		cfactory.initialize ();
 		cfactory.load_extra_modules (wdir_depdir);
 

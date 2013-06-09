@@ -74,6 +74,7 @@ pkg_check_modules(PACKAGEKIT_PLUGIN REQUIRED packagekit-plugin)
 set(COMPONENT_SOLVER_SOURCES
 	solvers/abstract-solver.vala
 	solvers/basic-solver.vala
+	solvers/pkit-solver.vala
 )
 
 set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}

@@ -27,12 +27,12 @@ namespace Listaller.Dep {
 
 private class BasicSolver : AbstractSolver {
 
-	public BasicSolver () {
-		base ();
-		id = "AbstractSolver";
+	public BasicSolver (SetupSettings setup_settings) {
+		base (setup_settings);
+		id = "BasicSolver";
 	}
 
-	private bool check_component_library_items_installed (Dep.Component comp, out string explanation = null) {
+	private bool check_component_library_items_installed (Dep.Component comp, out string? explanation = null) {
 		/* Search files using "find_library" before calling PackageKit to do this
 		 * (this is a huge speed improvement)
 		 * This only works for library dependencies!
@@ -54,7 +54,7 @@ private class BasicSolver : AbstractSolver {
 		return ret;
 	}
 
-	private bool check_component_binary_items_installed (Dep.Component comp, out string explanation = null) {
+	private bool check_component_binary_items_installed (Dep.Component comp, out string? explanation = null) {
 		string[] bin_dirs = {"/usr/bin", "/usr/sbin", "/sbin", "/bin"}; // constant! (no const stmt, since some C compilers have issues with the resulting C code)
 
 		// Check if binaries are present
@@ -82,7 +82,7 @@ private class BasicSolver : AbstractSolver {
 		return ret;
 	}
 
-	public override bool check_framework_items_installed (Framework cfrmw, out string reason = null) {
+	public override bool check_framework_items_installed (Framework cfrmw, out string? reason = null) {
 		bool ret;
 		string explanation;
 		ret = check_component_library_items_installed (cfrmw, out explanation);
@@ -93,7 +93,7 @@ private class BasicSolver : AbstractSolver {
 		return ret;
 	}
 
-	public override bool check_module_items_installed (Module cmod, out string reason = null) {
+	public override bool check_module_items_installed (Module cmod, out string? reason = null) {
 		bool ret;
 		ret = check_component_library_items_installed (cmod, out reason);
 		if (!ret)

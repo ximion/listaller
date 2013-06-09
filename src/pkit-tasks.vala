@@ -142,6 +142,10 @@ private class PkResolver : PkListallerTask {
 		string[] python2_modules = {};
 		string[] files = {};
 		foreach (string s in dep.raw_itemlist) {
+			// skip every item which has already been set to "installed"
+			if (s in dep.get_installdata ())
+				continue;
+
 			var ctype = dep.item_get_type (s);
 			var cname = dep.item_get_name (s);
 			switch (ctype) {
@@ -203,7 +207,7 @@ private class PkResolver : PkListallerTask {
 	/**
 	 * This method searches for dependency packages & stores them in dep.install_data
 	 */
-	public bool search_dep_packages (ref Dep.Module dep) {
+	public bool search_dep_packages (Dep.Module dep) {
 		bool ret = true;
 		reset ();
 
@@ -376,7 +380,7 @@ private class PkInstaller : PkListallerTask {
 	}
 
 	/* This method install a dependency if necessary */
-	public bool install_dependency (ref Dep.Module dep) {
+	public bool install_dependency (Dep.Module dep) {
 		bool ret = true;
 		// Just to be sure...
 		if (last_error != null)

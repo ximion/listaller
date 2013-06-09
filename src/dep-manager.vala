@@ -42,7 +42,7 @@ private class DepManager : MessageObject {
 			ssettings = new SetupSettings ();
 		}
 
-		cfactory = new ComponentFactory ();
+		cfactory = new ComponentFactory (ssettings);
 		cfactory.initialize ();
 	}
 

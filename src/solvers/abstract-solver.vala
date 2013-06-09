@@ -25,11 +25,21 @@ using Listaller.Utils;
 
 namespace Listaller.Dep {
 
+private errordomain SolverError {
+	RESOLVING_FAILED,
+	INSTALLATION_FAILED,
+	INTERNAL;
+}
+
 private abstract class AbstractSolver : Object {
 	public string id { get; protected set; }
 
-	public AbstractSolver () {
+	protected SetupSettings ssettings;
+
+	public AbstractSolver (SetupSettings setup_settings) {
 		id = "AbstractSolver";
+
+		ssettings = setup_settings;
 	}
 
 	/**
@@ -49,7 +59,9 @@ private abstract class AbstractSolver : Object {
 	 *
 	 * @return TRUE if this solver was successful, FALSE otherwise.
 	 */
-	public abstract bool check_framework_items_installed (Framework cfrmw, out string reason = null);
+	public virtual bool check_framework_items_installed (Framework cfrmw, out string? reason = null) {
+		return true;
+	}
 
 	/**
 	 * Function to check if items of a module are already installed.
@@ -62,9 +74,9 @@ private abstract class AbstractSolver : Object {
 	 *
 	 * @return TRUE if this solver was successful, FALSE otherwise.
 	 */
-	public abstract bool check_module_items_installed (Module cmod, out string reason = null);
+	public abstract bool check_module_items_installed (Module cmod, out string? reason = null);
 
-	public abstract bool install_module (Module cmod);
+	public abstract bool install_module (Module cmod) throws SolverError;
 
 
 }

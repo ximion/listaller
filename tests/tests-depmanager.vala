@@ -108,12 +108,12 @@ void test_dependency_manager () {
 
 void search_install_pkdep (Dep.PkInstaller pkinst, Dep.PkResolver pksolv, ref Dep.Module dep) {
 	bool ret;
-	ret = pksolv.search_dep_packages (ref dep);
+	ret = pksolv.search_dep_packages (dep);
 	if (!ret) {
 		debug (pksolv.last_error.details);
 		assert (ret == true);
 	}
-	ret = pkinst.install_dependency (ref dep);
+	ret = pkinst.install_dependency (dep);
 	if (!ret) {
 		debug (pkinst.last_error.details);
 		assert (ret == true);
@@ -148,7 +148,7 @@ void test_packagekit_installer () {
 	// Now something which fails
 	Dep.Module fail = new Dep.Module ("Fail");
 	fail.add_item (Dep.ItemType.UNKNOWN, "/run/chicken");
-	ret = pkslv.search_dep_packages (ref fail);
+	ret = pkslv.search_dep_packages (fail);
 	if (!ret) {
 		debug (pkit.last_error.details);
 		assert (ret == false);

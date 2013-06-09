@@ -34,15 +34,23 @@ namespace Listaller.Dep {
  */
 internal class ComponentFactory : Object {
 	private string system_components_dir;
+	private ArrayList<AbstractSolver> solver_pool;
+	private SetupSettings ssettings;
 
 	public HashMap<string, Dep.Framework> registered_frameworks { get; private set; }
 	public HashMap<string, Dep.Module> registered_modules { get; private set; }
 
-	public ComponentFactory () {
+
+	public ComponentFactory (SetupSettings? setup_settings = null) {
 		system_components_dir = PkgConfig.DATADIR + "/listaller/components";
 
 		registered_frameworks = new HashMap<string, Dep.Framework> ();
 		registered_modules = new HashMap<string, Dep.Module> ();
+		solver_pool = new ArrayList<AbstractSolver> ();
+
+		ssettings = setup_settings;
+		if (ssettings == null)
+			ssettings = new SetupSettings (IPK.InstallMode.SHARED);
 	}
 
 	public void initialize () {
@@ -72,6 +80,19 @@ internal class ComponentFactory : Object {
 					warning ("Unable to load data for module: %s", fname);
 			}
 		}
+	}
+
+	/**
+	 * Ensure that the solver pool is set-up. If it isn't,
+	 * a new pool is created.
+	 */
+	private void init_solverpool () {
+		if (solver_pool.size > 0)
+			return;
+		solver_pool.clear ();
+
+		solver_pool.add(new BasicSolver (ssettings));
+		solver_pool.add(new PkitSolver (ssettings));
 	}
 
 	public void load_extra_modules (string module_dir) {
@@ -136,12 +157,16 @@ internal class ComponentFactory : Object {
 	private bool check_framework_installed (Dep.Framework cfrmw) {
 		if (cfrmw.installed)
 			return true;
-		bool ret;
-		string reason;
 
-		ret = run_solver_framework (new BasicSolver (), cfrmw);
-		if (!ret)
-			return false;
+		bool ret = false;
+		string reason;
+		init_solverpool ();
+
+		foreach (AbstractSolver solver in solver_pool) {
+			ret = run_solver_framework (solver, cfrmw);
+			if (!ret)
+				return false;
+		}
 
 		return ret;
 	}
@@ -151,10 +176,16 @@ internal class ComponentFactory : Object {
 			return true;
 
 		bool ret;
-		ret = run_solver_module (new BasicSolver (), cmod, out reason);
-		if (!ret)
-			return false;
-		cmod.update_installed_status ();
+		init_solverpool ();
+
+		foreach (AbstractSolver solver in solver_pool) {
+			ret = run_solver_module (solver, cmod, out reason);
+			if (!ret)
+				return false;
+			// update the installed state, in case we resolved everything
+			cmod.update_installed_status ();
+		}
+
 		if ((!cmod.installed) && (reason == null))
 			critical ("Module '%s' is not installed, but we don't know a reason why, since no resolver has failed. This is usually a bug in a resolver, please fix it!", cmod.full_name);
 

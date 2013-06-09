@@ -91,7 +91,7 @@ private class DepInstaller : MessageObject {
 		var pksolv = new PkResolver (ssettings);
 		connect_with_object (pksolv, ObjConnectFlags.PROGRESS_TO_SUBPROGRESS);
 
-		ret = pksolv.search_dep_packages (ref dep);
+		ret = pksolv.search_dep_packages (dep);
 
 		// TODO: Implement & call all other solvers, to determine if this dependency can be satisfied
 
@@ -129,7 +129,7 @@ private class DepInstaller : MessageObject {
 		/* Now try the PackageKit dependency provider, if feedinstall is not forced
 		 * and the previous package dependency searching was successful */
 		if ((!force_feedinstall) && (dep.has_installdata ())) {
-			ret = pkinst.install_dependency (ref dep);
+			ret = pkinst.install_dependency (dep);
 			if (!ret)
 				error = pkinst.last_error;
 		}
