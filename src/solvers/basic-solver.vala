@@ -29,7 +29,7 @@ private class BasicSolver : AbstractSolver {
 
 	public BasicSolver (SetupSettings setup_settings) {
 		base (setup_settings);
-		id = "BasicSolver";
+		id = "Basic";
 	}
 
 	private bool check_component_library_items_installed (Dep.Component comp, out string? explanation = null) {

@@ -28,10 +28,10 @@ private class PkitSolver : AbstractSolver {
 	private PkResolver pksolv;
 	private PkInstaller pkinst;
 
-	// NOTE: This solver only cares for modules, nothing else is handled
+	// NOTE: This solver only cares about modules, nothing else is handled
 	public PkitSolver (SetupSettings setup_settings) {
 		base (setup_settings);
-		id = "PkitSolver";
+		id = "Native";
 
 		pkinst = new PkInstaller (ssettings);
 		pkinst.message.connect ( (m) => { message ("message from PackageKit Installer: %s", m.details); } );

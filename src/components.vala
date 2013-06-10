@@ -535,7 +535,6 @@ private class Module : Component {
 	 * installed
 	 */
 	public void update_installed_status () {
-		debug ("InstData-Size: %i -- IteList-Size: %i", install_data.size, item_list.size);
 		installed = install_data.size == item_list.size;
 	}
 

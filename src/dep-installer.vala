@@ -71,9 +71,12 @@ private class DepInstaller : MessageObject {
 			try {
 				ret = solver.install_module (cmod);
 			} catch (SolverError e) {
-				debug ("Solver install error: %s", e.message);
+				string? msg = e.message;
+				if (msg == null)
+					msg = "PackageKit did not return an error.";
+				debug ("Solver install error: %s", msg);
 				emit_error (ErrorEnum.DEPENDENCY_INSTALL_FAILED,
-						_("Unable to install module '%s' which is required for this installation.").printf (cmod.full_name));
+						_("Unable to install module '%s' which is required for this installation.\nMessage: %s").printf (cmod.full_name, msg));
 
 				return false;
 			}

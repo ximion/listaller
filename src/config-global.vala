@@ -176,6 +176,18 @@ internal class Config : Object {
 		return res;
 	}
 
+	private bool config_str_in_list (string comma_list, string str) {
+		if (comma_list.down () == "All")
+			return true;
+		if (comma_list.down () == "None")
+			return false;
+		string[] parts = comma_list.split (",");
+		if (str in parts)
+			return true;
+
+		return false;
+	}
+
 	public string? installer_get_str (string key) {
 		string? str;
 		try {
@@ -194,6 +206,15 @@ internal class Config : Object {
 		} catch (Error e) {
 			return false;
 		}
+
+		return ret;
+	}
+
+	public bool installer_get_string_in_list (string key, string str) {
+		string? res = installer_get_str (key);
+		if (res == null)
+			return false;
+		bool ret = config_str_in_list (res, str);
 
 		return ret;
 	}

@@ -34,7 +34,7 @@ private class PythonSolver : AbstractSolver {
 
 	public PythonSolver (SetupSettings setup_settings) {
 		base (setup_settings);
-		id = "PythonSolver";
+		id = "Python";
 
 		python2_modules = new HashMap<string, string> ();
 		python3_modules = new HashMap<string, string> ();
