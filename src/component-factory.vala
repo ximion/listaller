@@ -95,6 +95,12 @@ internal class ComponentFactory : Object {
 		solver_pool.add(new PkitSolver (ssettings));
 	}
 
+	public ArrayList<AbstractSolver> get_solverpool () {
+		init_solverpool ();
+
+		return solver_pool;
+	}
+
 	public void load_extra_modules (string module_dir) {
 		HashSet<string>? extra_module_info_files = find_files_matching (module_dir, "*.module");
 
@@ -371,6 +377,25 @@ internal class ComponentFactory : Object {
 		}
 
 		return true;
+	}
+
+	/**
+	 * This function is currently only used for testing purposes.
+	 *
+	 * @returns TRUE if dependencies in dep_list are installable.
+	 */
+	internal bool modules_installable (ref ArrayList<Dep.Module> dep_list, out string? reason = null) {
+		bool ret = true;
+		foreach (Dep.Module dep in dep_list) {
+			string ic_reason;
+			ret = check_module_installed (dep, out ic_reason);
+			if (!ret) {
+				reason = ic_reason;
+				return false;
+			}
+		}
+
+		return ret;
 	}
 }
 

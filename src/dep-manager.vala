@@ -50,7 +50,7 @@ private class DepManager : MessageObject {
 		return db;
 	}
 
-	public bool module_is_installed (ref Dep.Module dep) {
+	public bool module_is_installed (Dep.Module dep) {
 		Dep.Module? dbDep = db.get_dependency_by_id (dep.idname);
 		if (dbDep != null) {
 			debug ("Dependency with id [%s] is already installed :)", dep.idname);

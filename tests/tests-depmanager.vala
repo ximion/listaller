@@ -47,7 +47,8 @@ void test_dependency_installer () {
 	msg ("Dependency installer tests");
 
 	bool ret;
-	DepInstaller depinst = new DepInstaller (sdb);
+	var depinst = new DepInstaller (sdb);
+	var cfactory = new Dep.ComponentFactory (ssettings);
 
 	// Test 1
 	Dep.Module test1 = new Dep.Module ("Test:1.gee");
@@ -55,7 +56,7 @@ void test_dependency_installer () {
 	//test1.add_item ("libgee.so.2", Dep.ItemType.SHARED_LIB);
 	test1.add_item (Dep.ItemType.SHARED_LIB, "bladada.so.2");
 
-	ret = depinst.install_existing_module_dependency (ref test1);
+	ret = depinst.install_existing_module_dependency (cfactory, test1);
 	assert (ret == true);
 	assert (test1.installed == true);
 	debug (test1.full_name);
@@ -67,7 +68,7 @@ void test_dependency_installer () {
 	//test2.add_item ("libvorbis.so.0", Dep.ItemType.SHARED_LIB);
 	test2.add_item (Dep.ItemType.SHARED_LIB, "nobis.so.0");
 
-	ret = depinst.install_existing_module_dependency (ref test2);
+	ret = depinst.install_existing_module_dependency (cfactory, test2);
 
 	/* We already installed this in a previous test, but did no proper
 	 * registration. So this has to fail because unknown files would be overwritten.
@@ -80,7 +81,7 @@ void test_dependency_installer () {
 	// Look if dependency of test1 is still available :-P
 	test1.installed = false;
 	test1.full_name = "";
-	ret = depinst.install_existing_module_dependency (ref test1);
+	ret = depinst.install_existing_module_dependency (cfactory, test1);
 	assert (ret == true);
 	assert (test1.installed == true);
 	assert (test1.full_name == "libgee");
@@ -194,11 +195,9 @@ void test_depsolver () {
 	deplist.add (dep4);
 
 	bool ret;
-	DepInstaller depinst = new DepInstaller (sdb);
-	depinst.error_code.connect (test_solver_error_code_cb);
-	depinst.message.connect (test_solver_message_cb);
+	var cfactory = new Dep.ComponentFactory (ssettings);
 
-	ret = depinst.dependencies_installable (ref deplist);
+	ret = cfactory.modules_installable (ref deplist);
 	assert (ret == true);
 }
 
