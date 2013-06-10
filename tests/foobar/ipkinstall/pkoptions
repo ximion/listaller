@@ -2,7 +2,6 @@ Version: 1.2
 
 AutoFindDeps: true
 FilesRoot: %INSTDIR%
-InstallModes: Shared
-              Private
-              Test
+InstallModes: Shared, Private, Test
+License: GPLv3+
 Requires: dummy-module-dep-listallertest (>= 1.2)

@@ -2,5 +2,4 @@ Version: 1.2
 
 AutoFindDeps: true
 Requires: FooDependency (>= 1.0)
-InstallModes: Shared
-              Test
+InstallModes: Shared, Test

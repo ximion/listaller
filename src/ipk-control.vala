@@ -144,12 +144,12 @@ public abstract class Control : Object {
 			modesList += "Shared";
 		else
 			modesList += "NoShared";
-		modesList += "\n";
+		modesList += ",";
 		if (modes.is_all_set (InstallMode.PRIVATE))
 			modesList += "Private";
 		else
 			modesList += "NoPrivate";
-		modesList += "\n";
+		modesList += ",";
 		if (modes.is_all_set (InstallMode.TEST))
 			modesList += "Test";
 		else
@@ -163,7 +163,7 @@ public abstract class Control : Object {
 		InstallMode retFlags = InstallMode.SHARED;
 
 		string modesStr = packSetting.get_value ("InstallModes", false);
-		string[] modesStrV = modesStr.split ("\n");
+		string[] modesStrV = modesStr.split (",");
 		foreach (string s in modesStrV) {
 			string mode_str = s.down ().strip ();
 
@@ -374,16 +374,6 @@ public class PackControl : Control {
 
 		}
 		return license;
-	}
-
-	public override void set_app_description (string text) {
-		Xml.Node *cdata = xdoc->new_cdata_block (text, text.length);
-		Xml.Node *n = get_xsubnode (app_node (), "description");
-		n->add_child (cdata);
-	}
-
-	public override string get_app_description () {
-		return get_node_content (get_xsubnode (app_node (), "description"));
 	}
 #endif
 
