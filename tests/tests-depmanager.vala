@@ -52,7 +52,7 @@ void test_dependency_installer () {
 
 	// Test 1
 	Dep.Module test1 = new Dep.Module ("Test:1.gee");
-	test1.feed_url = "http://services.sugarlabs.org/libgee";
+	test1.feed_url = "http://sweets.sugarlabs.org/base/libgee";
 	//test1.add_item ("libgee.so.2", Dep.ItemType.SHARED_LIB);
 	test1.add_item (Dep.ItemType.SHARED_LIB, "bladada.so.2");
 
@@ -64,7 +64,7 @@ void test_dependency_installer () {
 
 	// Test 2
 	Dep.Module test2 = new Dep.Module ("Test:2.vorbis");
-	test2.feed_url = "http://services.sugarlabs.org/libvorbis";
+	test2.feed_url = "http://sweets.sugarlabs.org/base/libvorbis";
 	//test2.add_item ("libvorbis.so.0", Dep.ItemType.SHARED_LIB);
 	test2.add_item (Dep.ItemType.SHARED_LIB, "nobis.so.0");
 
@@ -162,7 +162,7 @@ void test_feed_installer () {
 	Dep.FeedInstaller finst = new Dep.FeedInstaller (ssettings);
 
 	Dep.Module test1 = new Dep.Module ("feedTest:1.vorb");
-	test1.feed_url = "http://services.sugarlabs.org/libvorbis";
+	test1.feed_url = "http://sweets.sugarlabs.org/base/libvorbis";
 
 	bool ret;
 	ret = finst.install_dependency (sdb, ref test1);
@@ -179,7 +179,7 @@ void test_depsolver () {
 
 	// Create a set of dependencies
 	Dep.Module dep1 = new Dep.Module ("Gee");
-	dep1.feed_url = "http://services.sugarlabs.org/libgee";
+	dep1.feed_url = "http://sweets.sugarlabs.org/base/libgee";
 	deplist.add (dep1);
 
 	Dep.Module dep2 = new Dep.Module ("SDLMixer1.2");
@@ -191,7 +191,7 @@ void test_depsolver () {
 	deplist.add (dep3);
 
 	Dep.Module dep4 = new Dep.Module ("LibXml2");
-	dep4.feed_url = "http://services.sugarlabs.org/libxml2";
+	dep4.feed_url = "http://sweets.sugarlabs.org/base/libxml2";
 	deplist.add (dep4);
 
 	bool ret;

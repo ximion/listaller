@@ -1,8 +1,8 @@
 
 Name: OggVorbis
 ID: ogg-vorbis
-Feeds: http://services.sugarlabs.org/libogg
- http://services.sugarlabs.org/libvorbis
+Feeds: http://sweets.sugarlabs.org/base/libogg
+ http://sweets.sugarlabs.org/base/libvorbis
 Libraries: libogg.so.*
            libvorbis.so.*
            libvorbisfile.so.*
