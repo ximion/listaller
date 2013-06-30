@@ -109,7 +109,7 @@ void test_zfeeds () {
 	feed.open (Path.build_filename (datadir, "libogg.xml", null));
 
 	Dep.Module dep_mod = new Dep.Module ("test");
-	feed.update_dependency_data (ref dep_mod);
+	feed.update_dependency_data (dep_mod);
 
 	assert (dep_mod.full_name == "libogg");
 	assert (dep_mod.homepage == "http://xiph.org/ogg/");
@@ -121,7 +121,7 @@ void test_zfeeds () {
 	bool ret = feed.search_matching_dependency ();
 	assert (ret == true);
 
-	feed.update_dependency_data (ref dep_mod);
+	feed.update_dependency_data (dep_mod);
 	assert (dep_mod.get_version () == "1.1.4-1");
 
 	assert (feed.package_url != "");

@@ -1,4 +1,4 @@
-/* pkit-solver.vala -- Solver using Listaller's built-in PackageKit bridge to satisfy dependencies
+/* zfeed-solver.vala -- Solve dependencies using ZeroInstall feeds
  *
  * Copyright (C) 2013 Matthias Klumpp <matthias@tenstral.net>
  *
@@ -19,42 +19,49 @@
  */
 
 using GLib;
+using Gee;
 using Listaller;
 using Listaller.Utils;
 
 namespace Listaller.Dep {
 
-private class PkitSolver : AbstractSolver {
-	private PkResolver pksolv;
-	private PkInstaller pkinst;
-
-	// NOTE: This solver only cares about modules, nothing else is handled
-	public PkitSolver (SetupSettings setup_settings) {
+private class ZFeedSolver : AbstractSolver {
+	public ZFeedSolver (SetupSettings setup_settings) {
 		base (setup_settings);
-		id = "Native";
+		id = "ZeroInstall";
+	}
 
-		pkinst = new PkInstaller (ssettings);
-		pkinst.message.connect ( (m) => { message ("message from PackageKit Installer: %s", m.details); } );
-		pksolv = new PkResolver (ssettings);
+	public override bool usable (Component cmp) {
+		if (!base.usable (cmp))
+			return false;
+
+		// we can only handle modules
+		if (cmp is Framework)
+			return false;
+		if (cmp is Module) {
+			Module cmod = cmp as Module;
+			if (!cmod.has_feed ())
+				return false;
+			return true;
+		}
+
+		// we should never get here....
+		warning ("Some invalid component type was received in ZFeedSolver.usable() method!");
+		return false;
 	}
 
 	public override bool check_module_items_installed (Module cmod, out string? reason = null) {
-		bool ret;
-
-		// Try if we can find native packages providing the dependency
-		ret = pksolv.search_dep_packages (cmod);
-		if (!ret)
-			reason = "No native package found to satisfy dependency.";
-
-		return ret;
+		// we do not handle install-checks
+		return true;
 	}
 
 	public override bool install_module (Module cmod) throws SolverError {
+		Dep.FeedInstaller finst = new Dep.FeedInstaller (ssettings);
 		bool ret;
-
-		ret = pkinst.install_dependency (cmod);
-		if (!ret)
-			throw new SolverError.INSTALLATION_FAILED (pkinst.last_error.details);
+		ret = finst.install_dependency (cmod);
+		if (finst.last_error != null) {
+			throw new SolverError.INSTALLATION_FAILED (finst.last_error.details);
+		}
 
 		return ret;
 	}

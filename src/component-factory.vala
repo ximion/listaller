@@ -91,8 +91,11 @@ internal class ComponentFactory : Object {
 			return;
 		solver_pool.clear ();
 
-		solver_pool.add(new BasicSolver (ssettings));
-		solver_pool.add(new PkitSolver (ssettings));
+		// the order of the solvers defines their priority
+		solver_pool.add (new BasicSolver (ssettings));
+		solver_pool.add (new PkitSolver (ssettings));
+		//solver_pool.add (new PythonSolver (ssettings));
+		solver_pool.add (new ZFeedSolver (ssettings));
 	}
 
 	public ArrayList<AbstractSolver> get_solverpool () {
@@ -132,7 +135,7 @@ internal class ComponentFactory : Object {
 
 	/**
 	 * Function which runs the solver methods on dependencies, to
-	 * determine if they are installed and if not.
+	 * determine if they are installed.
 	 */
 	private bool run_solver_framework (AbstractSolver depsolver, Dep.Framework cfrmw) {
 		if (!depsolver.usable (cfrmw))
@@ -148,7 +151,7 @@ internal class ComponentFactory : Object {
 
 	/**
 	 * Function which runs the solver methods on dependencies, to
-	 * determine if they are installed and if not and which parts are missing
+	 * determine if they are installed and, if not, which parts are missing
 	 * to satisfy a dependency.
 	 */
 	private bool run_solver_module (AbstractSolver depsolver, Dep.Module cmod, out string reason) {

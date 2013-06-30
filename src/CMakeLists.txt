@@ -76,10 +76,12 @@ set(COMPONENT_SOLVER_SOURCES
 	solvers/basic-solver.vala
 	solvers/pkit-solver.vala
 	solvers/python-solver.vala
+	solvers/zfeed-solver.vala
+	solvers/zfeed.vala
+	solvers/feed-installer.vala
 )
 
 set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
-	zfeed.vala
 	ipk-repo.vala
 	ipk-changelog.vala
 	dep-manager.vala
@@ -88,7 +90,6 @@ set(LISTALLER_GLIB_SOURCES ${LISTALLER_BASE_SOURCES}
 	component-factory.vala
 	pkbackend-glue.vala
 	pkit-tasks.vala
-	feed-installer.vala
 	signature.vala
 	key-manager.vala
 	repo-data.vala

@@ -165,7 +165,7 @@ void test_feed_installer () {
 	test1.feed_url = "http://sweets.sugarlabs.org/base/libvorbis";
 
 	bool ret;
-	ret = finst.install_dependency (sdb, ref test1);
+	ret = finst.install_dependency (test1);
 	if (finst.last_error != null) {
 		error (finst.last_error.details);
 	}

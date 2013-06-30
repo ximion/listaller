@@ -215,7 +215,7 @@ private class FeedInstaller : MessageObject {
 		return ret;
 	}
 
-	public bool install_dependency (SoftwareDB db, ref Dep.Module dep) {
+	public bool install_dependency (Dep.Module dep) {
 		if (dep.feed_url == "")
 			return false;
 
@@ -240,16 +240,8 @@ private class FeedInstaller : MessageObject {
 		}
 
 		/* Update this dependency information with fresh data from the (ZI) feed
-		 * This is *very* important to get a sane dependency-id! */
-		feed.update_dependency_data (ref dep);
-
-		// Now check if a dependency with the new dependency-id is already installed
-		Dep.Module? dbDep = db.get_dependency_by_id (dep.idname);
-		if (dbDep != null) {
-			debug ("Dependency with id [%s] is already installed :)", dep.idname);
-			dep = dbDep;
-			return true;
-		}
+		   This is *very* important to get a sane dependency-id! */
+		feed.update_dependency_data (dep);
 
 		string package_file = Path.build_filename (tmpdir, Path.get_basename (feed.package_url), null);
 		ret = download_file_sync (feed.package_url, package_file);
