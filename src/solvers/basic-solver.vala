@@ -42,7 +42,7 @@ private class BasicSolver : AbstractSolver {
 		foreach (string sitem in comp.raw_itemlist) {
 			if (Dep.Component.item_get_type (sitem) == Dep.ItemType.SHARED_LIB) {
 				string s = Component.item_get_name (sitem);
-				ret = find_library (s, conf);
+				ret = library_exists (s, conf);
 				if (!ret) {
 					debug ("Library not found: %s", s);
 					explanation = _("Library %s was not found").printf (s);

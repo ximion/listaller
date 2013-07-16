@@ -200,6 +200,18 @@ void test_components () {
 	foo_frmw.installed = true;
 	string version = foo_frmw.get_version ();
 	assert (version == "1.0");
+
+	// --------------
+
+	// Test capabilities of resolving version names
+	var lilibv_frmw = new Dep.Framework.blank ();
+	ret = lilibv_frmw.load_from_file (Path.build_filename (datadir, "ListallerTest1.framework", null));
+	assert (ret);
+	assert (lilibv_frmw.idname == "ListallerTest1");
+
+	lilibv_frmw.installed = true;
+	version = lilibv_frmw.get_version ();
+	assert (version == PkgConfig.PACKAGE_VERSION);
 }
 
 void test_playground () {

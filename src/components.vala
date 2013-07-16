@@ -106,7 +106,7 @@ private abstract class Component : Object {
 	}
 
 	protected bool contains_directive (string str) {
-		return ((str.index_of ("shell$") >= 0) || (str.index_of ("textfile$") >= 0) || (str.index_of ("prefix$") >= 0) || (str.index_of ("envvar$") >= 0));
+		return ((str.index_of ("shell$") >= 0) || (str.index_of ("textfile$") >= 0) || (str.index_of ("prefix$") >= 0) || (str.index_of ("envvar$") >= 0) || (str.index_of ("libversion$") >= 0));
 	}
 
 	private string get_directive_value (string directive) {
@@ -122,6 +122,8 @@ private abstract class Component : Object {
 			res = s.substring (10);
 		else if (s.has_prefix ("regex$ "))
 			res = s.substring (7);
+		else if (s.has_prefix ("libversion$ "))
+			res = s.substring (12);
 		else
 			return s;
 
@@ -132,6 +134,9 @@ private abstract class Component : Object {
 		return res;
 	}
 
+	/**
+	 * @returns Value of the directives found
+	 */
 	protected string process_directives (string directive_str) throws ComponentError {
 		// first grab all data from shell commands and env vars
 		string res = "";
@@ -139,11 +144,11 @@ private abstract class Component : Object {
 
 		foreach (string str in parts) {
 			string rawdata;
-			string s = str.strip ();
-			if (s.has_prefix ("shell$ ")) {
+			string v_value = get_directive_value (str);
+			if (str.has_prefix ("shell$ ")) {
 				int exit_status;
 				string stderr;
-				string cmd = get_directive_value (s);
+				string cmd = v_value;
 
 				Process.spawn_command_line_sync (cmd, out rawdata, out stderr, out exit_status);
 				if (exit_status != 0)
@@ -153,20 +158,32 @@ private abstract class Component : Object {
 				// this workaround reflects that fact - error has been catched through an exit code above
 				if (str_is_empty (res))
 					res = stderr;
-			} else if (s.has_prefix ("envvar$ ")) {
+			} else if (str.has_prefix ("envvar$ ")) {
 				int exit_status;
-				string varname = get_directive_value (s);
+				string varname = v_value;
 				rawdata = Environment.get_variable (varname);
 				res = rawdata;
+			} else if (str.has_prefix ("libversion$ ")) {
+				string? lib_path = find_library (v_value, new Config ());
+				// ignore missing libs
+				if (lib_path == null) {
+					debug ("Library %s not available for version-detection. Ignoring issue.", v_value);
+					continue;
+				}
+				lib_path = resolve_symbolic_link (lib_path);
+				string absolute_libname = Path.get_basename (lib_path);
+				// now extract version from library name (the stuff after the .so is the version, usually...)
+				res = absolute_libname.substring (absolute_libname.index_of (".so.") + 4);
 			}
 		}
 		foreach (string str in parts) {
 			str = str.strip ();
+			string v_value = get_directive_value (str);
 			if (str.has_prefix ("prefix$ ")) {
 				// the prefix directive fetches the data after the given prefix
 				if (str_is_empty (res))
 					throw new ComponentError.DIRECTIVES_INVALID ("Unable to resolve directives for %s: Get prefix-directive found, but don't have valid data to apply it.", full_name);
-				string prefix = get_directive_value (str);
+				string prefix = v_value;
 				if (res.index_of (prefix) < 0)
 					throw new ComponentError.DIRECTIVES_RESOLVE_FAILED ("Unable to get data prefixed with '%s' from raw data string '%s'.", prefix, res);
 

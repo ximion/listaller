@@ -243,7 +243,7 @@ internal class Config : Object {
 
 }
 
-private bool find_library (string libname, Config conf) {
+private string? find_library (string libname, Config conf) {
 	Posix.Stat? s = null;
 	string[] paths = conf.library_paths ();
 	for (uint i = 0; paths[i] != null; i++) {
@@ -255,18 +255,24 @@ private bool find_library (string libname, Config conf) {
 			if (res == null)
 				continue;
 			if (res.size > 0)
-				return true;
+				return res.to_array ()[0];
 		} else {
 			// speed-up non-wildcard searches
 			s = null;
 			string path = Path.build_filename (paths[i], libname);
 			Posix.stat (path, out s);
 			if (s.st_size != 0)
-				return true;
+				return path;
 		}
 	}
 
-	return false;
+	return null;
+}
+
+private bool library_exists (string libname, Config conf) {
+	string? res = find_library (libname, conf);
+
+	return res != null;
 }
 
 } // End of namespace: Listaller

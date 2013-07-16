@@ -617,4 +617,27 @@ private string concat_binfiles (string afname, string bfname) {
 	return f.get_path ();
 }
 
+/**
+ * Recursively resolve a symbolic link.
+ *
+ * @returns The full path to the link target.
+ */
+private string resolve_symbolic_link (string symlink_path) {
+	string path = symlink_path;
+	while (FileUtils.test (path, FileTest.IS_SYMLINK)) {
+		char buf[1024];
+		ssize_t len;
+		if ((len = Posix.readlink (path, buf)) != -1)
+			buf[len] = '\0';
+		string link_target = (string) buf;
+		// we want the full path here, so assemble it relatively to the link dir (if necessary)
+		if (link_target.has_prefix ("/"))
+			path = link_target;
+		else
+			path = real_path (Path.build_filename (Path.get_dirname (path), link_target, null));
+	}
+
+	return path;
+}
+
 } // End of namespace: Listaller.Utils
