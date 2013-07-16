@@ -276,7 +276,8 @@ public class Manager : MessageObject {
 		return true;
 	}
 
-	public string? get_application_filelist_as_string (AppItem app) {
+	[CCode (array_length = false, array_null_terminated = true)]
+	public string[]? get_application_filelist (AppItem app) {
 		app.fast_check ();
 
 		SoftwareDB db;
@@ -296,9 +297,10 @@ public class Manager : MessageObject {
 			return null;
 		}
 
-		string res = "";
+		string[] res = {};
 		foreach (IPK.FileEntry fe in files)
-			res += "%s\n".printf (fe.fname_installed);
+			res += fe.fname_installed;
+		res += null;
 
 		return res;
 	}

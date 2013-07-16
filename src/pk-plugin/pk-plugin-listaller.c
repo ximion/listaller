@@ -182,7 +182,7 @@ pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 void
 pk_listaller_get_filelist (PkPlugin *plugin, gchar **package_ids)
 {
-	const gchar *filelist;
+	gchar **filelist;
 	ListallerAppItem *app;
 	guint i;
 
@@ -195,12 +195,17 @@ pk_listaller_get_filelist (PkPlugin *plugin, gchar **package_ids)
 		/* update AppItem with database data */
 		listaller_manager_refresh_appitem_data (plugin->priv->mgr, &app);
 
-		filelist = listaller_manager_get_application_filelist_as_string (plugin->priv->mgr, app);
-		if (filelist == NULL)
-			filelist = "ERROR while fetching list of files. (Please report this issue)";
+		filelist = listaller_manager_get_application_filelist (plugin->priv->mgr, app);
 
-		/* emit */
-		pk_backend_job_files (plugin->job, package_ids[i], filelist);
+		if (filelist == NULL) {
+			/* we have an error while fetching the list */
+			pk_backend_job_error_code (plugin->job, PK_ERROR_ENUM_CANNOT_GET_FILELIST,
+				"Error while fetching list of files. (Please report this issue)");
+		} else {
+			/* emit */
+			pk_backend_job_files (plugin->job, package_ids[i], filelist);
+			g_strfreev (filelist);
+		}
 	};
 }
 
