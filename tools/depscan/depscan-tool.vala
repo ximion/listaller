@@ -78,7 +78,7 @@ public class DepScanTool : Object {
 	public void run () {
 		bool done = false;
 		if (o_show_version) {
-			stdout.printf ("depscan helper, version: %s\n", PkgConfig.VERSION);
+			stdout.printf ("depscan helper, version: %s\n", PkgConfig.PACKAGE_VERSION);
 			return;
 		}
 		if (Listaller.Utils.str_is_empty (o_input_path)) {

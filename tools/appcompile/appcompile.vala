@@ -75,7 +75,7 @@ public class AppCompileTool : Object {
 	public void run () {
 		bool done = false;
 		if (o_show_version) {
-			stdout.printf ("appcompile helper, version: %s\n", PkgConfig.VERSION);
+			stdout.printf ("appcompile helper, version: %s\n", PkgConfig.PACKAGE_VERSION);
 			return;
 		}
 		// Take directory from options, otherwise use current dir

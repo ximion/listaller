@@ -23,7 +23,7 @@ namespace PkgConfig
 {
 	/* Package information */
 	public const string PACKAGE_NAME;
-	public const string VERSION;
+	public const string PACKAGE_VERSION;
 	public const string PACKAGE_URL;
 	public const string PACKAGE_BUGREPORT;
 

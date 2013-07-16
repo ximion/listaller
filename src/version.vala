@@ -31,7 +31,7 @@ namespace Listaller {
  * @return Listaller version string
  */
 public string get_version_info_str () {
-	return PkgConfig.VERSION;
+	return PkgConfig.PACKAGE_VERSION;
 }
 
 /**
@@ -66,7 +66,7 @@ public string get_full_version_info_str () {
 	if (os_release == "")
 		os_release = "unknown/unsupported distribution";
 
-	vstr = "%s (on %s)".printf (PkgConfig.VERSION, os_release);
+	vstr = "%s (on %s)".printf (PkgConfig.PACKAGE_VERSION, os_release);
 
 	return vstr;
 }
