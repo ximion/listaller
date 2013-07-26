@@ -41,6 +41,7 @@ namespace Listaller {
 private static bool __debug_errors_fatal = false;
 private static bool verbose_mode = false;
 private static bool _console = true;
+private static bool _clitool = false;
 
 } // End of namespace: Listaller
 
@@ -55,6 +56,10 @@ private static void li_log_handler_cb (string? log_domain, LogLevelFlags log_lev
 	string msg_text = message;
 
 	if (!verbose_mode) {
+		// we ignore debug info if not in verbose mode
+		if (log_level == LogLevelFlags.LEVEL_DEBUG)
+			return;
+
 		// remove the source-code information from output, when not in verbose mode
 		if (msg_text.index_of (".vala") > 0) {
 			string msg = msg_text;
@@ -74,6 +79,26 @@ private static void li_log_handler_cb (string? log_domain, LogLevelFlags log_lev
 		} else {
 			stdout.printf ("***\n%s\t%s\t%s\n***\n", str_time, log_domain, msg_text);
 		}
+		return;
+	}
+
+	// in a command-line utility, we don't print additional information which crowds the output
+	if ((_clitool) && (!verbose_mode)) {
+		// debug-output is never shown if we're not in verbose mode
+		//stdout.printf ("%c[%dm%s\t", 0x1B, CONSOLE_RESET, log_domain);
+		switch (log_level) {
+			case LogLevelFlags.LEVEL_CRITICAL:
+				stdout.printf ("%c[%dm%s %c[%dm", 0x1B, CONSOLE_RED, "CRITICAL", 0x1B, CONSOLE_RESET);
+				break;
+			case LogLevelFlags.LEVEL_ERROR:
+				stdout.printf ("%c[%dm%s %c[%dm", 0x1B, CONSOLE_RED, "ERROR", 0x1B, CONSOLE_RESET);
+				break;
+			case LogLevelFlags.LEVEL_WARNING:
+				stdout.printf ("%c[%dm%s %c[%dm", 0x1B, CONSOLE_YELLOW, "WARNING", 0x1B, CONSOLE_RESET);
+				break;
+			default: break;
+		}
+		stdout.printf ("%c[%dm%s\n%c[%dm", 0x1B, CONSOLE_RESET, msg_text, 0x1B, CONSOLE_RESET);
 		return;
 	}
 
@@ -121,23 +146,21 @@ public void set_console_mode (bool enabled) {
 	_console = enabled;
 }
 
+public void set_clitool_mode (bool enabled) {
+	_clitool = enabled;
+	set_console_mode (enabled);
+}
+
 public void add_log_domain (string log_domain)
 {
-	if (verbose_mode) {
-		Log.set_fatal_mask (log_domain, LogLevelFlags.LEVEL_ERROR | LogLevelFlags.LEVEL_CRITICAL);
-		Log.set_handler (log_domain,
-				   LogLevelFlags.LEVEL_ERROR |
-				   LogLevelFlags.LEVEL_CRITICAL |
-				   LogLevelFlags.LEVEL_DEBUG |
-				   LogLevelFlags.LEVEL_WARNING,
-				   li_log_handler_cb);
-		Log.set_default_handler (li_log_handler_cb);
-	} else {
-		// hide all debugging
-		Log.set_handler (log_domain,
-				   LogLevelFlags.LEVEL_DEBUG | LogLevelFlags.LEVEL_WARNING,
-				   li_log_ignore_cb);
-	}
+	Log.set_fatal_mask (log_domain, LogLevelFlags.LEVEL_ERROR | LogLevelFlags.LEVEL_CRITICAL);
+	Log.set_handler (log_domain,
+			   LogLevelFlags.LEVEL_ERROR |
+			   LogLevelFlags.LEVEL_CRITICAL |
+			   LogLevelFlags.LEVEL_DEBUG |
+			   LogLevelFlags.LEVEL_WARNING,
+			   li_log_handler_cb);
+	Log.set_default_handler (li_log_handler_cb);
 }
 
 } // End of namespace: Listaller
