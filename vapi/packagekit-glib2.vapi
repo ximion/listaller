@@ -881,6 +881,8 @@ namespace PackageKit {
 		NOT_COLLECTIONS,
 		APPLICATION,
 		NOT_APPLICATION,
+		DOWNLOADED,
+		NOT_DOWNLOADED,
 		LAST;
 		public static PackageKit.Bitfield bitfield_from_string (string filters);
 		public static string bitfield_to_string (PackageKit.Bitfield filters);

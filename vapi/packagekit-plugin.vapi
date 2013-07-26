@@ -69,7 +69,7 @@ namespace PkPlugin {
 		public void details (string package_id, string license, PackageKit.Group group, string description, string url, ulong size);
 		public void distro_upgrade (PackageKit.DistroUpgradeType type, string name, string summary);
 		public void eula_required (string eula_id, string package_id, string vendor_name, string license_agreement);
-		public void files (string package_id, string filelist);
+		public void files (string package_id, string files);
 		public void finished ();
 		public bool get_allow_cancel ();
 		public void* get_backend ();
