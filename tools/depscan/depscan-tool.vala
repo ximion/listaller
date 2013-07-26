@@ -40,7 +40,7 @@ public class DepScanTool : Object {
 		{ "out-simpletext", 0, 0, OptionArg.NONE, ref o_simpletext,
 			N_("Print machine-readable simple text"), null },
 		{ "out-components", 'c', 0, OptionArg.NONE, ref o_components,
-			N_("Print machine-readable simple text"), null },
+			N_("Print list of used framework/modules"), null },
 		{ "include-modules", 0, 0, OptionArg.STRING, ref o_extra_modules_dir,
 			N_("Define an additional directory with module definitions"), null },
 		{ "verbose", 'v', 0, OptionArg.NONE, ref o_verbose_mode,
@@ -107,7 +107,7 @@ public class DepScanTool : Object {
 		Intl.textdomain(PkgConfig.GETTEXT_PACKAGE);
 
 		var main = new DepScanTool (args);
-		Listaller.set_console_mode (true);
+		Listaller.set_clitool_mode (true);
 		Listaller.set_verbose_mode (o_verbose_mode);
 		Listaller.add_log_domain ("DepScan");
 

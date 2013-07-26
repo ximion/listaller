@@ -53,7 +53,13 @@ internal class ComponentFactory : Object {
 			ssettings = new SetupSettings (IPK.InstallMode.SHARED);
 	}
 
-	public void initialize () {
+	/**
+	 * Initialize the component-factory with data from disk.
+	 *
+	 * @param include_optional Include optional sections in component-definitions. This is usually only used
+	 *                         by the package-builder to group dependencies together. The parameter defaults to FALSE.
+	 */
+	public void initialize (bool include_optional = false) {
 		HashSet<string>? framework_info_files = find_files_matching (Path.build_filename (system_components_dir, "frameworks", null), "*.framework");
 		HashSet<string>? module_info_files = find_files_matching (Path.build_filename (system_components_dir, "modules", null), "*.module");
 
@@ -61,7 +67,7 @@ internal class ComponentFactory : Object {
 		if (framework_info_files != null) {
 			foreach (string fname in framework_info_files) {
 				var cfrmw = new Dep.Framework.blank ();
-				bool ret = cfrmw.load_from_file (fname);
+				bool ret = cfrmw.load_from_file (fname, include_optional);
 				if (ret)
 					registered_frameworks.set (cfrmw.idname, cfrmw);
 				else
@@ -73,7 +79,7 @@ internal class ComponentFactory : Object {
 		if (module_info_files != null) {
 			foreach (string fname in module_info_files) {
 				var cmod = new Dep.Module.blank ();
-				bool ret = cmod.load_from_file (fname);
+				bool ret = cmod.load_from_file (fname, include_optional);
 				if (ret)
 					registered_modules.set (cmod.idname, cmod);
 				else

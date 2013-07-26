@@ -1,0 +1,6 @@
+Name: GCC Standard Libraries
+ID: Stdlibs
+Version: 6
+AlwaysInstalled: true
+Libraries: libgcc_s.so.*
+ libstdc++.so.6

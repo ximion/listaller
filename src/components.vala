@@ -236,8 +236,7 @@ private abstract class Component : Object {
 		_version_cache = new_version;
 	}
 
-
-	protected virtual IPK.MetaFile? load_from_file_internal (string fname) {
+	protected virtual IPK.MetaFile? load_from_file_internal (string fname, bool include_optional = false) {
 		var data = new IPK.MetaFile ();
 		var ret = data.open_file (fname);
 		if (!ret)
@@ -254,18 +253,27 @@ private abstract class Component : Object {
 		if (data.get_value ("AlwaysInstalled") == "true")
 			installed = true;
 
+		// The optional stuff is usually only used by the setup process, to group
+		// optional libraries to the right component, without throwing an error.
+		string[] prefixes = {};
+		prefixes += "";
+		if (include_optional)
+			prefixes += "Optional";
+
 		// add item data for this component
-		add_item_list (ItemType.SHARED_LIB, data.get_value ("Libraries"));
-		add_item_list (ItemType.BINARY, data.get_value ("Binaries"));
-		add_item_list (ItemType.PYTHON, data.get_value ("Python"));
-		add_item_list (ItemType.PYTHON_2, data.get_value ("Python2"));
-		add_item_list (ItemType.FILE, data.get_value ("Files"));
+		foreach (string prefix in prefixes) {
+			add_item_list (ItemType.SHARED_LIB, data.get_value (prefix + "Libraries"));
+			add_item_list (ItemType.BINARY, data.get_value (prefix + "Binaries"));
+			add_item_list (ItemType.PYTHON, data.get_value (prefix + "Python"));
+			add_item_list (ItemType.PYTHON_2, data.get_value (prefix + "Python2"));
+			add_item_list (ItemType.FILE, data.get_value (prefix + "Files"));
+		}
 
 		return data;
 	}
 
-	public bool load_from_file (string fname) {
-		IPK.MetaFile? data = load_from_file_internal (fname);
+	public bool load_from_file (string fname, bool include_optional = false) {
+		IPK.MetaFile? data = load_from_file_internal (fname, include_optional);
 		if (data == null)
 			return false;
 
@@ -343,7 +351,7 @@ private abstract class Component : Object {
 		if (ty == ItemType.FILE)
 			warning ("Component %s depends on a file (%s), which is not supported at time.".printf (idname, list));
 
-		if (list.index_of ("\n") <= 0) {
+		if (list.index_of ("\n") < 0) {
 			add_item (ty, list);
 			return;
 		}
@@ -480,8 +488,8 @@ private class Module : Component {
 		install_data = new HashSet<string> ();
 	}
 
-	protected override IPK.MetaFile? load_from_file_internal (string fname) {
-		IPK.MetaFile? data = base.load_from_file_internal (fname);
+	protected override IPK.MetaFile? load_from_file_internal (string fname, bool include_optional = false) {
+		IPK.MetaFile? data = base.load_from_file_internal (fname, include_optional);
 		if (data == null)
 			return null;
 

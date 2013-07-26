@@ -603,7 +603,8 @@ private class Builder : Object {
 		string pkg_depfiles_dir = Path.build_filename (tmp, "dependencies", null);
 		create_dir_structure (pkg_depfiles_dir);
 		var cfactory = new Dep.ComponentFactory ();
-		cfactory.initialize ();
+		// intialize factory, loading optional component-items for better dependency-resolving
+		cfactory.initialize (true);
 		HashSet<string>? mod_info_files = find_files_matching (extra_mod_dir, "*.module");
 
 		if (mod_info_files != null) {

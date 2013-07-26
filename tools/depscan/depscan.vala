@@ -108,7 +108,8 @@ private class DependencyScanner : Object {
 		var comp_list = new HashMap<string, Dep.Component> ();
 		var res = new ArrayList<string> ();
 
-		cfactory.initialize ();
+		// intialize factory, loading optional component-items for better dependency-resolving
+		cfactory.initialize (true);
 		if (!Utils.str_is_empty (extra_modules_dir))
 			cfactory.load_extra_modules (extra_modules_dir);
 		foreach (Dep.Framework frmw in cfactory.registered_frameworks.values) {
@@ -166,7 +167,7 @@ private class DependencyScanner : Object {
 		if (required_items.size != 0) {
 			// Add stuff which we were unable to detect
 			res.add ("----");
-			res.add ("Dependencies not matching a (installed) component:");
+			res.add ("Dependencies which are not matching a (installed) framework or module:");
 			res.add_all (required_items);
 		}
 

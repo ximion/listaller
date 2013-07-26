@@ -106,7 +106,7 @@ public class AppCompileTool : Object {
 
 		// Set everything up...
 		var main = new AppCompileTool (args);
-		set_console_mode (true);
+		set_clitool_mode (true);
 		set_verbose_mode (o_verbose_mode);
 		add_log_domain ("AppCompile");
 

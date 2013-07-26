@@ -194,7 +194,7 @@ public class LipaTool : Object {
 		Intl.textdomain(PkgConfig.GETTEXT_PACKAGE);
 
 		var main = new LipaTool (args);
-		set_console_mode (true);
+		set_clitool_mode (true);
 		set_verbose_mode (o_verbose_mode);
 		add_log_domain ("Lipa");
 
