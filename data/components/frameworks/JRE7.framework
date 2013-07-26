@@ -1,6 +1,0 @@
-# Java Runtime Environment Version 7
-
-ID: JRE7
-Version: shell$ java -version
- $regex "[^"]*"!
-Binaries: java

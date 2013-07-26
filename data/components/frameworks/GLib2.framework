@@ -1,0 +1,7 @@
+# GLib C utility library
+
+ID: GLib2
+Version: shell$ pkg-config --modversion gtk+-3.0
+Libraries: libgio-2.0.so.0
+ libgobject-2.0.so.0
+ libglib-2.0.so.0

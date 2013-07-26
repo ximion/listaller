@@ -2,6 +2,6 @@
 # THIS FILE IS ONLY FOR UNIT-TESTING!
 
 ID: ListallerTest1
-Version: libversion$ liblistaller-glib.so
+Version: libversion$ liblistaller-glib.so.*
 Binaries: lipa
 Libraries: liblistaller-glib.so

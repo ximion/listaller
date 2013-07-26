@@ -82,6 +82,30 @@ Libraries: kio_file.so
 		<variablelist>
 			<title>Default frameworks</title>
 			<varlistentry>
+				<term><literal>Libc6</literal></term>
+				<listitem>
+					<para>The GNU standard C library.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>Linux</literal></term>
+				<listitem>
+					<para>Meta-framework, indicating that the software was built for GNU/Linux.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>GLib2</literal></term>
+				<listitem>
+					<para>The GLib utility library of C routines.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>Xorg</literal></term>
+				<listitem>
+					<para>The X.org X11 server.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
 				<term><literal>GNOME3</literal></term>
 				<listitem>
 					<para>The GNOME-3 platform libraries.</para>
@@ -94,29 +118,12 @@ Libraries: kio_file.so
 				</listitem>
 			</varlistentry>
 			<varlistentry>
-				<term><literal>JRE7</literal></term>
-				<listitem>
-					<para>The Java Runtime Environment version 7.</para>
-				</listitem>
-			</varlistentry>
-			<varlistentry>
 				<term><literal>KDELibs4</literal></term>
 				<listitem>
 					<para>The KDE libraries from the KDE project.</para>
 				</listitem>
 			</varlistentry>
-			<varlistentry>
-				<term><literal>Libc6</literal></term>
-				<listitem>
-					<para>The GNU standard C library.</para>
-				</listitem>
-			</varlistentry>
-			<varlistentry>
-				<term><literal>Linux</literal></term>
-				<listitem>
-					<para>Meta-framework, indicating that the software was built for GNU/Linux.</para>
-				</listitem>
-			</varlistentry>
+
 			<varlistentry>
 				<term><literal>Mesa</literal></term>
 				<listitem>
@@ -139,12 +146,6 @@ Libraries: kio_file.so
 				<term><literal>Qt4Core</literal></term>
 				<listitem>
 					<para>The core libraries of the Qt4 toolkit.</para>
-				</listitem>
-			</varlistentry>
-			<varlistentry>
-				<term><literal>Xorg</literal></term>
-				<listitem>
-					<para>The X.org X11 server.</para>
 				</listitem>
 			</varlistentry>
 		</variablelist>
