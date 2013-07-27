@@ -67,7 +67,7 @@ Libraries: kio_file.so
  libsolid.so.4]]>
 		</programlisting>
 		<para>
-			The <code>ID</code> element defines an unique identifier for this component. Frameworks IDs start with an upper-cased letter, while Modules are lower-cased.
+			The <code>ID</code> element defines an unique identifier for this component. Framework IDs start with an upper-cased letter, while Modules are lower-cased.
 		</para>
 
 		<warning>
@@ -146,6 +146,12 @@ Libraries: kio_file.so
 				<term><literal>Qt4Core</literal></term>
 				<listitem>
 					<para>The core libraries of the Qt4 toolkit.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><literal>PulseAudio</literal></term>
+				<listitem>
+					<para>The PulseAudio soundserver.</para>
 				</listitem>
 			</varlistentry>
 		</variablelist>
