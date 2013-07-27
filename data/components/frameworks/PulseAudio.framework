@@ -1,0 +1,9 @@
+# PulseAudio soundserver
+
+ID: PulseAudio
+Version: shell$ pulseaudio --version
+ prefix$ "pulseaudio "
+Binaries: pulseaudio
+Libraries: libpulse.so.0
+ libpulse-simple.so.0
+ libpulsecommon-*.so
