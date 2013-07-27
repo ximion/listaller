@@ -82,36 +82,25 @@ private class BasicSolver : AbstractSolver {
 		return ret;
 	}
 
-	public override bool check_framework_items_installed (Framework cfrmw, out string? reason = null) {
+	private bool check_component_items_installed (Component ccmp, out string? reason = null) {
 		bool ret;
-		string explanation;
-		ret = check_component_library_items_installed (cfrmw, out explanation);
+		ret = check_component_library_items_installed (ccmp, out reason);
 		if (!ret)
 			return false;
-		ret = check_component_binary_items_installed (cfrmw, out explanation);
-
-		return ret;
-	}
-
-	public override bool check_module_items_installed (Module cmod, out string? reason = null) {
-		bool ret;
-		ret = check_component_library_items_installed (cmod, out reason);
-		if (!ret)
-			return false;
-		ret = check_component_binary_items_installed (cmod, out reason);
+		ret = check_component_binary_items_installed (ccmp, out reason);
 
 		// If all libraries/binaries were found, add them to installdata and exit
 		if (ret) {
-			foreach (string s in cmod.raw_itemlist) {
-				switch (cmod.item_get_type (s)) {
+			foreach (string s in ccmp.raw_itemlist) {
+				switch (ccmp.item_get_type (s)) {
 					case Dep.ItemType.SHARED_LIB:
 					case Dep.ItemType.BINARY:
-						cmod.add_installed_item (s);
+						ccmp.add_installed_item (s);
 						break;
 					default:
 						// we have an unknown dependency, so this Module is not satisfied!
 						reason = "Dependency %s was not found!".printf (s);
-						cmod.installed = false;
+						ccmp.installed = false;
 						return false;
 				}
 			}
@@ -120,6 +109,14 @@ private class BasicSolver : AbstractSolver {
 		}
 
 		return ret;
+	}
+
+	public override bool check_framework_items_installed (Framework cfrmw, out string? reason = null) {
+		return check_component_items_installed (cfrmw, out reason);
+	}
+
+	public override bool check_module_items_installed (Module cmod, out string? reason = null) {
+		return check_component_items_installed (cmod, out reason);
 	}
 
 	public override bool install_module (Module cmod) {

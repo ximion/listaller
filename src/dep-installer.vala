@@ -81,8 +81,6 @@ private class DepInstaller : MessageObject {
 				return false;
 			}
 		}
-		// update the installed state
-		cmod.update_installed_status ();
 
 		return true;
 	}

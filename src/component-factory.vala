@@ -183,7 +183,7 @@ internal class ComponentFactory : Object {
 				return false;
 		}
 
-		return ret;
+		return cfrmw.installed;
 	}
 
 	private bool check_module_installed (Dep.Module cmod, out string reason = null) {
@@ -197,8 +197,6 @@ internal class ComponentFactory : Object {
 			ret = run_solver_module (solver, cmod, out reason);
 			if (!ret)
 				return false;
-			// update the installed state, in case we resolved everything
-			cmod.update_installed_status ();
 		}
 
 		if ((!cmod.installed) && (reason == null))

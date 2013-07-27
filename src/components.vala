@@ -98,11 +98,15 @@ private abstract class Component : Object {
 		}
 	}
 
+	// Items which were installed in order to satisfy this dependency
+	protected HashSet<string> install_data { get; internal set; }
+
 	public Component (string id_name) {
 		idname = id_name;
 		_full_name = "";
 
 		item_list = new HashSet<string> ();
+		install_data = new HashSet<string> ();
 	}
 
 	protected bool contains_directive (string str) {
@@ -417,6 +421,71 @@ private abstract class Component : Object {
 
 		return tp;
 	}
+
+	public HashSet<string> get_installdata () {
+		return install_data;
+	}
+
+	public string get_installdata_as_string () {
+		string res = "";
+		foreach (string s in install_data)
+			res += s + "\n";
+		return res;
+	}
+
+	public bool has_installdata () {
+		if (install_data == null)
+			return false;
+		return install_data.size > 0;
+	}
+
+	internal bool add_installed_item (string sinstcomp) {
+		if (sinstcomp.index_of (":") <= 0)
+			warning ("Invalid install data set! This should never happen! (Data was %s)", sinstcomp);
+		bool ret = install_data.add (sinstcomp);
+		update_installed_status ();
+		return ret;
+	}
+
+	internal void clear_installdata () {
+		install_data.clear ();
+		update_installed_status ();
+	}
+
+	private bool _add_itemstr_instdata_save (string line) {
+		string[] cmp = line.split (":", 2);
+		if (cmp.length != 2) {
+			critical ("Installdata string is invalid! (Error at: %s) %i", line, cmp.length);
+			return false;
+		}
+		add_installed_item ("%s:%s".printf (cmp[0], cmp[1]));
+		return true;
+	}
+
+	internal void set_installdata_from_string (string str) {
+		if (str.index_of ("\n") < 0) {
+			_add_itemstr_instdata_save (str);
+			return;
+		}
+
+		string[]? lines = str.split ("\n");
+		if (lines == null)
+			return;
+		foreach (string s in lines) {
+			if (s != "")
+				if (!_add_itemstr_instdata_save (s))
+					return;
+		}
+		update_installed_status ();
+	}
+
+	/**
+	 * Check if the Module is installed, and update it's status if it has been
+	 * installed
+	 */
+	private void update_installed_status () {
+		installed = install_data.size == item_list.size;
+	}
 }
 
 /**
@@ -468,8 +537,6 @@ private class Module : Component {
 	public int64 install_time { get; internal set; }
 	public string environment { get; internal set; }
 
-	private HashSet<string> install_data { get; internal set; } // Items which were installed in order to satisfy this module dependency
-
 	public string feed_url { get; internal set; }
 
 	public Module (string idname) {
@@ -477,7 +544,6 @@ private class Module : Component {
 		environment = "";
 		feed_url = "";
 		origin = "unknown";
-		install_data = new HashSet<string> ();
 	}
 
 	public Module.blank () {
@@ -485,7 +551,6 @@ private class Module : Component {
 		environment = "";
 		feed_url = "";
 		origin = "unknown";
-		install_data = new HashSet<string> ();
 	}
 
 	protected override IPK.MetaFile? load_from_file_internal (string fname, bool include_optional = false) {
@@ -500,67 +565,6 @@ private class Module : Component {
 
 	public bool has_feed () {
 		return feed_url != "";
-	}
-
-	public HashSet<string> get_installdata () {
-		return install_data;
-	}
-
-	public string get_installdata_as_string () {
-		string res = "";
-		foreach (string s in install_data)
-			res += s + "\n";
-		return res;
-	}
-
-	public bool has_installdata () {
-		if (install_data == null)
-			return false;
-		return install_data.size > 0;
-	}
-
-	internal bool add_installed_item (string sinstcomp) {
-		if (sinstcomp.index_of (":") <= 0)
-			warning ("Invalid install data set! This should never happen! (Data was %s)", sinstcomp);
-		return install_data.add (sinstcomp);
-	}
-
-	internal void clear_installdata () {
-		install_data.clear ();
-	}
-
-	private bool _add_itemstr_instdata_save (string line) {
-		string[] cmp = line.split (":", 2);
-		if (cmp.length != 2) {
-			critical ("Installdata string is invalid! (Error at: %s) %i", line, cmp.length);
-			return false;
-		}
-		add_installed_item ("%s:%s".printf (cmp[0], cmp[1]));
-		return true;
-	}
-
-	internal void set_installdata_from_string (string str) {
-		if (str.index_of ("\n") < 0) {
-			_add_itemstr_instdata_save (str);
-			return;
-		}
-
-		string[]? lines = str.split ("\n");
-		if (lines == null)
-			return;
-		foreach (string s in lines) {
-			if (s != "")
-				if (!_add_itemstr_instdata_save (s))
-					return;
-		}
-	}
-
-	/**
-	 * Check if the Module is installed, and update it's status if it has been
-	 * installed
-	 */
-	public void update_installed_status () {
-		installed = install_data.size == item_list.size;
 	}
 
 	/**

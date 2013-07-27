@@ -51,6 +51,10 @@ private bool write_gpg_config_to_homedir (string homedir) {
 	if (!Utils.is_root ())
 		return false;
 
+	// ensure home dir exists (fixes nasty bug occuring on some machines after
+	// incorrect purge of Listaller facilities and settings)
+	create_dir_structure (homedir);
+
 	string config = "# Options for GnuPG used by Listaller \n\n" +
 			"no-greeting\n" +
 			"no-permission-warning\n" +
