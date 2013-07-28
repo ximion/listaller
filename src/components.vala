@@ -85,7 +85,7 @@ private abstract class Component : Object {
 	public string architecture { get; internal set; } // e.g. amd64
 
 	protected bool _installed;
-	public bool installed { get { update_installed_status (); return _installed; } internal set { _installed = value; } }
+	public bool installed { get { return _installed; } internal set { _installed = value; } }
 
 	protected string _version_raw;
 	private string _version_cache;
@@ -520,7 +520,6 @@ private class Module : Component {
 
 	public bool installed {
 		get {
-			update_installed_status ();
 			return _installed;
 		}
 		set {
