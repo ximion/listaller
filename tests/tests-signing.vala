@@ -30,6 +30,13 @@ void msg (string s) {
 	stdout.printf ("%s\n", s);
 }
 
+/*FIXME: this test only works if
+ * sudo likey -i BF4DECEB
+ * has been executed previously, to provide a database key.
+ * The KeyManager needs to be adjusted to be unit-testable.
+ * (That's the reason why this test is excluded from the default set)
+ */
+
 void test_sign_working () {
 	GPGSign gsig = new GPGSign ();
 

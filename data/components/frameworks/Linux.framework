@@ -1,8 +1,8 @@
 Name: Linux
 ID: Linux
 AlwaysInstalled: true
-Libraries: linux-gate.so.*
-           ld-linux.so.*
-           ld-linux-*
-           libselinux.so.*
-           linux-vdso.so.1
+Libraries: ld-linux.so.*
+    ld-linux-*
+    libselinux.so.*
+OptionalLibraries: linux-vdso.so.1
+    linux-gate.so.*

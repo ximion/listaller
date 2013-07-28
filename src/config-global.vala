@@ -250,7 +250,7 @@ private string? find_library (string libname, Config conf) {
 		if (!FileUtils.test (paths[i], FileTest.EXISTS))
 			continue;
 
-		if (libname.has_suffix (".*")) {
+		if (libname.has_suffix ("*")) {
 			var res = Utils.find_files_matching (paths[i], libname);
 			if (res == null)
 				continue;

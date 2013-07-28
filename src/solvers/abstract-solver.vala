@@ -44,11 +44,7 @@ private abstract class AbstractSolver : Object {
 
 		ssettings = setup_settings;
 		conf = new Config ();
-
-		enabled = (id == "Basic") || conf.installer_get_string_in_list ("UseResolvers", id);
-		if (!enabled) {
-			debug ("Dependency resolver '%s' has been disabled in system configuration.", id);
-		}
+		enabled = true;
 	}
 
 	/**
@@ -58,6 +54,12 @@ private abstract class AbstractSolver : Object {
 	public virtual bool usable (Component cmp) {
 		if (!enabled)
 			return false;
+
+		enabled = (id == "Basic") || conf.installer_get_string_in_list ("UseResolvers", id);
+		if (!enabled) {
+			debug ("Dependency resolver '%s' has been disabled in system configuration.", id);
+			return false;
+		}
 
 		return !cmp.installed;
 	}
