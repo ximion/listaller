@@ -544,6 +544,7 @@ private class Module : Component {
 		environment = "";
 		feed_url = "";
 		origin = "unknown";
+		architecture = system_machine_generic ();
 	}
 
 	public Module.blank () {

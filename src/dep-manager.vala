@@ -50,7 +50,7 @@ private class DepManager : MessageObject {
 		return db;
 	}
 
-	public bool module_is_installed (Dep.Module dep) {
+	public bool module_is_installed (ref Dep.Module dep) {
 		Dep.Module? dbDep = db.get_dependency_by_id (dep.idname);
 		if (dbDep != null) {
 			debug ("Dependency with id [%s] is already installed :)", dep.idname);
@@ -96,7 +96,7 @@ private class DepManager : MessageObject {
 
 		string? resDir = find_dir_containing_file (depInstallDir, "*.so", true);
 		if (resDir == null) {
-			warning ("Could not find shared libraries for dependency '%s'. this might be an error.", dep.idname);
+			GLib.message ("Could not find shared libraries for dependency '%s'. this might be an error.", dep.idname);
 			return "";
 		}
 

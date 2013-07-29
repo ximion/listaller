@@ -51,40 +51,40 @@ void test_dependency_installer () {
 	var cfactory = new Dep.ComponentFactory (ssettings);
 
 	// Test 1
-	Dep.Module test1 = new Dep.Module ("Test:1.gee");
-	test1.feed_url = "http://sweets.sugarlabs.org/base/libgee";
+	Dep.Module test1 = new Dep.Module ("Test:1#expat");
+	test1.feed_url = "http://repo.roscidus.com/lib/expat1";
 	//test1.add_item ("libgee.so.2", Dep.ItemType.SHARED_LIB);
 	test1.add_item (Dep.ItemType.SHARED_LIB, "bladada.so.2");
 
-	ret = depinst.install_existing_module_dependency (cfactory, test1);
+	ret = depinst.install_existing_module_dependency (cfactory, ref test1);
 	assert (ret == true);
 	assert (test1.installed == true);
 	debug (test1.full_name);
-	assert (test1.full_name == "libgee");
+	assert (test1.full_name == "libexpat1");
 
 	// Test 2
-	Dep.Module test2 = new Dep.Module ("Test:2.vorbis");
-	test2.feed_url = "http://sweets.sugarlabs.org/base/libvorbis";
+	Dep.Module test2 = new Dep.Module ("Test:2#GNU_parallel");
+	test2.feed_url = "http://git.savannah.gnu.org/cgit/parallel.git/plain/packager/0install/parallel.xml";
 	//test2.add_item ("libvorbis.so.0", Dep.ItemType.SHARED_LIB);
 	test2.add_item (Dep.ItemType.SHARED_LIB, "nobis.so.0");
 
-	ret = depinst.install_existing_module_dependency (cfactory, test2);
+	ret = depinst.install_existing_module_dependency (cfactory, ref test2);
 
 	/* We already installed this in a previous test, but did no proper
 	 * registration. So this has to fail because unknown files would be overwritten.
 	 */
 	assert (ret == false);
 	assert (test2.installed == false);
-	assert (test2.full_name == "libvorbis");
+	assert (test2.full_name == "GNU parallel");
 
 	// Test 3
 	// Look if dependency of test1 is still available :-P
 	test1.installed = false;
 	test1.full_name = "";
-	ret = depinst.install_existing_module_dependency (cfactory, test1);
+	ret = depinst.install_existing_module_dependency (cfactory, ref test1);
 	assert (ret == true);
 	assert (test1.installed == true);
-	assert (test1.full_name == "libgee");
+	assert (test1.full_name == "libexpat1");
 }
 
 void test_dependency_manager () {
@@ -92,16 +92,16 @@ void test_dependency_manager () {
 
 	DepManager depman = new DepManager (sdb);
 
-	Dep.Module testA = depman.dependency_from_idname ("libgee-0.5.0-8");
+	Dep.Module testA = depman.dependency_from_idname ("libexpat1");
 	assert (testA != null);
 
 	string path = depman.get_absolute_library_path (testA);
-	string expectedPath = Path.build_filename (ssettings.depdata_dir (), testA.idname, "lib", null);
+	string expectedPath = Path.build_filename (ssettings.depdata_dir (), testA.idname, "usr", "lib", null);
 	debug (path);
 	assert (path == expectedPath);
 
 	// We do the whole thing again to check if storing this info in the database worked.
-	testA = depman.dependency_from_idname ("libgee-0.5.0-8");
+	testA = depman.dependency_from_idname ("libexpat1");
 	path = depman.get_absolute_library_path (testA);
 	debug (path);
 	assert (path == expectedPath);
@@ -181,18 +181,22 @@ void test_depsolver () {
 	// Create a set of dependencies
 	Dep.Module dep1 = new Dep.Module ("Gee");
 	dep1.feed_url = "http://sweets.sugarlabs.org/base/libgee";
+	dep1.add_item (Dep.ItemType.SHARED_LIB, "libc.so.6");
 	deplist.add (dep1);
 
 	Dep.Module dep2 = new Dep.Module ("SDLMixer1.2");
 	dep2.feed_url = "http://repo.roscidus.com/lib_rsl/sdl-mixer1.2";
+	dep2.add_item (Dep.ItemType.SHARED_LIB, "libgee.so");
 	deplist.add (dep2);
 
 	Dep.Module dep3 = new Dep.Module ("Mp3Gain");
 	dep3.add_item (Dep.ItemType.BINARY, "/usr/bin/mp3gain");
+	dep3.add_item (Dep.ItemType.SHARED_LIB, "libc.so.6");
 	deplist.add (dep3);
 
 	Dep.Module dep4 = new Dep.Module ("LibXml2");
 	dep4.feed_url = "http://sweets.sugarlabs.org/base/libxml2";
+	dep4.add_item (Dep.ItemType.SHARED_LIB, "libglib-2.0.so.0");
 	deplist.add (dep4);
 
 	bool ret;
@@ -223,11 +227,11 @@ int main (string[] args) {
 	// Open the DB
 	sdb.open_write ();
 
+	test_depsolver ();
 	test_feed_installer ();
 	//! test_packagekit_installer ();
 	test_dependency_installer ();
 	test_dependency_manager ();
-	test_depsolver ();
 
 	tenv.run ();
 

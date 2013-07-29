@@ -159,11 +159,9 @@ private class FeedInstaller : MessageObject {
 		return ret;
 	}
 
-	private bool extract_depfile (Archive.Read ar, Archive.Entry e, Dep.Module dep) {
+	private bool extract_depfile (Archive.Read ar, Archive.Entry e, string dest, Dep.Module dep) {
 		bool ret = true;
 
-		// Target dependency subdirectory (from DEP installation-var)
-		string dest = dep.get_install_dir_for_setting (ssettings);
 		// Target filename
 		string fname = Path.build_filename (dest, e.pathname (), null);
 
@@ -205,13 +203,26 @@ private class FeedInstaller : MessageObject {
 			return false;
 		}
 
+		// Target dependency subdirectory (from DEP installation-var)
+		string dest = dep.get_install_dir_for_setting (ssettings);
+
 		weak Archive.Entry e;
 		bool ret = false;
 		while (ar.next_header (out e) == Archive.Result.OK) {
-			ret = extract_depfile (ar, e, dep);
+			ret = extract_depfile (ar, e, dest, dep);
 			if (!ret)
 				break;
 		}
+
+		if (ret) {
+			HashSet<string> libs = find_files_matching (dest, "*.so*", true);
+			if ((libs != null) && (libs.size > 0)) {
+				string libname = libs.to_array ()[0];
+				dep.environment = "LD_LIBRARY_PATH=\"%s\"".printf (Path.get_dirname (libname));
+			}
+
+		}
+		
 		return ret;
 	}
 

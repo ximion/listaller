@@ -179,11 +179,12 @@ private class Feed : Object {
 				continue;
 			}
 			if (iter->name == "group") {
-				if (node_arch_property_matching (iter)) {
+				// real-life ZI feeds seem to ignore arch on groups, so we do that too
+				//if (node_arch_property_matching (iter)) {
 					impl = search_implementation (iter->children);
 					if (impl != null)
 						break;
-				}
+				//
 				continue;
 			}
 

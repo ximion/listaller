@@ -308,7 +308,7 @@ private abstract class InternalDB : Object {
 	 */
 	protected void db_assert (int result, string action_name = "") throws DatabaseError {
 		if (action_name == "")
-			action_name = "generic action";
+			action_name = "unknown action";
 		string msg = _("Database action '%s' failed: %s").printf (action_name, db.errmsg ());
 
 		switch (result) {

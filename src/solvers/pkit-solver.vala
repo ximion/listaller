@@ -53,8 +53,12 @@ private class PkitSolver : AbstractSolver {
 		bool ret;
 
 		ret = pkinst.install_dependency (cmod);
-		if (!ret)
-			throw new SolverError.INSTALLATION_FAILED (pkinst.last_error.details);
+		if (!ret) {
+			if (pkinst.last_error == null)
+				ret = true;
+			else
+				throw new SolverError.INSTALLATION_FAILED (pkinst.last_error.details);
+		}
 
 		return ret;
 	}

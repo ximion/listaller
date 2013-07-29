@@ -108,7 +108,7 @@ private class DepInstaller : MessageObject {
 			debug ("Prepared module dependency %s, satisfied: %i", dep_mod.idname, (int) dep_mod.installed);
 
 			ret = true;
-			if (!depman.module_is_installed (dep_mod)) {
+			if (!depman.module_is_installed (ref dep_mod)) {
 				ret = install_module_dep_internal (cfactory, dep_mod);
 				if ((ret) && (dep_mod.installed))
 					db.add_dependency (dep_mod);
@@ -124,9 +124,9 @@ private class DepInstaller : MessageObject {
 	 * This method is useful for testing, and should only be used for that
 	 * purpose internally.
 	 */
-	internal bool install_existing_module_dependency (ComponentFactory cfactory, Dep.Module dep_mod) {
+	internal bool install_existing_module_dependency (ComponentFactory cfactory, ref Dep.Module dep_mod) {
 		bool ret = true;
-		if (!depman.module_is_installed (dep_mod)) {
+		if (!depman.module_is_installed (ref dep_mod)) {
 			ret = install_module_dep_internal (cfactory, dep_mod);
 			if ((ret) && (dep_mod.installed))
 				db.add_dependency (dep_mod);

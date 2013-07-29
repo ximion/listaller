@@ -214,7 +214,7 @@ private class PkResolver : PkListallerTask {
 		// If there are no files, consider this dependency as "installed"
 		// This is usually an ERROR and might indicate a broken package
 		if (!dep.has_items ()) {
-			warning ("Module dependency %s has no components assigned!".printf (dep.full_name));
+			warning ("Module dependency %s has no items assigned!".printf (dep.full_name));
 			dep.installed = true;
 			return true;
 		}

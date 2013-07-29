@@ -56,6 +56,9 @@ private abstract class AbstractSolver : Object {
 			return false;
 
 		enabled = (id == "Basic") || conf.installer_get_string_in_list ("UseResolvers", id);
+		// we enable all solvers when running unit-tests
+		if (__unittestmode)
+			enabled = true;
 		if (!enabled) {
 			debug ("Dependency resolver '%s' has been disabled in system configuration.", id);
 			return false;
@@ -90,6 +93,15 @@ private abstract class AbstractSolver : Object {
 	 */
 	public abstract bool check_module_items_installed (Module cmod, out string? reason = null);
 
+	/**
+	 * Trigger installation of a module.
+	 *
+	 * The function should throw an error if installation fails.
+	 *
+	 * @param cmod Module which should be installed
+	 *
+	 * @return TRUE if there was no error (even if the solver is unable to perform an installation). FALSE if installation failed.
+	 */
 	public abstract bool install_module (Module cmod) throws SolverError;
 
 
