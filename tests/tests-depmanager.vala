@@ -148,7 +148,7 @@ void test_packagekit_installer () {
 
 	// Now something which fails
 	Dep.Module fail = new Dep.Module ("Fail");
-	fail.add_item (Dep.ItemType.UNKNOWN, "/run/chicken");
+	fail.add_item (Dep.ItemType.UNKNOWN, "/run/far_away");
 	ret = pkslv.search_dep_packages (fail);
 	if (!ret) {
 		debug (pkit.last_error.details);
@@ -161,8 +161,8 @@ void test_feed_installer () {
 	msg ("ZI Feed installer tests");
 	Dep.FeedInstaller finst = new Dep.FeedInstaller (ssettings);
 
-	Dep.Module test1 = new Dep.Module ("feedTest:1.vorb");
-	test1.feed_url = "http://sweets.sugarlabs.org/base/libvorbis";
+	Dep.Module test1 = new Dep.Module ("feedTest:1-gnu_parallel");
+	test1.feed_url = "http://git.savannah.gnu.org/cgit/parallel.git/plain/packager/0install/parallel.xml";
 
 	bool ret;
 	ret = finst.install_dependency (test1);
@@ -170,7 +170,8 @@ void test_feed_installer () {
 		error (finst.last_error.details);
 	}
 	assert (ret == true);
-	assert (test1.full_name == "libvorbis");
+	assert (test1.full_name == "GNU parallel");
+	debug ("Selected version (GNU parallel): %s", test1.get_version ());
 }
 
 void test_depsolver () {

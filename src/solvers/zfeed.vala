@@ -146,27 +146,68 @@ private class Feed : Object {
 		dep.homepage = get_intf_info_str ("homepage");
 	}
 
-	public bool search_matching_dependency () {
+	private bool node_arch_property_matching (Xml.Node* node) {
+		string arch = get_xproperty (node, "arch")->get_content ().down ();
+		// no arch => all archs are allowed, implementation matches
+		if (arch == "")
+			return true;
+
+		if (PatternSpec.match_simple (arch, "*-i?86"))
+			arch = "%s-%s".printf (arch.substring (0, arch.index_of ("-")), system_machine ());
+		else
+			arch = system_osname_arch ();
+		if (get_xproperty (node, "arch")->get_content ().down () == arch.down ()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Very ugly way to find implementations...
+	 * This does not really respect ZeroInstall feed conventions, so
+	 * all ZI feeds processed by Listaller need to be tested carefully.
+	 * (since ZI != LI, we will never have 100% compatibility anyway)
+	 */
+	private Xml.Node* search_implementation (Xml.Node* start_node) {
 		Xml.Node *impl = null;
 
 		// Find implementation which matches the current system
-		for (Xml.Node* iter = interface_node()->children; iter != null; iter = iter->next) {
+		for (Xml.Node* iter = start_node; iter != null; iter = iter->next) {
 			// Spaces between tags are also nodes, discard them
 			if (iter->type != ElementType.ELEMENT_NODE) {
 				continue;
 			}
+			if (iter->name == "group") {
+				if (node_arch_property_matching (iter)) {
+					impl = search_implementation (iter->children);
+					if (impl != null)
+						break;
+				}
+				continue;
+			}
+
 			if (iter->name == "implementation") {
-				string arch = get_xproperty (iter, "arch")->get_content ().down ();
-				if (PatternSpec.match_simple (arch, "*-i?86"))
-					arch = "%s-%s".printf (arch.substring (0, arch.index_of ("-")), system_machine ());
-				else
-					arch = system_osname_arch ();
-				if (get_xproperty (iter, "arch")->get_content ().down () == arch.down ()) {
-					impl = iter;
-					break;
+				if (node_arch_property_matching (iter)) {
+					// we want the highest version
+					if (impl == null) {
+						impl = iter;
+					} else {
+						if (compare_versions (get_xproperty (iter, "version")->get_content (), get_xproperty (impl, "version")->get_content ()) > 0)
+							impl = iter;
+
+					}
 				}
 			}
 		}
+
+		return impl;
+	}
+
+	public bool search_matching_dependency () {
+		Xml.Node *impl = null;
+
+		impl = search_implementation (interface_node()->children);
 		if (impl == null)
 			return false;
 
