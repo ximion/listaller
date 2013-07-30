@@ -438,7 +438,7 @@ public class AppItem : Object {
 		if (Utils.str_is_empty (desktop_file))
 			data = "local:listaller";
 		else
-			data = "local:listaller%" + desktop_file;
+			data = "local:listaller#" + desktop_file;
 
 		// FIXME: Handle architecture correctly
 		package_id = PackageKit.Package.id_build (idname, version, system_machine_generic (), data);
