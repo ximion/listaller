@@ -6,4 +6,4 @@ Version: shell$ pulseaudio --version
 Binaries: pulseaudio
 Libraries: libpulse.so.0
  libpulse-simple.so.0
- libpulsecommon-*.so
+OptionalLibraries: libpulsecommon-*.so
