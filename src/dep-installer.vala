@@ -62,27 +62,35 @@ private class DepInstaller : MessageObject {
 		ArrayList<AbstractSolver> solver_pool = cfactory.get_solverpool ();
 
 		ErrorItem? error = null;
+		bool ret = false;
 
 		foreach (AbstractSolver solver in solver_pool) {
-			bool ret;
 			if (!solver.usable (cmod))
 				continue;
 
 			try {
 				ret = solver.install_module (cmod);
+				debug ("Solver '%s', result: %i", solver.id, (int) ret);
 			} catch (SolverError e) {
 				string? msg = e.message;
 				if (msg == null)
-					msg = "PackageKit did not return an error.";
+					msg = "Solver did not return an error.";
 				debug ("Solver install error: %s", msg);
 				emit_error (ErrorEnum.DEPENDENCY_INSTALL_FAILED,
 						_("Unable to install module '%s' which is required for this installation.\nMessage: %s").printf (cmod.full_name, msg));
 
 				return false;
 			}
+			if (ret)
+				return true;
 		}
 
-		return true;
+		if (!ret) {
+			emit_error (ErrorEnum.DEPENDENCY_INSTALL_FAILED,
+						_("Unable to install module '%s' which is required for this installation.\nUnable to find a method to satisfy the dependency.").printf (cmod.full_name));
+		}
+
+		return ret;
 	}
 
 	/**

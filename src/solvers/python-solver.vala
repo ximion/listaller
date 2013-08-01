@@ -71,7 +71,7 @@ private class PythonSolver : AbstractSolver {
 
 	public override bool install_module (Module cmod) throws SolverError {
 		// TODO
-		return true;
+		return false;
 	}
 }
 

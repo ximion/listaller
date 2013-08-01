@@ -155,6 +155,7 @@ public class Manager : MessageObject {
 			emit_error (ErrorEnum.REMOVAL_FAILED, _("Could not uninstall application %s. It is not installed.").printf (app.full_name));
 			return false;
 		}
+
 		// Remove all files which belong to this application
 		ArrayList<IPK.FileEntry>? files = db.get_application_filelist (app);
 		if (files == null) {

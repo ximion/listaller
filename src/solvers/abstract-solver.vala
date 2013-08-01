@@ -102,7 +102,9 @@ private abstract class AbstractSolver : Object {
 	 *
 	 * @return TRUE if there was no error (even if the solver is unable to perform an installation). FALSE if installation failed.
 	 */
-	public abstract bool install_module (Module cmod) throws SolverError;
+	public virtual bool install_module (Module cmod) throws SolverError {
+		return false;
+	}
 
 
 }
