@@ -574,6 +574,8 @@ pk_plugin_reset_backend_jobs (PkPlugin *plugin)
 
 	/* set up the internal backend job */
 	pk_backend_job_reset (plugin->priv->internal_job);
+	pk_transaction_signals_reset (plugin->priv->current_transaction,
+				     plugin->priv->internal_job);
 
 	pk_backend_job_set_vfunc (plugin->priv->internal_job,
 				  PK_BACKEND_SIGNAL_FINISHED,
@@ -587,6 +589,10 @@ pk_plugin_reset_backend_jobs (PkPlugin *plugin)
 				  PK_BACKEND_SIGNAL_ERROR_CODE,
 				  (PkBackendJobVFunc) pk_plugin_backend_job_error_code_cb,
 				  plugin);
+
+	/* run our internal job (if it is not yet running) */
+	if (!pk_backend_job_get_started (plugin->priv->internal_job))
+		pk_backend_start_job (plugin->backend, plugin->priv->internal_job);
 }
 
 /**
@@ -908,8 +914,6 @@ pk_plugin_initialize (PkPlugin *plugin)
 
 	/* we use an internal job to communicate with the native backend. plugin->job is used for client communication */
 	plugin->priv->internal_job = pk_backend_job_new ();
-	pk_backend_job_set_backend (plugin->priv->internal_job, plugin->backend);
-	pk_backend_job_set_started (plugin->priv->internal_job, TRUE);
 
 	/* tell PK we might be able to handle these */
 	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_GET_DETAILS);
