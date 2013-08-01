@@ -29,6 +29,7 @@
 
 struct PkPluginPrivate {
 	PkTransaction		*current_transaction;
+	PkBackendJob		*internal_job; /* job to communicate with the backend - plugin->job is used for frontend communication */
 	ListallerManager	*mgr;
 	ListallerSetupSettings	*setup_settings;
 	PkResults		*backend_results;
@@ -36,8 +37,7 @@ struct PkPluginPrivate {
 	gboolean		error_set;
 };
 
-static void pk_plugin_reset_backend_job (PkPlugin *plugin);
-static void pk_plugin_redirect_backend_signals (PkPlugin *plugin);
+static void pk_plugin_reset_backend_jobs (PkPlugin *plugin);
 
 /**
  * pk_plugin_reset:
@@ -50,7 +50,7 @@ pk_plugin_reset (PkPlugin *plugin)
 	plugin->priv->backend_results = pk_results_new ();
 
 	/* reset the job */
-	pk_plugin_reset_backend_job (plugin);
+	pk_plugin_reset_backend_jobs (plugin);
 }
 
 /**
@@ -63,9 +63,11 @@ pk_plugin_skip_native_backend (PkPlugin *plugin)
 {
 	PkExitEnum exit;
 	exit = pk_backend_job_get_exit_code (plugin->job);
+	g_debug ("Skipping native backend.");
 
 	/* only skip transaction if we don't have an error already */
 	if (!pk_backend_job_get_is_error_set (plugin->job)) {
+		g_debug ("Apply skip exit code.");
 		pk_backend_job_set_exit_code (plugin->job, PK_EXIT_ENUM_SKIP_TRANSACTION);
 	}
 }
@@ -152,7 +154,6 @@ pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 	guint i;
 
 	g_debug ("listaller: running get_details ()");
-	pk_plugin_reset_backend_job (plugin);
 
 	for (i=0; package_ids[i] != NULL; i++) {
 		app = pk_listaller_appitem_from_pkid (package_ids[i]);
@@ -187,7 +188,6 @@ pk_listaller_get_filelist (PkPlugin *plugin, gchar **package_ids)
 	guint i;
 
 	g_debug ("listaller: running get_filelist ()");
-	pk_plugin_reset_backend_job (plugin);
 
 	for (i=0; package_ids[i] != NULL; i++) {
 		app = pk_listaller_appitem_from_pkid (package_ids[i]);
@@ -216,18 +216,14 @@ listaller_application_cb (GObject *sender, ListallerAppItem *item, PkPlugin *plu
 
 	package_id = pk_listaller_pkid_from_appitem (item);
 	if (package_id == NULL) {
-		g_debug ("listaller: <error> generated PK package-id was NULL, ignoring entry.");
+		g_debug ("error: generated PK package-id was NULL, ignoring entry.");
 		return;
 	}
-	g_debug ("listaller: new app found -> %s", listaller_app_item_get_appid (item));
-
-	pk_plugin_reset_backend_job (plugin);
+	g_debug ("new app found -> %s (%s)", listaller_app_item_get_appid (item), package_id);
 
 	/* emit */
 	pk_backend_job_package (plugin->job, PK_INFO_ENUM_INSTALLED, package_id,
 			    listaller_app_item_get_summary (item));
-
-	pk_plugin_redirect_backend_signals (plugin);
 
 	g_free (package_id);
 }
@@ -238,14 +234,13 @@ listaller_error_code_cb (GObject *sender, ListallerErrorItem *error, PkPlugin *p
 	g_return_if_fail (error != NULL);
 
 	/* don't try to set errors twice */
-	if (pk_backend_job_get_is_error_set (plugin->job))
+	if (pk_backend_job_get_is_error_set (plugin->job)) {
+		g_warning ("Tried to set error twice.");
 		return;
+	}
 
 	/* set error code to prevent other actions to continue, after the transaction has failed */
 	plugin->priv->error_set = TRUE;
-
-	/* we want this to be sent to PackageKit clients */
-	pk_plugin_reset_backend_job (plugin);
 
 	/* emit */
 	pk_backend_job_error_code (plugin->job, PK_ERROR_ENUM_INTERNAL_ERROR,
@@ -286,8 +281,6 @@ listaller_progress_cb (GObject *sender, ListallerProgressItem *item, PkPlugin *p
 	value = listaller_progress_item_get_value (item);
 	prog_type = listaller_progress_item_get_prog_type (item);
 
-	pk_plugin_reset_backend_job (plugin);
-
 	/* emit */
 	if (prog_type == LISTALLER_PROGRESS_ENUM_MAIN_PROGRESS) {
 		if (value > 0)
@@ -300,8 +293,6 @@ listaller_progress_cb (GObject *sender, ListallerProgressItem *item, PkPlugin *p
 		if (value > 0)
 			pk_backend_job_set_item_progress (plugin->job, item_id, PK_STATUS_ENUM_RUNNING, value);
 	}
-
-	pk_plugin_redirect_backend_signals (plugin);
 }
 
 static void
@@ -322,13 +313,9 @@ listaller_status_change_cb (GObject *sender, ListallerStatusItem *status, PkPlug
 
 	g_debug ("listaller: <status-info> %s", listaller_status_item_get_info (status));
 
-	pk_plugin_reset_backend_job (plugin);
-
 	/* emit */
 	if (pkstatus != PK_STATUS_ENUM_UNKNOWN)
 		pk_backend_job_set_status (plugin->job, pkstatus);
-
-	pk_plugin_redirect_backend_signals (plugin);
 }
 
 /**
@@ -565,51 +552,41 @@ pk_plugin_backend_job_error_code_cb (PkBackendJob *job,
 }
 
 /**
- * pk_plugin_redirect_backend_signals:
- *
- **/
-static void
-pk_plugin_redirect_backend_signals (PkPlugin *plugin)
-{
-	if (plugin->priv->error_set == TRUE) {
-		g_debug ("don't redirecting backend signals: Listaller plugin encountered an error.");
-		return;
-	}
-
-	/* connect (used) backend signals to Listaller PkPlugin */
-	pk_backend_job_set_vfunc (plugin->job,
-				  PK_BACKEND_SIGNAL_FINISHED,
-				  (PkBackendJobVFunc) pk_plugin_backend_job_finished_cb,
-				  plugin);
-	pk_backend_job_set_vfunc (plugin->job,
-				  PK_BACKEND_SIGNAL_PACKAGE,
-				  (PkBackendJobVFunc) pk_plugin_backend_job_package_cb,
-				  plugin);
-	pk_backend_job_set_vfunc (plugin->job,
-				  PK_BACKEND_SIGNAL_ERROR_CODE,
-				  (PkBackendJobVFunc) pk_plugin_backend_job_error_code_cb,
-				  plugin);
-}
-
-/**
- * pk_plugin_reset_backend_job:
+ * pk_plugin_reset_backend_jobs:
  *
  * Reset the PkBackendJob used by the Listaller plugin and rewire
  * it with the transaction again. (=> does some kind of "soft-reset")
  **/
 static void
-pk_plugin_reset_backend_job (PkPlugin *plugin)
+pk_plugin_reset_backend_jobs (PkPlugin *plugin)
 {
-	pk_backend_job_reset (plugin->job);
-
 	if (plugin->priv->current_transaction == NULL) {
 		g_critical ("No current transaction is set! Cannot reconnect backend job! (this is a bug)");
 		return;
 	}
 
+	g_debug ("Resetting jobs");
+
 	/* connect backend-job to current backend again */
+	pk_backend_job_reset (plugin->job);
 	pk_transaction_signals_reset (plugin->priv->current_transaction,
 				     plugin->job);
+
+	/* set up the internal backend job */
+	pk_backend_job_reset (plugin->priv->internal_job);
+
+	pk_backend_job_set_vfunc (plugin->priv->internal_job,
+				  PK_BACKEND_SIGNAL_FINISHED,
+				  (PkBackendJobVFunc) pk_plugin_backend_job_finished_cb,
+				  plugin);
+	pk_backend_job_set_vfunc (plugin->priv->internal_job,
+				  PK_BACKEND_SIGNAL_PACKAGE,
+				  (PkBackendJobVFunc) pk_plugin_backend_job_package_cb,
+				  plugin);
+	pk_backend_job_set_vfunc (plugin->priv->internal_job,
+				  PK_BACKEND_SIGNAL_ERROR_CODE,
+				  (PkBackendJobVFunc) pk_plugin_backend_job_error_code_cb,
+				  plugin);
 }
 
 /**
@@ -627,17 +604,16 @@ pk_backend_job_request_whatprovides_cb (PkBitfield filters,
 
 	/* query the native backend for a package provinding X */
 	if (plugin == NULL)
-		g_debug ("<liplugin-dbg> PLUGIN was NULL!");
+		g_debug ("PLUGIN was NULL!");
 
 	g_debug ("Running what-provides on native backend!");
 
 	/* prepare for native backend call */
 	pk_plugin_reset (plugin);
-	pk_plugin_redirect_backend_signals (plugin);
 
 	/* query the native backend */
 	pk_backend_what_provides (plugin->backend,
-				   plugin->job,
+				   plugin->priv->internal_job,
 				   filters,
 				   provides,
 				   search);
@@ -646,7 +622,7 @@ pk_backend_job_request_whatprovides_cb (PkBitfield filters,
 	g_main_loop_run (plugin->priv->loop);
 
 	results = plugin->priv->backend_results;
-	pk_plugin_reset_backend_job (plugin);
+	pk_plugin_reset_backend_jobs (plugin);
 
 	g_debug ("Results exit code is %s", pk_exit_enum_to_string (pk_results_get_exit_code (results)));
 
@@ -669,11 +645,10 @@ pk_backend_job_request_installpackages_cb (PkBitfield transaction_flags,
 
 	/* prepare the backend */
 	pk_plugin_reset (plugin);
-	pk_plugin_redirect_backend_signals (plugin);
 
 	/* query the native backend */
 	pk_backend_install_packages (plugin->backend,
-				      plugin->job,
+				      plugin->priv->internal_job,
 				      transaction_flags,
 				      package_ids);
 
@@ -681,7 +656,7 @@ pk_backend_job_request_installpackages_cb (PkBitfield transaction_flags,
 	g_main_loop_run (plugin->priv->loop);
 
 	results = plugin->priv->backend_results;
-	pk_plugin_reset_backend_job (plugin);
+	pk_plugin_reset_backend_jobs (plugin);
 
 	g_debug ("Results exit code is %s", pk_exit_enum_to_string (pk_results_get_exit_code (results)));
 
@@ -711,8 +686,8 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 
 	plugin->priv->error_set = FALSE;
 
-	/* reset the native-backend job */
-	pk_plugin_reset_backend_job (plugin);
+	/* reset all jobs connected to the backend (public/private) */
+	pk_plugin_reset_backend_jobs (plugin);
 	pk_backend_job_set_status (plugin->job, PK_STATUS_ENUM_SETUP);
 
 	/* create a backend proxy and connect it, so Listaller can acces parts of PkBackend */
@@ -815,7 +790,7 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 			pk_listaller_install_files (plugin, data);
 		}
 
-		/* nothing more to process */
+		/* nothing more to process? */
 		full_paths = pk_transaction_get_full_paths (transaction);
 		if (g_strv_length (full_paths) == 0)
 			pk_plugin_skip_native_backend (plugin);
@@ -831,7 +806,7 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 		if (data != NULL)
 			pk_listaller_remove_applications (plugin, data);
 
-		/* nothing more to process */
+		/* nothing more to process? */
 		package_ids = pk_transaction_get_package_ids (transaction);
 		if (g_strv_length (package_ids) == 0)
 			pk_plugin_skip_native_backend (plugin);
@@ -931,6 +906,11 @@ pk_plugin_initialize (PkPlugin *plugin)
 	plugin->priv->backend_results = pk_results_new ();
 	plugin->priv->setup_settings = NULL;
 
+	/* we use an internal job to communicate with the native backend. plugin->job is used for client communication */
+	plugin->priv->internal_job = pk_backend_job_new ();
+	pk_backend_job_set_backend (plugin->priv->internal_job, plugin->backend);
+	pk_backend_job_set_started (plugin->priv->internal_job, TRUE);
+
 	/* tell PK we might be able to handle these */
 	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_GET_DETAILS);
 	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_GET_FILES);
@@ -956,6 +936,8 @@ void
 pk_plugin_destroy (PkPlugin *plugin)
 {
 	g_main_loop_unref (plugin->priv->loop);
+	pk_backend_stop_job (plugin->backend, plugin->priv->internal_job);
+	plugin->priv->internal_job = NULL;
 	if (plugin->priv->setup_settings != NULL)
 		g_object_unref (plugin->priv->setup_settings);
 	g_object_unref (plugin->priv->mgr);
