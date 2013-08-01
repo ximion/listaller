@@ -82,7 +82,7 @@ pk_listaller_appitem_from_pkid (const gchar *package_id)
 	ListallerAppItem *item = NULL;
 
 	parts = pk_package_id_split (package_id);
-	tmp = g_strsplit (parts[3], "%", 2);
+	tmp = g_strsplit (parts[3], "#", 2);
 	if (g_strcmp0 (tmp[0], "local:listaller") != 0)
 		goto out;
 
