@@ -61,7 +61,7 @@ private class DepInstaller : MessageObject {
 		// all the solver we have - now for installing stuff
 		ArrayList<AbstractSolver> solver_pool = cfactory.get_solverpool ();
 
-		ErrorItem? error = null;
+		string error_msg = null;
 		bool ret = false;
 
 		foreach (AbstractSolver solver in solver_pool) {
@@ -76,15 +76,19 @@ private class DepInstaller : MessageObject {
 				if (msg == null)
 					msg = "Solver did not return an error.";
 				debug ("Solver install error: %s", msg);
-				emit_error (ErrorEnum.DEPENDENCY_INSTALL_FAILED,
-						_("Unable to install module '%s' which is required for this installation.\nMessage: %s").printf (cmod.full_name, msg));
-
-				return false;
+				error_msg = _("Unable to install module '%s' which is required for this installation.\nMessage: %s").printf (cmod.full_name, msg);
 			}
 			if (ret)
 				return true;
 		}
 
+		// emit the last error message found
+		if (error_msg != null) {
+			emit_error (ErrorEnum.DEPENDENCY_INSTALL_FAILED, error_msg);
+			return false;
+		}
+
+		// all resolvers failed, but we don't have an explicit error -> no resolver was able to handle the dependency
 		if (!ret) {
 			emit_error (ErrorEnum.DEPENDENCY_INSTALL_FAILED,
 						_("Unable to install module '%s' which is required for this installation.\nUnable to find a method to satisfy the dependency.").printf (cmod.full_name));
