@@ -1,14 +1,46 @@
 Version 0.5.8
 ~~~~~~~~~~~~~~
- == Still in development ==
+Released: 2013-08-02
 
 Notes:
+ * The database format is now stable, also most of the other specs used should no loger change.
+   If it is necessary, we might still apply some modifications, so the interfaces are not yet
+   100% stable.
+ * The Python solver included in this release is just a demonstration and does not work yet.
+   It will be completed in the next release.
 
 Features:
+ * Implement frameworks and modules support in Listaller's dependency solver (Matthias Klumpp)
+ * Generate GIR typelib and install it (Matthias Klumpp)
+ * Support for clearly defined dependency-components (Matthias Klumpp)
+ * Remove old Listaller IPK.Dependency and associated parts (Matthias Klumpp)
+ * Make depscan component-aware (Matthias Klumpp)
+ * Allow wildcards in component items (Matthias Klumpp)
+ * Allow embedding of additional module dependencies in IPK packages (Matthias Klumpp)
+ * Implement new dependency-solver infrastructure (Matthias Klumpp)
+ * Add prototype for a Python solver (Matthias Klumpp)
+ * Add library-name based version detection (Matthias Klumpp)
+ * Bump PackageKit dependency: We require 0.8.10 now due to API changes (Matthias Klumpp)
+ * Implement nicer errors/warnings for all cli tools (Matthias Klumpp)
+ * Handle optional component-items in dependency-scanning (Matthias Klumpp)
+ * Add framework for PulseAudio (Matthias Klumpp)
+ * plugin: Update to new li-pid syntax (Matthias Klumpp)
+ * plugin: Use internal job for native-backend communication (Matthias Klumpp)
 
 Specs & Docs:
+ * Implement first parts of the IPK1.2 spec (Matthias Klumpp)
+ * depscan: Document the --components option in manual page (Matthias Klumpp)
+ * docs: Add a little bit of basic documentation on components (Matthias Klumpp)
+ * docs: Rewrite documentation in Docbook (Matthias Klumpp)
+ * ipkspec: Make InstallModes list comma-separated (Matthias Klumpp)
 
 Bugfixes:
+ * Don't add position information to locale files (Matthias Klumpp)
+ * Many fixes in depscan output (Matthias Klumpp)
+ * Adjust to latest PackageKit API changes (Matthias Klumpp)
+ * Prevent debug-log spam from disabled resolvers (Matthias Klumpp)
+ * Adjust unittests to new URLs (Matthias Klumpp)
+ * plugin: Fix crash in backends on internal job creation (Matthias Klumpp)
 
 Version 0.5.7
 ~~~~~~~~~~~~~~
