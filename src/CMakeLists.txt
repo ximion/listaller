@@ -71,6 +71,12 @@ pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2>=0.8.10)
 pkg_check_modules(PACKAGEKIT_PLUGIN REQUIRED packagekit-plugin)
 #find_gir(PKGIR "PackageKitGlib-1.0" REQUIRED)
 
+# make sure that the ir-compiler really has been found
+# (fixes some compile-issues which have been reported frequently)
+if (INTROSPECTION_COMPILER STREQUAL "")
+	message (FATAL_ERROR "GObject-Introspection was not found! Please install it to continue!")
+endif (INTROSPECTION_COMPILER STREQUAL "")
+
 set(COMPONENT_SOLVER_SOURCES
 	solvers/abstract-solver.vala
 	solvers/basic-solver.vala
@@ -135,7 +141,7 @@ add_custom_target (gir-compile
 	${INTROSPECTION_COMPILER}  "--shared-library=listaller-glib" "--includedir=."
 				"${CMAKE_CURRENT_BINARY_DIR}/Listaller-${LILIBS_VERSION}.gir"
 				"-o" "${CMAKE_CURRENT_BINARY_DIR}/Listaller-${LILIBS_VERSION}.typelib"
-	DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/Listaller-${LILIBS_VERSION}.gir
+	DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/Listaller-${LILIBS_VERSION}.gir listaller-glib_precompile
 	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 add_dependencies (listaller-glib gir-compile)
