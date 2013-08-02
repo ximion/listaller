@@ -31,6 +31,12 @@ private errordomain ComponentError {
     DIRECTIVES_INVALID
 }
 
+/**
+ * Type of a component-item
+ *
+ * Describes the type of an item which is part of a
+ * dependency (framework/module).
+ */
 public enum ItemType {
 	SHARED_LIB,
 	BINARY,

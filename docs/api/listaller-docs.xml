@@ -10,7 +10,7 @@
     <releaseinfo>
       for liblistaller-glib 0.5.x.
       The latest version of this documentation can be found on-line at
-      <ulink role="online-location" url="http://listaller.tenstral.net/docs/api-doc.html">http://listaller.tenstral.net/</ulink>.
+      <ulink role="online-location" url="http://listaller.tenstral.net/docs/">http://listaller.tenstral.net/</ulink>.
     </releaseinfo>
   </bookinfo>
 
@@ -29,7 +29,7 @@
 
     <xi:include href="xml/security-info.xml"/>
     <xi:include href="xml/ipk-control.xml"/>
-    <xi:include href="xml/dep-info.xml"/>
+    <xi:include href="xml/components.xml"/>
     <xi:include href="xml/ipk-changelog.xml"/>
 
     <xi:include href="xml/message-object.xml"/>

@@ -72,7 +72,9 @@ if (API_DOCS)
 	set (SYSTEM_VAPI_DIR "${CMAKE_INSTALL_PREFIX}/share/vala-${VALA_VERSION_SHORT}/vapi")
 
 	# find public library sources
-	file (GLOB LISTALLER_LIB_SOURCES "${CMAKE_SOURCE_DIR}/src/*.vala")
+	file (GLOB LISTALLER_LIB_SOURCES_MAIN "${CMAKE_SOURCE_DIR}/src/*.vala")
+	file (GLOB LISTALLER_LIB_SOURCES_SOLVERS "${CMAKE_SOURCE_DIR}/src/solvers/*.vala")
+	set (LISTALLER_LIB_SOURCES ${LISTALLER_LIB_SOURCES_MAIN} ${LISTALLER_LIB_SOURCES_SOLVERS})
 
 	add_custom_command (TARGET documentation
 			COMMAND "valadoc" "--force" "-b" "${CMAKE_SOURCE_DIR}/src" "-o" "${CMAKE_SOURCE_DIR}/docs/api"
