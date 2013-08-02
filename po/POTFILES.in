@@ -16,6 +16,7 @@ src/gpgex.vala
 src/signature.vala
 src/security-info.vala
 src/doap.vala
+src/ipk-changelog.vala
 src/ipk-metafile.vala
 src/ipk-control.vala
 src/ipk-filelist.vala
@@ -29,12 +30,18 @@ src/varsetter.vala
 src/manager.vala
 src/installer.vala
 src/updater.vala
-src/dep-info.vala
+src/components.vala
+src/component-factory.vala
 src/dep-manager.vala
 src/dep-installer.vala
 src/pkit-tasks.vala
-src/feed-installer.vala
-src/zfeed.vala
+src/solvers/abstract-solver.vala
+src/solvers/basic-solver.vala
+src/solvers/feed-installer.vala
+src/solvers/pkit-solver.vala
+src/solvers/python-solver.vala
+src/solvers/zfeed-solver.vala
+src/solvers/zfeed.vala
 # Listaller tools
 tools/toolshared.vala
 tools/reporting.vala

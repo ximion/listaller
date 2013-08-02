@@ -67,7 +67,6 @@ pk_plugin_skip_native_backend (PkPlugin *plugin)
 
 	/* only skip transaction if we don't have an error already */
 	if (!pk_backend_job_get_is_error_set (plugin->job)) {
-		g_debug ("Apply skip exit code.");
 		pk_backend_job_set_exit_code (plugin->job, PK_EXIT_ENUM_SKIP_TRANSACTION);
 	}
 }

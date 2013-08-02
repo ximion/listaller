@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lclstrconsts\n"
 "Report-Msgid-Bugs-To: listaller@freelists.org\n"
-"POT-Creation-Date: 2013-03-11 13:39+0100\n"
+"POT-Creation-Date: 2013-08-02 16:14+0200\n"
 "PO-Revision-Date: 2009-05-06 13:38+0000\n"
 "Last-Translator: Slavko <Unknown>\n"
 "Language-Team: Slovenský <sk@li.org>\n"
@@ -13,580 +13,467 @@ msgstr ""
 "X-Launchpad-Export-Date: 2013-03-14 20:16+0000\n"
 "X-Generator: Launchpad (build 16532)\n"
 
-#: ../src/manager.vala:161
 msgid ""
 "'%s' has no file-list registered. The software database might be broken."
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:113 ../tools/lipa/lipa-installer.vala:126
 msgid "<<< Press ENTER to continue! >>>"
 msgstr ""
 
-#: ../src/installer.vala:215
 msgid "A higher version '%s' of this application has already been installed."
 msgstr ""
 
-#: ../src/installer.vala:213
 msgid "A lower version '%s' of this application has already been installed."
 msgstr ""
 
-#: ../src/application.vala:296 ../tools/lipa/lipa-manager.vala:80
 msgid "AVAILABLE"
 msgstr ""
 
-#: ../tools/runapp/runapp.vala:84 ../tools/lipa/lipa.vala:57
-#: ../tools/lipkgen/lipkgen.vala:49 ../tools/depscan/depscan-tool.vala:41
-#: ../tools/likey/likey.vala:38
 msgid "Activate verbose mode"
 msgstr ""
 
-#: ../src/application.vala:395
 msgid "Application ID %s is invalid!"
 msgstr ""
 
-#: ../tools/lipkgen/lipkgen.vala:41
+msgid "Binary %s was not found"
+msgstr ""
+
 msgid "Build IPK package"
 msgstr ""
 
-#: ../src/installer.vala:249
 msgid "Copying files to their destination"
 msgstr ""
 
-#: ../src/ipk-package.vala:317
 msgid ""
 "Could not copy file %s to its destination. Do you have the necessary rights "
 "to perform this action?\n"
 "Error message was \"%s\"."
 msgstr ""
 
-#: ../src/ipk-filelist.vala:194
 msgid "Could not create file '%s'! File already exists."
 msgstr ""
 
-#: ../src/database-internal.vala:224
 msgid "Could not create software database!"
 msgstr ""
 
-#: ../src/ipk-package.vala:576
 msgid "Could not extract IPK payload! Package might be damaged. Error: %s"
 msgstr ""
 
-#: ../src/ipk-package.vala:266
 msgid "Could not extract file %s! Error: %s"
 msgstr ""
 
-#: ../src/feed-installer.vala:153
 msgid "Could not extract file! Error: %s"
 msgstr ""
 
 #. : IPk builder was unable to find IPK source scripts
-#: ../tools/lipkgen/ipkbuilder.vala:425 ../tools/lipkgen/prepare.vala:51
 msgid "Could not find IPK source files!"
 msgstr ""
 
-#: ../tools/lipa/lipa-manager.vala:100
 msgid "Could not find application which matches '%s'!\n"
 msgstr ""
 
-#: ../tools/lipa/lipa-manager.vala:144
 msgid "Could not find application!"
 msgstr ""
 
-#: ../src/application.vala:457 ../src/varsetter.vala:45
 msgid "Could not load desktop file values: %s"
 msgstr ""
 
-#: ../src/pkit-tasks.vala:63
 msgid ""
 "Could not obtain a PkBackendProxy instance. Maybe the Listaller-PkPlugin is "
 "not installed or broken?"
 msgstr ""
 
-#: ../src/ipk-package.vala:402
 msgid "Could not open IPK file! Error: %s"
 msgstr ""
 
-#: ../src/application.vala:498 ../src/application.vala:525
-#: ../src/varsetter.vala:56
 msgid "Could not open desktop file: %s"
 msgstr ""
 
-#: ../src/installer.vala:185
 msgid ""
 "Could not open the software database, maybe it is locked at time.\n"
 "Please close all other running installations to continue!"
 msgstr ""
 
-#: ../src/ipk-package.vala:215
 msgid ""
 "Could not override file %s! Maybe the software database is damaged or this "
 "package is broken!"
 msgstr ""
 
-#: ../src/ipk-package.vala:336 ../src/feed-installer.vala:176
 msgid "Could not override file %s, this file already exists!"
 msgstr ""
 
-#: ../src/ipk-package.vala:93
 msgid "Could not read IPK control information! Error: %s"
 msgstr ""
 
-#: ../src/ipk-package.vala:606
 msgid ""
 "Could not read IPK payload container! Package might be damaged. Error: %s"
 msgstr ""
 
-#: ../src/feed-installer.vala:204
 msgid ""
 "Could not read dependency archive! Archive might be damaged. Message: %s"
 msgstr ""
 
-#: ../src/manager.vala:170
 msgid "Could not remove file %s!"
 msgstr ""
 
-#: ../src/manager.vala:155
 msgid "Could not uninstall application %s. It is not installed."
 msgstr ""
 
-#: ../tools/lipkgen/lipkgen.vala:43 ../tools/lipkgen/lipkgen.vala:45
-#: ../tools/appcompile/appcompile.vala:39
-#: ../tools/appcompile/appcompile.vala:41
 msgid "DIRECTORY"
 msgstr ""
 
-#: ../src/database-internal.vala:312
 msgid "Database action '%s' failed: %s"
 msgstr ""
 
-#: ../src/database-internal.vala:132
 msgid "Database action failed"
 msgstr ""
 
-#: ../src/database-internal.vala:129
 msgid "Database action successful"
 msgstr ""
 
-#: ../src/database-internal.vala:123
 msgid "Database locked"
 msgstr ""
 
-#: ../src/database-internal.vala:126
 msgid "Database unlocked"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:102
+msgid "Define an additional directory with module definitions"
+msgstr ""
+
 msgid "Description:"
 msgstr ""
 
-#: ../src/pkit-tasks.vala:192
 msgid "Details from PackageKit: %s"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:131
 msgid "Do you accept these terms and conditions?"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:157
 msgid "Do you want to install %s now?"
 msgstr ""
 
-#: ../tools/lipa/lipa-manager.vala:110
 msgid "Do you want to remove %s (%s) now?"
 msgstr ""
 
-#: ../tools/depscan/depscan-tool.vala:68
 msgid "ERROR: %s"
 msgstr ""
 
-#: ../tools/appcompile/appcompile.vala:45
 msgid "Enable verbose mode"
 msgstr ""
 
-#: ../src/utils.vala:241 ../src/utils.vala:274
 msgid "Error while finding files in directory %s: %s"
 msgstr ""
 
-#: ../src/ipk-control.vala:446 ../tools/depscan/depscan.vala:75
 msgid "Error: %s\n"
 msgstr ""
 
-#: ../tools/likey/likey.vala:42
 msgid "FPR"
 msgstr ""
 
-#: ../tools/likey/likey.vala:100
 msgid "Failed to import key with fingerprint '%s'."
 msgstr ""
 
-#: ../src/zfeed.vala:64
 msgid "File %s not found or permission denied!"
 msgstr ""
 
-#: ../src/ipk-filelist.vala:142
 msgid "File '%s' doesn't exist."
 msgstr ""
 
-#: ../src/varsetter.vala:88
 msgid "File does not exist!"
 msgstr ""
 
-#: ../tools/lipkgen/lipkgen.vala:47
+msgid "Framework %s is not installed! Please make it available to continue."
+msgstr ""
+
+msgid ""
+"Framework %s is only available in version %s, while a version %s %s is "
+"required. This software can not be installed, please notify the original "
+"author about it."
+msgstr ""
+
 msgid "GPG-Sign the resulting package"
 msgstr ""
 
-#: ../src/application.vala:298 ../tools/lipa/lipa-manager.vala:82
 msgid "INSTALLED"
 msgstr ""
 
-#: ../src/ipk-package.vala:413
 msgid "IPK package could not be found!"
 msgstr ""
 
-#: ../tools/lipkgen/lipkgen.vala:45
 msgid "IPK package output directory"
 msgstr ""
 
-#: ../tools/likey/likey.vala:42
 msgid "Import key with fingerprint FPR"
 msgstr ""
 
-#: ../tools/lipa/lipa.vala:61
 msgid "Install a remote IPK package"
 msgstr ""
 
-#: ../tools/lipa/lipa.vala:59
 msgid "Install an IPK package"
 msgstr ""
 
-#: ../src/installer.vala:292 ../src/installer.vala:358
-#: ../tools/lipa/lipa-installer.vala:56
 msgid "Installation completed!"
 msgstr ""
 
-#: ../src/installer.vala:296 ../src/installer.vala:362
 msgid "Installation failed!"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:100
 msgid "Installation of %s"
 msgstr ""
 
-#: ../src/pkit-tasks.vala:346 ../src/pkit-tasks.vala:363
 msgid "Installation of native packages failed with message: %s"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:162
 msgid "Installing"
 msgstr ""
 
-#: ../src/pkit-tasks.vala:419
 msgid "Installing native packages: %s"
 msgstr ""
 
-#: ../tools/likey/likey.vala:104
 msgid "Key '%s' imported successfully!"
 msgstr ""
 
-#: ../src/security-info.vala:95
 msgid "Key is missing"
 msgstr ""
 
-#: ../src/key-manager.vala:213
 msgid "Key not found!"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:116
+msgid "Library %s was not found"
+msgstr ""
+
 msgid "License:"
 msgstr ""
 
-#: ../tools/lipa/lipa.vala:67
 msgid "List all installed applications"
 msgstr ""
 
-#: ../tools/lipa/lipa.vala:65
 msgid "List installed Listaller applications"
 msgstr ""
 
-#: ../tools/lipa/lipa.vala:74
 msgid ""
 "Listaller command-line tool: No command specified.\n"
 "Run '%s --help' to see a list of available commands."
 msgstr ""
 
-#: ../tools/likey/likey.vala:40
 msgid "Lookup key which matches PATTERN"
 msgstr ""
 
-#: ../src/security-info.vala:214
 msgid "Low security."
 msgstr ""
 
-#: ../src/installer.vala:263
 msgid "Making '%s' known to your system."
 msgstr ""
 
-#: ../tools/lipkgen/ipkbuilder.vala:143
 msgid "Malformed line in file listing: %s"
 msgstr ""
 
-#: ../src/security-info.vala:211
 msgid "Medium security."
 msgstr ""
 
-#: ../tools/lipa/lipa.vala:134
 msgid "Missing parameter for 'install' action: No IPK package specified.\n"
 msgstr ""
 
-#: ../tools/lipa/lipa.vala:146
 msgid ""
 "Missing parameter for 'install-remote' action: No IPK package-id specified.\n"
 msgstr ""
 
-#: ../tools/lipa/lipa.vala:158
 msgid ""
 "Missing parameter for 'remove' action: No application-id or name specified.\n"
 msgstr ""
 
-#: ../src/security-info.vala:136
+msgid ""
+"Module %s is only available in version %s, while a version %s %s is "
+"required. This software can not be installed, please notify the original "
+"author about it."
+msgstr ""
+
 msgid "Never trust."
 msgstr ""
 
-#: ../tools/runapp/runapp.vala:121
 msgid "No application specified!"
 msgstr ""
 
-#: ../tools/depscan/depscan-tool.vala:79
+msgid "No framework/module matching '%s' (v%s) found!"
+msgstr ""
+
 msgid "No path given!"
 msgstr ""
 
-#: ../src/ipk-package.vala:662 ../src/ipk-package.vala:735
 msgid ""
 "No payload data archive has been registered! This might be a bug in this "
 "application, please report the issue!"
 msgstr ""
 
-#: ../src/ipk-control.vala:465
 msgid "No valid DOAP data found in directory %s - Can't open control files."
 msgstr ""
 
-#: ../src/security-info.vala:98
 msgid "One key has been revoked"
 msgstr ""
 
-#: ../src/security-info.vala:92
 msgid "One key has expired"
 msgstr ""
 
-#: ../tools/likey/likey.vala:40
 msgid "PATTERN"
 msgstr ""
 
-#: ../src/varsolver.vala:176 ../src/varsolver.vala:191
-#: ../src/varsolver.vala:206
 msgid ""
 "Package uses custom variable: '%s' - usually this is not intentional, please "
 "contact the package author!"
 msgstr ""
 
-#: ../src/pkit-tasks.vala:170
 msgid ""
 "PackageKit backend does not support finding packages by stuff they provide - "
 "Installer was unable to use native packages to satisfy dependencies of this "
 "application."
 msgstr ""
 
-#: ../src/pkit-tasks.vala:282
 msgid ""
 "PackageKit backend does not support searching for files - Installer was "
 "unable to use native packages to satisfy dependencies of this application."
 msgstr ""
 
-#: ../src/pkit-tasks.vala:313
 msgid ""
 "PackageKit transaction failed!\n"
 "Exit message was: %s"
 msgstr ""
 
-#: ../tools/lipkgen/lipkgen.vala:43
 msgid "Path to Listaller package source directory"
 msgstr ""
 
-#: ../tools/appcompile/appcompile.vala:39
 msgid "Path to the application's source code"
 msgstr ""
 
-#: ../src/installer.vala:218
 msgid "Please remove the existing version to continue!"
 msgstr ""
 
-#: ../tools/depscan/depscan-tool.vala:39
+msgid "Print list of used framework/modules"
+msgstr ""
+
 msgid "Print machine-readable simple text"
 msgstr ""
 
-#: ../src/security-info.vala:107
 msgid "Pubkey is missing"
 msgstr ""
 
-#: ../src/doap.vala:157
 msgid "Query returned no results. Maybe there's no release defined?"
 msgstr ""
 
-#: ../src/doap.vala:201
 msgid "Query returned no results. Maybe this DOAP data is broken?"
 msgstr ""
 
-#: ../src/signature.vala:127
 msgid "RFU"
 msgstr ""
 
-#: ../tools/lipa/lipa.vala:69
 msgid "Refresh repository application cache"
 msgstr ""
 
-#: ../tools/lipa/lipa-manager.vala:129
 msgid "Removal of %s completed successfully!"
 msgstr ""
 
-#: ../tools/lipa/lipa-manager.vala:131
 msgid "Removal of %s failed!"
 msgstr ""
 
-#: ../src/manager.vala:183 ../src/manager.vala:226
 msgid "Removal of %s finished."
 msgstr ""
 
-#: ../src/manager.vala:147
 msgid "Removal of %s started."
 msgstr ""
 
-#: ../tools/lipa/lipa.vala:63
 msgid "Remove an application installed using Listaller"
 msgstr ""
 
-#: ../tools/lipa/lipa-manager.vala:116
 msgid "Removing"
 msgstr ""
 
-#: ../src/installer.vala:229
 msgid "Resolving dependencies of '%s'."
 msgstr ""
 
-#: ../tools/runapp/runapp.vala:98 ../tools/lipa/lipa.vala:87
-#: ../tools/lipkgen/lipkgen.vala:62 ../tools/appcompile/appcompile.vala:69
-#: ../tools/depscan/depscan-tool.vala:54 ../tools/likey/likey.vala:62
 msgid "Run '%s --help' to see a full list of available command line options.\n"
 msgstr ""
 
-#: ../src/installer.vala:201
 msgid "Running installation of %s"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:144 ../tools/lipa/lipa-installer.vala:146
-#: ../tools/lipa/lipa-installer.vala:148
 msgid "Security is:"
 msgstr ""
 
-#: ../src/installer.vala:437
 msgid "Setup has not been initialized!"
 msgstr ""
 
-#: ../src/security-info.vala:208
 msgid "Should be safe to use."
 msgstr ""
 
-#: ../tools/runapp/runapp.vala:82 ../tools/lipa/lipa.vala:55
-#: ../tools/lipkgen/lipkgen.vala:39 ../tools/appcompile/appcompile.vala:37
-#: ../tools/depscan/depscan-tool.vala:35 ../tools/likey/likey.vala:36
 msgid "Show the application's version"
 msgstr ""
 
-#: ../src/security-info.vala:101
 msgid "Signature has expired"
 msgstr ""
 
-#: ../src/security-info.vala:104
 msgid "Signature is bad"
 msgstr ""
 
-#: ../src/security-info.vala:89
 msgid "Signature is fully valid"
 msgstr ""
 
-#: ../src/database-internal.vala:135
 msgid "Software database closed"
 msgstr ""
 
-#: ../src/database-internal.vala:138
 msgid "Software database message (%d)"
 msgstr ""
 
-#: ../src/database-internal.vala:120
 msgid "Software database opened"
 msgstr ""
 
-#: ../tools/appcompile/appcompile.vala:41
 msgid "Software install prefix"
 msgstr ""
 
-#: ../data/mime/listaller-ipk.xml.in.h:1
 msgid "Software installation package"
 msgstr ""
 
-#: ../src/ipk-package.vala:761
 msgid ""
 "Some files of this package could not be installed, because they were not "
 "found in payload data.\n"
 "This IPK package might be damaged, please obtain a new copy!"
 msgstr ""
 
-#: ../src/security-info.vala:86
 msgid "Status of this signature is unknown or package is not signed."
 msgstr ""
 
-#: ../tools/appcompile/appcompile.vala:43
 msgid "Strip debug infos from files in install-target"
 msgstr ""
 
-#: ../src/installer.vala:446
 msgid ""
 "The installer will only work with the %s operating system, but you use "
 "'%s'.\n"
 "Setup can not continue, sorry."
 msgstr ""
 
-#: ../tools/lipkgen/ipkbuilder.vala:217
 msgid "There are no files in file-list for architecture '%s'!"
 msgstr ""
 
-#: ../src/installer.vala:217
 msgid "This application has already been installed."
 msgstr ""
 
-#: ../src/installer.vala:125
 msgid ""
 "This package can't be installed on your system architecture (%s)!\n"
 "Please get a package which was built for your machine."
 msgstr ""
 
-#: ../src/security-info.vala:217
 msgid "This package could be dangerous!"
 msgstr ""
 
-#: ../src/installer.vala:155
 msgid ""
 "This package is a delta-package, containing software patches. It is usually "
 "distributed via update-services, you can't install it using this tool. "
 "Please obtain a non-delta version of this application!"
 msgstr ""
 
-#: ../src/installer.vala:139
 msgid ""
 "This package was built using a more recent version of Listaller.\n"
 "Please update your copy of Listaller to be able to install it."
 msgstr ""
 
-#: ../src/installer.vala:147
 msgid ""
 "This package was built using spec version '%s', but we need at least '%s' or "
 "higher to proceed.\n"
@@ -594,271 +481,218 @@ msgid ""
 "version."
 msgstr ""
 
-#: ../src/database-internal.vala:214
 msgid "Tried to access locked database! This shouldn't happen."
 msgstr ""
 
-#: ../src/database-internal.vala:322
 msgid "Tried to access locked database! This shouldn't happen. Message: %s"
 msgstr ""
 
-#: ../src/ipk-package.vala:648 ../src/ipk-package.vala:722
 msgid "Tried to perform action on invalid IPK package."
 msgstr ""
 
-#: ../src/software-db.vala:149
 msgid ""
 "Tried to perform action on private software database, but the database is "
 "not opened! (this should never happen!)"
 msgstr ""
 
-#: ../src/software-db.vala:138
 msgid ""
 "Tried to perform action on shared software database, but the database is not "
 "opened! (maybe a permission problem?)"
 msgstr ""
 
-#: ../src/database-internal.vala:423 ../src/database-internal.vala:779
-#: ../src/database-internal.vala:965
 msgid "Tried to write on readonly database! (This should never happen)"
 msgstr ""
 
-#: ../src/security-info.vala:142
 msgid "Trust is full"
 msgstr ""
 
-#: ../src/security-info.vala:139
 msgid "Trust is marginal"
 msgstr ""
 
-#: ../src/security-info.vala:145
 msgid "Trust is ultimate."
 msgstr ""
 
-#: ../src/security-info.vala:130
 msgid "Trust level is unknown"
 msgstr ""
 
-#: ../src/manager.vala:241
 msgid ""
 "Trying to remove local application, but AppManager is in superuser mode!\n"
 "Setting AppManager to local mode now."
 msgstr ""
 
-#: ../src/manager.vala:239
 msgid ""
 "Trying to remove shared application, but AppManager is not in superuser "
 "mode!\n"
 "Setting AppManager to superuse mode now."
 msgstr ""
 
-#: ../src/software-db.vala:483
 msgid "Unable to add a dependency to database: %s"
 msgstr ""
 
-#: ../src/software-db.vala:260
 msgid "Unable to add application file list to database: %s"
 msgstr ""
 
-#: ../src/software-db.vala:239
 msgid "Unable to add application to database: %s"
 msgstr ""
 
-#: ../tools/lipkgen/ipkbuilder.vala:468
 msgid "Unable to build package: %s"
 msgstr ""
 
-#: ../src/software-db.vala:296
 msgid "Unable to count applications: %s"
 msgstr ""
 
-#: ../src/database-internal.vala:402
 msgid "Unable to create database config table: %s"
 msgstr ""
 
-#: ../src/database-internal.vala:382
 msgid "Unable to create database tables: %s"
 msgstr ""
 
-#: ../src/ipk-package.vala:224
 msgid "Unable to create destination directory."
 msgstr ""
 
-#: ../src/ipk-filelist.vala:208
 msgid "Unable to create file '%s'!"
 msgstr ""
 
-#: ../src/feed-installer.vala:101
 msgid "Unable to download feed %s. Message: %s"
 msgstr ""
 
-#: ../src/ipk-repo.vala:192
 msgid ""
 "Unable to download package for '%s'\n"
 "Error: %s"
 msgstr ""
 
-#: ../src/ipk-package.vala:574
 msgid "Unable to extract IPK data!"
 msgstr ""
 
-#: ../src/ipk-package.vala:431
 msgid "Unable to extract IPK metadata!"
 msgstr ""
 
-#: ../src/ipk-package.vala:287
 msgid "Unable to extract data file %s. Message: %s"
 msgstr ""
 
-#: ../src/ipk-package.vala:270
 msgid ""
 "Unable to extract data file %s. This IPK package might be damaged, please "
 "obtain a new copy."
 msgstr ""
 
-#: ../src/feed-installer.vala:186
 msgid "Unable to extract file '%s' for dependency '%s'!"
 msgstr ""
 
-#: ../src/ipk-package.vala:247 ../src/ipk-package.vala:354
-#: ../src/ipk-package.vala:372
 msgid "Unable to extract file. %s"
 msgstr ""
 
-#: ../src/ipk-package.vala:492
 msgid "Unable to extract signature! Maybe package is not signed."
 msgstr ""
 
-#: ../src/software-db.vala:315
 msgid "Unable to fetch application by id: %s"
 msgstr ""
 
-#: ../src/software-db.vala:337
 msgid "Unable to fetch application by name: %s"
 msgstr ""
 
-#: ../src/database-internal.vala:1029 ../src/software-db.vala:281
 msgid "Unable to fetch application file list: %s"
 msgstr ""
 
-#: ../src/ipk-repo.vala:164
 msgid ""
 "Unable to fetch repository contents for: '%s'\n"
 "Error: %s"
 msgstr ""
 
-#: ../src/feed-installer.vala:238
 msgid ""
 "Unable to find a matching implementation of '%s' for your system/"
 "architecture."
 msgstr ""
 
-#: ../src/pkit-tasks.vala:190
 msgid "Unable to find native package for '%s'!"
 msgstr ""
 
-#: ../src/dep-installer.vala:58
 msgid "Unable to find valid candidate to satisfy dependency '%s'!"
 msgstr ""
 
-#: ../src/ipk-metafile.vala:53 ../src/repo-list.vala:49
 msgid "Unable to get meta-information list: %s"
 msgstr ""
 
-#: ../src/software-db.vala:194
+msgid ""
+"Unable to install module '%s' which is required for this installation.\n"
+"Message: %s"
+msgstr ""
+
+msgid ""
+"Unable to install module '%s' which is required for this installation.\n"
+"Unable to find a method to satisfy the dependency."
+msgstr ""
+
 msgid "Unable to open database for writing: %s"
 msgstr ""
 
-#: ../src/software-db.vala:168
 msgid "Unable to open database read-only: %s"
 msgstr ""
 
-#: ../src/manager.vala:81
 msgid "Unable to open software database for reading & writing!"
 msgstr ""
 
-#: ../src/manager.vala:87
 msgid "Unable to open software database for reading only!"
 msgstr ""
 
-#: ../src/ipk-package.vala:518
 msgid "Unable to read package signature! Message: %s"
 msgstr ""
 
-#: ../src/software-db.vala:358
 msgid "Unable to remove application from database: %s"
 msgstr ""
 
-#: ../src/varsetter.vala:88 ../src/varsetter.vala:96
 msgid "Unable to save modified desktop-file! %s"
 msgstr ""
 
-#: ../src/software-db.vala:378
 msgid "Unable to search application database: %s"
 msgstr ""
 
-#: ../src/database-internal.vala:995
 msgid "Unable to write application file list! Message: %s"
 msgstr ""
 
-#: ../src/ipk-metafile.vala:135 ../src/repo-list.vala:95
 msgid "Unable to write meta information! Message: %s"
 msgstr ""
 
-#: ../tools/lipkgen/ipkbuilder.vala:386
 msgid "Unable to write signature file! Message: %s"
 msgstr ""
 
-#: ../src/signature.vala:109 ../src/signature.vala:110
-#: ../src/signature.vala:124 ../src/signature.vala:125
 msgid "Unknown"
 msgstr ""
 
-#: ../src/updater.vala:135
 msgid ""
 "Update of application '%s' failed. Maybe the update information is out of "
 "date. Please refresh it and try again."
 msgstr ""
 
-#: ../src/updater.vala:178
 msgid ""
 "Update of application '%s' failed. Something bad happened. Please install "
 "the application again!"
 msgstr ""
 
-#: ../src/updater.vala:169
 msgid ""
 "Update of application '%s' failed. Unable to remove the old application."
 msgstr ""
 
-#: ../tools/lipa/lipa-manager.vala:173
 msgid "Updating package cache"
 msgstr ""
 
-#: ../tools/depscan/depscan-tool.vala:37
 msgid "Use recursive mode"
 msgstr ""
 
-#: ../src/ipk-package.vala:300
 msgid ""
 "Validation of file %s failed! This IPK file might have been modified after "
 "creation.\n"
 "Please obtain a new copy and try again."
 msgstr ""
 
-#: ../src/security-info.vala:133
 msgid "Validity is undefined"
 msgstr ""
 
-#: ../src/application.vala:383
 msgid "We don't know a desktop-file for application '%s'!"
 msgstr ""
 
-#: ../src/zfeed.vala:82
 msgid "XML file is not a valid ZI feed!"
 msgstr ""
 
-#: ../src/installer.vala:455
 msgid ""
 "You are not allowed to install this package, because it's security level is "
 "'%s' and you need at least a package with security-level '%s'.\n"
@@ -866,7 +700,6 @@ msgid ""
 "try again!"
 msgstr ""
 
-#: ../src/updater.vala:155
 msgid ""
 "You are not allowed to update the application '%s'! The security level of "
 "the update is '%s' and you need at least security-level '%s'.\n"
@@ -874,73 +707,56 @@ msgid ""
 "compromised!"
 msgstr ""
 
-#: ../tools/lipa/lipa-installer.vala:134
 msgid ""
 "You need to agree with the license to install & use the application. Exiting "
 "setup now."
 msgstr ""
 
-#: ../tools/likey/likey.vala:90
 msgid "You need to be root to change Listaller's key database!"
 msgstr ""
 
-#: ../tools/lipkgen/ipkbuilder.vala:280
 msgid "Your package has errors and was therefore not generated."
 msgstr ""
 
-#: ../src/zfeed.vala:71
 msgid "ZI XML file '%s' is damaged."
 msgstr ""
 
-#: ../src/signature.vala:119 ../src/signature.vala:126
 msgid "[None]"
 msgstr ""
 
-#: ../src/signature.vala:127
 msgid "bad"
 msgstr ""
 
-#: ../src/security-info.vala:47
 msgid "dangerous"
 msgstr ""
 
-#: ../tools/lipkgen/lipkgen.vala:69
 msgid "error: %s"
 msgstr ""
 
-#: ../src/security-info.vala:38
 msgid "high"
 msgstr ""
 
-#: ../src/security-info.vala:44
 msgid "low"
 msgstr ""
 
-#: ../src/security-info.vala:41
 msgid "medium"
 msgstr ""
 
-#: ../src/signature.vala:127
 msgid "n/a"
 msgstr ""
 
-#: ../src/signature.vala:129
 msgid "no"
 msgstr ""
 
-#: ../src/signature.vala:127
 msgid "okay"
 msgstr ""
 
-#: ../src/application.vala:290 ../tools/lipa/lipa-manager.vala:69
 msgid "personal"
 msgstr ""
 
-#: ../src/application.vala:292 ../tools/lipa/lipa-manager.vala:71
 msgid "shared"
 msgstr ""
 
-#: ../src/signature.vala:95
 msgid ""
 "status ....: %s\n"
 "summary ...:%s\n"
@@ -957,6 +773,5 @@ msgid ""
 "notations .: %s"
 msgstr ""
 
-#: ../src/signature.vala:129
 msgid "yes"
 msgstr ""
