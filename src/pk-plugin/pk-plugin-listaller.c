@@ -61,11 +61,9 @@ pk_plugin_reset (PkPlugin *plugin)
 static void
 pk_plugin_skip_native_backend (PkPlugin *plugin)
 {
-	PkExitEnum exit;
-	exit = pk_backend_job_get_exit_code (plugin->job);
 	g_debug ("Skipping native backend.");
 
-	/* only skip transaction if we don't have an error already */
+	/* only skip transaction if an error is not already set */
 	if (!pk_backend_job_get_is_error_set (plugin->job)) {
 		pk_backend_job_set_exit_code (plugin->job, PK_EXIT_ENUM_SKIP_TRANSACTION);
 	}
@@ -288,7 +286,7 @@ listaller_progress_cb (GObject *sender, ListallerProgressItem *item, PkPlugin *p
 
 	if (prog_type == LISTALLER_PROGRESS_ENUM_ITEM_PROGRESS) {
 		const gchar *item_id = listaller_progress_item_get_item_id (item);
-		// TODO: Implement better status handling
+		/* TODO: Implement better status handling */
 		if (value > 0)
 			pk_backend_job_set_item_progress (plugin->job, item_id, PK_STATUS_ENUM_RUNNING, value);
 	}
@@ -708,7 +706,7 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 	/* get transaction role */
 	role = pk_transaction_get_role (transaction);
 
-	/* if we're only simulation, skip Listaller packages */
+	/* if we're only simulating, skip Listaller packages */
 	if (pk_bitfield_contain (pk_transaction_get_transaction_flags (transaction),
 				   PK_TRANSACTION_FLAG_ENUM_SIMULATE)) {
 
@@ -718,7 +716,7 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 									full_paths);
 
 			/* We have Listaller packages, so skip this! */
-			/* FIXME: This needs to be smarter - backend needs to Simulate() with remaining pkgs */
+			/* TODO: This needs to be smarter - backend needs to Simulate() with remaining pkgs */
 			if (data != NULL)
 				pk_plugin_skip_native_backend (plugin);
 		} else {
