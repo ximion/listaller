@@ -29,6 +29,7 @@ namespace Listaller {
 private class DepInstaller : MessageObject {
 	private SoftwareDB db;
 	private DepManager depman;
+	private Config conf;
 
 	public DepInstaller (SoftwareDB software_db) {
 		base ();
@@ -41,6 +42,8 @@ private class DepInstaller : MessageObject {
 		// Create a new dependency manager to fetch information about installed dependencies
 		depman = new DepManager (db);
 		depman.connect_with_object_all (this);
+
+		conf = new Config ();
 	}
 
 	private void emit_depmissing_error (ErrorItem? inst_error, Dep.Module dep) {
@@ -67,6 +70,10 @@ private class DepInstaller : MessageObject {
 		foreach (AbstractSolver solver in solver_pool) {
 			if (!solver.usable (cmod))
 				continue;
+			if ((solver.id != "Native") && (conf.installer_get_bool ("Install3rdPartyModules") == false)) {
+				error_msg = _("System policy forbids installation of 3rd-party modules.");
+				break;
+			}
 
 			try {
 				ret = solver.install_module (cmod);
