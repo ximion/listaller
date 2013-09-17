@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+   <id type="desktop">dummy.desktop</id>
+   <licence>CC0</licence>
+   <pkgname>dummy-pkg</pkgname>
+   <name>Dummy</name>
+   <summary>All-arch dummy app</summary>
+   <description>
+      <p>Dummy package with the only purpose of testing Listaller repositories and being arch:all</p>
+   </description>
+   <url type="homepage">http://listaller.tenstral.net/stuff/dummy-pkg</url>
+   <contact>matthias_at_tenstral.net</contact>
+   <version>0.1</version>
+</application>

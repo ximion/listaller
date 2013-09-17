@@ -38,7 +38,7 @@ void msg (string s) {
 void run_command (string cmd) {
 	int exit_status = 0;
 	try {
-		debug ("Running command: " + cmd);
+		stdout.printf ("\nRunning command: %s\n\n", cmd);
 		Process.spawn_command_line_sync (cmd, null, null, out exit_status);
 		assert (exit_status == 0);
 	} catch (SpawnError e) {
@@ -78,7 +78,7 @@ void test_lipkgen_build () {
 
 	// Cleanup
 	FileUtils.remove (Path.build_filename (datadir, "FooBar-1.0_%s.ipk".printf (Utils.system_machine_generic ()), null));
-	FileUtils.remove (Path.build_filename (datadir, "DummyPkg-0.1_all.ipk", null));
+	FileUtils.remove (Path.build_filename (datadir, "Dummy-0.1_all.ipk", null));
 
 	string cmd;
 

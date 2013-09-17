@@ -59,7 +59,7 @@ void test_ipk_package () {
 	assert (ret == true);
 
 	AppItem app = ipk.control.get_application ();
-	assert (app.full_name == "Foo Bar");
+	assert (app.full_name == "FooBar");
 
 	Collection<IPK.FileEntry> flist = ipk.get_file_entries ();
 	foreach (IPK.FileEntry e in flist) {
@@ -121,11 +121,11 @@ void test_ipk_packcontrol () {
 	bool ret;
 	// We use the "pkoptions" file instead of the "pksetting" file here, both files have the same layout.
 	ret = ipkc.open_control (Path.build_filename (ctrlDir, "pkoptions", null),
-				 Path.build_filename (ctrlDir, "foobar.doap", null));
+				 Path.build_filename (ctrlDir, "foobar.appdata.xml", null));
 	assert (ret);
 
 	AppItem app = ipkc.get_application ();
-	assert (app.full_name == "Foo Bar");
+	assert (app.full_name == "FooBar");
 	assert (app.idname == "foobar");
 }
 

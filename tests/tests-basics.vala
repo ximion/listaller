@@ -212,6 +212,7 @@ void test_components () {
 
 	lilibv_frmw.installed = true;
 	version = lilibv_frmw.get_version ();
+	debug ("LiVersion: %s", version);
 	assert (version == PkgConfig.PACKAGE_VERSION);
 }
 

@@ -125,17 +125,17 @@ void test_packagekit_installer () {
 	msg ("PackageKit dependency installer test");
 	bool ret = false;
 
-	// Build simple mp3gain dependency
+	// Build simple Nano dependency
 	ArrayList<Dep.Module> deplist = new ArrayList<Dep.Module> ();
-	Dep.Module depMp3Gain = new Dep.Module ("Mp3Gain");
-	depMp3Gain.add_item (Dep.ItemType.BINARY, "/usr/bin/mp3gain");
+	Dep.Module depNano = new Dep.Module ("Nano");
+	depNano.add_item (Dep.ItemType.BINARY, "/usr/bin/nano");
 
 	Dep.PkInstaller pkit = new Dep.PkInstaller (ssettings);
 	Dep.PkResolver pkslv = new Dep.PkResolver (ssettings);
 	pkit.message.connect (test_solver_message_cb);
 
-	search_install_pkdep (pkit, pkslv, ref depMp3Gain);
-	assert (depMp3Gain.installed == true);
+	search_install_pkdep (pkit, pkslv, ref depNano);
+	assert (depNano.installed == true);
 
 	// Now something more advanced
 	Dep.Module crazy = new Dep.Module ("CrazyStuff");
@@ -189,8 +189,8 @@ void test_depsolver () {
 	dep2.add_item (Dep.ItemType.SHARED_LIB, "libgee.so");
 	deplist.add (dep2);
 
-	Dep.Module dep3 = new Dep.Module ("Mp3Gain");
-	dep3.add_item (Dep.ItemType.BINARY, "/usr/bin/mp3gain");
+	Dep.Module dep3 = new Dep.Module ("Nano");
+	dep3.add_item (Dep.ItemType.BINARY, "/usr/bin/nano");
 	dep3.add_item (Dep.ItemType.SHARED_LIB, "libc.so.6");
 	deplist.add (dep3);
 

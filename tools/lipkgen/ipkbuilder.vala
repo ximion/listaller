@@ -62,7 +62,7 @@ private class Builder : Object {
 		outname = "";
 		ctrlfiles = new ArrayList<string> ();
 		datapkgs = new ArrayList<string> ();
-		ipkVersion = "1.2";
+		ipkVersion = "2.0";
 	}
 
 	~Builder () {

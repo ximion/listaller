@@ -32,10 +32,10 @@ namespace Listaller {
  */
 private class AppStreamXML : Object {
 	private Xml.Doc* doc;
-	private Xml.Node* root;
 	private string locale;
 
 	public AppStreamXML () {
+		doc = null;
 		locale = Intl.get_language_names ()[0];
 	}
 
@@ -98,16 +98,10 @@ private class AppStreamXML : Object {
 			return false;
 		}
 
-		root = doc->get_root_element ();
+		Xml.Node* root = doc->get_root_element ();
 		if (root == null) {
 			delete doc;
 			stderr.printf ("The XML file '%s' is empty", fname);
-			return false;
-		}
-
-		if (root->name != "applications") {
-			delete doc;
-			stderr.printf ("The XML file '%s' does not contain valid AppStream data.", fname);
 			return false;
 		}
 
@@ -127,7 +121,7 @@ private class AppStreamXML : Object {
 			return false;
 		}
 
-		root = doc->get_root_element ();
+		Xml.Node* root = doc->get_root_element ();
 		if (root == null) {
 			delete doc;
 			stderr.printf ("The XML data is empty");
@@ -201,15 +195,24 @@ private class AppStreamXML : Object {
 	}
 
 	public AppItem? get_app_item () {
+		if (doc == null) {
+			warning ("No AppStream data is set. Could not return AppItem.");
+			return null;
+		}
 		AppItem? item = null;
-		for (Xml.Node* iter = root->children; iter != null; iter = iter->next) {
-			// Discard spaces
-			if (iter->type != ElementType.ELEMENT_NODE) {
-				continue;
-			}
+		Xml.Node* root = doc->get_root_element ();
+		if (root->name == "application") {
+			item = parse_application_node (root);
+		} else {
+			for (Xml.Node* iter = root->children; iter != null; iter = iter->next) {
+				// Discard spaces
+				if (iter->type != ElementType.ELEMENT_NODE) {
+					continue;
+				}
 
-			if (iter->name == "application")
-				item = parse_application_node (iter);
+				if (iter->name == "application")
+					item = parse_application_node (iter);
+			}
 		}
 
 		return item;

@@ -2,6 +2,8 @@
 <application>
    <id type="desktop">foobar.desktop</id>
    <licence>CC0</licence>
+   <pkgname>foobar</pkgname>
+   <name>FooBar</name>
    <summary>A simple dummy application</summary>
    <description>
       <p>Foobar is an application which does absolutely nothing.
