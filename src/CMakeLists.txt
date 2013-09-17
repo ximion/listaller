@@ -31,7 +31,7 @@ set(LISTALLER_BASE_SOURCES ${lisrc}/logging.vala
 	CACHE INTERNAL "Listaller core source files"
 )
 
-set(LISTALLER_BASE_VALA_DEPS config gee-1.0 gio-2.0 sqlite3 libarchive libsoup-2.4 gpgme libxml-2.0 rdf-minimal
+set(LISTALLER_BASE_VALA_DEPS config gee-1.0 gio-2.0 sqlite3 libarchive libsoup-2.4 gpgme libxml-2.0
 			     CACHE INTERNAL "Essential Vala package dependencies"
 )
 
@@ -65,7 +65,6 @@ find_package(GI REQUIRED)
 find_library(M_LIB m)
 pkg_check_modules(GEE REQUIRED gee-1.0>=0.6)
 pkg_check_modules(GIO2 REQUIRED gio-2.0>=2.26)
-pkg_check_modules(REDLAND REQUIRED redland>=0.4)
 pkg_check_modules(SOUP REQUIRED libsoup-2.4>=2.40)
 pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2>=0.8.10)
 pkg_check_modules(PACKAGEKIT_PLUGIN REQUIRED packagekit-plugin)
@@ -162,7 +161,6 @@ target_link_libraries(listaller-glib
 		${LIBXML2_LIBRARIES}
 		${GPGME_VANILLA_LIBRARIES}
 		${SOUP_LIBRARIES}
-		${REDLAND_LIBRARIES}
 		${PACKAGEKIT_LIBRARIES}
 		${PACKAGEKIT_PLUGIN_LIBRARIES}
 )
@@ -177,7 +175,6 @@ include_directories(${CMAKE_BINARY_DIR}
 		${LIBXML2_INCLUDE_DIR}
 		${GPGME_INCLUDES}
 		${SOUP_INCLUDE_DIRS}
-		${REDLAND_INCLUDE_DIRS}
 		${PACKAGEKIT_INCLUDE_DIRS}
 		${PACKAGEKIT_PLUGIN_INCLUDE_DIRS}
 )
