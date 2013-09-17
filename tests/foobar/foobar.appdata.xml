@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+   <id type="desktop">foobar.desktop</id>
+   <licence>CC0</licence>
+   <description>
+      <p>Foobar is an application which does absolutely nothing.
+      Really, it's completely useless!</p>
+      <p>Things you can expect from FooBar:</p>
+      <ul>
+         <li>Does _nothing_</li>
+         <li>No shiny graphic effects</li>
+         <li>Bad user experience</li>
+      </ul>
+      <p>The only purpose of Foobar is to be the guinea-pig app for
+Listaller testing scripts.</p>
+   </description>
+   <url type="homepage">https://listaller.tenstral.net</url>
+   <updatecontact>matthias_at_tenstral.net</updatecontact>
+   <version>1.0</version>
+</application>
