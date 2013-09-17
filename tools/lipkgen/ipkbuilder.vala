@@ -497,7 +497,7 @@ private class Builder : Object {
 		debug ("Building package for %s, version: %s (id: %s)", appInfo.full_name, appInfo.version, appInfo.idname);
 
 		// Build IPK control directory
-		ictrl.create_new (ipkCDir.get_doap_data (), ipkVersion);
+		ictrl.create_new (ipkCDir.get_appstream_data (), ipkVersion);
 
 		// check if we have a failure already
 		if (failed)

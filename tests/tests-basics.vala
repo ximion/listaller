@@ -143,12 +143,13 @@ void test_versions () {
 	assert (comp_ver ("3.0.rc2", "3.0.0") == -1);
 }
 
-void test_doap () {
-	DoapData doda = new DoapData ();
-	string dd = load_file_to_string (Path.build_filename (datadir, "doap.doap"));
-	doda.add_data (dd);
-	//doda.add_file (Path.build_filename (datadir, "doap.doap"));
-	doda.get_project ();
+void test_appstream_xml () {
+	var asxml = new AppStreamXML ();
+	string asd = load_file_to_string (Path.build_filename (datadir, "appstream.appdata.xml"));
+	asxml.load_data (asd);
+	AppItem? item = asxml.get_app_item ();
+	assert (item != null);
+	assert (item.idname == "foobar-1");
 }
 
 void test_metafile () {
@@ -238,7 +239,7 @@ int main (string[] args) {
 	test_application_ids ();
 	test_versions ();
 	test_metafile ();
-	test_doap ();
+	test_appstream_xml ();
 	test_components ();
 	test_zfeeds ();
 	test_field ();
