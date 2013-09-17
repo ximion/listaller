@@ -26,10 +26,10 @@ using Listaller.Utils;
 namespace Listaller.IPK {
 
 // We need at least an IPK 1.1 package to process it
-private static const string MINIMUM_IPK_SPEC_VERSION = "1.2";
+private static const string MINIMUM_IPK_SPEC_VERSION = "2.0";
 
 public errordomain ControlDataError {
-	NO_DOAP,
+	NO_APPDATA,
 	DOAP_INVALID,
 	DEPLIST_INVALID,
 	INTERNAL,
@@ -40,26 +40,22 @@ public errordomain ControlDataError {
  * Generic IPK package control data
  */
 public abstract class Control : Object {
-	internal DoapData doap;
+	internal AppStreamXML appXML;
 	internal MetaFile packSetting;
 	protected AppItem? appItem;
 
 	internal Control () {
-		doap = new DoapData ();
+		appXML = new AppStreamXML ();
 		packSetting = new MetaFile ();
 		appItem = null;
 	}
 
-	protected bool open_doap (string data) {
-		doap.add_data (data);
-		return true;
+	protected bool load_appstream_file (string fname) {
+		return appXML.load_file (fname);
 	}
 
-	protected bool open_doap_file (string fname) {
-		if (doap.get_doap_url () != "")
-			return false;
-		doap.add_file (fname);
-		return true;
+	protected bool load_appstream_data (string data) {
+		return appXML.load_data (data);
 	}
 
 	protected bool open_packsetting (string pksFName) {
@@ -194,9 +190,11 @@ public abstract class Control : Object {
 	public AppItem get_application () {
 		if (appItem != null)
 			return appItem;
-		AppItem? item = doap.get_project ();
+		AppItem? item = appXML.get_app_item ();
 		if (item != null)
 			appItem = item;
+		else
+			return null;
 		item.replaces = get_replaces ();
 
 		return item;
@@ -254,13 +252,13 @@ public abstract class Control : Object {
  */
 public class PackControl : Control {
 	private string ipkVersion;
-	private string doapData;
+	private string asData;
 
 	public PackControl () {
-		ipkVersion = "1.1";
+		ipkVersion = "2.0";
 	}
 
-	public bool open_control (string fPackSetting, string fDoap) {
+	public bool open_control (string fPackSetting, string fAppStream) {
 		bool ret;
 		ret = open_packsetting (fPackSetting);
 		if (!ret) {
@@ -268,8 +266,8 @@ public class PackControl : Control {
 			return false;
 		}
 
-		doapData = load_file_to_string (fDoap);
-		ret = this.open_doap (doapData);
+		asData = load_file_to_string (fAppStream);
+		ret = this.load_appstream_data (asData);
 		if (!ret)
 			return false;
 
@@ -289,15 +287,15 @@ public class PackControl : Control {
 		return true;
 	}
 
-	public bool create_new (string? newDoapData, string ipkV) {
-		if ((newDoapData == null) || (newDoapData == "")) {
-			critical ("Error while processing DOAP data: Data was NULL!");
+	public bool create_new (string? newAppStreamData, string ipkV) {
+		if ((newAppStreamData == null) || (newAppStreamData == "")) {
+			critical ("Error while processing AppStream data: Data was NULL!");
 			return false;
 		}
 
-		doapData = newDoapData;
-		doap = new DoapData ();
-		bool ret = this.open_doap (doapData);
+		asData = newAppStreamData;
+		appXML = new AppStreamXML ();
+		bool ret = this.load_appstream_data (asData);
 		if (ret)
 			ret = cache_appitem ();
 		if (ret) {
@@ -322,7 +320,7 @@ public class PackControl : Control {
 	public bool save_to_dir (string dirPath) {
 		bool ret;
 
-		ret = save_string_to_file (Path.build_filename (dirPath, this.appItem.idname + ".doap", null), doapData);
+		ret = save_string_to_file (Path.build_filename (dirPath, this.appItem.idname + ".appdata.xml", null), asData);
 		if (!ret)
 			return false;
 
@@ -338,7 +336,7 @@ public class PackControl : Control {
 	public string[] get_files () {
 		string[] res;
 		res = { "pksetting" };
-		res += this.appItem.idname + ".doap";
+		res += this.appItem.idname + ".appdata.xml";
 		// Add license text
 		if (has_license_text ())
 			res += "license.txt";
@@ -387,15 +385,15 @@ public class PackControl : Control {
  */
 public class ControlDir : Control {
 	private string ctrlDir;
-	private string doapFile;
+	private string asdFile; // AppStream data file
 
 	public ControlDir () {
 		ctrlDir = "";
-		doapFile = "";
+		asdFile = "";
 	}
 
-	private string find_doap_data (string dir) {
-		string doapFile = "";
+	private string find_appstream_data (string dir) {
+		string asdFile = "";
 		try {
 			var directory = File.new_for_path (dir);
 			var enumerator = directory.enumerate_children (FileAttribute.STANDARD_NAME, 0);
@@ -406,15 +404,16 @@ public class ControlDir : Control {
 				if (file_info.get_is_hidden ())
 					continue;
 
-				if (path.down ().has_suffix (".doap"))
-					doapFile = path;
+				if (path.down ().has_suffix (".appdata.xml"))
+					asdFile = path;
 			}
 
 		} catch (GLib.Error e) {
 			stderr.printf (_("Error: %s\n"), e.message);
 			return "";
 		}
-		return doapFile;
+
+		return asdFile;
 	}
 
 	public bool open_dir (string dir) throws ControlDataError {
@@ -428,11 +427,11 @@ public class ControlDir : Control {
 			return false;
 
 
-		doapFile = find_doap_data (dir);
-		if (doapFile == "")
-			throw new ControlDataError.NO_DOAP (_("No valid DOAP data found in directory %s - Can't open control files.").printf (dir));
+		asdFile = find_appstream_data (dir);
+		if (asdFile == "")
+			throw new ControlDataError.NO_APPDATA (_("No valid AppStream application data found in directory %s - Can't open control files.").printf (dir));
 
-		bool ret = this.open_doap_file (doapFile);
+		bool ret = this.load_appstream_file (asdFile);
 		if (!ret)
 			return false;
 		ctrlDir = dir;
@@ -461,12 +460,13 @@ public class ControlDir : Control {
 		return false;
 	}
 
-	public string? get_doap_data () {
-		if (doapFile == "")
+	public string? get_appstream_data () {
+		if (asdFile == "")
 			return null;
 
-		string doap = load_file_to_string (doapFile);
-		return doap;
+		string xmldata = load_file_to_string (asdFile);
+
+		return xmldata;
 	}
 
 	public bool save_control () {

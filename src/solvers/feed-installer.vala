@@ -109,7 +109,7 @@ private class FeedInstaller : MessageObject {
 		File remote_file = File.new_for_uri (remote_url);
 
 		MainLoop main_loop = new MainLoop ();
-		do_download (remote_file, local_file, main_loop, null);
+		do_download.begin (remote_file, local_file, main_loop, null);
 		main_loop.run ();
 		if (last_error == null)
 			return true;

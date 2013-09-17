@@ -37,7 +37,7 @@ namespace Listaller.IPK {
  * |   |   |   |-- changelog                         - software changelog
  * |   |   |   |-- appid1-1.4_amd64.ipk              - IPK package to install
  * |   |   |   |-- appid1-1.4_ix32.ipk
- * |   |   |   |-- (?)appid1.doap                    - optional: application DOAP data (RDF)
+ * |   |   |   |-- (?)appid1.appdata.xml             - optional: application AppStream data (RDF)
  * |   |   |   |-- [delta]                           - directory with package deltas
  * |   |   |   |   |-- [amd64]                       - architecture dir
  * |   |   |   |   |   |-- appid-1.0-to-1.4.deltaipk - deltaIPK packages

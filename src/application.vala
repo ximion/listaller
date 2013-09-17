@@ -300,6 +300,14 @@ public class AppItem : Object {
 		return "%s %s (%s) :: %s -- %s".printf (app_state_str, idname, version, full_name, summary);
 	}
 
+	public void fast_check () {
+		// Fast sanity checks for AppItem
+		assert (idname != null);
+		assert (full_name != null);
+		assert (version != null);
+		assert (appid != "");
+	}
+
 	private void set_license_info (string lName, string lText) {
 		_license = AppLicense () {
 			name = lName,
@@ -307,36 +315,12 @@ public class AppItem : Object {
 		};
 	}
 
-	public void set_license_name (string lName) {
-		set_license_info (lName, _license.text);
-	}
-
-	public void set_license_text (string lText) {
-		set_license_info (_license.name, lText);
-	}
-
-	public void set_license_from_doap_name (string? name) {
+	public void set_license_name (string? name) {
 		if ((name == null) || (name.strip () == ""))
 			return;
 		string licenseName, licenseText = "";
-		string lID = name.strip ();
-		// First handle the DOAP names
-		switch (lID.down ()) {
-			case ("http://usefulinc.com/doap/licenses/gpl"):
-				licenseName = "GPL";
-				break;
-			case ("http://usefulinc.com/doap/licenses/lgpl"):
-				licenseName = "LGPL";
-				break;
-			case ("http://usefulinc.com/doap/licenses/mpl"):
-				licenseName = "MPL";
-				break;
-
-			default:
-				licenseName = lID;
-				break;
-		}
-		// Now check if we have a copy of this license stored somewhere (works for Debian at time)
+		licenseName = name.strip ();
+		// Check if we have a copy of this license stored somewhere (works for Debian at time)
 		string licenseDir = "/usr/share/common-licenses";
 		if (FileUtils.test (Path.build_filename (licenseDir, licenseName, null), FileTest.EXISTS)) {
 			licenseText = load_file_to_string (Path.build_filename (licenseDir, licenseName, null));
@@ -354,12 +338,8 @@ public class AppItem : Object {
 		set_license_info (licenseName, licenseText);
 	}
 
-	public void fast_check () {
-		// Fast sanity checks for AppItem
-		assert (idname != null);
-		assert (full_name != null);
-		assert (version != null);
-		assert (appid != "");
+	public void set_license_text (string lText) {
+		set_license_info (_license.name, lText);
 	}
 
 	/** Build a Listaller application-id

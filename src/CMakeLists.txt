@@ -20,7 +20,7 @@ set(LISTALLER_BASE_SOURCES ${lisrc}/logging.vala
 	${lisrc}/software-cache.vala
 	${lisrc}/varsolver.vala
 	${lisrc}/varsetter.vala
-	${lisrc}/doap.vala
+	${lisrc}/appstream-data.vala
 	${lisrc}/ipk-metafile.vala
 	${lisrc}/ipk-filelist.vala
 	${lisrc}/ipk-control.vala

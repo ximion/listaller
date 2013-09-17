@@ -94,7 +94,7 @@ private class Package : MessageObject {
 			return false;
 		}
 
-		string doapFileName = "";
+		string asdFileName = "";
 		ipk_selected_arch_ = "";
 		string archFListName = "";
 		string currentArch = arch_generic (system_machine ());
@@ -105,10 +105,10 @@ private class Package : MessageObject {
 
 		while (ar.next_header (out e) == Result.OK) {
 			string pName = e.pathname ();
-			if (pName.has_suffix (".doap")) {
+			if (pName.has_suffix (".appdata.xml")) {
 					ret = extract_entry_to (ar, e, wdir);
 					if (ret)
-						doapFileName = pName;
+						asdFileName = pName;
 			} else {
 				switch (pName) {
 					case "pksetting":
@@ -146,10 +146,10 @@ private class Package : MessageObject {
 
 		if (!ret)
 			return false;
-		if (doapFileName == "")
+		if (asdFileName == "")
 			return false;
 
-		string tmpf = Path.build_filename (wdir, doapFileName, null);
+		string tmpf = Path.build_filename (wdir, asdFileName, null);
 		ret = false;
 		if (FileUtils.test (tmpf, FileTest.EXISTS)) {
 			ret = ipkc.open_control (Path.build_filename (wdir, "pksetting", null),
