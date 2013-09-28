@@ -126,12 +126,14 @@ endif(TESTS)
 #
 # Custom C flags
 #
-set (MAINTAINER_CFLAGS "-Werror -Wall -Wcast-align -Wno-uninitialized -Wempty-body -Wformat-security -Winit-self")
-option (DISABLE_MAINTAINER_CFLAGS "Disable maintainer CFlags" ON)
-if (DISABLE_MAINTAINER_CFLAGS)
-	set (MAINTAINER_CFLAGS "")
-endif (DISABLE_MAINTAINER_CFLAGS)
+set(MAINTAINER_CFLAGS "-Werror -Wall -Wcast-align -Wno-uninitialized -Wempty-body -Wformat-security -Winit-self")
+option(DISABLE_MAINTAINER_CFLAGS "Disable maintainer CFlags" ON)
+if(DISABLE_MAINTAINER_CFLAGS)
+	set(MAINTAINER_CFLAGS "")
+endif(DISABLE_MAINTAINER_CFLAGS)
 add_definitions(${MAINTAINER_CFLAGS})
+
+set(GLOBAL_VALAC_FLAGS "--target-glib=2.36")
 
 # Required to include config.h before all other units
 add_definitions ("--include config.h")

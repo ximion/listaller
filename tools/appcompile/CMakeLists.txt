@@ -29,6 +29,7 @@ include_directories(${CMAKE_BINARY_DIR}
 vala_add_executable (appcompile ${LIBUILD_SOURCES}
 			PACKAGES config gee-1.0 gio-2.0 posix
 			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
+			COMPILE_FLAGS ${GLOBAL_VALAC_FLAGS}
 )
 
 target_link_libraries(appcompile

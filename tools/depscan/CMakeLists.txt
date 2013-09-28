@@ -34,6 +34,7 @@ add_definitions(${GEE_CFLAGS} ${GEE_CFLAGS_OTHER})
 vala_add_executable(depscan ${DEPSCAN_SOURCES}
 			PACKAGES ${LISTALLER_BASE_VALA_DEPS} listaller_internal packagekit-glib2
 			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
+			COMPILE_FLAGS ${GLOBAL_VALAC_FLAGS}
 )
 
 install(TARGETS depscan DESTINATION bin)

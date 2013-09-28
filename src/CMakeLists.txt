@@ -55,7 +55,7 @@ endif(QT)
 find_package(Vala REQUIRED)
 include("${VALA_USE_FILE}")
 
-find_package(GLIB2 2.23 REQUIRED)
+find_package(GLIB2 2.36 REQUIRED)
 find_package(Gettext REQUIRED)
 find_package(SQLite3 REQUIRED)
 find_package(LibArchive REQUIRED)
@@ -120,6 +120,7 @@ vala_add_library(listaller-glib SHARED ${LISTALLER_GLIB_SOURCES}
 				--library Listaller-${LILIBS_VERSION}
 				--internal-vapi=listaller_internal.vapi.orig
 				--thread
+				${GLOBAL_VALAC_FLAGS}
 )
 
 find_program (SED_TOOL NAMES sed)

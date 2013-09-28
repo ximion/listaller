@@ -2,13 +2,13 @@
 
 add_subdirectory (man)
 
+# Find required tools
 find_program (XMLTO xmlto)
 mark_as_advanced (XMLTO)
 if (XMLTO STREQUAL "")
 	message (FATAL_ERROR "Xmlto was not found! Please install it to continue!")
 endif (XMLTO STREQUAL "")
 
-# Find required tools
 find_program (PUBLICAN publican)
 mark_as_advanced (PUBLICAN)
 if (PUBLICAN STREQUAL "")
