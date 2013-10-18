@@ -106,7 +106,7 @@ private class TestEnvironment {
 		Test.run ();
 	}
 
-	public void add_func (string testpath, Callback test_funcvoid) {
+	public void add_func (string testpath, TestFunc test_funcvoid) {
 		Test.add_func ("/%s/%s".printf (test_env_name, testpath), test_funcvoid);
 	}
 

@@ -48,6 +48,7 @@ vala_add_executable (li-test-basics ${LIUNITTEST_SOURCES} tests-basics.vala
 				BASE_DIR ${lisrc}
 				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 listaller_internal
 				VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
+				COMPILE_FLAGS ${GLOBAL_VALAC_FLAGS}
 )
 add_test(basic-test li-test-basics ${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -56,6 +57,7 @@ vala_add_executable (li-test-database ${LIUNITTEST_SOURCES} tests-database.vala
 				BASE_DIR ${lisrc}
 				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 listaller_internal
 				VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
+				COMPILE_FLAGS ${GLOBAL_VALAC_FLAGS}
 )
 add_test(database-test li-test-database)
 
@@ -64,6 +66,7 @@ vala_add_executable (li-test-ipk ${LIUNITTEST_SOURCES} tests-ipk.vala
 				BASE_DIR ${lisrc}
 				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 listaller_internal
 				VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
+				COMPILE_FLAGS ${GLOBAL_VALAC_FLAGS}
 )
 add_test(ipk-test li-test-ipk ${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -75,6 +78,7 @@ vala_add_executable (li-test-ipkbuild ${LIUNITTEST_SOURCES} tests-ipkbuild.vala
 				BASE_DIR ${lisrc}
 				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 listaller_internal
 				VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
+				COMPILE_FLAGS ${GLOBAL_VALAC_FLAGS}
 )
 add_test(ipkbuild-test li-test-ipkbuild ${CMAKE_CURRENT_SOURCE_DIR}
 	${CMAKE_BINARY_DIR}/tools/appcompile/appcompile
@@ -87,6 +91,7 @@ vala_add_executable (li-test-installer ${LIUNITTEST_SOURCES} tests-installer.val
 				BASE_DIR ${lisrc}
 				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 listaller_internal
 				VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
+				COMPILE_FLAGS ${GLOBAL_VALAC_FLAGS}
 )
 add_test(installer-test li-test-installer ${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -95,6 +100,7 @@ vala_add_executable (li-test-repo ${LIUNITTEST_SOURCES} tests-repository.vala
 				BASE_DIR ${lisrc}
 				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 listaller_internal
 				VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
+				COMPILE_FLAGS ${GLOBAL_VALAC_FLAGS}
 )
 add_test(repo-test li-test-repo ${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -103,6 +109,7 @@ vala_add_executable (li-test-updater ${LIUNITTEST_SOURCES} tests-updater.vala
 				BASE_DIR ${lisrc}
 				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 listaller_internal
 				VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
+				COMPILE_FLAGS ${GLOBAL_VALAC_FLAGS}
 )
 add_test(updater-test li-test-updater ${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -111,6 +118,7 @@ vala_add_executable (li-test-depmanager ${LIUNITTEST_SOURCES} tests-depmanager.v
 				BASE_DIR ${lisrc}
 				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 listaller_internal
 				VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
+				COMPILE_FLAGS ${GLOBAL_VALAC_FLAGS}
 )
 if(TEST_DEPMANAGER)
 	add_test(depmanager-test li-test-depmanager ${CMAKE_CURRENT_SOURCE_DIR})
@@ -123,6 +131,7 @@ vala_add_executable (li-test-signing ${LIUNITTEST_SOURCES} tests-signing.vala
 				BASE_DIR ${lisrc}
 				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 listaller_internal
 				VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
+				COMPILE_FLAGS ${GLOBAL_VALAC_FLAGS}
 )
 if(TEST_SIGNING)
 	add_test(signatures-test li-test-signing ${CMAKE_CURRENT_SOURCE_DIR})
@@ -133,5 +142,6 @@ vala_add_executable (li-test-keydb ${LIUNITTEST_SOURCES} tests-keydb.vala
 				BASE_DIR ${lisrc}
 				PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 listaller_internal
 				VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
+				COMPILE_FLAGS ${GLOBAL_VALAC_FLAGS}
 )
 add_test(keydb-test li-test-keydb ${CMAKE_CURRENT_SOURCE_DIR})
