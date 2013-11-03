@@ -32,7 +32,7 @@
 		</para>
 		<para>
 			For Intel's x86 architecture (names like "i386, "i486", "i686", ...) we use the name
-			<emphasis>ix86</emphasis>. No other names are processed.
+			<emphasis>ia32</emphasis>. No other names are processed.
 		</para>
 		<para>For any other architecture, no special name changes are applied and we use the name which is exposed by the Linux kernel.</para>
 	</section>

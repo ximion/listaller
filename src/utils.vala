@@ -180,7 +180,7 @@ private string arch_generic (string arch) {
 	string res = arch;
 
 	if (PatternSpec.match_simple ("i?86", arch))
-		res = "ix86";
+		res = "ia32";
 	if (arch == "x86_64")
 		res = "amd64";
 

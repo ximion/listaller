@@ -74,7 +74,7 @@ AutoFindDeps: true]]>
 			Now you need to write a list of the files your application wants to install, so Listaller can add them to the package and copy them
 			to the right locations, when the setup is executed. IPK packages support multiarch setups, so you can define files which have to be
 			installed by architecture, using <filename>files-*arch*.list</filename> file-lists, where <code>*arch*</code> is the architecture these files
-			belong to. (e.g. ix86, amd64, …) If <code>*arch*</code> is <code>all</code>, files in this file-list will get installed on all
+			belong to. (e.g. ia32, amd64, …) If <code>*arch*</code> is <code>all</code>, files in this file-list will get installed on all
 			architectures.
 		</para>
 

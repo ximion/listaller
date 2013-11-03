@@ -30,26 +30,26 @@ namespace Listaller.IPK {
  * /                                                 - root
  * |-- reposetting                                   - basic repository settings (MetaFile format)
  * |-- contents_amd64.xz                             - contents of this repository (MetaFile format), arch-specific
- * |-- contents_ix32.xz
+ * |-- contents_ia32.xz
  * |-- [apps]
  * |   |-- [pool]                                    - contains the package data
  * |   |   |-- [appid1]                              - directory named like project's application-id (using AppItem appid)
  * |   |   |   |-- changelog                         - software changelog
  * |   |   |   |-- appid1-1.4_amd64.ipk              - IPK package to install
- * |   |   |   |-- appid1-1.4_ix32.ipk
+ * |   |   |   |-- appid1-1.4_ia32.ipk
  * |   |   |   |-- (?)appid1.appdata.xml             - optional: application AppStream data (RDF)
  * |   |   |   |-- [delta]                           - directory with package deltas
  * |   |   |   |   |-- [amd64]                       - architecture dir
  * |   |   |   |   |   |-- appid-1.0-to-1.4.deltaipk - deltaIPK packages
  * |   |   |   |   |   |-- ...
- * |   |   |   |   |-- [ix86]
+ * |   |   |   |   |-- [ia32]
  * |   |   |   |   |-- [all]                         - data for all architectures
  * |   |   |-- [appid2]
  * |   |-- [meta]                                    - directory for metadata (icons/AppStream info)
  * |-- [deps]
  * |   |-- [feeds]                                   - contains the dependency feed files
  * |   |-- [data]                                    - contains dependency-data (if necessary)
- * |   |   |-- [ix32]
+ * |   |   |-- [ia32]
  * |   |   |-- [amd64]
  * |   |   |-- [all]
  */
