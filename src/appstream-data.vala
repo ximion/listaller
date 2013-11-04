@@ -24,6 +24,11 @@ using Listaller;
 
 namespace Listaller {
 
+private errordomain ASParserError {
+		UNKNOWN,
+		TAG_NOT_FOUND;
+}
+
 /**
  * Implements a superset of the AppStream XML spec for Listaller to use.
  * It adds the following elements to the original AppStream spec:
@@ -131,7 +136,7 @@ private class AppStreamXML : Object {
 		return ret;
 	}
 
-	private AppItem? parse_application_node (Xml.Node* node) {
+	private AppItem? parse_application_node (Xml.Node* node) throws ASParserError {
 		var app = new AppItem.blank ();
 		for (Xml.Node* iter = node->children; iter != null; iter = iter->next) {
 			if (iter->type != ElementType.ELEMENT_NODE) {
@@ -175,11 +180,11 @@ private class AppStreamXML : Object {
 				case "version":	if (content != null)
 							app.version = content;
 						break;
-				case "licence":	if (content != null)
+				case "project_license":	if (content != null)
 							app.set_license_name (content);
 						break;
-				case "appcategories":
-						string[] cat_array = get_childs_as_array (iter, "appcategory");
+				case "categories":
+						string[] cat_array = get_childs_as_array (iter, "category");
 						string cat_str = "";
 						foreach (string s in cat_array)
 							cat_str = "%s%s;".printf (cat_str, s);
@@ -188,13 +193,17 @@ private class AppStreamXML : Object {
 			}
 		}
 
+		if (Utils.str_is_empty (app.version))
+			throw new ASParserError.TAG_NOT_FOUND (_("AppData does not define a version number for this application!"));
+
+
 		// sanity checks
 		app.fast_check ();
 
 		return app;
 	}
 
-	public AppItem? get_app_item () {
+	public AppItem? get_app_item () throws ASParserError {
 		if (doc == null) {
 			warning ("No AppStream data is set. Could not return AppItem.");
 			return null;
@@ -202,7 +211,11 @@ private class AppStreamXML : Object {
 		AppItem? item = null;
 		Xml.Node* root = doc->get_root_element ();
 		if (root->name == "application") {
-			item = parse_application_node (root);
+			try {
+				item = parse_application_node (root);
+			} catch (ASParserError e) {
+				throw e;
+			}
 		} else {
 			for (Xml.Node* iter = root->children; iter != null; iter = iter->next) {
 				// Discard spaces
@@ -210,8 +223,13 @@ private class AppStreamXML : Object {
 					continue;
 				}
 
-				if (iter->name == "application")
-					item = parse_application_node (iter);
+				if (iter->name == "application") {
+					try {
+						item = parse_application_node (iter);
+					} catch (ASParserError e) {
+						throw e;
+					}
+				}
 			}
 		}
 

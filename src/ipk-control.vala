@@ -30,7 +30,7 @@ private static const string MINIMUM_IPK_SPEC_VERSION = "2.0";
 
 public errordomain ControlDataError {
 	NO_APPDATA,
-	DOAP_INVALID,
+	APPDATA_INVALID,
 	DEPLIST_INVALID,
 	INTERNAL,
 	UNKNOWN;
@@ -187,14 +187,21 @@ public abstract class Control : Object {
 		return retFlags;
 	}
 
-	public AppItem get_application () {
+	public AppItem get_application () throws ControlDataError {
 		if (appItem != null)
 			return appItem;
-		AppItem? item = appXML.get_app_item ();
+		AppItem? item;
+
+		try {
+			item = appXML.get_app_item ();
+		} catch (Error e) {
+			throw new ControlDataError.APPDATA_INVALID (e.message);
+		}
+
 		if (item != null)
 			appItem = item;
 		else
-			return null;
+			throw new ControlDataError.APPDATA_INVALID (_("Unable to load valid application from AppData. The XML file might be malformed or lacking data."));
 		item.replaces = get_replaces ();
 
 		return item;
@@ -237,12 +244,18 @@ public abstract class Control : Object {
 		string? license_text = load_file_to_string (fname);
 		if (license_text == null)
 			return false;
-		get_application ();
+		try {
+			get_application ();
+		} catch (Error e) {
+			return false;
+		}
+
 		appItem.set_license_text (license_text);
 		return true;
 	}
 
 	public void set_license_text (string txt) {
+		assert (appItem != null);
 		appItem.set_license_text (txt);
 	}
 }
@@ -279,11 +292,12 @@ public class PackControl : Control {
 	private bool cache_appitem () {
 		// Cache application entry
 		this.get_application ();
-		if (this.appItem.idname == "") {
-			error ("Listaller AppItem did not have a valid id-name!");
+		if ((appItem == null) || (this.appItem.idname == "")) {
+			error ("AppItem does not have a valid id-name!");
 			appItem = null;
 			return false;
 		}
+
 		return true;
 	}
 
@@ -307,6 +321,7 @@ public class PackControl : Control {
 	}
 
 	private bool has_license_text () {
+		assert (appItem != null);
 		return (appItem.license.text != "") && (appItem.license.name != appItem.license.text);
 	}
 
@@ -319,6 +334,7 @@ public class PackControl : Control {
 
 	public bool save_to_dir (string dirPath) {
 		bool ret;
+		assert (appItem != null);
 
 		ret = save_string_to_file (Path.build_filename (dirPath, this.appItem.idname + ".appdata.xml", null), asData);
 		if (!ret)
@@ -335,6 +351,8 @@ public class PackControl : Control {
 	[CCode (array_length = false, array_null_terminated = true)]
 	public string[] get_files () {
 		string[] res;
+		assert (appItem != null);
+
 		res = { "pksetting" };
 		res += this.appItem.idname + ".appdata.xml";
 		// Add license text
@@ -435,6 +453,13 @@ public class ControlDir : Control {
 		if (!ret)
 			return false;
 		ctrlDir = dir;
+
+		// ensure that we have loaded a valid application, otherwise we get in trouble later
+		try {
+			get_application ();
+		} catch (ControlDataError e) {
+			throw e;
+		};
 
 		// Open license text, if there is any...
 		string licenseTxtFName = Path.build_filename (ctrlDir, "license.txt", null);

@@ -46,10 +46,11 @@ namespace Listaller.IPK {
 } // End of namespace
 
 private static void pkbuild_action (string msg, bool header = false) {
-	string prefix = "~";
+	string output_txt = "";
 	if (header)
-		prefix = "=>";
+		output_txt = "== %s ==\n".printf (msg);
 	else
-		prefix = " ->";
-	stdout.printf (" " + prefix + " " + msg + "\n");
+		output_txt = " - %s\n".printf (msg);
+
+	stdout.printf (output_txt);
 }
