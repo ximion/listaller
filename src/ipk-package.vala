@@ -154,6 +154,8 @@ private class Package : MessageObject {
 		if (FileUtils.test (tmpf, FileTest.EXISTS)) {
 			ret = ipkc.open_control (Path.build_filename (wdir, "pksetting", null),
 						 tmpf);
+			if (!ret)
+				return false;
 		}
 
 		// Set license text, if we have any. (This fubction returns false if file doesn't exists)

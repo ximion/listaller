@@ -33,7 +33,7 @@ public class LipaInstaller : LipaModule {
 		// End progress, if any
 		progress_bar.end ();
 
-		stderr.printf (error.details);
+		stderr.printf ("%s\n", error.details);
 		error_code = (int) error.error;
 	}
 

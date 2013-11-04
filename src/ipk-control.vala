@@ -280,6 +280,8 @@ public class PackControl : Control {
 		}
 
 		asData = load_file_to_string (fAppStream);
+		if (str_is_empty (asData))
+			return false;
 		ret = this.load_appstream_data (asData);
 		if (!ret)
 			return false;

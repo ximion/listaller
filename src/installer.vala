@@ -111,8 +111,12 @@ public class Setup : MessageObject {
 		bool ret = false;
 		initialized = false;
 		ret = ipkp.initialize ();
-		if (!ret)
+		if (!ret) {
+			emit_error (ErrorEnum.IPK_DAMAGED,
+				    _("Unable to load package information and initialize installation. The IPK package might be damaged."));
 			return false;
+		}
+
 		inst_progress = 0;
 		full_progress = 0;
 
@@ -186,8 +190,16 @@ public class Setup : MessageObject {
 			return false;
 		}
 
-		// Construct LiAppItem
-		AppItem app = ipkp.control.get_application ();
+		// Fetch the AppItem
+		AppItem app;
+		try {
+			app = ipkp.control.get_application ();
+		} catch (Error e) {
+			emit_error (ErrorEnum.IPK_DAMAGED,
+				    _("Could not load application information: %s").printf (e.message));
+			return false;
+		}
+
 		if (str_is_empty (origin))
 			app.set_origin_local ();
 		app.dependencies_str = "?";
