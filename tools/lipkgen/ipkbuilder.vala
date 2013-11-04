@@ -422,7 +422,7 @@ private class Builder : Object {
 	}
 
 	public bool initialize () {
-		pkbuild_action ("Initializing...");
+		pkbuild_action ("Initializing");
 		// Check for valid installer source dirs
 		srcdir = find_ipk_source_dir (srcdir);
 		if (srcdir == null) {
@@ -462,7 +462,7 @@ private class Builder : Object {
 	public bool build_ipk () {
 		bool ret = false;
 
-		pkbuild_action ("Building IPK control file.");
+		pkbuild_action ("Building IPK control file");
 
 		IPK.PackControl ictrl = new IPK.PackControl ();
 
@@ -517,7 +517,7 @@ private class Builder : Object {
 		// Set license...
 		ictrl.set_license_text (ipkCDir.get_application ().license.text);
 
-		pkbuild_action ("Generating package payload...");
+		pkbuild_action ("Generating package payload");
 
 		IPK.FileList flist = new IPK.FileList (false);
 		string archs = "";
@@ -555,7 +555,7 @@ private class Builder : Object {
 		// We only set architectures we have install-files for
 		ictrl.set_architectures (archs);
 
-		pkbuild_action ("Processing dependencies...");
+		pkbuild_action ("Processing dependencies");
 
 		// add explicit arch-specific dependencies
 		string deps_arch = "";
@@ -587,7 +587,7 @@ private class Builder : Object {
 		if (failed)
 			return false;
 
-		pkbuild_action ("Finalizing package...");
+		pkbuild_action ("Finalizing package");
 
 		// Finalize control data
 		string tmp = Path.build_filename (tmpdir, "control", null);
