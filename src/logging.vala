@@ -151,6 +151,10 @@ public void set_clitool_mode (bool enabled) {
 	set_console_mode (enabled);
 }
 
+public bool get_clitool_mode () {
+	return _clitool;
+}
+
 public void add_log_domain (string log_domain)
 {
 	Log.set_fatal_mask (log_domain, LogLevelFlags.LEVEL_ERROR | LogLevelFlags.LEVEL_CRITICAL);

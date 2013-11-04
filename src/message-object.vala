@@ -77,10 +77,12 @@ public abstract class MessageObject : Object {
 		// emit
 		error_code (item);
 
-		if (error_hint_str == "")
-			GLib.message ("ERROR: %s", details);
-		else
-			GLib.message ("ERROR: [%s]:%s", error_hint_str, details);
+		if (!get_clitool_mode ()) {
+			if (error_hint_str == "")
+				GLib.message ("ERROR: %s", details);
+			else
+				GLib.message ("ERROR: [%s]:%s", error_hint_str, details);
+		}
 	}
 
 	internal virtual void change_progress (int prog_value) {
