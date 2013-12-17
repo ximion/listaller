@@ -10,5 +10,7 @@
    </description>
    <url type="homepage">http://listaller.tenstral.net/stuff/dummy-pkg</url>
    <contact>matthias_at_tenstral.net</contact>
-   <version>0.1</version>
+   <release>
+       <version>0.1</version>
+   </release>
 </application>

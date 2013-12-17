@@ -72,7 +72,7 @@ private class AppStreamXML : Object {
 		return content;
 	}
 
-	private string[] get_childs_as_array (Xml.Node* node, string element_name) {
+	private string[] get_children_values_as_array (Xml.Node* node, string element_name) {
 		string[] list = {};
 		for (Xml.Node* iter = node->children; iter != null; iter = iter->next) {
 			// Discard spaces
@@ -177,14 +177,15 @@ private class AppStreamXML : Object {
 				case "url":	if (content != null)
 							app.website = content;
 						break;
-				case "version":	if (content != null)
-							app.version = content;
+				case "release":	string[] ver_aray = get_children_values_as_array (iter, "version");
+				                if (ver_array.length > 0)
+							app.version = ver_array[0];
 						break;
 				case "project_license":	if (content != null)
 							app.set_license_name (content);
 						break;
 				case "categories":
-						string[] cat_array = get_childs_as_array (iter, "category");
+						string[] cat_array = get_children_values_as_array (iter, "category");
 						string cat_str = "";
 						foreach (string s in cat_array)
 							cat_str = "%s%s;".printf (cat_str, s);

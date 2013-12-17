@@ -18,6 +18,8 @@ Listaller testing scripts.</p>
    </description>
    <url type="homepage">https://listaller.tenstral.net</url>
    <updatecontact>matthias_at_tenstral.net</updatecontact>
-   <version>1.0</version>
+   <release>
+      <version>1.0</version>
+   </release>
    <author>Myself</author>
 </application>

@@ -16,14 +16,15 @@
 			organization of packages on a Linux system.
 		</para>
 		<para>
-			While Frameworks are provided by the distributor and are hard-wired into the system, Modules can be installed by Listaller from 3rd-party sources.
+			While frameworks are provided by the distributor or project upstream and are hard-wired into the system, Modules can be installed by Listaller from 3rd-party sources.
 		</para>
 		<para>
-			In an ideal world, packages only depend on Frameworks, but currently it might sometimes be necessary to pull Modules from 3rd-party sources (of course Listaller will
+			In an ideal world, packages only depend on frameworks, but currently it might sometimes be necessary to pull Modules from 3rd-party sources (of course Listaller will
 			query the distribution's package database for the Module-dependency, before pulling it from somewhere else).
+			Administrators may prevent Listaller from fetching modules from 3rd-party sources, so if you package an application, keep in mind that it might not install everywhere if you rely on modules.
 		</para>
 		<para>
-			Modules and Frameworks are described in small textfiles, which are shipped with Listaller. Module dependencies may also be present in Listaller packages.
+			Modules and frameworks are described in small textfiles, which are shipped with Listaller. Module dependencies may also be present in Listaller packages.
 			If some description files are missing, please file a bug report against Listaller, requesting inclusion by default.
 		</para>
 	</section>
@@ -39,17 +40,19 @@
 			Framework/Module info don't have to be present, since the description files contain all information how to install them.
 		</para>
 		<para>
-			The Modules defined in the system's <filename>modules/</filename> folder override all Modules defined in Listaller packages which have the same name. Frameworks are never shipped
+			The Modules defined in the system's <filename>modules/</filename> folder override all Modules defined in Listaller packages which have the same name. frameworks are never shipped
 			in Listaller packages.
 		</para>
 	</section>
 
 	<section id="spec-deptypes-schema">
-		<title>Description file schema</title>
+		<title>Framework file schema</title>
 		<para>
 			Framework and Module files are simple textfiles with the file extensions <filename>.framework</filename> or <filename>.module</filename>, depending on their type. The file contents
-			are similar, but some elements are specific for Franeworks or Modules, e.g. only modules can have an element of the type <code>Feed</code>.
+			are similar, but some elements are specific for Franeworks or Modules, e.g. only Modules can have an element of the type <code>Feed</code>.
 		</para>
+		<para>
+			Ideally, upstreams should ship a framework or module description file in
 		<para>A Framework file may look like this:</para>
 		<programlisting language="Debian Control">
 <![CDATA[# The KDE4 base libraries
