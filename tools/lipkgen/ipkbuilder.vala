@@ -249,7 +249,7 @@ private class Builder : Object {
 			}
 			string pathname = Path.get_basename (fname);
 			// simple hack, to always have all dependencies stored in a dependencies/ subdirectory
-			if ((fname.has_suffix (".module")) && (fname.index_of ("dependencies") >= 0))
+			if ((fname.has_suffix (".module") || fname.has_suffix (".framework")) && (fname.index_of ("dependencies") >= 0))
 				pathname = Path.build_filename ("dependencies", pathname, null);
 
 			entry.set_pathname (pathname);
@@ -605,8 +605,9 @@ private class Builder : Object {
 		var cfactory = new Dep.ComponentFactory ();
 		// intialize factory, loading optional component-items for better dependency-resolving
 		cfactory.initialize (true);
-		HashSet<string>? mod_info_files = find_files_matching (extra_mod_dir, "*.module");
 
+		// add the package's cutom modules
+		HashSet<string>? mod_info_files = find_files_matching (extra_mod_dir, "*.module");
 		if (mod_info_files != null) {
 			foreach (string fname in mod_info_files) {
 				var cmod = new Dep.Module.blank ();
@@ -623,6 +624,29 @@ private class Builder : Object {
 				}
 			}
 		}
+
+		// we want all dependency definitions to be present in the IPK package, so add the ones from system
+		// directories as well (this helps the installer to find not-installed dependencies later)
+		string[] deps = ictrl.get_dependencies ("").split(",");
+		foreach (string dep in deps) {
+			debug (dep);
+			string name;
+			if (dep.index_of ("(") > 0) {
+				// we have a version number, ignore it
+				string[] parts = dep.split ("(", 2);
+				name = parts[0].strip ();
+			} else {
+				name = dep.strip ();
+			}
+			string? cfname = cfactory.find_component_path (name);
+			// we might have custom dependencies...
+			if (cfname == null)
+				continue;
+			string pkg_depfile = Path.build_filename (pkg_depfiles_dir, Path.get_basename (cfname));
+			copy_file (cfname, pkg_depfile);
+			ctrlfiles.add (pkg_depfile);
+		}
+
 
 		ret = write_ipk_control_data ();
 		if (!ret)

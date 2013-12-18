@@ -40,6 +40,9 @@ internal class ComponentFactory : Object {
 	public HashMap<string, Dep.Framework> registered_frameworks { get; private set; }
 	public HashMap<string, Dep.Module> registered_modules { get; private set; }
 
+	private HashSet<string>? framework_info_files_sys;
+	private HashSet<string>? framework_info_files_listaller;
+	private HashSet<string>? module_info_files;
 
 	public ComponentFactory (SetupSettings? setup_settings = null) {
 		listaller_components_dir = PkgConfig.DATADIR + "/listaller/components";
@@ -61,11 +64,15 @@ internal class ComponentFactory : Object {
 	 */
 	public void initialize (bool include_optional = false) {
 		// search for frameworks installed on this system
-		HashSet<string>? framework_info_files = find_files_matching (Config.sys_frameworkdir, "*.framework");
+		framework_info_files_sys = find_files_matching (Config.sys_frameworkdir, "*.framework");
 		// now add Listaller-provided frameworks (the system files override these ones)
-		framework_info_files.add_all (find_files_matching (Path.build_filename (listaller_components_dir, "frameworks", null), "*.framework"));
+		framework_info_files_listaller = find_files_matching (Path.build_filename (listaller_components_dir, "frameworks", null), "*.framework");
 		// add Listaller-provided modules (these override the definitions provided by IPK packages)
-		HashSet<string>? module_info_files = find_files_matching (Path.build_filename (listaller_components_dir, "modules", null), "*.module");
+		module_info_files = find_files_matching (Path.build_filename (listaller_components_dir, "modules", null), "*.module");
+
+		HashSet<string>? framework_info_files = new HashSet<string> ();
+		framework_info_files.add_all (framework_info_files_sys);
+		framework_info_files.add_all (framework_info_files_listaller);
 
 		// process all framework data
 		if (framework_info_files != null) {
@@ -90,6 +97,43 @@ internal class ComponentFactory : Object {
 					warning ("Unable to load data for module: %s", fname);
 			}
 		}
+	}
+
+	/**
+	 * Find the path which matches the framework name
+	 *
+	 * This is mainly used while building an Listaller package
+	 *
+	 * @return NULL if no path was found.
+	 */
+	public string? find_component_path (string cmname) {
+		if (framework_info_files_sys != null) {
+			foreach (string fname in framework_info_files_sys) {
+				var cfrmw = new Dep.Framework.blank ();
+				bool ret = cfrmw.load_from_file (fname, false);
+				if (cfrmw.idname == cmname)
+					return fname;
+			}
+		}
+		if (framework_info_files_listaller != null) {
+			foreach (string fname in framework_info_files_listaller) {
+				var cfrmw = new Dep.Framework.blank ();
+				bool ret = cfrmw.load_from_file (fname, false);
+				if (cfrmw.idname == cmname)
+					return fname;
+			}
+		}
+
+		if (module_info_files != null) {
+			foreach (string fname in module_info_files) {
+				var cmod = new Dep.Module.blank ();
+				bool ret = cmod.load_from_file (fname, false);
+				if (cmod.idname == cmname)
+					return fname;
+			}
+		}
+
+		return null;
 	}
 
 	/**
