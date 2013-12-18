@@ -77,6 +77,7 @@ public class DepScanTool : Object {
 
 	public void run () {
 		bool done = false;
+		bool ret = false;
 		if (o_show_version) {
 			stdout.printf ("depscan helper, version: %s\n", PkgConfig.PACKAGE_VERSION);
 			return;
@@ -96,7 +97,9 @@ public class DepScanTool : Object {
 		DependencyScanner scan = new DependencyScanner (o_input_path, omode);
 		scan.recursive = o_run_recursive;
 		scan.extra_modules_dir = o_extra_modules_dir;
-		scan.compile_required_files_list ();
+		ret = scan.compile_required_files_list ();
+		if (!ret)
+			exit_code = 1;
 	}
 
 	static int main (string[] args) {

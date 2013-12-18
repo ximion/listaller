@@ -53,7 +53,7 @@
 		</para>
 		<para>
 			The modules defined in the system's <filename>modules/</filename> folder override all modules defined in Listaller packages which have the same name. The same applies
-			to frameworks, if they are shipped with Listaller packages (included in packages since IPKv1.2).
+			to frameworks, if they are shipped with Listaller packages (included in packages since IPKv2.0).
 		</para>
 	</section>
 

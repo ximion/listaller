@@ -35,15 +35,21 @@ private class DepFind : Object {
 
 	public ArrayList<string>? get_dependency_list () {
 		string output;
+		int exit_code;
 		string[] cmd = { "depscan", "-rc", "--include-modules=%s".printf (module_dir), input_dir };
 
 		try {
 			Process.spawn_sync (input_dir, cmd, null,
-					SpawnFlags.SEARCH_PATH, null, out output, null, null);
+					SpawnFlags.SEARCH_PATH, null, out output, null, out exit_code);
 		} catch (Error e) {
 			error ("Unable to scan dependencies: %s", e.message);
 			return null;
 		}
+		// if exit-code is 1, there were no dependencies found. In any other case, we have an
+		// error, and therefore also no correct output.
+		if (exit_code > 0)
+			return null;
+
 		output = output.escape ("\n").replace ("\\r", "");
 		string[] deps = output.split ("\n");
 		ArrayList<string> deplist = new ArrayList<string> ();
@@ -58,7 +64,10 @@ private class DepFind : Object {
 		pkbuild_action ("Scanning for dependencies...");
 		string deplist = "";
 
-		ArrayList<string> dependency_data = get_dependency_list ();
+		ArrayList<string>? dependency_data = get_dependency_list ();
+		if (dependency_data == null)
+			return "";
+
 		string unknown_deps = "";
 		bool have_unknown_deps = false;
 		foreach (string s in dependency_data) {

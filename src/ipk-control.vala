@@ -25,7 +25,7 @@ using Listaller.Utils;
 
 namespace Listaller.IPK {
 
-// We need at least an IPK 1.1 package to process it
+// We need at least an IPK 2.0 package to process it
 private static const string MINIMUM_IPK_SPEC_VERSION = "2.0";
 
 public errordomain ControlDataError {
@@ -68,7 +68,7 @@ public abstract class Control : Object {
 	public string get_ipk_version () {
 		string s = packSetting.get_value ("Version", false);
 		if (s == "")
-			s = "1.1";
+			s = "0.1";
 
 		return s;
 	}
@@ -97,12 +97,17 @@ public abstract class Control : Object {
 
 	/**
 	 * Get replaced native components for the package.
+	 *
+	 * @deprecated
 	 */
 	public string get_replaces () {
 		string s = packSetting.get_value ("Replaces", false);
 		return s;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public void set_replaces (string repList) {
 		packSetting.add_value ("Replaces", repList);
 	}
@@ -213,7 +218,7 @@ public abstract class Control : Object {
 			dep_field = "Requires[%s]".printf (arch);
 
 		// Add the dependencies
-		packSetting.add_value (dep_field, dependencies_list);
+		packSetting.update_value (dep_field, dependencies_list);
 	}
 
 	public string get_dependencies (string arch, bool arch_only = false) {
