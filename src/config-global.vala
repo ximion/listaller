@@ -49,6 +49,7 @@ internal class Config : Object {
 	internal const string sys_bindir = PkgConfig.PREFIXDIR + "/bin";
 	internal const string sys_sharedir = PkgConfig.PREFIXDIR + "/share";
 	internal const string sys_etcdir = "/etc";
+	internal const string sys_frameworkdir = sys_sharedir + "/frameworks";
 
 	private string su_instroot;
 

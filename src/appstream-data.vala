@@ -177,7 +177,7 @@ private class AppStreamXML : Object {
 				case "url":	if (content != null)
 							app.website = content;
 						break;
-				case "release":	string[] ver_aray = get_children_values_as_array (iter, "version");
+				case "release":	string[] ver_array = get_children_values_as_array (iter, "version");
 				                if (ver_array.length > 0)
 							app.version = ver_array[0];
 						break;

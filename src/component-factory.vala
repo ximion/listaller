@@ -33,7 +33,7 @@ namespace Listaller.Dep {
  * It can also generate new components on the fly.
  */
 internal class ComponentFactory : Object {
-	private string system_components_dir;
+	private string listaller_components_dir;
 	private ArrayList<AbstractSolver> solver_pool;
 	private SetupSettings ssettings;
 
@@ -42,7 +42,7 @@ internal class ComponentFactory : Object {
 
 
 	public ComponentFactory (SetupSettings? setup_settings = null) {
-		system_components_dir = PkgConfig.DATADIR + "/listaller/components";
+		listaller_components_dir = PkgConfig.DATADIR + "/listaller/components";
 
 		registered_frameworks = new HashMap<string, Dep.Framework> ();
 		registered_modules = new HashMap<string, Dep.Module> ();
@@ -60,8 +60,12 @@ internal class ComponentFactory : Object {
 	 *                         by the package-builder to group dependencies together. The parameter defaults to FALSE.
 	 */
 	public void initialize (bool include_optional = false) {
-		HashSet<string>? framework_info_files = find_files_matching (Path.build_filename (system_components_dir, "frameworks", null), "*.framework");
-		HashSet<string>? module_info_files = find_files_matching (Path.build_filename (system_components_dir, "modules", null), "*.module");
+		// search for frameworks installed on this system
+		HashSet<string>? framework_info_files = find_files_matching (Config.sys_frameworkdir, "*.framework");
+		// now add Listaller-provided frameworks (the system files override these ones)
+		framework_info_files.add_all (find_files_matching (Path.build_filename (listaller_components_dir, "frameworks", null), "*.framework"));
+		// add Listaller-provided modules (these override the definitions provided by IPK packages)
+		HashSet<string>? module_info_files = find_files_matching (Path.build_filename (listaller_components_dir, "modules", null), "*.module");
 
 		// process all framework data
 		if (framework_info_files != null) {

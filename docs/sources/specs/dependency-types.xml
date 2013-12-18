@@ -5,8 +5,8 @@
 ]>
 
 <section id="sect-Listaller-Specs-DepTypes">
-	<title>Dependency types</title>
-	<para>Description of dependency separation and handling in Listaller</para>
+	<title>Dependency Definitions</title>
+	<para>Description how Listaller gets information about software dependencies and how the dependency-data is handled internally.</para>
 
 	<section id="spec-deptypes-rationale">
 		<title>Rationale</title>
@@ -19,13 +19,23 @@
 			While frameworks are provided by the distributor or project upstream and are hard-wired into the system, Modules can be installed by Listaller from 3rd-party sources.
 		</para>
 		<para>
-			In an ideal world, packages only depend on frameworks, but currently it might sometimes be necessary to pull Modules from 3rd-party sources (of course Listaller will
-			query the distribution's package database for the Module-dependency, before pulling it from somewhere else).
+			In an ideal world, packages only depend on frameworks, but currently it might sometimes be necessary to pull modules from 3rd-party sources (of course Listaller will
+			query the distribution's package database for the module-dependency, before pulling it from somewhere else).
 			Administrators may prevent Listaller from fetching modules from 3rd-party sources, so if you package an application, keep in mind that it might not install everywhere if you rely on modules.
 		</para>
 		<para>
-			Modules and frameworks are described in small textfiles, which are shipped with Listaller. Module dependencies may also be present in Listaller packages.
-			If some description files are missing, please file a bug report against Listaller, requesting inclusion by default.
+			Frameworks description files should be provided by upstream projects and are stored in <filename>/usr/share/frameworks</filename>. The files describe libraries,
+			binaries and other (public) resources provided by this project.
+			Think of framework-descriptions as pkg-config files for non-development libraries (and extended to more than just libraries).
+		</para>
+		<para>
+			Listaller ships a set of framework descriptions for common dependencies. As soon as files with the same name are found in the system framework directory,
+			these are preferred. Listaller also ships a set of module dependency-description files.
+			Module files can be written by the IPK-package creator, and are provided in Listaller packages. The module files shipped with Listaller override modules
+			which may be defined in IPK packages.
+		</para>
+		<para>
+			If framework description files are missing, please file a bug at the upstream project providing the framework, or ask the Listaller Project for inclusion.
 		</para>
 	</section>
 
@@ -34,14 +44,16 @@
 
 		<para>
 			Listaller stores the information about possible default dependencies on the filesystem, usually in <filename>/usr/share/listaller/components/</filename>.
+			Projects providing frameworks should install them into <filename>/usr/share/frameworks</filename>.
 		</para>
 		<para>
-			The Framework dependencies are stored in <filename>frameworks/</filename>, while the Module dependencies are placed in <filename>modules/</filename>. The components associated with the
-			Framework/Module info don't have to be present, since the description files contain all information how to install them.
+			In the Listaller-specific directories, the framework dependencies are stored in <filename>frameworks/</filename>, while the module-dependencies are placed
+			in <filename>modules/</filename>. The components associated with the framework/module info don't have to be present, since the description files contain
+			information how to install them.
 		</para>
 		<para>
-			The Modules defined in the system's <filename>modules/</filename> folder override all Modules defined in Listaller packages which have the same name. frameworks are never shipped
-			in Listaller packages.
+			The modules defined in the system's <filename>modules/</filename> folder override all modules defined in Listaller packages which have the same name. The same applies
+			to frameworks, if they are shipped with Listaller packages (included in packages since IPKv1.2).
 		</para>
 	</section>
 
@@ -49,10 +61,11 @@
 		<title>Framework file schema</title>
 		<para>
 			Framework and Module files are simple textfiles with the file extensions <filename>.framework</filename> or <filename>.module</filename>, depending on their type. The file contents
-			are similar, but some elements are specific for Franeworks or Modules, e.g. only Modules can have an element of the type <code>Feed</code>.
+			are similar, but some elements are specific for frameworks or modules, e.g. only modules can have an element of the type <code>Feed</code>.
 		</para>
 		<para>
-			Ideally, upstreams should ship a framework or module description file in
+			Ideally, upstreams should ship a framework description file, and install it to the shared framework directory.
+		</para>
 		<para>A Framework file may look like this:</para>
 		<programlisting language="Debian Control">
 <![CDATA[# The KDE4 base libraries
