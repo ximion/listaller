@@ -1,9 +1,0 @@
-## Listaller software modules directory
-Modules are software dependencies (=libraries, artwork, everything which can be referenced
-by a 3rd-party application, ...) which can be satisfied using Listaller and which don't need tight
-system integration, like frameworks do.
-
-Distributors and other software can drop new files into this directory, making modules known to
-Listaller, so it can resolve dependencies during a setup process.
-
-The file format is described in Listaller's documentation.

@@ -1,0 +1,11 @@
+## Listaller software modules internal directory
+
+Modules are software dependencies, which are required by other software to be run.
+They can be libraries, artwork, Python-modules, basically everything which can be referenced
+by a 3rd-party application.
+
+Each module is described by a module-info file, which is shipped by the upstream project.
+Since some projects don't ship these files yet, Listaller provides them for some commonly
+used modules.
+
+The module-info file format is described in Listaller's documentation.

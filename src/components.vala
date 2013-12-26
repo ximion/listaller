@@ -37,13 +37,22 @@ private errordomain ComponentError {
  * Describes the type of an item which is part of a
  * dependency (framework/module).
  */
-public enum ItemType {
+private enum ItemType {
 	SHARED_LIB,
 	BINARY,
 	PYTHON,
 	PYTHON_2,
 	FILE,
 	UNKNOWN;
+}
+
+/**
+ * Type of the component we depend on.
+ */
+private enum ComponentType {
+	INVALID,
+	MODULE,
+	FRAMEWORK;
 }
 
 /**

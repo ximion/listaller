@@ -45,7 +45,7 @@ internal class ComponentFactory : Object {
 	private HashSet<string>? module_info_files;
 
 	public ComponentFactory (SetupSettings? setup_settings = null) {
-		listaller_components_dir = PkgConfig.DATADIR + "/listaller/components";
+		listaller_components_dir = PkgConfig.DATADIR + "/listaller/modules";
 
 		registered_frameworks = new HashMap<string, Dep.Framework> ();
 		registered_modules = new HashMap<string, Dep.Module> ();
@@ -64,11 +64,11 @@ internal class ComponentFactory : Object {
 	 */
 	public void initialize (bool include_optional = false) {
 		// search for frameworks installed on this system
-		framework_info_files_sys = find_files_matching (Config.sys_frameworkdir, "*.framework");
+		framework_info_files_sys = find_files_matching (Config.sys_componentdir, "*.framework");
 		// now add Listaller-provided frameworks (the system files override these ones)
 		framework_info_files_listaller = find_files_matching (Path.build_filename (listaller_components_dir, "frameworks", null), "*.framework");
 		// add Listaller-provided modules (these override the definitions provided by IPK packages)
-		module_info_files = find_files_matching (Path.build_filename (listaller_components_dir, "modules", null), "*.module");
+		module_info_files = find_files_matching (listaller_components_dir, "*.module");
 
 		HashSet<string>? framework_info_files = new HashSet<string> ();
 		framework_info_files.add_all (framework_info_files_sys);

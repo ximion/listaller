@@ -3,6 +3,7 @@
 ID: KDELibs4
 Version: shell$ kde4-config --version
  prefix$ "KDE: "
+Modules: Qt4
 Binaries: kde4-config
  kde-open
 ExtraLibSearchPath: %SYS_LIB%/kde4
