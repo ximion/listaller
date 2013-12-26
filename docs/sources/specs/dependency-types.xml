@@ -13,29 +13,38 @@
 
 		<para>
 			Listaller distinguishes between so-called <emphasis>Framework</emphasis>-dependencies and <emphasis>Module</emphasis>-dependencies to simplify dependency-solving and to reflect the
-			organization of packages on a Linux system.
+			organization of software on a Linux system.
 		</para>
 		<para>
-			While frameworks are provided by the distributor or project upstream and are hard-wired into the system, Modules can be installed by Listaller from 3rd-party sources.
+			Module dependencies describe a certain software packages and the things it exposes to the public for other applications to use. In other words, a module
+			may provide things like icons, shared libraries, Python modules, binaries etc. which have a public API and are used by other apps.
+			You may think of modules as a fancy runtime-version of a pkg-config pc-file, if your software is just providing a library.
 		</para>
 		<para>
-			In an ideal world, packages only depend on frameworks, but currently it might sometimes be necessary to pull modules from 3rd-party sources (of course Listaller will
-			query the distribution's package database for the module-dependency, before pulling it from somewhere else).
-			Administrators may prevent Listaller from fetching modules from 3rd-party sources, so if you package an application, keep in mind that it might not install everywhere if you rely on modules.
+			Modules are described by module-info files, which are usually generated and provided by upstream projects. However, because many projects don't ship
+			module-info files yet, Listaller provides some of these files on it's own.
 		</para>
 		<para>
-			Frameworks description files should be provided by upstream projects and are stored in <filename>/usr/share/frameworks</filename>. The files describe libraries,
-			binaries and other (public) resources provided by this project.
-			Think of framework-descriptions as pkg-config files for non-development libraries (and extended to more than just libraries).
+			Frameworks, on the other hand, are defined by the distributor and upstream project. A framework is basically a collection of modules, and a larger
+			"umbrella dependency" an IPK package can depend on. For example, the <literal>GNOME3</literal> framework provides <literal>GLib2</literal>,
+			<literal>GTK+3</literal>, <literal>Clutter</literal>, <literal>GNOME-Shell, </literal><literal>WebKitGtk</literal>, etc. An IPK package which makes
+			use of this framework may then simply depend on a version of the <literal>GNOME3</literal> platform.
 		</para>
 		<para>
-			Listaller ships a set of framework descriptions for common dependencies. As soon as files with the same name are found in the system framework directory,
-			these are preferred. Listaller also ships a set of module dependency-description files.
-			Module files can be written by the IPK-package creator, and are provided in Listaller packages. The module files shipped with Listaller override modules
-			which may be defined in IPK packages.
+			Framework files are also defined by framework-info files, which look very similar to module-info files. Framework files also declare which modules they depend
+			on and are usually shipped in a metapackage of the distribution which depends on all the required framework components.
+			It may also be shipped by upstream in one software package which depends on all the other parts to run.
 		</para>
 		<para>
-			If framework description files are missing, please file a bug at the upstream project providing the framework, or ask the Listaller Project for inclusion.
+			Listaller will usually not attempt to satisfy framework dependencies from 3rd-party sources. If the distribution does not ship the minimum version of
+			a framework in it's repositories, the IPK package installation will fail with a nice error message describing which framework is missing.
+		</para>
+		<para>
+			Listaller provides a set of internal framework/module definitions. These files are always overridden by files placed in the global system location.
+			Files there will also override custom-made module-info files which were written by the IPK package author (upstream application developer).
+		</para>
+		<para>
+			If framework or module description files are missing, please file a bug at the upstream project providing the framework, or ask the Listaller Project for inclusion.
 		</para>
 	</section>
 
@@ -43,17 +52,19 @@
 		<title>Dependency description locations</title>
 
 		<para>
-			Listaller stores the information about possible default dependencies on the filesystem, usually in <filename>/usr/share/listaller/components/</filename>.
-			Projects providing frameworks should install them into <filename>/usr/share/frameworks</filename>.
+			Upstream project should install their module-info files named <filename>&lt;id&gt;.module</filename> in the system module location
+			at <filename>/usr/share/modules</filename> (while &lt;id&gt; is the module's unique id-name). Frameworks are installed in <filename>/usr/share/modules/frameworks</filename>
+			(replace <filename>/usr</filename> with you prefix)
 		</para>
 		<para>
-			In the Listaller-specific directories, the framework dependencies are stored in <filename>frameworks/</filename>, while the module-dependencies are placed
-			in <filename>modules/</filename>. The components associated with the framework/module info don't have to be present, since the description files contain
-			information how to install them.
+			Listaller stores internal information about some modules and frameworks in <filename>/usr/share/listaller/modules</filename>.
+			The components associated with the framework/module info don't have to be present, since the description files contain
+			hints how to install them.
+			Files in the global system location take precedence over anything Listaller ships by default.
 		</para>
 		<para>
 			The modules defined in the system's <filename>modules/</filename> folder override all modules defined in Listaller packages which have the same name. The same applies
-			to frameworks, if they are shipped with Listaller packages (included in packages since IPKv2.0).
+			to frameworks, if they are shipped with Listaller packages (they are automatically included in packages since IPKv2.0).
 		</para>
 	</section>
 
@@ -110,12 +121,6 @@ Libraries: kio_file.so
 				</listitem>
 			</varlistentry>
 			<varlistentry>
-				<term><literal>GLib2</literal></term>
-				<listitem>
-					<para>The GLib utility library of C routines.</para>
-				</listitem>
-			</varlistentry>
-			<varlistentry>
 				<term><literal>Xorg</literal></term>
 				<listitem>
 					<para>The X.org X11 server.</para>
@@ -125,12 +130,6 @@ Libraries: kio_file.so
 				<term><literal>GNOME3</literal></term>
 				<listitem>
 					<para>The GNOME-3 platform libraries.</para>
-				</listitem>
-			</varlistentry>
-			<varlistentry>
-				<term><literal>GTK+3</literal></term>
-				<listitem>
-					<para>The GTK+3 GUI toolkit libraries.</para>
 				</listitem>
 			</varlistentry>
 			<varlistentry>
@@ -156,12 +155,6 @@ Libraries: kio_file.so
 				<term><literal>Python</literal></term>
 				<listitem>
 					<para>The Python3 scripting language.</para>
-				</listitem>
-			</varlistentry>
-			<varlistentry>
-				<term><literal>Qt4Core</literal></term>
-				<listitem>
-					<para>The core libraries of the Qt4 toolkit.</para>
 				</listitem>
 			</varlistentry>
 			<varlistentry>
