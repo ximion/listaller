@@ -52,7 +52,6 @@ option(PATCHELF "Build patchelf utility" OFF)
 option(VISUAL_LDD "Build the Visual-LDD utility" OFF)
 option(L10N "Enable localization" ON)
 option(API_DOCS "Add target to build API documentation" OFF)
-option(TESTS "Enable Listaller's Unit Tests" OFF)
 option(TEST_DEPMANAGER "Test Listaller's dependency solver" OFF)
 option(TEST_SIGNING "Enable Listaller signing tests" OFF)
 
@@ -117,11 +116,9 @@ configure_file(config.h.in ${CMAKE_BINARY_DIR}/config.h)
 # set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_SOURCE_DIR}/src/config.h)
 
 #
-# Enable/disable testing
+# Enable testing
 #
-if(TESTS)
-	enable_testing()
-endif(TESTS)
+enable_testing()
 
 #
 # Custom C flags
@@ -153,10 +150,8 @@ add_subdirectory(src)
 add_subdirectory(tools)
 add_subdirectory(data)
 add_subdirectory(contrib)
+add_subdirectory(tests)
 add_subdirectory(docs)
-if(TESTS)
-	add_subdirectory(tests)
-endif(TESTS)
 if (GETTEXT_FOUND AND L10N)
   add_subdirectory(po)
 endif (GETTEXT_FOUND AND L10N)
