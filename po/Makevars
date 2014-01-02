@@ -12,7 +12,7 @@ XGETTEXT_OPTIONS = -L C# -i -c: -s --keyword=_ --keyword=N_ --keyword=__ --no-wr
 	--package-name="listaller" \
 	--copyright-holder="Matthias Klumpp"
 
-COPYRIGHT_HOLDER = Copyright (c) 2008-2013 Matthias Klumpp
+COPYRIGHT_HOLDER = Copyright (c) 2008-2014 Matthias Klumpp
 
 MSGID_BUGS_ADDRESS = listaller@freelists.org
 

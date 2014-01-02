@@ -1,6 +1,6 @@
 /* gpgex.vala - Common operations to simplify handling of GPGMe
  *
- * Copyright (C) 2011-2013 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2011-2014 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU Lesser General Public License Version 3
  *

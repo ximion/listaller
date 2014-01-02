@@ -1,6 +1,6 @@
 /* setup-settings.vala -- Handle settings of a installation
  *
- * Copyright (C) 2009-2013 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2009-2014 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU Lesser General Public License Version 3
  *

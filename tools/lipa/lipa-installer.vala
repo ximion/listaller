@@ -1,6 +1,6 @@
 /* lipa-installer.vala -- Application setup handling in Listaller command-line tool
  *
- * Copyright (C) 2010-2013 Matthias Klumpp <matthias@tenstral.net>
+ * Copyright (C) 2010-2014 Matthias Klumpp <matthias@tenstral.net>
  *
  * Licensed under the GNU General Public License Version 3
  *
