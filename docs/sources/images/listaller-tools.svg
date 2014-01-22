@@ -16,8 +16,8 @@
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="listaller-tools.svg"
    inkscape:export-filename="/home/matthias/Development/Listaller/listaller/docs/sources/images/listaller-tools.png"
-   inkscape:export-xdpi="51"
-   inkscape:export-ydpi="51">
+   inkscape:export-xdpi="80"
+   inkscape:export-ydpi="80">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -428,41 +428,9 @@
            id="tspan3214"
            sodipodi:role="line">lirepo</tspan></text>
     </g>
-    <g
-       id="g3404"
-       transform="translate(22,-24)">
-      <path
-         transform="matrix(1.5776222,0,0,0.43339144,-37.886102,157.83477)"
-         d="M 417.14285,538.07647 345.90469,678.22664 214.13554,763.98116 57.142858,772.36218 -83.007307,701.12402 -168.76183,569.35487 -177.14285,412.36219 -105.90469,272.21202 25.864457,186.4575 182.85714,178.07648 323.00731,249.31464 408.76183,381.08379 z"
-         inkscape:randomized="0"
-         inkscape:rounded="0"
-         inkscape:flatsided="true"
-         sodipodi:arg2="0.47026461"
-         sodipodi:arg1="0.20846522"
-         sodipodi:r2="293.36951"
-         sodipodi:r1="303.71844"
-         sodipodi:cy="475.21933"
-         sodipodi:cx="120"
-         sodipodi:sides="12"
-         id="path2987"
-         style="fill:#afe9af;fill-opacity:1;stroke:#000000;stroke-width:2.4000001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-         sodipodi:type="star" />
-      <text
-         sodipodi:linespacing="125%"
-         id="text3400"
-         y="390.64789"
-         x="-220"
-         style="font-size:80px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Cantarell;-inkscape-font-specification:Cantarell"
-         xml:space="preserve"><tspan
-           style="font-size:108px"
-           y="390.64789"
-           x="-220"
-           id="tspan3402"
-           sodipodi:role="line">Listaller Project</tspan></text>
-    </g>
     <path
        style="fill:none;stroke:#000000;stroke-width:3.4000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-       d="M -374.39952,-117.35211 39.715273,228.21182"
+       d="M -376.04977,-117.35211 29.275976,227.66504"
        id="path3409"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
@@ -472,7 +440,7 @@
        inkscape:connection-end-point="d4" />
     <path
        style="fill:none;stroke:#000000;stroke-width:3.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="M -483.1496,48.362185 -44.718532,242.96406"
+       d="M -486.69369,48.362185 -56.228064,243.82097"
        id="path3411"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
@@ -482,7 +450,7 @@
        inkscape:connection-end-point="d4" />
     <path
        style="fill:none;stroke:#000000;stroke-width:3.4000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="m -563.42895,213.00572 371.77266,63.96788"
+       d="m -563.48344,214.66592 364.93706,65.30114"
        id="path4200"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
@@ -492,7 +460,7 @@
        inkscape:connection-end-point="d4" />
     <path
        style="fill:none;stroke:#000000;stroke-width:3.4000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="m -739.14281,344.7553 459.63002,-2.50046"
+       d="m -739.14281,345.95577 456.76363,-0.22702"
        id="path4202"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
@@ -502,7 +470,7 @@
        inkscape:connection-start="#g3316" />
     <path
        style="fill:none;stroke:#000000;stroke-width:3.4000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="M -477.47543,736.64793 -32.68728,465.45991"
+       d="M -476.92017,736.64793 -44.277341,474.13455"
        id="path4204"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
@@ -512,7 +480,7 @@
        inkscape:connection-end-point="d4" />
     <path
        style="fill:none;stroke:#000000;stroke-width:3.4000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="M -130.07082,940.64795 101.62054,481.9537"
+       d="M -130.36843,940.64795 94.232621,492.21628"
        id="path4206"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
@@ -522,7 +490,7 @@
        inkscape:connection-end-point="d4" />
     <path
        style="fill:none;stroke:#000000;stroke-width:3.4000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="M 549.73734,1054.9336 247.11207,479.82"
+       d="M 548.9541,1054.9336 245.29716,489.87484"
        id="path4208"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
@@ -532,7 +500,7 @@
        inkscape:connection-end-point="d4" />
     <path
        style="fill:none;stroke:#000000;stroke-width:3.4000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="M 837.60328,862.36216 346.97025,476.33303"
+       d="M 836.05539,862.36216 347.23799,484.3385"
        id="path4210"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
@@ -542,7 +510,7 @@
        inkscape:connection-end-point="d4" />
     <path
        style="fill:none;stroke:#000000;stroke-width:3.4000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="M 967.72423,681.21936 448.74818,458.13711"
+       d="M 964.4447,681.21936 450.77226,464.77577"
        id="path4212"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
@@ -551,8 +519,8 @@
        inkscape:connection-end="#g3404"
        inkscape:connection-end-point="d4" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:3.4000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="M 950.28577,448.62478 615.8092,401.76619"
+       style="fill:none;stroke:#000000;stroke-width:3.4000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       d="M 950.28577,450.16772 609.10607,404.53766"
        id="path4214"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
@@ -561,8 +529,8 @@
        inkscape:connection-end="#g3404"
        inkscape:connection-end-point="d4" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:3.4000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="M 953.14289,295.12984 641.76585,312.96507"
+       style="fill:none;stroke:#000000;stroke-width:3.4000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       d="M 953.14289,296.40212 627.98594,316.73007"
        id="path4216"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
@@ -572,7 +540,7 @@
        inkscape:connection-end-point="d4" />
     <path
        style="fill:none;stroke:#000000;stroke-width:3.4000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="M 944.84052,60.647946 434.25247,245.40913"
+       d="M 946.82836,60.647946 436.41457,247.26373"
        id="path4218"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
@@ -582,7 +550,7 @@
        inkscape:connection-end-point="d4" />
     <path
        style="fill:none;stroke:#000000;stroke-width:3.4000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="m 925.00589,-141.63782 -583.92406,374.037"
+       d="M 925.40876,-141.63782 342.15391,233.35295"
        id="path4220"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
@@ -592,7 +560,7 @@
        inkscape:connection-end-point="d4" />
     <path
        style="fill:none;stroke:#000000;stroke-width:3.4000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="M 454.92168,-160.78067 237.80793,225.3067"
+       d="M 454.6179,-160.78067 236.48363,224.1509"
        id="path4222"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0"
@@ -627,15 +595,15 @@
     <text
        xml:space="preserve"
        style="font-size:80px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Cantarell;-inkscape-font-specification:Cantarell"
-       x="-479.87628"
-       y="1700.9115"
+       x="-374.80573"
+       y="1664.9304"
        id="text4329"
        sodipodi:linespacing="125%"
        transform="matrix(0.59154239,-0.8062739,0.8062739,0.59154239,0,0)"><tspan
          sodipodi:role="line"
          id="tspan4331"
-         x="-479.87628"
-         y="1700.9115">Packaging, dependency tracking</tspan></text>
+         x="-374.80573"
+         y="1664.9304">Packaging, QA</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:80px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Cantarell;-inkscape-font-specification:Cantarell"
@@ -648,5 +616,37 @@
          id="tspan4335"
          x="564.96973"
          y="-841.52478">Portable app development</tspan></text>
+    <g
+       id="g3404"
+       transform="matrix(0.98783848,0,0,1.0440244,18.127311,-34.301393)">
+      <path
+         transform="matrix(1.5776222,0,0,0.43339144,-37.886102,157.83477)"
+         d="M 417.14285,538.07647 345.90469,678.22664 214.13554,763.98116 57.142858,772.36218 -83.007307,701.12402 -168.76183,569.35487 -177.14285,412.36219 -105.90469,272.21202 25.864457,186.4575 182.85714,178.07648 323.00731,249.31464 408.76183,381.08379 z"
+         inkscape:randomized="0"
+         inkscape:rounded="0"
+         inkscape:flatsided="true"
+         sodipodi:arg2="0.47026461"
+         sodipodi:arg1="0.20846522"
+         sodipodi:r2="293.36951"
+         sodipodi:r1="303.71844"
+         sodipodi:cy="475.21933"
+         sodipodi:cx="120"
+         sodipodi:sides="12"
+         id="path2987"
+         style="fill:#afe9af;fill-opacity:1;stroke:#000000;stroke-width:2.4000001;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+         sodipodi:type="star" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3400"
+         y="390.64789"
+         x="-220"
+         style="font-size:80px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Cantarell;-inkscape-font-specification:Cantarell"
+         xml:space="preserve"><tspan
+           style="font-size:108px"
+           y="390.64789"
+           x="-220"
+           id="tspan3402"
+           sodipodi:role="line">Listaller Project</tspan></text>
+    </g>
   </g>
 </svg>
