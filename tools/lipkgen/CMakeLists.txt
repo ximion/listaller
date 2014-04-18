@@ -18,7 +18,7 @@ add_definitions("-DG_LOG_DOMAIN=\"Builder\"")
 
 # Listaller build tool
 vala_add_executable (lipkgen ${LIPKGEN_SOURCES}
-			PACKAGES ${LISTALLER_BASE_VALA_DEPS} listaller_internal packagekit-glib2
+			PACKAGES ${LISTALLER_BASE_VALA_DEPS} listaller_internal packagekit-glib2 appstream
 			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
 			COMPILE_FLAGS ${GLOBAL_VALAC_FLAGS}
 )
@@ -33,8 +33,13 @@ target_link_libraries(lipkgen
 		${LibArchive_LIBRARIES}
 		${LIBXML2_LIBRARIES}
 		${GPGME_VANILLA_LIBRARIES}
-		${REDLAND_LIBRARIES}
 		listaller-glib
+)
+
+include_directories(${CMAKE_BINARY_DIR}
+		    ${CMAKE_BINARY_DIR}/src
+		    ${CMAKE_CURRENT_SOURCE_DIR}
+		    ${APPSTREAM_INCLUDE_DIRS}
 )
 
 install(TARGETS lipkgen DESTINATION bin)

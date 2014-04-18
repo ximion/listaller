@@ -16,7 +16,7 @@ include_directories(${CMAKE_BINARY_DIR}
 		    ${LibArchive_INCLUDE_DIR}
 		    ${LIBXML2_INCLUDE_DIR}
 		    ${GPGME_INCLUDES}
-		    ${REDLAND_INCLUDE_DIRS}
+		    ${APPSTREAM_INCLUDE_DIRS}
 )
 
 # Add log domain

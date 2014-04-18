@@ -20,6 +20,7 @@ set(LISTALLER_BASE_SOURCES ${lisrc}/logging.vala
 	${lisrc}/software-cache.vala
 	${lisrc}/varsolver.vala
 	${lisrc}/varsetter.vala
+	${lisrc}/appstream.vala
 	${lisrc}/appstream-data.vala
 	${lisrc}/ipk-metafile.vala
 	${lisrc}/ipk-filelist.vala
@@ -68,6 +69,7 @@ pkg_check_modules(GIO2 REQUIRED gio-2.0>=2.26)
 pkg_check_modules(SOUP REQUIRED libsoup-2.4>=2.40)
 pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2>=0.8.10)
 pkg_check_modules(PACKAGEKIT_PLUGIN REQUIRED packagekit-plugin)
+pkg_check_modules(APPSTREAM REQUIRED appstream>=0.6.1)
 #find_gir(PKGIR "PackageKitGlib-1.0" REQUIRED)
 
 # make sure that the ir-compiler really has been found
@@ -111,7 +113,7 @@ list(APPEND VALA_INCLUDE_DIRS ${CMAKE_BINARY_DIR})
 vala_add_library(listaller-glib SHARED ${LISTALLER_GLIB_SOURCES}
 			BASE_DIR ${lisrc}
 			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
-			PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2
+			PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 appstream
 			GENERATE_VAPI listaller-${LILIBS_VERSION}.vapi
 			GENERATE_HEADER listaller.h
 			GENERATE_INTERNAL_HEADER listaller_internal.h
@@ -164,6 +166,7 @@ target_link_libraries(listaller-glib
 		${SOUP_LIBRARIES}
 		${PACKAGEKIT_LIBRARIES}
 		${PACKAGEKIT_PLUGIN_LIBRARIES}
+		${APPSTREAM_PLUGIN_LIBRARIES}
 )
 
 include_directories(${CMAKE_BINARY_DIR}
@@ -178,6 +181,7 @@ include_directories(${CMAKE_BINARY_DIR}
 		${SOUP_INCLUDE_DIRS}
 		${PACKAGEKIT_INCLUDE_DIRS}
 		${PACKAGEKIT_PLUGIN_INCLUDE_DIRS}
+		${APPSTREAM_INCLUDE_DIRS}
 )
 
 if(NOT LILIBS_FULL_VERSION)

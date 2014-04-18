@@ -18,7 +18,6 @@ link_libraries(${GLIB2_LIBRARIES}
 	       ${GIO2_LIBRARIES}
 	       ${LIBXML2_LIBRARIES}
 	       ${GPGME_VANILLA_LIBRARIES}
-	       ${REDLAND_LIBRARIES}
 	       listaller-glib
 )
 
@@ -27,12 +26,13 @@ include_directories(${CMAKE_BINARY_DIR}
 		    ${GLIB2_INCLUDE_DIR}
 		    ${GEE_INCLUDE_DIR}
 		    ${GIO2_INCLUDE_DIR}
+		    ${APPSTREAM_INCLUDE_DIRS}
 )
 
 add_definitions(${GEE_CFLAGS} ${GEE_CFLAGS_OTHER})
 
 vala_add_executable(depscan ${DEPSCAN_SOURCES}
-			PACKAGES ${LISTALLER_BASE_VALA_DEPS} listaller_internal packagekit-glib2
+			PACKAGES ${LISTALLER_BASE_VALA_DEPS} listaller_internal packagekit-glib2 appstream
 			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
 			COMPILE_FLAGS ${GLOBAL_VALAC_FLAGS}
 )
