@@ -26,7 +26,7 @@ using Listaller.Utils;
 namespace Listaller.IPK {
 
 // We need at least an IPK 2.0 package to process it
-private static const string MINIMUM_IPK_SPEC_VERSION = "1.9";
+private static const string MINIMUM_IPK_SPEC_VERSION = "2.0";
 
 public errordomain ControlDataError {
 	NO_APPDATA,

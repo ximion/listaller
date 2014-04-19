@@ -154,6 +154,7 @@ void test_appstream_xml () {
 	}
 
 	AppItem? item = appstream_component_to_appitem (cpt);
+	item.fast_check ();
 	assert (item != null);
 	assert (item.idname == "foobar-1");
 }
