@@ -20,6 +20,7 @@
 
 using GLib;
 using Listaller;
+using Appstream;
 
 namespace Listaller {
 
@@ -29,18 +30,34 @@ namespace Listaller {
  * @raturns NULL if Component was of wrong type or another converion error occured.
  */
 private AppItem? appstream_component_to_appitem (Appstream.Component cpt) {
-	if (cpt.kind != Appstream.ComponentKind.DESKTOP_APP)
+	if (cpt.kind != ComponentKind.DESKTOP_APP)
 		return null;
 
 	// we will want to replace AppItem with AsComponent sooner or later
 	var app = new AppItem.blank ();
-	app.idname = cpt.idname;
+	app.idname = cpt.pkgname;
 	app.full_name = cpt.name;
 	app.summary = cpt.summary;
 	app.description = cpt.description;
 	app.desktop_file = cpt.idname;
 	app.website = cpt.homepage;
 	app.icon_name = cpt.icon;
+	app.set_license_name (cpt.project_license);
+
+	// set version, after retting the latest release
+	Release? release = null;
+	GenericArray<Release> releases = cpt.get_releases ();
+	uint64 timestamp = 0;
+	for(uint i = 0; i < releases.length; i++) {
+		Release r = releases.get (i);
+		if (r.get_timestamp () > timestamp) {
+			release = r;
+			timestamp = r.get_timestamp ();
+		}
+	}
+	if (release != null) {
+		app.version = release.get_version ();
+	}
 
 	return app;
 }

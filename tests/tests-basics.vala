@@ -144,10 +144,16 @@ void test_versions () {
 }
 
 void test_appstream_xml () {
-	var asxml = new AppStreamXML ();
+	Appstream.Component cpt;
+	var mdata = new Appstream.Metadata ();
 	string asd = load_file_to_string (Path.build_filename (datadir, "appstream.appdata.xml"));
-	asxml.load_data (asd);
-	AppItem? item = asxml.get_app_item ();
+	try {
+		cpt = mdata.parse_data (asd);
+	} catch (Error e) {
+		error (e.message);
+	}
+
+	AppItem? item = appstream_component_to_appitem (cpt);
 	assert (item != null);
 	assert (item.idname == "foobar-1");
 }

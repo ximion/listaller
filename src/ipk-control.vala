@@ -26,7 +26,7 @@ using Listaller.Utils;
 namespace Listaller.IPK {
 
 // We need at least an IPK 2.0 package to process it
-private static const string MINIMUM_IPK_SPEC_VERSION = "2.0";
+private static const string MINIMUM_IPK_SPEC_VERSION = "1.9";
 
 public errordomain ControlDataError {
 	NO_APPDATA,
@@ -40,22 +40,17 @@ public errordomain ControlDataError {
  * Generic IPK package control data
  */
 public abstract class Control : Object {
-	internal AppStreamXML appXML;
+	internal string appXML;
 	internal MetaFile packSetting;
 	protected AppItem? appItem;
 
 	internal Control () {
-		appXML = new AppStreamXML ();
 		packSetting = new MetaFile ();
 		appItem = null;
 	}
 
-	protected bool load_appstream_file (string fname) {
-		return appXML.load_file (fname);
-	}
-
-	protected bool load_appstream_data (string data) {
-		return appXML.load_data (data);
+	protected void load_appstream_data (string data) {
+		appXML = data;
 	}
 
 	protected bool open_packsetting (string pksFName) {
@@ -68,7 +63,7 @@ public abstract class Control : Object {
 	public string get_ipk_version () {
 		string s = packSetting.get_value ("Version", false);
 		if (s == "")
-			s = "0.1";
+			s = "0.4";
 
 		return s;
 	}
@@ -193,15 +188,21 @@ public abstract class Control : Object {
 	}
 
 	public AppItem get_application () throws ControlDataError {
+		Appstream.Metadata mdata;
 		if (appItem != null)
 			return appItem;
 		AppItem? item;
+		Appstream.Component cpt;
+
+		// new AppStream metadata parser
+		mdata = new Appstream.Metadata ();
 
 		try {
-			item = appXML.get_app_item ();
+			cpt = mdata.parse_data (appXML);
 		} catch (Error e) {
 			throw new ControlDataError.APPDATA_INVALID (e.message);
 		}
+		item = appstream_component_to_appitem (cpt);
 
 		if (item != null)
 			appItem = item;
@@ -287,9 +288,7 @@ public class PackControl : Control {
 		asData = load_file_to_string (fAppStream);
 		if (str_is_empty (asData))
 			return false;
-		ret = this.load_appstream_data (asData);
-		if (!ret)
-			return false;
+		load_appstream_data (asData);
 
 		ipkVersion = this.get_ipk_version ();
 
@@ -309,16 +308,17 @@ public class PackControl : Control {
 	}
 
 	public bool create_new (string? newAppStreamData, string ipkV) {
+		bool ret;
 		if ((newAppStreamData == null) || (newAppStreamData == "")) {
 			critical ("Error while processing AppStream data: Data was NULL!");
 			return false;
 		}
 
 		asData = newAppStreamData;
-		appXML = new AppStreamXML ();
-		bool ret = this.load_appstream_data (asData);
-		if (ret)
-			ret = cache_appitem ();
+		load_appstream_data (asData);
+
+		ret = cache_appitem ();
+
 		if (ret) {
 			ipkVersion = ipkV;
 			set_ipk_version (ipkVersion);
@@ -456,9 +456,9 @@ public class ControlDir : Control {
 		if (asdFile == "")
 			throw new ControlDataError.NO_APPDATA (_("No valid AppStream application data found in directory %s - Can't open control files.").printf (dir));
 
-		bool ret = this.load_appstream_file (asdFile);
-		if (!ret)
-			return false;
+		string asData = load_file_to_string (asdFile);
+		load_appstream_data (asData);
+
 		ctrlDir = dir;
 
 		// ensure that we have loaded a valid application, otherwise we get in trouble later

@@ -21,7 +21,6 @@ set(LISTALLER_BASE_SOURCES ${lisrc}/logging.vala
 	${lisrc}/varsolver.vala
 	${lisrc}/varsetter.vala
 	${lisrc}/appstream.vala
-	${lisrc}/appstream-data.vala
 	${lisrc}/ipk-metafile.vala
 	${lisrc}/ipk-filelist.vala
 	${lisrc}/ipk-control.vala
@@ -32,7 +31,7 @@ set(LISTALLER_BASE_SOURCES ${lisrc}/logging.vala
 	CACHE INTERNAL "Listaller core source files"
 )
 
-set(LISTALLER_BASE_VALA_DEPS config gee-1.0 gio-2.0 sqlite3 libarchive libsoup-2.4 gpgme libxml-2.0
+set(LISTALLER_BASE_VALA_DEPS config gee-1.0 gio-2.0 sqlite3 libarchive libsoup-2.4 gpgme libxml-2.0 appstream
 			     CACHE INTERNAL "Essential Vala package dependencies"
 )
 
@@ -113,7 +112,7 @@ list(APPEND VALA_INCLUDE_DIRS ${CMAKE_BINARY_DIR})
 vala_add_library(listaller-glib SHARED ${LISTALLER_GLIB_SOURCES}
 			BASE_DIR ${lisrc}
 			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
-			PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2 appstream
+			PACKAGES ${LISTALLER_BASE_VALA_DEPS} packagekit-glib2
 			GENERATE_VAPI listaller-${LILIBS_VERSION}.vapi
 			GENERATE_HEADER listaller.h
 			GENERATE_INTERNAL_HEADER listaller_internal.h
@@ -166,7 +165,7 @@ target_link_libraries(listaller-glib
 		${SOUP_LIBRARIES}
 		${PACKAGEKIT_LIBRARIES}
 		${PACKAGEKIT_PLUGIN_LIBRARIES}
-		${APPSTREAM_PLUGIN_LIBRARIES}
+		${APPSTREAM_LIBRARIES}
 )
 
 include_directories(${CMAKE_BINARY_DIR}

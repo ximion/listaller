@@ -250,6 +250,8 @@ namespace Appstream {
 		public static GLib.Quark error_quark ();
 		[CCode (cname = "as_metadata_get_locale")]
 		public unowned string get_locale ();
+		[CCode (cname = "as_metadata_parse_data")]
+		public Appstream.Component parse_data (string data) throws GLib.Error;
 		[CCode (cname = "as_metadata_parse_file")]
 		public Appstream.Component parse_file (GLib.File infile) throws GLib.Error;
 		[CCode (cname = "as_metadata_set_locale")]
