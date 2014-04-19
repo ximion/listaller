@@ -15,12 +15,13 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}
 		    ${GLIB2_INCLUDE_DIR}
 		    ${GEE_INCLUDE_DIRS}
 		    ${GIO2_INCLUDE_DIR}
+		    ${APPSTREAM_INCLUDE_DIRS}
 		    ${CMAKE_BINARY_DIR}
 		    ${CMAKE_BINARY_DIR}/src
 )
 
 vala_add_executable(runapp ${RUNAPP_SOURCES}
-			PACKAGES config gee-1.0 gio-2.0 posix listaller-${LILIBS_VERSION}
+			PACKAGES config gee-1.0 gio-2.0 posix appstream listaller-${LILIBS_VERSION}
 			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
 			COMPILE_FLAGS ${GLOBAL_VALAC_FLAGS}
 )
@@ -32,6 +33,7 @@ target_link_libraries(runapp
 		${GLIB2_LIBRARIES}
 		${GEE_LIBRARIES}
 		${GIO2_LIBRARIES}
+		${APPSTREAM_LIBRARIES}
 		listaller-glib
 )
 

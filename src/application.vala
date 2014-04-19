@@ -109,6 +109,7 @@ public class AppItem : Object {
 	private string _origin;
 	private string _app_id;
 	private SetupSettings setup_settings;
+	private Appstream.Component _info;
 
 	/**
 	 * Application identifier
@@ -164,6 +165,11 @@ public class AppItem : Object {
 	public string categories {
 		get { return _categories; }
 		set { _categories = value; }
+	}
+
+	public Appstream.Component info {
+		get { return _info; }
+		set { _info = value; }
 	}
 
 	public int size_installed { get; set; } // Installed size of this application in KiB
@@ -259,6 +265,11 @@ public class AppItem : Object {
 			name = "",
 			text = ""
 		};
+	}
+
+	public AppItem.with_component (Appstream.Component cpt) {
+		this.blank ();
+		_info = cpt;
 	}
 
 	public void set_origin_local () {

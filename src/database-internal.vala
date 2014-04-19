@@ -28,27 +28,20 @@ namespace Listaller {
 
 private const string DATABASE = ""
 		+ "CREATE TABLE applications ("
-		+ "name TEXT PRIMARY KEY, "
+		+ "idname TEXT PRIMARY KEY, "
 		+ "full_name TEXT NOT NULL, "
 		+ "version TEXT NOT NULL, "
-		+ "desktop_file TEXT,"
-		+ "author TEXT, "
-		+ "publisher TEXT, "
-		+ "categories TEXT, "
-		+ "description TEXT, "
-		+ "homepage TEXT, "
+		+ "metadata TEXT,"
 		+ "architecture TEXT NOT NULL, "
 		+ "origin TEXT NOT NULL, "
 		+ "install_time INTEGER, "
 		+ "dependencies TEXT"
 		+ "); "
 		+ "CREATE TABLE dependencies ("
-		+ "name TEXT PRIMARY KEY, "
+		+ "idname TEXT PRIMARY KEY, "
 		+ "full_name TEXT NOT NULL, "
 		+ "version TEXT NOT NULL, "
-		+ "description TEXT, "
-		+ "author TEXT, "
-		+ "homepage TEXT, "
+		+ "metadata TEXT, "
 		+ "architecture TEXT NOT NULL, "
 		+ "origin TEXT NOT NULL, "
 		+ "install_time INTEGER, "
@@ -59,41 +52,33 @@ private const string DATABASE = ""
 		+ ");" +
 		"";
 
-private const string appcols = "name, full_name, version, desktop_file, author, publisher, categories, " +
-			"description, homepage, architecture, origin, install_time, dependencies";
-private const string depcols = "name, full_name, version, description, author, homepage, architecture, " +
-			"origin, install_time, items_installed, items, environment, dependencies";
+private const string appcols = "idname, full_name, version, metadata, architecture, origin, install_time, dependencies";
+private const string depcols = "idname, full_name, version, metadata, architecture, origin, install_time, items_installed, " +
+						"items, environment, dependencies";
 
 private enum AppRow {
 	IDNAME = 0,
 	FULLNAME = 1,
 	VERSION = 2,
-	DESKTOPFILE = 3,
-	AUTHOR = 4,
-	PUBLISHER = 5,
-	CATEGORIES = 6,
-	DESCRIPTION = 7,
-	HOMEPAGE = 8,
-	ARCHITECTURE = 9,
-	ORIGIN = 10,
-	INST_TIME = 11,
-	DEPS = 12;
+	METADATA = 3,
+	ARCHITECTURE = 4,
+	ORIGIN = 5,
+	INST_TIME = 6,
+	DEPS = 7;
 }
 
 private enum DepRow {
 	IDNAME = 0,
 	FULLNAME = 1,
 	VERSION = 2,
-	DESCRIPTION = 3,
-	AUTHOR = 4,
-	HOMEPAGE = 5,
-	ARCHITECTURE = 6,
-	ORIGIN = 7,
-	INST_TIME = 8,
-	ITEMS_INSTALLED = 9,
-	ITEMS = 10,
-	ENVIRONMENT = 11,
-	DEPENDENCIES = 12;
+	METADATA = 3,
+	ARCHITECTURE = 4,
+	ORIGIN = 5,
+	INST_TIME = 6,
+	ITEMS_INSTALLED = 7,
+	ITEMS = 8,
+	ENVIRONMENT = 9,
+	DEPENDENCIES = 10;
 }
 
 public errordomain DatabaseError {
@@ -229,7 +214,7 @@ private abstract class InternalDB : Object {
 		// InsertApp statement
 		try {
 			db_assert (db.prepare_v2 ("INSERT INTO applications (" + appcols + ") "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
 					-1, out insert_app), "prepare app insert statement");
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (e.message);
@@ -238,7 +223,7 @@ private abstract class InternalDB : Object {
 		// InsertDep statement
 		try {
 			db_assert (db.prepare_v2 ("INSERT INTO dependencies (" + depcols + ") "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					-1, out insert_dep), "prepare dependency insert statement");
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (e.message);
@@ -436,17 +421,7 @@ private abstract class InternalDB : Object {
 
 			db_assert (insert_app.bind_text (AppRow.FULLNAME +1, item.full_name), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.DESKTOPFILE +1, item.desktop_file), "assign value");
-
-			db_assert (insert_app.bind_text (AppRow.AUTHOR +1, item.author), "assign value");
-
-			db_assert (insert_app.bind_text (AppRow.PUBLISHER +1, item.publisher), "assign value");
-
-			db_assert (insert_app.bind_text (AppRow.CATEGORIES +1, item.categories), "assign value");
-
-			db_assert (insert_app.bind_text (AppRow.DESCRIPTION +1, "%s\n\n%s".printf (item.summary, item.description)), "assign value");
-
-			db_assert (insert_app.bind_text (AppRow.HOMEPAGE +1, item.website), "assign value");
+			db_assert (insert_app.bind_text (AppRow.METADATA +1, item.desktop_file), "assign value");
 
 			db_assert (insert_app.bind_text (AppRow.ARCHITECTURE +1, arch), "assign value");
 
@@ -487,21 +462,7 @@ private abstract class InternalDB : Object {
 		item.idname = stmt.column_text (AppRow.IDNAME);
 		item.full_name = stmt.column_text (AppRow.FULLNAME);
 		item.version = stmt.column_text (AppRow.VERSION);
-		item.desktop_file = stmt.column_text (AppRow.DESKTOPFILE);
-		item.author = stmt.column_text (AppRow.AUTHOR);
-		item.publisher = stmt.column_text (AppRow.PUBLISHER);
-		item.categories = stmt.column_text (AppRow.CATEGORIES);
-		item.website = stmt.column_text (AppRow.HOMEPAGE);
-
-		string s = stmt.column_text (AppRow.DESCRIPTION);
-		string[] desc = s.split ("\n\n", 2);
-		if (desc[0] != null) {
-			item.summary = desc[0];
-			if (desc[1] != null)
-				item.description = desc[1];
-		} else {
-			item.summary = s;
-		}
+		item.desktop_file = stmt.column_text (AppRow.METADATA);
 
 		item.install_time = stmt.column_int (AppRow.INST_TIME);
 		item.dependencies_str = stmt.column_text (AppRow.DEPS);
@@ -515,7 +476,7 @@ private abstract class InternalDB : Object {
 	public string? get_arch_for_app (string app_idname) {
 		Sqlite.Statement stmt;
 		try {
-			db_assert (db.prepare_v2 ("SELECT * FROM applications WHERE name=?", -1, out stmt),
+			db_assert (db.prepare_v2 ("SELECT * FROM applications WHERE idname=?", -1, out stmt),
 				   "prepare find app by idname statement");
 
 			db_assert (stmt.bind_text (1, app_idname), "bind value");
@@ -536,7 +497,7 @@ private abstract class InternalDB : Object {
 	public AppItem? get_application_by_idname (string app_idname) throws DatabaseError {
 		Sqlite.Statement stmt;
 		try {
-			db_assert (db.prepare_v2 ("SELECT * FROM applications WHERE name=?", -1, out stmt),
+			db_assert (db.prepare_v2 ("SELECT * FROM applications WHERE idname=?", -1, out stmt),
 				   "prepare find app by idname statement");
 
 			db_assert (stmt.bind_text (1, app_idname), "bind value");
@@ -650,7 +611,7 @@ private abstract class InternalDB : Object {
 
 	public AppItem? get_application_by_name_version (string appName, string appVersion) throws DatabaseError {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT * FROM applications WHERE name=? AND version=?", -1, out stmt);
+		int res = db.prepare_v2 ("SELECT * FROM applications WHERE idname=? AND version=?", -1, out stmt);
 		try {
 			db_assert (res, "get application (by full_name and version)");
 			db_assert (stmt.bind_text (1, appName), "bind value");
@@ -675,7 +636,7 @@ private abstract class InternalDB : Object {
 
 	public virtual bool remove_application (AppItem app) throws DatabaseError {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("DELETE FROM applications WHERE name=?", -1, out stmt);
+		int res = db.prepare_v2 ("DELETE FROM applications WHERE idname=?", -1, out stmt);
 
 		try {
 			db_assert (res, "delete application (prepare statement)");
@@ -754,7 +715,7 @@ private abstract class InternalDB : Object {
 
 	public bool set_application_dependencies (string appName, string depstr) throws DatabaseError {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("UPDATE applications SET dependencies=? WHERE name=?", -1, out stmt);
+		int res = db.prepare_v2 ("UPDATE applications SET dependencies=? WHERE idname=?", -1, out stmt);
 
 		try {
 			db_assert (res, "update application deps (by name)");
@@ -787,11 +748,7 @@ private abstract class InternalDB : Object {
 
 			db_assert (insert_dep.bind_text (DepRow.VERSION +1, dep_mod.get_version ()), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.DESCRIPTION +1, "%s\n\n%s".printf (dep_mod.summary, dep_mod.description)), "bind value");
-
-			db_assert (insert_dep.bind_text (DepRow.HOMEPAGE +1, dep_mod.homepage), "bind value");
-
-			db_assert (insert_dep.bind_text (DepRow.AUTHOR +1, dep_mod.author), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.METADATA +1, "TODO"));
 
 			db_assert (insert_dep.bind_int64 (DepRow.INST_TIME +1, dep_mod.install_time), "bind value");
 
@@ -824,18 +781,6 @@ private abstract class InternalDB : Object {
 		dep.full_name = stmt.column_text (DepRow.FULLNAME);
 		dep.set_version (stmt.column_text (DepRow.VERSION));
 
-		string s = stmt.column_text (DepRow.DESCRIPTION);
-		string[] desc = s.split ("\n\n", 2);
-		if (desc[0] != null) {
-			dep.summary = desc[0];
-			if (desc[1] != null)
-				dep.description = desc[1];
-		} else {
-			dep.summary = s;
-		}
-
-		dep.homepage = stmt.column_text (DepRow.HOMEPAGE);
-		dep.author = stmt.column_text (DepRow.AUTHOR);
 		dep.install_time = stmt.column_int (DepRow.INST_TIME);
 		dep.architecture = stmt.column_text (DepRow.ARCHITECTURE);
 		dep.set_items_from_string (stmt.column_text (DepRow.ITEMS));
@@ -850,7 +795,7 @@ private abstract class InternalDB : Object {
 
 	public Dep.Module? get_dependency_by_id (string depIdName) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT * FROM dependencies WHERE name=?", -1, out stmt);
+		int res = db.prepare_v2 ("SELECT * FROM dependencies WHERE idname=?", -1, out stmt);
 
 		try {
 			db_assert (res, "get dependency (by id)");
@@ -870,7 +815,7 @@ private abstract class InternalDB : Object {
 
 	public bool set_dependency_environment (string depIdName, string env) throws DatabaseError {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("UPDATE dependencies SET environment=? WHERE name=?", -1, out stmt);
+		int res = db.prepare_v2 ("UPDATE dependencies SET environment=? WHERE idname=?", -1, out stmt);
 
 		try {
 			db_assert (res, "get dependency (by id)");

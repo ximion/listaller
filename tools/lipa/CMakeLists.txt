@@ -20,6 +20,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}
 		    ${GLIB2_INCLUDE_DIR}
 		    ${GEE_INCLUDE_DIRS}
 		    ${GIO2_INCLUDE_DIR}
+		    ${APPSTREAM_INCLUDE_DIRS}
 		    ${CMAKE_BINARY_DIR}
 		    ${CMAKE_BINARY_DIR}/src
 )
@@ -37,6 +38,7 @@ target_link_libraries(lipa
 		${GLIB2_LIBRARIES}
 		${GEE_LIBRARIES}
 		${GIO2_LIBRARIES}
+		${APPSTREAM_LIBRARIES}
 		listaller-glib
 )
 
