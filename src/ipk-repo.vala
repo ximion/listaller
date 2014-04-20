@@ -189,7 +189,7 @@ internal class RepoRemote : Repo {
 			dl.download_file_sync (url, fname);
 		} catch (Error e) {
 			emit_error (ErrorEnum.NETWORK_ERROR,
-					    _("Unable to download package for '%s'\nError: %s").printf (app.full_name, e.message));
+					    _("Unable to download package for '%s'\nError: %s").printf (app.info.name, e.message));
 
 			return null;
 		}

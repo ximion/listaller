@@ -95,14 +95,14 @@ public class LipaInstaller : LipaModule {
 			}
 		}
 
-		AppItem appID = ipkmeta.get_application ();
+		AppItem app = ipkmeta.get_application ();
 		//print ("%c8", 0x1B);
-		print ("==== %s ====\n\n", _("Installation of %s").printf (appID.full_name));
+		print ("==== %s ====\n\n", _("Installation of %s").printf (app.info.name));
 
-		print ("%s\n\n%s\n", _("Description:"), appID.description);
+		print ("%s\n\n%s\n", _("Description:"), app.info.description);
 
 		if (ipkmeta.user_accept_license) {
-			string[] licenseLines = appID.license.text.split ("\n");
+			string[] licenseLines = app.license.text.split ("\n");
 
 			// save cursor in new position
 			//print ("%c7", 0x1B);
@@ -150,11 +150,11 @@ public class LipaInstaller : LipaModule {
 		// Make sure color is reset...
 		print ("%c[%dm", 0x1B, CONSOLE_RESET);
 
-		AppItem? app = inst.get_current_application ();
+		app = inst.get_current_application ();
 		if (app == null)
 			error ("Did not receive valid application information!");
 
-		ret = console_get_prompt (_("Do you want to install %s now?").printf (app.full_name), true);
+		ret = console_get_prompt (_("Do you want to install %s now?").printf (app.info.name), true);
 		// If user doesn't want to install the application, exit
 		if (!ret)
 			return;
@@ -165,9 +165,9 @@ public class LipaInstaller : LipaModule {
 		progress_bar.end ();
 
 		if (ret) {
-			print ("Installation of %s completed successfully!\n", app.full_name);
+			print ("Installation of %s completed successfully!\n", app.info.name);
 		} else {
-			print ("Installation of %s failed!\n", app.full_name);
+			print ("Installation of %s failed!\n", app.info.name);
 			error_code = 3;
 		}
 

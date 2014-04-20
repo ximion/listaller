@@ -17,7 +17,7 @@ set(LI_TOOLS_SHARED_SOURCES toolshared.vala
 )
 
 vala_precompile(tools-shared LI_TOOLS_SHARED_C ${LI_TOOLS_SHARED_SOURCES}
-			PACKAGES config gee-1.0 gio-2.0 posix listaller-${LILIBS_VERSION}
+			PACKAGES config gee-1.0 gio-2.0 posix appstream listaller-${LILIBS_VERSION}
 			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
 )
 
@@ -32,7 +32,7 @@ include_directories(${CMAKE_BINARY_DIR}
 		    ${LibArchive_INCLUDE_DIR}
 		    ${LIBXML2_INCLUDE_DIR}
 		    ${GPGME_INCLUDES}
-		    ${REDLAND_INCLUDE_DIRS}
+		    ${APPSTREAM_INCLUDE_DIRS}
 		    ${PACKAGEKIT_INCLUDE_DIRS}
 )
 

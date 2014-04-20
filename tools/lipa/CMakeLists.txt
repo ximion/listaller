@@ -26,7 +26,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 vala_add_executable(lipa ${LIPA_SOURCES}
-			PACKAGES config gee-1.0 gio-2.0 posix listaller-${LILIBS_VERSION}
+			PACKAGES config gee-1.0 gio-2.0 posix appstream listaller-${LILIBS_VERSION}
 			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
 			COMPILE_FLAGS ${GLOBAL_VALAC_FLAGS}
 )

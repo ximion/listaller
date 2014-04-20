@@ -419,7 +419,7 @@ private abstract class InternalDB : Object {
 
 			db_assert (insert_app.bind_text (AppRow.VERSION +1, item.version), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.FULLNAME +1, item.full_name), "assign value");
+			db_assert (insert_app.bind_text (AppRow.FULLNAME +1, item.info.name), "assign value");
 
 			db_assert (insert_app.bind_text (AppRow.METADATA +1, item.desktop_file), "assign value");
 
@@ -460,7 +460,7 @@ private abstract class InternalDB : Object {
 		AppItem item = new AppItem.blank ();
 
 		item.idname = stmt.column_text (AppRow.IDNAME);
-		item.full_name = stmt.column_text (AppRow.FULLNAME);
+		item.info.name = stmt.column_text (AppRow.FULLNAME);
 		item.version = stmt.column_text (AppRow.VERSION);
 		item.desktop_file = stmt.column_text (AppRow.METADATA);
 
@@ -653,11 +653,11 @@ private abstract class InternalDB : Object {
 		string str = s.down ();
 		if (item.idname.down ().index_of (str) > -1)
 			return true;
-		if (item.full_name.down ().index_of (str) > -1)
+		if (item.info.name.down ().index_of (str) > -1)
 			return true;
-		if (item.summary.down ().index_of (str) > -1)
+		if (item.info.summary.down ().index_of (str) > -1)
 			return true;
-		if (item.description.down ().index_of (str) > -1)
+		if (item.info.description.down ().index_of (str) > -1)
 			return true;
 		return false;
 	}
@@ -919,7 +919,7 @@ private class LocalDB : InternalDB {
 					return false;
 
 				var data_stream = new DataOutputStream (file_stream);
-				data_stream.put_string ("# File list for " + aid.full_name + "\n\n");
+				data_stream.put_string ("# File list for " + aid.info.name + "\n\n");
 				// Now write file list to file
 				foreach (IPK.FileEntry fe in flist) {
 					if (fe.is_installed ()) {

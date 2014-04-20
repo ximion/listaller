@@ -132,7 +132,7 @@ public class Updater : MessageObject {
 		Setup? inst = repo_mgr.get_setup_for_remote_app (app_new, arch);
 		if (inst == null) {
 			emit_error (ErrorEnum.UPDATE_FAILED,
-				_("Update of application '%s' failed. Maybe the update information is out of date. Please refresh it and try again.").printf (app_old.full_name));
+				_("Update of application '%s' failed. Maybe the update information is out of date. Please refresh it and try again.").printf (app_old.info.name));
 			return false;
 		}
 
@@ -166,7 +166,7 @@ public class Updater : MessageObject {
 		ret = app_mgr.remove_application (app_old);
 		if (!ret) {
 			emit_error (ErrorEnum.UPDATE_FAILED,
-				_("Update of application '%s' failed. Unable to remove the old application.").printf (app_old.full_name));
+				_("Update of application '%s' failed. Unable to remove the old application.").printf (app_old.info.name));
 			return false;
 		}
 
@@ -175,7 +175,7 @@ public class Updater : MessageObject {
 		if (!ret) {
 			// FIXME: a better error message would be awesome ;-)
 			emit_error (ErrorEnum.UPDATE_FAILED,
-				_("Update of application '%s' failed. Something bad happened. Please install the application again!").printf (app_old.full_name));
+				_("Update of application '%s' failed. Something bad happened. Please install the application again!").printf (app_old.info.name));
 			return false;
 		}
 

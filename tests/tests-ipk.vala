@@ -59,7 +59,7 @@ void test_ipk_package () {
 	assert (ret == true);
 
 	AppItem app = ipk.control.get_application ();
-	assert (app.full_name == "FooBar");
+	assert (app.info.name == "FooBar");
 
 	Collection<IPK.FileEntry> flist = ipk.get_file_entries ();
 	foreach (IPK.FileEntry e in flist) {
@@ -70,6 +70,8 @@ void test_ipk_package () {
 
 /*
 NOTE: This is an old IPK-Control read/write test
+*/
+#if 0
 void test_ipk_control_file () {
 	msg ("Controlfile tests");
 	IPK.PackControl ipkc = new IPK.PackControl ();
@@ -110,7 +112,7 @@ void test_ipk_control_file () {
 	assert (list[0].full_name == "alpha");
 	assert (list[0].has_component ("/etc/alpha.conf", Deps.ComponentType.FILE) == true);
 }
-*/
+#endif
 
 void test_ipk_packcontrol () {
 	msg ("IPK PackControl tests");
@@ -125,7 +127,7 @@ void test_ipk_packcontrol () {
 	assert (ret);
 
 	AppItem app = ipkc.get_application ();
-	assert (app.full_name == "FooBar");
+	assert (app.info.name == "FooBar");
 	assert (app.idname == "foobar");
 }
 

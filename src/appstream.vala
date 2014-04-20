@@ -36,12 +36,8 @@ private AppItem? appstream_component_to_appitem (Appstream.Component cpt) {
 	// we will want to replace AppItem with AsComponent sooner or later
 	var app = new AppItem.blank ();
 	app.idname = cpt.pkgname;
-	app.full_name = cpt.name;
-	app.summary = cpt.summary;
-	app.description = cpt.description;
+	app.info = cpt;
 	app.desktop_file = cpt.idname;
-	app.website = cpt.homepage;
-	app.icon_name = cpt.icon;
 	app.set_license_name (cpt.project_license);
 
 	// set version, after retting the latest release

@@ -92,23 +92,14 @@ public struct AppLicense {
 public class AppItem : Object {
 	private string _idname;
 	private string _version;
-	private string _appname;
-	private string _summary;
-	private string _description;
-	private string _author;
-	private string _pkgmaintainer;
 	private AppLicense _license;
-	private string _categories;
-	private string _desktop_file;
-	private string _desktop_file_prefix;
-	private string _website;
-	private string _icon_name;
 	private int64  _install_time;
 	private string _dependencies;
 	private AppState _state;
 	private string _origin;
 	private string _app_id;
 	private SetupSettings setup_settings;
+	private string _desktop_file;
 	private Appstream.Component _info;
 
 	/**
@@ -117,19 +108,14 @@ public class AppItem : Object {
 	public string idname {
 		get {
 			if (_idname.strip () == "")
-				_idname = string_replace (_appname.down (), "( )", "_");
+				_idname = string_replace (info.name.down (), "( )", "_");
 			return _idname;
 		}
 		internal set {
 			_idname = value;
-			if (_appname.strip () == "")
-				_appname = _idname;
+			if (info.name.strip () == "")
+				info.name = _idname;
 		}
-	}
-
-	public string full_name {
-		get { return _appname; }
-		set { _appname = value; }
 	}
 
 	public string version {
@@ -137,43 +123,23 @@ public class AppItem : Object {
 		set { _version = value; }
 	}
 
-	public string summary {
-		get { return _summary; }
-		set { _summary = value; }
-	}
-
-	public string description {
-		get { return _description; }
-		set { _description = value; }
-	}
-
-	public string author {
-		get { return _author; }
-		set { _author = value; }
-	}
-
-	public string publisher {
-		get { return _pkgmaintainer; }
-		set { _pkgmaintainer = value; }
-	}
-
 	public AppLicense license {
 		get { return _license; }
 		set { _license = value; }
 	}
 
-	public string categories {
-		get { return _categories; }
-		set { _categories = value; }
-	}
-
 	public Appstream.Component info {
-		get { return _info; }
+		get {
+			if (_info == null)
+				error ("Fatal: AppItem does not contain AppStream Component information object!");
+			return _info;
+		}
 		set { _info = value; }
 	}
 
 	public int size_installed { get; set; } // Installed size of this application in KiB
 
+	private string _desktop_file_folded;
 	public string desktop_file {
 		get {
 			if (_desktop_file.strip () == "")
@@ -186,8 +152,8 @@ public class AppItem : Object {
 				// If no exact path has been specified, we assume %APP%
 				dfile = Path.build_filename ("%APP%", dfile, null);
 			}
-			_desktop_file_prefix = fold_user_dir (dfile);
-			return _desktop_file_prefix;
+			_desktop_file_folded = fold_user_dir (dfile);
+			return _desktop_file_folded;
 		}
 		set {
 			_desktop_file = fold_user_dir (value);
@@ -215,16 +181,6 @@ public class AppItem : Object {
 		}
 	}
 
-	public string icon_name {
-		get { return _icon_name; }
-		set { _icon_name = value; }
-	}
-
-	public string website {
-		get { return _website; }
-		set { _website = value; }
-	}
-
 	public int64 install_time {
 		get { return _install_time; }
 		set { _install_time = value; }
@@ -246,19 +202,14 @@ public class AppItem : Object {
 		get { _app_id = generate_appid (); return _app_id; }
 	}
 
+	public string author { get; set; }
+
 	public AppItem.blank () {
 		_idname = "";
-		_appname = "";
-		_idname = "";
-		_summary = "";
-		_description = "";
 		install_time = 0;
-		categories = "all;";
 		origin = "unknown";
 		_app_id = "";
 		_desktop_file = "";
-		_website = "";
-		_icon_name = "";
 		setup_settings = new SetupSettings ();
 		_state = AppState.UNKNOWN;
 		_license = AppLicense () {
@@ -267,7 +218,7 @@ public class AppItem : Object {
 		};
 	}
 
-	public AppItem.with_component (Appstream.Component cpt) {
+	public AppItem (Appstream.Component cpt) {
 		this.blank ();
 		_info = cpt;
 	}
@@ -276,23 +227,10 @@ public class AppItem : Object {
 		origin = "local";
 	}
 
-	public AppItem (string afullname, string aversion, string desktop_filename = "") {
-		this.blank ();
-		full_name = afullname;
-		version = aversion;
-		desktop_file = desktop_filename;
-	}
-
 	public AppItem.from_id (string application_id) {
 		this.blank ();
 		_app_id = application_id;
 		update_with_appid ();
-	}
-
-	public AppItem.from_desktopfile (string desktop_filename) {
-		this.blank ();
-		desktop_file = desktop_filename;
-		this.update_with_desktop_file ();
 	}
 
 	public string to_string () {
@@ -308,13 +246,13 @@ public class AppItem : Object {
 		else
 			app_state_str = "[%s|%s]".printf (_("INSTALLED"), str_ownership);
 
-		return "%s %s (%s) :: %s -- %s".printf (app_state_str, idname, version, full_name, summary);
+		return "%s %s (%s) :: %s".printf (app_state_str, idname, version, info.to_string ());
 	}
 
 	public void fast_check () {
 		// Fast sanity checks for AppItem
-		assert (idname != null);
-		assert (full_name != null);
+		assert (info != null);
+		assert (info.name != null);
 		assert (version != null);
 		assert (appid != "");
 	}
@@ -371,7 +309,7 @@ public class AppItem : Object {
 			return _app_id;
 
 		if (desktop_file.strip () == "") {
-			debug (_("We don't know a desktop-file for application '%s'!").printf (full_name));
+			debug (_("We don't know a desktop-file for application '%s'!").printf (info.name));
 			// If no desktop file was found, use application name and version as ID
 			res = idname + ";" + version;
 			res = res + ";" + ";" + origin;
@@ -489,15 +427,14 @@ public class AppItem : Object {
 			warning (_("Could not open desktop file: %s").printf (e.message));
 		}
 
-		full_name = get_desktop_file_string (dfile, "Name");
+		info.name = get_desktop_file_string (dfile, "Name");
 		if (idname == "")
-			idname = full_name;
+			idname = info.name;
 		version = get_desktop_file_string (dfile, "X-AppVersion");
-		summary = get_desktop_file_string (dfile, "Comment");
-		icon_name = get_desktop_file_string (dfile, "Icon");
+		info.summary = get_desktop_file_string (dfile, "Comment");
+		info.icon = get_desktop_file_string (dfile, "Icon");
 		author = get_desktop_file_string (dfile, "X-Author");
-		categories = get_desktop_file_string (dfile, "Categories");
-		publisher = get_desktop_file_string (dfile, "X-Publisher");
+		info.set_categories_from_str (get_desktop_file_string (dfile, "Categories"));
 	}
 
 	public string get_raw_cmd (bool subst_cmd = false) {
