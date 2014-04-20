@@ -99,7 +99,7 @@ public class AppItem : Object {
 	private string _origin;
 	private string _app_id;
 	private SetupSettings setup_settings;
-	private string _desktop_file;
+	private string _metadata_file;
 	private Appstream.Component _info;
 
 	/**
@@ -139,36 +139,40 @@ public class AppItem : Object {
 
 	public int size_installed { get; set; } // Installed size of this application in KiB
 
-	private string _desktop_file_folded;
-	public string desktop_file {
+	public string xml_data { get; set; }
+
+	private string _metadata_fname_folded;
+	public string metadata_file {
 		get {
-			if (_desktop_file.strip () == "")
+			if (_metadata_file.strip () == "")
 				return "";
-			string dfile = _desktop_file;
-			// Check if %APP% prefix needs to be added
+			string dfile = _metadata_file;
+			// Check if full path needs to be added
 			if ( (!dfile.has_prefix ("%")) &&
 				(!dfile.has_prefix ("/")) &&
 				(!dfile.has_prefix ("~")) ) {
-				// If no exact path has been specified, we assume %APP%
-				dfile = Path.build_filename ("%APP%", dfile, null);
+				// If no exact path has been specified, we assume /usr/share/appdata
+				dfile = Path.build_filename ("/usr/share/appdata", dfile, null);
 			}
-			_desktop_file_folded = fold_user_dir (dfile);
-			return _desktop_file_folded;
+			_metadata_fname_folded = fold_user_dir (dfile);
+			return _metadata_fname_folded;
 		}
 		set {
-			_desktop_file = fold_user_dir (value);
+			_metadata_file = fold_user_dir (value);
 
 			// Only do autodetection if we not already have a shared application
 			if (state != AppState.INSTALLED_SHARED) {
 				// Desktop file in / ==> shared application
-				if (_desktop_file.has_prefix ("/"))
+				if (_metadata_file.has_prefix ("/"))
 					state = AppState.INSTALLED_SHARED;
 				// Desktop-file in %APP%/user's home ==> application not shared
-				if (_desktop_file.has_prefix ("~"))
+				if (_metadata_file.has_prefix ("~"))
 					state = AppState.INSTALLED_PRIVATE;
 			}
 		}
 	}
+
+	public string desktop_file { get; set; }
 
 	public AppState state {
 		get { return _state; }
@@ -209,7 +213,8 @@ public class AppItem : Object {
 		install_time = 0;
 		origin = "unknown";
 		_app_id = "";
-		_desktop_file = "";
+		desktop_file = "";
+		_metadata_file = "";
 		setup_settings = new SetupSettings ();
 		_state = AppState.UNKNOWN;
 		_license = AppLicense () {
@@ -220,6 +225,19 @@ public class AppItem : Object {
 
 	public AppItem (Appstream.Component cpt) {
 		this.blank ();
+		_info = cpt;
+	}
+
+	public AppItem.from_metadata (string asdata_fname) {
+		this.blank ();
+		var mdata = new Appstream.Metadata ();
+		var f = File.new_for_path (asdata_fname);
+		Appstream.Component cpt;
+		try {
+			cpt = mdata.parse_file (f);
+		} catch (Error e) {
+			error (e.message);
+		}
 		_info = cpt;
 	}
 
@@ -294,11 +312,11 @@ public class AppItem : Object {
 	/** Build a Listaller application-id
 	 *
 	 * An application ID has the following form:
-	 * idname;version;desktop_file;origin
+	 * idname;version;metadata-file;origin
 	 * idname usually is the application's .desktop file name
 	 * version is the application's version
 	 * arch the architecture(s) the app was build for
-	 * desktop_file is the application's desktop file
+	 * metadata-file is the application's AppStream metadata file
 	 * origin is the origin of this app, e.g. a repository-id, "unknown" or "local"
 	 *
 	 * @return a valid application-id
@@ -308,14 +326,12 @@ public class AppItem : Object {
 		if (validate_appid (_app_id))
 			return _app_id;
 
-		if (desktop_file.strip () == "") {
-			debug (_("We don't know a desktop-file for application '%s'!").printf (info.name));
-			// If no desktop file was found, use application name and version as ID
-			res = idname + ";" + version;
-			res = res + ";" + ";" + origin;
+		if (metadata_file.strip () == "") {
+			warning (_("We don't know a metadata-file for application '%s'!").printf (info.name));
+			// If no metadata file was found, we can only use application name and version as ID
+			res = "%s;%s;;%s".printf (idname, version, origin);
 		} else {
-			res = idname + ";" + version + ";" + desktop_file + ";";
-			res += origin;
+			res = "%s;%s;%s;%s".printf (idname, version, metadata_file, origin);
 		}
 		return res;
 	}
@@ -344,16 +360,16 @@ public class AppItem : Object {
 		string[] blocks = appid.split (";");
 		idname = blocks[0];
 		version = blocks[1];
-		string dfile = blocks[2];
+		string asfile = blocks[2];
 		// Set application origin
 		string orig = blocks[3];
 		origin = orig;
 
-		// Rebuild the desktop file
-		if (dfile != null) {
-			desktop_file = dfile;
+		// Rebuild the Appstream metadata file
+		if (asfile != null) {
+			metadata_file = asfile;
 			if (!fast)
-				update_with_desktop_file ();
+				update_with_metadata_file ();
 		}
 
 	}
@@ -364,10 +380,10 @@ public class AppItem : Object {
 	public string build_pk_package_id () {
 		string data;
 		string package_id;
-		if (Utils.str_is_empty (desktop_file))
+		if (Utils.str_is_empty (metadata_file))
 			data = "local:listaller";
 		else
-			data = "local:listaller#" + desktop_file;
+			data = "local:listaller#%s".printf (metadata_file);
 
 		// FIXME: Handle architecture correctly
 		package_id = PackageKit.Package.id_build (idname, version, system_machine_generic (), data);
@@ -405,36 +421,62 @@ public class AppItem : Object {
 		return fname;
 	}
 
-	public void update_with_desktop_file () {
-		if (desktop_file == "")
+	public void update_with_metadata_file () {
+		if (metadata_file == "")
 			return;
 		// Set idname if no idname was specified
 		if (_idname == "") {
-			idname = string_replace (Path.get_basename (desktop_file), "(.desktop)", "");
-			debug ("Set app-idname from desktop filename: %s".printf (idname));
+			idname = string_replace (Path.get_basename (metadata_file), "(.appdata.xml)", "");
+			debug ("Set app-idname from AppStream metafile: %s".printf (idname));
 		}
 
-		// Get complete .desktop-file path
-		string fname = get_desktop_filename_expanded ();
+		// Get complete metadata-file path
+		string fname = expand_user_dir (metadata_file);
 		if (fname == "")
 			return;
 
-		// Load new values from desktop file
-		KeyFile dfile = new KeyFile ();
+		string? xml;
 		try {
-			dfile.load_from_file (fname, KeyFileFlags.NONE);
+			xml = load_file_to_string (_metadata_file);
 		} catch (Error e) {
-			warning (_("Could not open desktop file: %s").printf (e.message));
+			warning (_("Could not open AppStream metadata file: %s").printf (e.message));
+			return;
 		}
 
-		info.name = get_desktop_file_string (dfile, "Name");
-		if (idname == "")
-			idname = info.name;
-		version = get_desktop_file_string (dfile, "X-AppVersion");
-		info.summary = get_desktop_file_string (dfile, "Comment");
-		info.icon = get_desktop_file_string (dfile, "Icon");
-		author = get_desktop_file_string (dfile, "X-Author");
-		info.set_categories_from_str (get_desktop_file_string (dfile, "Categories"));
+		if (xml == null) {
+			warning (_("Could not open AppStream metadata file: %s").printf (_("File does not exist.")));
+			return;
+		}
+		xml_data = xml;
+
+		// fetch AppStream component from data
+		var mdata = new Appstream.Metadata ();
+		var cpt = mdata.parse_data (xml_data);
+
+		// set version, after retting the latest release
+		Appstream.Release? release = null;
+		GenericArray<Appstream.Release> releases = cpt.get_releases ();
+		uint64 timestamp = 0;
+		for(uint i = 0; i < releases.length; i++) {
+			Appstream.Release r = releases.get (i);
+			if (r.get_timestamp () > timestamp) {
+				release = r;
+				timestamp = r.get_timestamp ();
+			}
+		}
+		if (release != null) {
+			version = release.get_version ();
+		}
+
+		// set desktop-file
+		if (cpt.idname.has_suffix (".desktop")) {
+			desktop_file = "%APP%/" + cpt.idname;
+		} else {
+			warning (_("AppStream metadata for %s did not have desktop-file as ID!").printf (cpt.name));
+		}
+
+		// set new component
+		info = cpt;
 	}
 
 	public string get_raw_cmd (bool subst_cmd = false) {

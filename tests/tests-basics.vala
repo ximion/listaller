@@ -61,13 +61,10 @@ void test_application_ids () {
 	bool ret = false;
 	msg ("Testing app-ids");
 
-	string foobar_dfile = Path.build_filename (foobar_dir, "foobar.desktop", null);
-// FIXME
-#if 0
-	AppItem dummy = new AppItem.from_desktopfile (foobar_dfile);
+	string foobar_mfile = Path.build_filename (foobar_dir, "foobar.appdata.xml", null);
+	AppItem dummy = new AppItem.from_metadata (foobar_mfile);
 	msg ("Dummy application id: " + dummy.appid);
-#endif
-	string expected_id = "foobar;1.0;" + fold_user_dir (foobar_dfile) + ";" + "unknown";
+	string expected_id = "foobar;1.0;" + fold_user_dir (foobar_mfile) + ";" + "unknown";
 
 	//! assert (dummy.appid == expected_id);
 
@@ -86,8 +83,8 @@ void test_application_ids () {
 	item2.origin = "http://example.com";
 	assert (item2.info.name == "MyApp");
 	assert (item2.idname == "myapp");
-	//item2.desktop_file = Path.build_filename (foobar_dir, "foobar.desktop", null);
-	item2.update_with_desktop_file ();
+	item2.metadata_file = Path.build_filename (foobar_dir, "foobar.appdata.xml", null);
+	item2.update_with_metadata_file ();
 	assert (item2.desktop_file == "");
 	assert (item2.appid == "myapp;0.1;;http://example.com");
 
