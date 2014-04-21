@@ -10,14 +10,22 @@ namespace Appstream {
 		public void add_subcategory (Appstream.Category cat);
 		[CCode (cname = "as_category_complete")]
 		public void complete ();
+		[CCode (cname = "as_category_construct")]
+		public static Appstream.Category @construct (GLib.Type object_type);
 		[CCode (cname = "as_category_get_directory")]
 		public unowned string get_directory ();
+		[CCode (cname = "as_category_get_excluded")]
+		public unowned GLib.List<string> get_excluded ();
 		[CCode (cname = "as_category_get_icon")]
 		public unowned string get_icon ();
+		[CCode (cname = "as_category_get_included")]
+		public unowned GLib.List<string> get_included ();
 		[CCode (cname = "as_category_get_level")]
 		public int get_level ();
 		[CCode (cname = "as_category_get_name")]
 		public unowned string get_name ();
+		[CCode (cname = "as_category_get_subcategories")]
+		public unowned GLib.List<string> get_subcategories ();
 		[CCode (cname = "as_category_get_summary")]
 		public unowned string get_summary ();
 		[CCode (cname = "as_category_has_subcategory")]
@@ -57,6 +65,10 @@ namespace Appstream {
 		public void add_release (Appstream.Release release);
 		[CCode (cname = "as_component_add_screenshot")]
 		public void add_screenshot (Appstream.Screenshot sshot);
+		[CCode (cname = "as_component_construct")]
+		public static Appstream.Component @construct (GLib.Type object_type);
+		[CCode (array_length = false, array_null_terminated = true, cname = "as_component_get_categories")]
+		public string[] get_categories ();
 		[CCode (array_length = false, array_null_terminated = true, cname = "as_component_get_compulsory_for_desktops")]
 		public unowned string[] get_compulsory_for_desktops ();
 		[CCode (cname = "as_component_get_description")]
@@ -69,8 +81,12 @@ namespace Appstream {
 		public unowned string get_icon_url ();
 		[CCode (cname = "as_component_get_idname")]
 		public unowned string get_idname ();
+		[CCode (array_length = false, array_null_terminated = true, cname = "as_component_get_keywords")]
+		public string[] get_keywords ();
 		[CCode (cname = "as_component_get_kind")]
 		public Appstream.ComponentKind get_kind ();
+		[CCode (array_length = false, array_null_terminated = true, cname = "as_component_get_mimetypes")]
+		public string[] get_mimetypes ();
 		[CCode (cname = "as_component_get_name")]
 		public unowned string get_name ();
 		[CCode (cname = "as_component_get_name_original")]
@@ -167,14 +183,20 @@ namespace Appstream {
 	public class Database : GLib.Object {
 		[CCode (cname = "as_database_new", has_construct_function = false)]
 		public Database ();
+		[CCode (cname = "as_database_construct")]
+		public static Appstream.Database @construct (GLib.Type object_type);
 		[CCode (cname = "as_database_db_exists")]
 		public bool db_exists ();
 		[CCode (cname = "as_database_find_components")]
 		public GLib.GenericArray<Appstream.Component> find_components (Appstream.SearchQuery query);
 		[CCode (cname = "as_database_find_components_by_str")]
-		public GLib.GenericArray<Appstream.Component> find_components_by_str (string search_str, string? categories_str);
+		public GLib.GenericArray<Appstream.Component> find_components_by_str (string search_str, string categories_str);
 		[CCode (cname = "as_database_get_all_components")]
 		public GLib.GenericArray<Appstream.Component> get_all_components ();
+		[CCode (cname = "as_database_get_component_by_id")]
+		public Appstream.Component get_component_by_id (string idname);
+		[CCode (cname = "as_database_get_components_by_provides")]
+		public GLib.GenericArray<Appstream.Component> get_components_by_provides (string provides_item);
 		[CCode (cname = "as_database_get_database_path")]
 		public unowned string get_database_path ();
 		public virtual bool open ();
@@ -191,12 +213,16 @@ namespace Appstream {
 		public bool config_distro_get_bool (string key);
 		[CCode (cname = "as_distro_details_config_distro_get_str")]
 		public string config_distro_get_str (string key);
+		[CCode (cname = "as_distro_details_construct")]
+		public static Appstream.DistroDetails @construct (GLib.Type object_type);
 		[CCode (cname = "as_distro_details_get_distro_id")]
 		public unowned string get_distro_id ();
 		[CCode (cname = "as_distro_details_get_distro_name")]
 		public unowned string get_distro_name ();
 		[CCode (cname = "as_distro_details_get_distro_version")]
 		public unowned string get_distro_version ();
+		[CCode (array_length = false, array_null_terminated = true, cname = "as_distro_details_get_icon_repository_paths")]
+		public string[] get_icon_repository_paths ();
 		[NoAccessorMethod]
 		public string distro_id { owned get; }
 		[NoAccessorMethod]
@@ -233,10 +259,16 @@ namespace Appstream {
 	public class MenuParser : GLib.Object {
 		[CCode (cname = "as_menu_parser_new", has_construct_function = false)]
 		public MenuParser ();
+		[CCode (cname = "as_menu_parser_construct")]
+		public static Appstream.MenuParser @construct (GLib.Type object_type);
+		[CCode (cname = "as_menu_parser_construct_from_file")]
+		public static Appstream.MenuParser construct_from_file (GLib.Type object_type, string menu_file);
 		[CCode (cname = "as_menu_parser_new_from_file", has_construct_function = false)]
 		public MenuParser.from_file (string menu_file);
 		[CCode (cname = "as_menu_parser_get_update_category_data")]
 		public bool get_update_category_data ();
+		[CCode (cname = "as_menu_parser_parse")]
+		public GLib.List<Appstream.Category> parse ();
 		[CCode (cname = "as_menu_parser_set_update_category_data")]
 		public void set_update_category_data (bool value);
 		[NoAccessorMethod]
@@ -301,6 +333,10 @@ namespace Appstream {
 	public class SearchQuery : GLib.Object {
 		[CCode (cname = "as_search_query_new", has_construct_function = false)]
 		public SearchQuery (string term);
+		[CCode (cname = "as_search_query_construct")]
+		public static Appstream.SearchQuery @construct (GLib.Type object_type, string term);
+		[CCode (array_length = false, array_null_terminated = true, cname = "as_search_query_get_categories")]
+		public string[] get_categories ();
 		[CCode (cname = "as_search_query_get_search_all_categories")]
 		public bool get_search_all_categories ();
 		[CCode (cname = "as_search_query_get_search_term")]
@@ -364,6 +400,8 @@ namespace Appstream {
 	public static Appstream.ComponentKind component_kind_from_string (string kind_str);
 	[CCode (cheader_filename = "appstream.h", cname = "as_component_kind_to_string")]
 	public static unowned string component_kind_to_string (Appstream.ComponentKind kind);
+	[CCode (cheader_filename = "appstream.h", cname = "as_get_system_categories")]
+	public static GLib.List<Appstream.Category> get_system_categories ();
 	[CCode (cheader_filename = "appstream.h", cname = "as_provides_item_create")]
 	public static string provides_item_create (Appstream.ProvidesKind kind, string value);
 	[CCode (cheader_filename = "appstream.h", cname = "as_provides_item_get_kind")]
