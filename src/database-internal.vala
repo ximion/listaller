@@ -731,36 +731,36 @@ private abstract class InternalDB : Object {
 
 	/* Dependency stuff */
 
-	public bool add_dependency (Dependency dep_mod) throws DatabaseError {
+	public bool add_dependency (Dependency dep) throws DatabaseError {
 		if (!database_writeable ()) {
 			throw new DatabaseError.ERROR (_("Tried to write on readonly database! (This should never happen)"));
 		}
 
 		// Set install timestamp
 		DateTime dt = new DateTime.now_local ();
-		dep_mod.install_time = dt.to_unix ();
+		dep.install_time = dt.to_unix ();
 
 		try {
 			// Assign values
-			db_assert (insert_dep.bind_text (DepRow.IDNAME +1, dep_mod.idname), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.IDNAME +1, dep.info.idname), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.FULLNAME +1, dep_mod.full_name), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.FULLNAME +1, dep.info.name), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.VERSION +1, dep_mod.get_version ()), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.VERSION +1, dep.get_version ()), "bind value");
 
 			db_assert (insert_dep.bind_text (DepRow.METADATA +1, "TODO"));
 
-			db_assert (insert_dep.bind_int64 (DepRow.INST_TIME +1, dep_mod.install_time), "bind value");
+			db_assert (insert_dep.bind_int64 (DepRow.INST_TIME +1, dep.install_time), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.ARCHITECTURE +1, dep_mod.architecture), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.ARCHITECTURE +1, dep.architecture), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.ORIGIN +1, dep_mod.origin), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.ORIGIN +1, dep.origin), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.ITEMS_INSTALLED +1, dep_mod.get_installdata_as_string ()), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.ITEMS_INSTALLED +1, dep.get_installdata_as_string ()), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.ITEMS +1, dep_mod.get_items_as_string ()), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.ITEMS +1, dep.get_items_as_string ()), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.ENVIRONMENT +1, dep_mod.environment), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.ENVIRONMENT +1, dep.environment), "bind value");
 
 			db_assert (insert_dep.bind_text (DepRow.DEPENDENCIES +1, ""), "bind value");
 
@@ -777,8 +777,8 @@ private abstract class InternalDB : Object {
 	private Dependency? retrieve_dependency (Sqlite.Statement stmt) {
 		var dep = new Dependency.blank ();
 
-		dep.idname = stmt.column_text (DepRow.IDNAME);
-		dep.full_name = stmt.column_text (DepRow.FULLNAME);
+		dep.info.idname = stmt.column_text (DepRow.IDNAME);
+		dep.info.name = stmt.column_text (DepRow.FULLNAME);
 		dep.set_version (stmt.column_text (DepRow.VERSION));
 
 		dep.install_time = stmt.column_int (DepRow.INST_TIME);

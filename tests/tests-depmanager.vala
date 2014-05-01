@@ -51,7 +51,8 @@ void test_dependency_installer () {
 	var cfactory = new Dep.ComponentFactory (ssettings);
 
 	// Test 1
-	Dependency test1 = new Dependency ("Test:1#expat");
+	Dependency test1 = new Dependency.blank ();
+	test1.info.idname = "Test:1#expat";
 	test1.feed_url = "http://repo.roscidus.com/lib/expat1";
 	//test1.add_item ("libgee.so.2", Dep.ItemType.SHARED_LIB);
 	test1.add_item (Dep.ItemType.SHARED_LIB, "bladada.so.2");
@@ -59,11 +60,12 @@ void test_dependency_installer () {
 	ret = depinst.install_existing_module_dependency (cfactory, ref test1);
 	assert (ret == true);
 	assert (test1.installed == true);
-	debug (test1.full_name);
-	assert (test1.full_name == "libexpat1");
+	debug (test1.info.name);
+	assert (test1.info.name == "libexpat1");
 
 	// Test 2
-	Dependency test2 = new Dependency ("Test:2#GNU_parallel");
+	Dependency test2 = new Dependency.blank ();
+	test2.info.idname = "Test:2#GNU_parallel";
 	test2.feed_url = "http://git.savannah.gnu.org/cgit/parallel.git/plain/packager/0install/parallel.xml";
 	//test2.add_item ("libvorbis.so.0", Dep.ItemType.SHARED_LIB);
 	test2.add_item (Dep.ItemType.SHARED_LIB, "nobis.so.0");
@@ -75,16 +77,16 @@ void test_dependency_installer () {
 	 */
 	assert (ret == false);
 	assert (test2.installed == false);
-	assert (test2.full_name == "GNU parallel");
+	assert (test2.info.name == "GNU parallel");
 
 	// Test 3
 	// Look if dependency of test1 is still available :-P
 	test1.installed = false;
-	test1.full_name = "";
+	test1.info.name = "";
 	ret = depinst.install_existing_module_dependency (cfactory, ref test1);
 	assert (ret == true);
 	assert (test1.installed == true);
-	assert (test1.full_name == "libexpat1");
+	assert (test1.info.name == "libexpat1");
 }
 
 void test_dependency_manager () {
@@ -96,7 +98,7 @@ void test_dependency_manager () {
 	assert (testA != null);
 
 	string path = depman.get_absolute_library_path (testA);
-	string expectedPath = Path.build_filename (ssettings.depdata_dir (), testA.idname, "usr", "lib", null);
+	string expectedPath = Path.build_filename (ssettings.depdata_dir (), testA.info.idname, "usr", "lib", null);
 	debug (path);
 	assert (path == expectedPath);
 
@@ -129,7 +131,8 @@ void test_packagekit_installer () {
 
 	// Build simple Nano dependency
 	ArrayList<Dependency> deplist = new ArrayList<Dependency> ();
-	Dependency depNano = new Dependency ("Nano");
+	Dependency depNano = new Dependency.blank ();
+	depNano.info.idname = "Nano";
 	depNano.add_item (Dep.ItemType.BINARY, "/usr/bin/nano");
 
 	Dep.PkInstaller pkit = new Dep.PkInstaller (ssettings);
@@ -140,7 +143,8 @@ void test_packagekit_installer () {
 	assert (depNano.installed == true);
 
 	// Now something more advanced
-	Dependency crazy = new Dependency ("CrazyStuff");
+	Dependency crazy = new Dependency.blank ();
+	crazy.info.idname = "CrazyStuff";
 	crazy.add_item (Dep.ItemType.BINARY, "/bin/bash");
 	crazy.add_item (Dep.ItemType.SHARED_LIB, "libpackagekit-glib2.so");
 	crazy.add_item (Dep.ItemType.SHARED_LIB, "libc6.so");
@@ -165,7 +169,8 @@ void test_feed_installer () {
 	msg ("ZI Feed installer tests");
 	Dep.FeedInstaller finst = new Dep.FeedInstaller (ssettings);
 
-	Dependency test1 = new Dependency ("feedTest:1-gnu_parallel");
+	Dependency test1 = new Dependency.blank ();
+	test1.info.idname = "feedTest:1-gnu_parallel";
 	test1.feed_url = "http://git.savannah.gnu.org/cgit/parallel.git/plain/packager/0install/parallel.xml";
 
 	bool ret;
@@ -174,7 +179,7 @@ void test_feed_installer () {
 		error (finst.last_error.details);
 	}
 	assert (ret == true);
-	assert (test1.full_name == "GNU parallel");
+	assert (test1.info.name == "GNU parallel");
 	debug ("Selected version (GNU parallel): %s", test1.get_version ());
 }
 
@@ -183,22 +188,26 @@ void test_depsolver () {
 	ArrayList<Dependency> deplist = new ArrayList<Dependency> ();
 
 	// Create a set of dependencies
-	Dependency dep1 = new Dependency ("Gee");
+	Dependency dep1 = new Dependency.blank ();
+	dep1.info.idname = "Gee";
 	dep1.feed_url = "http://sweets.sugarlabs.org/base/libgee";
 	dep1.add_item (Dep.ItemType.SHARED_LIB, "libc.so.6");
 	deplist.add (dep1);
 
-	Dependency dep2 = new Dependency ("SDLMixer1.2");
+	Dependency dep2 = new Dependency.blank ();
+	dep2.info.idname = "SDLMixer1.2";
 	dep2.feed_url = "http://repo.roscidus.com/lib_rsl/sdl-mixer1.2";
 	dep2.add_item (Dep.ItemType.SHARED_LIB, "libgee.so");
 	deplist.add (dep2);
 
-	Dependency dep3 = new Dependency ("Nano");
+	Dependency dep3 = new Dependency.blank ();
+	dep3.info.idname = "Nano";
 	dep3.add_item (Dep.ItemType.BINARY, "/usr/bin/nano");
 	dep3.add_item (Dep.ItemType.SHARED_LIB, "libc.so.6");
 	deplist.add (dep3);
 
-	Dependency dep4 = new Dependency ("LibXml2");
+	Dependency dep4 = new Dependency.blank ();
+	dep4.info.idname = "LibXml2";
 	dep4.feed_url = "http://sweets.sugarlabs.org/base/libxml2";
 	dep4.add_item (Dep.ItemType.SHARED_LIB, "libglib-2.0.so.0");
 	deplist.add (dep4);

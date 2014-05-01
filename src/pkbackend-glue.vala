@@ -105,7 +105,7 @@ internal ArrayList<UpdateItem> get_update_items_from_package_id_list (Updater up
 
 				string dep_id = swid.substring (4);
 
-				if ((item.sw_old as Dependency).idname == dep_id)
+				if ((item.sw_old as Dependency).info.idname == dep_id)
 					res.add (item);
 			}
 		}

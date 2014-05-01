@@ -123,28 +123,28 @@ private class DependencyScanner : Object {
 				string iname = Dependency.item_get_name (s);
 
 				if (dep.has_matching_item (itype, iname)) {
-					comp_list.set (dep.idname, dep);
+					comp_list.set (dep.info.idname, dep);
 					iter.remove ();
 				}
 
 			} while (iter.next ());
 		}
 
-		foreach (Dependency comp in comp_list.values) {
+		foreach (Dependency dep in comp_list.values) {
 			// pretend to be installed
 			// FIXME: don't use this hack and *really* determine if dependency was installed
-			comp.installed = true;
+			dep.installed = true;
 
 			string version = "";
 			try {
-				version = comp.get_version ();
+				version = dep.get_version ();
 			} catch (Error e) {
-				debug ("Unable to retrieve version for %s: %s", comp.idname, e.message);
+				debug ("Unable to retrieve version for %s: %s", dep.info.idname, e.message);
 			}
 			if (version == "")
-				res.add (comp.idname);
+				res.add (dep.info.idname);
 			else
-				res.add ("%s (>= %s)".printf (comp.idname, version));
+				res.add ("%s (>= %s)".printf (dep.info.idname, version));
 		}
 
 		if (required_items.size != 0) {

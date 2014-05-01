@@ -78,7 +78,7 @@ internal class ComponentFactory : Object {
 				var dep = new Dependency.blank ();
 				bool ret = dep.load_from_file (fname, include_optional);
 				if (ret)
-					registered_deps.set (dep.idname, dep);
+					registered_deps.set (dep.info.idname, dep);
 				else
 					warning ("Unable to load data for module: %s", fname);
 			}
@@ -97,7 +97,7 @@ internal class ComponentFactory : Object {
 			foreach (string fname in framework_info_files_sys) {
 				var cfrmw = new Dependency.blank ();
 				bool ret = cfrmw.load_from_file (fname, false);
-				if (cfrmw.idname == cmname)
+				if (cfrmw.info.idname == cmname)
 					return fname;
 			}
 		}
@@ -105,7 +105,7 @@ internal class ComponentFactory : Object {
 			foreach (string fname in framework_info_files_listaller) {
 				var cfrmw = new Dependency.blank ();
 				bool ret = cfrmw.load_from_file (fname, false);
-				if (cfrmw.idname == cmname)
+				if (cfrmw.info.idname == cmname)
 					return fname;
 			}
 		}
@@ -114,7 +114,7 @@ internal class ComponentFactory : Object {
 			foreach (string fname in module_info_files) {
 				var dep = new Dependency.blank ();
 				bool ret = dep.load_from_file (fname, false);
-				if (dep.idname == cmname)
+				if (dep.info.idname == cmname)
 					return fname;
 			}
 		}
@@ -153,10 +153,10 @@ internal class ComponentFactory : Object {
 				var dep = new Dependency.blank ();
 				bool ret = dep.load_from_file (fname);
 				// installed system modules take precendence before any additional modules
-				if (dep.idname in registered_deps)
+				if (dep.info.idname in registered_deps)
 					continue;
 				if (ret)
-					registered_deps.set (dep.idname, dep);
+					registered_deps.set (dep.info.idname, dep);
 				else
 					warning ("Unable to load data for module: %s", fname);
 			}
@@ -201,7 +201,7 @@ internal class ComponentFactory : Object {
 		}
 
 		if ((!dep.installed) && (reason == null))
-			critical ("Module '%s' is not installed, but we don't know a reason why, since no resolver has failed. This is usually a bug in a resolver, please fix it!", dep.full_name);
+			critical ("Module '%s' is not installed, but we don't know a reason why, since no resolver has failed. This is usually a bug in a resolver, please fix it!", dep.info.name);
 
 		return dep.installed;
 	}
@@ -274,7 +274,7 @@ internal class ComponentFactory : Object {
 
 			ret = component_version_satisfied (c_version, required_version, required_version_relation);
 			if (!ret) {
-				reason = _("Component %s is only available in version %s, while a version %s %s is required. This software can not be installed, please notify the original author about it.").printf (dep.full_name,
+				reason = _("Component %s is only available in version %s, while a version %s %s is required. This software can not be installed, please notify the original author about it.").printf (dep.info.name,
 																										c_version,
 																										required_version,
 																										required_version_relation);

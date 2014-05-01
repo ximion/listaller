@@ -51,7 +51,7 @@ private class DepInstaller : MessageObject {
 		if (inst_error != null)
 			text = "\n\n%s".printf (inst_error.details);
 		emit_error (ErrorEnum.DEPENDENCY_MISSING, "%s%s".printf (
-			_("Unable to find valid candidate to satisfy dependency '%s'!").printf (dep.full_name),
+			_("Unable to find valid candidate to satisfy dependency '%s'!").printf (dep.info.name),
 			  text));
 	}
 
@@ -83,7 +83,7 @@ private class DepInstaller : MessageObject {
 				if (msg == null)
 					msg = "Solver did not return an error.";
 				debug ("Solver install error: %s", msg);
-				error_msg = _("Unable to install module '%s' which is required for this installation.\nMessage: %s").printf (dep.full_name, msg);
+				error_msg = _("Unable to install module '%s' which is required for this installation.\nMessage: %s").printf (dep.info.name, msg);
 			}
 			if (ret)
 				return true;
@@ -98,7 +98,7 @@ private class DepInstaller : MessageObject {
 		// all resolvers failed, but we don't have an explicit error -> no resolver was able to handle the dependency
 		if (!ret) {
 			emit_error (ErrorEnum.DEPENDENCY_INSTALL_FAILED,
-						_("Unable to install module '%s' which is required for this installation.\nUnable to find a method to satisfy the dependency.").printf (dep.full_name));
+						_("Unable to install module '%s' which is required for this installation.\nUnable to find a method to satisfy the dependency.").printf (dep.info.name));
 		}
 
 		return ret;
@@ -123,14 +123,14 @@ private class DepInstaller : MessageObject {
 			return false;
 		}
 
-		foreach (Dependency dep_mod in req_mods) {
-			debug ("Prepared module dependency %s, satisfied: %i", dep_mod.idname, (int) dep_mod.installed);
+		foreach (Dependency dep in req_mods) {
+			debug ("Prepared module dependency %s, satisfied: %i", dep.info.idname, (int) dep.installed);
 
 			ret = true;
-			if (!depman.module_is_installed (ref dep_mod)) {
-				ret = install_module_dep_internal (cfactory, dep_mod);
-				if ((ret) && (dep_mod.installed))
-					db.add_dependency (dep_mod);
+			if (!depman.module_is_installed (ref dep)) {
+				ret = install_module_dep_internal (cfactory, dep);
+				if ((ret) && (dep.installed))
+					db.add_dependency (dep);
 			}
 			if (!ret)
 				break;
@@ -143,12 +143,12 @@ private class DepInstaller : MessageObject {
 	 * This method is useful for testing, and should only be used for that
 	 * purpose internally.
 	 */
-	internal bool install_existing_module_dependency (ComponentFactory cfactory, ref Dependency dep_mod) {
+	internal bool install_existing_module_dependency (ComponentFactory cfactory, ref Dependency dep) {
 		bool ret = true;
-		if (!depman.module_is_installed (ref dep_mod)) {
-			ret = install_module_dep_internal (cfactory, dep_mod);
-			if ((ret) && (dep_mod.installed))
-				db.add_dependency (dep_mod);
+		if (!depman.module_is_installed (ref dep)) {
+			ret = install_module_dep_internal (cfactory, dep);
+			if ((ret) && (dep.installed))
+				db.add_dependency (dep);
 		}
 
 		return ret;

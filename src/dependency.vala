@@ -23,6 +23,7 @@ using Gee;
 using Listaller;
 using Listaller.Utils;
 using Listaller.Dep;
+using Appstream;
 
 namespace Listaller.Dep {
 
@@ -58,41 +59,7 @@ namespace Listaller {
  * about the referenced component-dependency.
  */
 private class Dependency : Object {
-	private string _full_name;
-	public string full_name {
-		get {
-			if (_full_name == "")
-				_full_name = _idname;
-			if (_full_name == "")
-				return "empty";
-			return _full_name;
-		}
-		internal set {
-			_full_name = value;
-		}
-	}
-
-	private string _idname;
-	public string idname {
-		get {
-			if (_idname != "")
-				return _idname;
-
-			// Form unique dependency-id, if not already set
-			_idname = full_name;
-			_idname = _idname.down ().replace (" ", "_");
-
-			return _idname;
-		}
-		set {
-			_idname = value;
-		}
-	}
-
-	public string summary { get; internal set; }
-	public string description { get; internal set; }
-	public string homepage { get; internal set; }
-	public string author { get; internal set; }
+	public Component info { get; private set; }
 
 	public string architecture { get; internal set; } // e.g. amd64
 
@@ -105,10 +72,10 @@ private class Dependency : Object {
 		}
 		set {
 			if ((!Utils.__unittestmode) &&
-			    (idname != "") &&
+			    (info.idname != "") &&
 			    (!has_installdata ()) &&
 			    (feed_url == "")) {
-				warning ("Trying to set dependency %s to 'satisfied', although it is not a standardlib. (Reason: No install-data found!) - This usually is a packaging bug.", idname);
+				warning ("Trying to set dependency %s to 'satisfied', although it is not a standardlib. (Reason: No install-data found!) - This usually is a packaging bug.", info.idname);
 			}
 			_installed = value;
 		}
@@ -119,8 +86,6 @@ private class Dependency : Object {
 	public string environment { get; internal set; }
 
 	public string feed_url { get; internal set; }
-
-	public string pkgname { get; internal set; }
 
 	protected string _version_raw;
 	private string _version_cache;
@@ -137,7 +102,7 @@ private class Dependency : Object {
 	protected HashSet<string> install_data { get; internal set; }
 
 	public Dependency.blank () {
-		_full_name = "";
+		info = new Component ();
 
 		item_list = new HashSet<string> ();
 		install_data = new HashSet<string> ();
@@ -148,9 +113,9 @@ private class Dependency : Object {
 		architecture = system_machine_generic ();
 	}
 
-	public Dependency (string id_name) {
+	public Dependency (Component cpt) {
 		this.blank ();
-		idname = id_name;
+		info = cpt;
 	}
 
 	protected bool contains_directive (string str) {
@@ -200,7 +165,7 @@ private class Dependency : Object {
 
 				Process.spawn_command_line_sync (cmd, out rawdata, out stderr, out exit_status);
 				if (exit_status != 0)
-					throw new ComponentError.DIRECTIVES_RESOLVE_FAILED ("Unable to resolve directives for %s: Command %s returned error-code %i.", full_name, cmd, exit_status);
+					throw new ComponentError.DIRECTIVES_RESOLVE_FAILED ("Unable to resolve directives for %s: Command %s returned error-code %i.", info.name, cmd, exit_status);
 				res = rawdata;
 				// for some stupid reason, a few tools (such as the Xserver) print their versions to stderr
 				// this workaround reflects that fact - error has been catched through an exit code above
@@ -230,7 +195,7 @@ private class Dependency : Object {
 			if (str.has_prefix ("prefix$ ")) {
 				// the prefix directive fetches the data after the given prefix
 				if (str_is_empty (res))
-					throw new ComponentError.DIRECTIVES_INVALID ("Unable to resolve directives for %s: Get prefix-directive found, but don't have valid data to apply it.", full_name);
+					throw new ComponentError.DIRECTIVES_INVALID ("Unable to resolve directives for %s: Get prefix-directive found, but don't have valid data to apply it.", info.name);
 				string prefix = v_value;
 				if (res.index_of (prefix) < 0)
 					throw new ComponentError.DIRECTIVES_RESOLVE_FAILED ("Unable to get data prefixed with '%s' from raw data string '%s'.", prefix, res);
@@ -258,7 +223,7 @@ private class Dependency : Object {
 			return _version_cache;
 
 		if (!installed)
-			throw new ComponentError.VERSION_NOT_FOUND ("Component %s is not installed, cannot retrieve version number!", full_name);
+			throw new ComponentError.VERSION_NOT_FOUND ("Component %s is not installed, cannot retrieve version number!", info.name);
 
 		// process version directive, if necessary
 		if (!contains_directive (_version_raw))
@@ -275,7 +240,7 @@ private class Dependency : Object {
 		res = res.replace ("\n", "");
 
 		if (res == "")
-			warning ("No version found for component '%s'.", idname);
+			warning ("No version found for component '%s'.", info.idname);
 
 		return res;
 	}
@@ -291,8 +256,8 @@ private class Dependency : Object {
 			return null;
 		data.open_block_first ();
 
-		full_name = data.get_value ("Name");
-		idname = data.get_value ("ID");
+		info.name = data.get_value ("Name");
+		info.idname = data.get_value ("ID");
 		_version_raw = data.get_value ("Version");
 		if (!data.has_field ("Version"))
 			// if there is no version field, we can never determine the version, so this component is not versioned
@@ -399,7 +364,7 @@ private class Dependency : Object {
 
 		// We don't like file requirements
 		if (ty == ItemType.FILE)
-			warning ("Component %s depends on a file (%s), which is not supported at time.".printf (idname, list));
+			warning ("Component %s depends on a file (%s), which is not supported at time.".printf (info.idname, list));
 
 		if (list.index_of ("\n") < 0) {
 			add_item (ty, list);
@@ -541,7 +506,7 @@ private class Dependency : Object {
 	 * Get installation directory for this module, using the SettupSettings taken as argument
 	 */
 	public string get_install_dir_for_setting (SetupSettings setup_setting) {
-		return Path.build_filename (setup_setting.depdata_dir (), idname, null);
+		return Path.build_filename (setup_setting.depdata_dir (), info.idname, null);
 	}
 
 	/**
@@ -549,7 +514,7 @@ private class Dependency : Object {
 	*/
 	public string build_pk_package_id () {
 		string package_id;
-		string unique_idname = "dep:%s".printf (idname);
+		string unique_idname = "dep:%s".printf (info.idname);
 
 		package_id = PackageKit.Package.id_build (unique_idname,
 							  get_version (),
@@ -562,13 +527,13 @@ private class Dependency : Object {
 
 [CCode (has_target = false)]
 private static uint dependency_hash_func (Dependency dep) {
-	string str = dep.idname;
+	string str = dep.info.idname;
 	return str_hash (str);
 }
 
 [CCode (has_target = false)]
 private static bool dependency_equal_func (Dependency a, Dependency b) {
-	if (a.idname == b.idname)
+	if (a.info.idname == b.info.idname)
 		return true;
 	return false;
 }
