@@ -105,49 +105,32 @@ private class DependencyScanner : Object {
 
 	private ArrayList<string> get_scanner_output_components (HashSet<string> required_items) {
 		var cfactory = new Dep.ComponentFactory ();
-		var comp_list = new HashMap<string, Dep.Component> ();
+		var comp_list = new HashMap<string, Dependency> ();
 		var res = new ArrayList<string> ();
 
 		// intialize factory, loading optional component-items for better dependency-resolving
 		cfactory.initialize (true);
 		if (!Utils.str_is_empty (extra_modules_dir))
 			cfactory.load_extra_modules (extra_modules_dir);
-		foreach (Dep.Framework frmw in cfactory.registered_frameworks.values) {
+
+		foreach (Dependency dep in cfactory.registered_deps.values) {
 			var iter = required_items.iterator ();
 			if (!iter.first ())
 				continue;
 			do {
 				string s = iter.get ();
+				Dep.ItemType itype = Dependency.item_get_type (s);
+				string iname = Dependency.item_get_name (s);
 
-				Dep.ItemType itype = Dep.Component.item_get_type (s);
-				string iname = Dep.Component.item_get_name (s);
-
-				if (frmw.has_matching_item (itype, iname)) {
-					comp_list.set (frmw.idname, frmw);
+				if (dep.has_matching_item (itype, iname)) {
+					comp_list.set (dep.idname, dep);
 					iter.remove ();
 				}
 
 			} while (iter.next ());
 		}
 
-		foreach (Dep.Module cmod in cfactory.registered_modules.values) {
-			var iter = required_items.iterator ();
-			if (!iter.first ())
-				continue;
-			do {
-				string s = iter.get ();
-				Dep.ItemType itype = Dep.Component.item_get_type (s);
-				string iname = Dep.Component.item_get_name (s);
-
-				if (cmod.has_matching_item (itype, iname)) {
-					comp_list.set (cmod.idname, cmod);
-					iter.remove ();
-				}
-
-			} while (iter.next ());
-		}
-
-		foreach (Dep.Component comp in comp_list.values) {
+		foreach (Dependency comp in comp_list.values) {
 			// pretend to be installed
 			// FIXME: don't use this hack and *really* determine if dependency was installed
 			comp.installed = true;

@@ -31,34 +31,24 @@ private class ZFeedSolver : AbstractSolver {
 		id = "ZeroInstall";
 	}
 
-	public override bool usable (Component cmp) {
-		if (!base.usable (cmp))
+	public override bool usable (Dependency dep) {
+		if (!base.usable (dep))
 			return false;
 
-		// we can only handle modules
-		if (cmp is Framework)
+		if (!dep.has_feed ())
 			return false;
-		if (cmp is Module) {
-			Module cmod = cmp as Module;
-			if (!cmod.has_feed ())
-				return false;
-			return true;
-		}
-
-		// we should never get here....
-		warning ("Some invalid component type was received in ZFeedSolver.usable() method!");
-		return false;
+		return true;
 	}
 
-	public override bool check_module_items_installed (Module cmod, out string? reason = null) {
+	public override bool check_dependency_installed (Dependency dep, out string? reason = null) {
 		// we do not handle install-checks
 		return true;
 	}
 
-	public override bool install_module (Module cmod) throws SolverError {
+	public override bool install_dependency (Dependency dep) throws SolverError {
 		Dep.FeedInstaller finst = new Dep.FeedInstaller (ssettings);
 		bool ret;
-		ret = finst.install_dependency (cmod);
+		ret = finst.install_dependency (dep);
 		if (finst.last_error != null) {
 			throw new SolverError.INSTALLATION_FAILED (finst.last_error.details);
 		}

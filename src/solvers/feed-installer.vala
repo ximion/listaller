@@ -159,7 +159,7 @@ private class FeedInstaller : MessageObject {
 		return ret;
 	}
 
-	private bool extract_depfile (Archive.Read ar, Archive.Entry e, string dest, Dep.Module dep) {
+	private bool extract_depfile (Archive.Read ar, Archive.Entry e, string dest, Dependency dep) {
 		bool ret = true;
 
 		// Target filename
@@ -188,7 +188,7 @@ private class FeedInstaller : MessageObject {
 		return true;
 	}
 
-	private bool install_archive (string fname, Dep.Module dep) {
+	private bool install_archive (string fname, Dependency dep) {
 		if (!FileUtils.test (fname, FileTest.EXISTS))
 			return false;
 
@@ -226,7 +226,7 @@ private class FeedInstaller : MessageObject {
 		return ret;
 	}
 
-	public bool install_dependency (Dep.Module dep) {
+	public bool install_dependency (Dependency dep) {
 		if (dep.feed_url == "")
 			return false;
 

@@ -51,7 +51,7 @@ void test_dependency_installer () {
 	var cfactory = new Dep.ComponentFactory (ssettings);
 
 	// Test 1
-	Dep.Module test1 = new Dep.Module ("Test:1#expat");
+	Dependency test1 = new Dependency ("Test:1#expat");
 	test1.feed_url = "http://repo.roscidus.com/lib/expat1";
 	//test1.add_item ("libgee.so.2", Dep.ItemType.SHARED_LIB);
 	test1.add_item (Dep.ItemType.SHARED_LIB, "bladada.so.2");
@@ -63,7 +63,7 @@ void test_dependency_installer () {
 	assert (test1.full_name == "libexpat1");
 
 	// Test 2
-	Dep.Module test2 = new Dep.Module ("Test:2#GNU_parallel");
+	Dependency test2 = new Dependency ("Test:2#GNU_parallel");
 	test2.feed_url = "http://git.savannah.gnu.org/cgit/parallel.git/plain/packager/0install/parallel.xml";
 	//test2.add_item ("libvorbis.so.0", Dep.ItemType.SHARED_LIB);
 	test2.add_item (Dep.ItemType.SHARED_LIB, "nobis.so.0");
@@ -92,7 +92,7 @@ void test_dependency_manager () {
 
 	DepManager depman = new DepManager (sdb);
 
-	Dep.Module testA = depman.dependency_from_idname ("libexpat1");
+	Dependency testA = depman.dependency_from_idname ("libexpat1");
 	assert (testA != null);
 
 	string path = depman.get_absolute_library_path (testA);
@@ -107,7 +107,7 @@ void test_dependency_manager () {
 	assert (path == expectedPath);
 }
 
-void search_install_pkdep (Dep.PkInstaller pkinst, Dep.PkResolver pksolv, ref Dep.Module dep) {
+void search_install_pkdep (Dep.PkInstaller pkinst, Dep.PkResolver pksolv, ref Dependency dep) {
 	bool ret;
 #if 0
 	ret = pksolv.search_dep_packages (dep);
@@ -128,8 +128,8 @@ void test_packagekit_installer () {
 	bool ret = false;
 
 	// Build simple Nano dependency
-	ArrayList<Dep.Module> deplist = new ArrayList<Dep.Module> ();
-	Dep.Module depNano = new Dep.Module ("Nano");
+	ArrayList<Dependency> deplist = new ArrayList<Dependency> ();
+	Dependency depNano = new Dependency ("Nano");
 	depNano.add_item (Dep.ItemType.BINARY, "/usr/bin/nano");
 
 	Dep.PkInstaller pkit = new Dep.PkInstaller (ssettings);
@@ -140,7 +140,7 @@ void test_packagekit_installer () {
 	assert (depNano.installed == true);
 
 	// Now something more advanced
-	Dep.Module crazy = new Dep.Module ("CrazyStuff");
+	Dependency crazy = new Dependency ("CrazyStuff");
 	crazy.add_item (Dep.ItemType.BINARY, "/bin/bash");
 	crazy.add_item (Dep.ItemType.SHARED_LIB, "libpackagekit-glib2.so");
 	crazy.add_item (Dep.ItemType.SHARED_LIB, "libc6.so");
@@ -150,7 +150,7 @@ void test_packagekit_installer () {
 
 #if 0
 	// Now something which fails
-	Dep.Module fail = new Dep.Module ("Fail");
+	Dependency fail = new Dependency ("Fail");
 	fail.add_item (Dep.ItemType.UNKNOWN, "/run/far_away");
 	ret = pkslv.search_dep_packages (fail);
 	if (!ret) {
@@ -165,7 +165,7 @@ void test_feed_installer () {
 	msg ("ZI Feed installer tests");
 	Dep.FeedInstaller finst = new Dep.FeedInstaller (ssettings);
 
-	Dep.Module test1 = new Dep.Module ("feedTest:1-gnu_parallel");
+	Dependency test1 = new Dependency ("feedTest:1-gnu_parallel");
 	test1.feed_url = "http://git.savannah.gnu.org/cgit/parallel.git/plain/packager/0install/parallel.xml";
 
 	bool ret;
@@ -180,25 +180,25 @@ void test_feed_installer () {
 
 void test_depsolver () {
 	msg ("Dependency solver tests");
-	ArrayList<Dep.Module> deplist = new ArrayList<Dep.Module> ();
+	ArrayList<Dependency> deplist = new ArrayList<Dependency> ();
 
 	// Create a set of dependencies
-	Dep.Module dep1 = new Dep.Module ("Gee");
+	Dependency dep1 = new Dependency ("Gee");
 	dep1.feed_url = "http://sweets.sugarlabs.org/base/libgee";
 	dep1.add_item (Dep.ItemType.SHARED_LIB, "libc.so.6");
 	deplist.add (dep1);
 
-	Dep.Module dep2 = new Dep.Module ("SDLMixer1.2");
+	Dependency dep2 = new Dependency ("SDLMixer1.2");
 	dep2.feed_url = "http://repo.roscidus.com/lib_rsl/sdl-mixer1.2";
 	dep2.add_item (Dep.ItemType.SHARED_LIB, "libgee.so");
 	deplist.add (dep2);
 
-	Dep.Module dep3 = new Dep.Module ("Nano");
+	Dependency dep3 = new Dependency ("Nano");
 	dep3.add_item (Dep.ItemType.BINARY, "/usr/bin/nano");
 	dep3.add_item (Dep.ItemType.SHARED_LIB, "libc.so.6");
 	deplist.add (dep3);
 
-	Dep.Module dep4 = new Dep.Module ("LibXml2");
+	Dependency dep4 = new Dependency ("LibXml2");
 	dep4.feed_url = "http://sweets.sugarlabs.org/base/libxml2";
 	dep4.add_item (Dep.ItemType.SHARED_LIB, "libglib-2.0.so.0");
 	deplist.add (dep4);

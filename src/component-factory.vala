@@ -37,8 +37,7 @@ internal class ComponentFactory : Object {
 	private ArrayList<AbstractSolver> solver_pool;
 	private SetupSettings ssettings;
 
-	public HashMap<string, Dep.Framework> registered_frameworks { get; private set; }
-	public HashMap<string, Dep.Module> registered_modules { get; private set; }
+	public HashMap<string, Dependency> registered_deps { get; private set; }
 
 	private HashSet<string>? framework_info_files_sys;
 	private HashSet<string>? framework_info_files_listaller;
@@ -47,8 +46,7 @@ internal class ComponentFactory : Object {
 	public ComponentFactory (SetupSettings? setup_settings = null) {
 		listaller_components_dir = PkgConfig.DATADIR + "/listaller/modules";
 
-		registered_frameworks = new HashMap<string, Dep.Framework> ();
-		registered_modules = new HashMap<string, Dep.Module> ();
+		registered_deps = new HashMap<string, Dependency> ();
 		solver_pool = new ArrayList<AbstractSolver> ();
 
 		ssettings = setup_settings;
@@ -74,25 +72,13 @@ internal class ComponentFactory : Object {
 		framework_info_files.add_all (framework_info_files_sys);
 		framework_info_files.add_all (framework_info_files_listaller);
 
-		// process all framework data
-		if (framework_info_files != null) {
-			foreach (string fname in framework_info_files) {
-				var cfrmw = new Dep.Framework.blank ();
-				bool ret = cfrmw.load_from_file (fname, include_optional);
-				if (ret)
-					registered_frameworks.set (cfrmw.idname, cfrmw);
-				else
-					warning ("Unable to load data for framework: %s", fname);
-			}
-		}
-
-		// process all module data
+		// process all dependency data
 		if (module_info_files != null) {
 			foreach (string fname in module_info_files) {
-				var cmod = new Dep.Module.blank ();
-				bool ret = cmod.load_from_file (fname, include_optional);
+				var dep = new Dependency.blank ();
+				bool ret = dep.load_from_file (fname, include_optional);
 				if (ret)
-					registered_modules.set (cmod.idname, cmod);
+					registered_deps.set (dep.idname, dep);
 				else
 					warning ("Unable to load data for module: %s", fname);
 			}
@@ -109,7 +95,7 @@ internal class ComponentFactory : Object {
 	public string? find_component_path (string cmname) {
 		if (framework_info_files_sys != null) {
 			foreach (string fname in framework_info_files_sys) {
-				var cfrmw = new Dep.Framework.blank ();
+				var cfrmw = new Dependency.blank ();
 				bool ret = cfrmw.load_from_file (fname, false);
 				if (cfrmw.idname == cmname)
 					return fname;
@@ -117,7 +103,7 @@ internal class ComponentFactory : Object {
 		}
 		if (framework_info_files_listaller != null) {
 			foreach (string fname in framework_info_files_listaller) {
-				var cfrmw = new Dep.Framework.blank ();
+				var cfrmw = new Dependency.blank ();
 				bool ret = cfrmw.load_from_file (fname, false);
 				if (cfrmw.idname == cmname)
 					return fname;
@@ -126,9 +112,9 @@ internal class ComponentFactory : Object {
 
 		if (module_info_files != null) {
 			foreach (string fname in module_info_files) {
-				var cmod = new Dep.Module.blank ();
-				bool ret = cmod.load_from_file (fname, false);
-				if (cmod.idname == cmname)
+				var dep = new Dependency.blank ();
+				bool ret = dep.load_from_file (fname, false);
+				if (dep.idname == cmname)
 					return fname;
 			}
 		}
@@ -164,13 +150,13 @@ internal class ComponentFactory : Object {
 		// process additional module data
 		if (extra_module_info_files != null) {
 			foreach (string fname in extra_module_info_files) {
-				var cmod = new Dep.Module.blank ();
-				bool ret = cmod.load_from_file (fname);
+				var dep = new Dependency.blank ();
+				bool ret = dep.load_from_file (fname);
 				// installed system modules take precendence before any additional modules
-				if (cmod.idname in registered_modules)
+				if (dep.idname in registered_deps)
 					continue;
 				if (ret)
-					registered_modules.set (cmod.idname, cmod);
+					registered_deps.set (dep.idname, dep);
 				else
 					warning ("Unable to load data for module: %s", fname);
 			}
@@ -189,78 +175,35 @@ internal class ComponentFactory : Object {
 
 	/**
 	 * Function which runs the solver methods on dependencies, to
-	 * determine if they are installed.
-	 */
-	private bool run_solver_framework (AbstractSolver depsolver, Dep.Framework cfrmw) {
-		if (!depsolver.usable (cfrmw))
-			return true;
-		bool ret;
-		string reason;
-		ret = depsolver.check_framework_items_installed (cfrmw, out reason);
-		if (!ret)
-			warning ("Framework '%s' could not be found, reason: %s", cfrmw.full_name, reason);
-
-		return ret;
-	}
-
-	/**
-	 * Function which runs the solver methods on dependencies, to
 	 * determine if they are installed and, if not, which parts are missing
 	 * to satisfy a dependency.
 	 */
-	private bool run_solver_module (AbstractSolver depsolver, Dep.Module cmod, out string reason) {
-		if (!depsolver.usable (cmod))
+	private bool run_solver_module (AbstractSolver depsolver, Dependency dep, out string reason) {
+		if (!depsolver.usable (dep))
 			return true;
 		bool ret;
-		ret = depsolver.check_module_items_installed (cmod, out reason);
+		ret = depsolver.check_dependency_installed (dep, out reason);
 
 		return ret;
 	}
 
-	private bool check_framework_installed (Dep.Framework cfrmw) {
-		if (cfrmw.installed)
-			return true;
-
-		bool ret = false;
-		string reason;
-		init_solverpool ();
-
-		foreach (AbstractSolver solver in solver_pool) {
-			ret = run_solver_framework (solver, cfrmw);
-			if (!ret)
-				return false;
-		}
-
-		return cfrmw.installed;
-	}
-
-	private bool check_module_installed (Dep.Module cmod, out string reason = null) {
-		if (cmod.installed)
+	private bool check_module_installed (Dependency dep, out string reason = null) {
+		if (dep.installed)
 			return true;
 
 		bool ret;
 		init_solverpool ();
 
 		foreach (AbstractSolver solver in solver_pool) {
-			ret = run_solver_module (solver, cmod, out reason);
+			ret = run_solver_module (solver, dep, out reason);
 			if (!ret)
 				return false;
 		}
 
-		if ((!cmod.installed) && (reason == null))
-			critical ("Module '%s' is not installed, but we don't know a reason why, since no resolver has failed. This is usually a bug in a resolver, please fix it!", cmod.full_name);
+		if ((!dep.installed) && (reason == null))
+			critical ("Module '%s' is not installed, but we don't know a reason why, since no resolver has failed. This is usually a bug in a resolver, please fix it!", dep.full_name);
 
-		return cmod.installed;
-	}
-
-	public bool framework_installed (string idname) {
-		if (registered_frameworks.has_key (idname)) {
-			Dep.Framework cfrmw = get_framework (idname);
-			check_framework_installed (cfrmw);
-			return cfrmw.installed;
-		}
-
-		return false;
+		return dep.installed;
 	}
 
 	public bool component_version_satisfied (string version, string reference_version, string relation) {
@@ -292,7 +235,7 @@ internal class ComponentFactory : Object {
 		return false;
 	}
 
-	private bool is_satisfied (string idname, string version_comp, out Dep.Module required_mod = null, out string reason = null) {
+	private bool is_satisfied (string idname, string version_comp, out Dependency required_dep = null, out string reason = null) {
 		if (!version_comp_is_valid (version_comp)) {
 			warning ("Version compare string %s is not valid!", version_comp);
 			reason = "Invalid version-compare string! (This is a serious packaging bug)";
@@ -309,45 +252,21 @@ internal class ComponentFactory : Object {
 		string required_version = vparts[1].strip ();
 		string required_version_relation = vparts[0].strip ();
 
-		if (registered_frameworks.has_key (idname)) {
-			Dep.Framework cfrmw = get_framework (idname);
-			check_framework_installed (cfrmw);
-			if (!cfrmw.installed) {
-				reason = _("Framework %s is not installed! Please make it available to continue.").printf (cfrmw.full_name);
-				return false;
-			}
-
-			string c_version;
-			try {
-				c_version = cfrmw.get_version ();
-			} catch (Error e) {
-				reason = e.message;
-				return false;
-			}
-
-			ret = component_version_satisfied (c_version, required_version, required_version_relation);
-			if (!ret)
-				reason = _("Framework %s is only available in version %s, while a version %s %s is required. This software can not be installed, please notify the original author about it.").printf (cfrmw.full_name,
-																										c_version,
-																										required_version,
-																										required_version_relation);
-			return ret;
-
-		} else if (registered_modules.has_key (idname)) {
+		if (registered_deps.has_key (idname)) {
 			// TODO: Resolve module (installed? all dependencies installed?)
-			Dep.Module cmod = get_module (idname);
+			Dependency dep = get_dependency (idname);
 			string ic_reason;
-			check_module_installed (cmod, out ic_reason);
+			check_module_installed (dep, out ic_reason);
 
-			if (!cmod.installed) {
+			if (!dep.installed) {
 				reason = ic_reason;
-				required_mod = cmod;
+				required_dep = dep;
 				return false;
 			}
 
 			string c_version;
 			try {
-				c_version = cmod.get_version ();
+				c_version = dep.get_version ();
 			} catch (Error e) {
 				reason = e.message;
 				return false;
@@ -355,33 +274,26 @@ internal class ComponentFactory : Object {
 
 			ret = component_version_satisfied (c_version, required_version, required_version_relation);
 			if (!ret) {
-				reason = _("Module %s is only available in version %s, while a version %s %s is required. This software can not be installed, please notify the original author about it.").printf (cmod.full_name,
+				reason = _("Component %s is only available in version %s, while a version %s %s is required. This software can not be installed, please notify the original author about it.").printf (dep.full_name,
 																										c_version,
 																										required_version,
 																										required_version_relation);
-				required_mod = cmod;
+				required_dep = dep;
 			}
 
 			return true;
 		} else {
-			reason = _("No framework/module matching '%s' (v%s) found!").printf (idname, version_comp);
+			reason = _("No component matching '%s' (v%s) found!").printf (idname, version_comp);
 
 			return false;
 		}
 	}
 
 	/*
-	 * Get franework dependency by name
+	 * Get dependency by name
 	 */
-	public Dep.Framework? get_framework (string name) {
-		return registered_frameworks.get (name);
-	}
-
-	/*
-	 * Get Module dependency by name
-	 */
-	public Dep.Module? get_module (string name) {
-		return registered_modules.get (name);
+	public Dependency? get_dependency (string name) {
+		return registered_deps.get (name);
 	}
 
 	/**
@@ -394,11 +306,11 @@ internal class ComponentFactory : Object {
 	 *
 	 * @returns TRUE if there is a way to install this application, FALSE in any other case
 	 */
-	public bool can_be_installed (string dependencies, out ArrayList<Dep.Module> required_modules, out string reason = null) {
+	public bool can_be_installed (string dependencies, out ArrayList<Dependency> required_modules, out string reason = null) {
 		// a dependencies listing is comma-separated, so split it
 		string[] deps = dependencies.split(",");
 
-		required_modules = new ArrayList<Dep.Module> ();
+		required_modules = new ArrayList<Dependency> ();
 		foreach (string dep in deps) {
 			string name;
 			string vcomp;
@@ -418,7 +330,7 @@ internal class ComponentFactory : Object {
 			}
 
 			string s_reason;
-			Dep.Module dep_mod;
+			Dependency dep_mod;
 			bool ret;
 			ret = is_satisfied (name, vcomp, out dep_mod, out s_reason);
 			if (!ret) {
@@ -439,9 +351,9 @@ internal class ComponentFactory : Object {
 	 *
 	 * @returns TRUE if dependencies in dep_list are installable.
 	 */
-	internal bool modules_installable (ref ArrayList<Dep.Module> dep_list, out string? reason = null) {
+	internal bool modules_installable (ref ArrayList<Dependency> dep_list, out string? reason = null) {
 		bool ret = true;
-		foreach (Dep.Module dep in dep_list) {
+		foreach (Dependency dep in dep_list) {
 			string ic_reason;
 			ret = check_module_installed (dep, out ic_reason);
 			if (!ret) {

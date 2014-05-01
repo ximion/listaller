@@ -50,8 +50,8 @@ private class DepManager : MessageObject {
 		return db;
 	}
 
-	public bool module_is_installed (ref Dep.Module dep) {
-		Dep.Module? dbDep = db.get_dependency_by_id (dep.idname);
+	public bool module_is_installed (ref Dependency dep) {
+		Dependency? dbDep = db.get_dependency_by_id (dep.idname);
 		if (dbDep != null) {
 			debug ("Dependency with id [%s] is already installed :)", dep.idname);
 			dep = dbDep;
@@ -61,7 +61,7 @@ private class DepManager : MessageObject {
 		return false;
 	}
 
-	public string get_absolute_library_path (Dep.Module dep) {
+	public string get_absolute_library_path (Dependency dep) {
 		// No components => no libraries
 		if (!dep.has_items ())
 			return "";
@@ -80,7 +80,7 @@ private class DepManager : MessageObject {
 
 		bool contains_libs = false;
 		foreach (string comp in dep.raw_itemlist) {
-			if (Dep.Component.item_get_type (comp) == Dep.ItemType.SHARED_LIB) {
+			if (Dependency.item_get_type (comp) == Dep.ItemType.SHARED_LIB) {
 				contains_libs = true;
 				break;
 			}
@@ -105,17 +105,17 @@ private class DepManager : MessageObject {
 		return resDir;
 	}
 
-	public Dep.Module? dependency_from_idname (string depIdName) {
-		Dep.Module? dep = db.get_dependency_by_id (depIdName);
+	public Dependency? dependency_from_idname (string depIdName) {
+		Dependency? dep = db.get_dependency_by_id (depIdName);
 		if (dep == null)
 			debug ("Dependency not found in database: %s", depIdName);
 
 		return dep;
 	}
 
-	public HashSet<Dep.Module> dependencies_from_idlist (string[] dep_ids) {
-		HashSet<Dep.Module> resList = Dep.module_hashset_new ();
-		Dep.Module? dep = null;
+	public HashSet<Dependency> dependencies_from_idlist (string[] dep_ids) {
+		HashSet<Dependency> resList = dependency_hashset_new ();
+		Dependency? dep = null;
 		foreach (string s in dep_ids) {
 			dep = db.get_dependency_by_id (s);
 			if (dep == null) {

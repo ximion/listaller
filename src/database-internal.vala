@@ -731,7 +731,7 @@ private abstract class InternalDB : Object {
 
 	/* Dependency stuff */
 
-	public bool add_dependency (Dep.Module dep_mod) throws DatabaseError {
+	public bool add_dependency (Dependency dep_mod) throws DatabaseError {
 		if (!database_writeable ()) {
 			throw new DatabaseError.ERROR (_("Tried to write on readonly database! (This should never happen)"));
 		}
@@ -774,8 +774,8 @@ private abstract class InternalDB : Object {
 		return true;
 	}
 
-	private Dep.Module? retrieve_dependency (Sqlite.Statement stmt) {
-		var dep = new Dep.Module.blank ();
+	private Dependency? retrieve_dependency (Sqlite.Statement stmt) {
+		var dep = new Dependency.blank ();
 
 		dep.idname = stmt.column_text (DepRow.IDNAME);
 		dep.full_name = stmt.column_text (DepRow.FULLNAME);
@@ -793,7 +793,7 @@ private abstract class InternalDB : Object {
 		return dep;
 	}
 
-	public Dep.Module? get_dependency_by_id (string depIdName) {
+	public Dependency? get_dependency_by_id (string depIdName) {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("SELECT * FROM dependencies WHERE idname=?", -1, out stmt);
 
@@ -809,7 +809,7 @@ private abstract class InternalDB : Object {
 			throw new DatabaseError.ERROR (e.message);
 		}
 
-		Dep.Module? dep = retrieve_dependency (stmt);
+		Dependency? dep = retrieve_dependency (stmt);
 		return dep;
 	}
 

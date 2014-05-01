@@ -209,7 +209,7 @@ private class PkInstaller : PkListallerTask {
 	}
 
 	/* This method install a dependency if necessary */
-	public bool install_dependency (Dep.Module dep) {
+	public bool install_dependency (Dependency dep) {
 		bool ret = true;
 		// Just to be sure...
 		if (last_error != null)

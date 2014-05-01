@@ -51,7 +51,7 @@ private abstract class AbstractSolver : Object {
 	 * Returns if the current solver can be used on the given component.
 	 * If it the function returns FALSE, the solver is skipped.
 	 */
-	public virtual bool usable (Component cmp) {
+	public virtual bool usable (Dependency dep) {
 		if (!enabled)
 			return false;
 
@@ -64,20 +64,7 @@ private abstract class AbstractSolver : Object {
 			return false;
 		}
 
-		return !cmp.installed;
-	}
-
-	/**
-	 * Function to check if items of a framework are already installed.
-	 * This function should complete relatively fast.
-	 *
-	 * @param cfrmw Framework which should be checked.
-	 * @param reason Reference to a string in which the reason why the dependency can not be satisfied is returned.
-	 *
-	 * @return TRUE if this solver was successful, FALSE otherwise.
-	 */
-	public virtual bool check_framework_items_installed (Framework cfrmw, out string? reason = null) {
-		return true;
+		return !dep.installed;
 	}
 
 	/**
@@ -86,23 +73,23 @@ private abstract class AbstractSolver : Object {
 	 * a request to PackageKit is sent.
 	 * Installed items are added to the list of installed items.
 	 *
-	 * @param cmod Module which should be checked.
+	 * @param dep Dependency which should be checked.
 	 * @param reason Reference to a string in which the reason why the dependency can not be satisfied is returned.
 	 *
 	 * @return TRUE if this solver was successful, FALSE otherwise.
 	 */
-	public abstract bool check_module_items_installed (Module cmod, out string? reason = null);
+	public abstract bool check_dependency_installed (Dependency dep, out string? reason = null);
 
 	/**
 	 * Trigger installation of a module.
 	 *
 	 * The function should throw an error if installation fails.
 	 *
-	 * @param cmod Module which should be installed
+	 * @param dep Dependency which should be installed
 	 *
 	 * @return TRUE if there was no error (even if the solver is unable to perform an installation). FALSE if installation failed.
 	 */
-	public virtual bool install_module (Module cmod) throws SolverError {
+	public virtual bool install_dependency (Dependency dep) throws SolverError {
 		return false;
 	}
 

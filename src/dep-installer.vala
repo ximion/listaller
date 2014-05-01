@@ -46,7 +46,7 @@ private class DepInstaller : MessageObject {
 		conf = new Config ();
 	}
 
-	private void emit_depmissing_error (ErrorItem? inst_error, Dep.Module dep) {
+	private void emit_depmissing_error (ErrorItem? inst_error, Dependency dep) {
 		string text = "";
 		if (inst_error != null)
 			text = "\n\n%s".printf (inst_error.details);
@@ -55,10 +55,10 @@ private class DepInstaller : MessageObject {
 			  text));
 	}
 
-	private bool install_module_dep_internal (ComponentFactory cfactory, Dep.Module cmod) {
+	private bool install_module_dep_internal (ComponentFactory cfactory, Dependency dep) {
 		// If dependency is already satisfied, we don't need to run an installation
 		// (usually, this function shouldn't be called then, but we check it again for sanity)
-		if (cmod.installed)
+		if (dep.installed)
 			return true;
 
 		// all the solver we have - now for installing stuff
@@ -68,7 +68,7 @@ private class DepInstaller : MessageObject {
 		bool ret = false;
 
 		foreach (AbstractSolver solver in solver_pool) {
-			if (!solver.usable (cmod))
+			if (!solver.usable (dep))
 				continue;
 			if ((solver.id != "Native") && (conf.installer_get_bool ("Install3rdPartyModules") == false)) {
 				error_msg = _("System policy forbids installation of 3rd-party modules.");
@@ -76,14 +76,14 @@ private class DepInstaller : MessageObject {
 			}
 
 			try {
-				ret = solver.install_module (cmod);
+				ret = solver.install_dependency (dep);
 				debug ("Solver '%s', result: %i", solver.id, (int) ret);
 			} catch (SolverError e) {
 				string? msg = e.message;
 				if (msg == null)
 					msg = "Solver did not return an error.";
 				debug ("Solver install error: %s", msg);
-				error_msg = _("Unable to install module '%s' which is required for this installation.\nMessage: %s").printf (cmod.full_name, msg);
+				error_msg = _("Unable to install module '%s' which is required for this installation.\nMessage: %s").printf (dep.full_name, msg);
 			}
 			if (ret)
 				return true;
@@ -98,7 +98,7 @@ private class DepInstaller : MessageObject {
 		// all resolvers failed, but we don't have an explicit error -> no resolver was able to handle the dependency
 		if (!ret) {
 			emit_error (ErrorEnum.DEPENDENCY_INSTALL_FAILED,
-						_("Unable to install module '%s' which is required for this installation.\nUnable to find a method to satisfy the dependency.").printf (cmod.full_name));
+						_("Unable to install module '%s' which is required for this installation.\nUnable to find a method to satisfy the dependency.").printf (dep.full_name));
 		}
 
 		return ret;
@@ -114,7 +114,7 @@ private class DepInstaller : MessageObject {
 	 * @returns TRUE if there were no errors.
 	 */
 	public bool install_dependencies (string dependencies_str, ComponentFactory cfactory) {
-		ArrayList<Dep.Module> req_mods;
+		ArrayList<Dependency> req_mods;
 		string fail_reason;
 
 		bool ret = cfactory.can_be_installed (dependencies_str, out req_mods, out fail_reason);
@@ -123,7 +123,7 @@ private class DepInstaller : MessageObject {
 			return false;
 		}
 
-		foreach (Dep.Module dep_mod in req_mods) {
+		foreach (Dependency dep_mod in req_mods) {
 			debug ("Prepared module dependency %s, satisfied: %i", dep_mod.idname, (int) dep_mod.installed);
 
 			ret = true;
@@ -143,7 +143,7 @@ private class DepInstaller : MessageObject {
 	 * This method is useful for testing, and should only be used for that
 	 * purpose internally.
 	 */
-	internal bool install_existing_module_dependency (ComponentFactory cfactory, ref Dep.Module dep_mod) {
+	internal bool install_existing_module_dependency (ComponentFactory cfactory, ref Dependency dep_mod) {
 		bool ret = true;
 		if (!depman.module_is_installed (ref dep_mod)) {
 			ret = install_module_dep_internal (cfactory, dep_mod);

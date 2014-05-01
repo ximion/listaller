@@ -40,8 +40,8 @@ private class PythonSolver : AbstractSolver {
 		python3_modules = new HashMap<string, string> ();
 	}
 
-	public override bool usable (Component cmp) {
-		if (!base.usable (cmp))
+	public override bool usable (Dependency dep) {
+		if (!base.usable (dep))
 			return false;
 
 		// check if we have the pip-binary
@@ -59,17 +59,13 @@ private class PythonSolver : AbstractSolver {
 		// TODO
 	}
 
-	public override bool check_framework_items_installed (Framework cfrmw, out string? reason = null) {
+
+	public override bool check_dependency_installed (Dependency dep, out string? reason = null) {
 		// TODO
 		return true;
 	}
 
-	public override bool check_module_items_installed (Module cmod, out string? reason = null) {
-		// TODO
-		return true;
-	}
-
-	public override bool install_module (Module cmod) throws SolverError {
+	public override bool install_dependency (Dependency dep) throws SolverError {
 		// TODO
 		return false;
 	}

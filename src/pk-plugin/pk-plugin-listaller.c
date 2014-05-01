@@ -419,7 +419,7 @@ pk_listaller_get_updates (PkPlugin *plugin)
 	GeeArrayList *available_updates;
 	ListallerUpdateItem *uitem;
 	ListallerAppItem *app;
-	ListallerDepModule *dep_mod;
+	ListallerDependency *dep;
 	AsComponent *info;
 	gchar *package_id;
 	GType swtype;
@@ -457,7 +457,7 @@ pk_listaller_get_updates (PkPlugin *plugin)
 						package_id,
 						as_component_get_summary (info));
 			g_free (package_id);
-		} else if (swtype == LISTALLER_DEP_TYPE_MODULE) {
+		} else if (swtype == LISTALLER_TYPE_DEPENDENCY) {
 			// TODO
 		} else {
 			g_warning ("Found UpdateItem with invalid software type: %s", g_type_name (swtype));

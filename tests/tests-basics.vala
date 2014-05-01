@@ -112,21 +112,21 @@ void test_zfeeds () {
 	Dep.Feed feed = new Dep.Feed ();
 	feed.open (Path.build_filename (datadir, "libogg.xml", null));
 
-	Dep.Module dep_mod = new Dep.Module ("test");
-	feed.update_dependency_data (dep_mod);
+	var dep = new Dependency ("test");
+	feed.update_dependency_data (dep);
 
-	assert (dep_mod.full_name == "libogg");
-	assert (dep_mod.homepage == "http://xiph.org/ogg/");
+	assert (dep.full_name == "libogg");
+	assert (dep.homepage == "http://xiph.org/ogg/");
 	/* Info: It is "libogg-0", because the version is set through "search_matching_dependency ()",
 	 * which we don't call here because the libogg feed does not provide implementations
 	 * for every platform out there. (This is a default-test, which should not fail, usually.) */
-	assert (dep_mod.idname == "libogg");
+	assert (dep.idname == "libogg");
 
 	bool ret = feed.search_matching_dependency ();
 	assert (ret == true);
 
-	feed.update_dependency_data (dep_mod);
-	assert (dep_mod.get_version () == "1.1.4-1");
+	feed.update_dependency_data (dep);
+	assert (dep.get_version () == "1.1.4-1");
 
 	assert (feed.package_url != "");
 }
@@ -203,7 +203,7 @@ void test_field () {
 void test_components () {
 	bool ret;
 
-	var foo_frmw = new Dep.Framework.blank ();
+	var foo_frmw = new Dependency.blank ();
 	ret = foo_frmw.load_from_file (Path.build_filename (datadir, "FooTest2.framework", null));
 	assert (ret);
 
@@ -216,7 +216,7 @@ void test_components () {
 	// --------------
 
 	// Test capabilities of resolving version names
-	var lilibv_frmw = new Dep.Framework.blank ();
+	var lilibv_frmw = new Dependency.blank ();
 	ret = lilibv_frmw.load_from_file (Path.build_filename (datadir, "ListallerTest1.framework", null));
 	assert (ret);
 	assert (lilibv_frmw.idname == "ListallerTest1");

@@ -1,4 +1,4 @@
-/* components.vala -- Defines component types to resolve dependencies
+/* dependency.vala -- Defines component types to resolve dependencies
  *
  * Copyright (C) 2011-2014 Matthias Klumpp <matthias@tenstral.net>
  *
@@ -22,6 +22,7 @@ using GLib;
 using Gee;
 using Listaller;
 using Listaller.Utils;
+using Listaller.Dep;
 
 namespace Listaller.Dep {
 
@@ -46,21 +47,17 @@ private enum ItemType {
 	UNKNOWN;
 }
 
-/**
- * Type of the component we depend on.
- */
-private enum ComponentType {
-	INVALID,
-	MODULE,
-	FRAMEWORK;
 }
 
+namespace Listaller {
+
 /**
- * Definition of common properties of a component
+ * Definition of a dependency of an application
  *
- * Ancestor class for Framework and Module
+ * Contains a #AsComponent which holds the actual information
+ * about the referenced component-dependency.
  */
-private abstract class Component : Object {
+private class Dependency : Object {
 	private string _full_name;
 	public string full_name {
 		get {
@@ -100,7 +97,30 @@ private abstract class Component : Object {
 	public string architecture { get; internal set; } // e.g. amd64
 
 	protected bool _installed;
-	public bool installed { get { return _installed; } internal set { _installed = value; } }
+	public string dependencies { get; private set; }
+
+	public bool installed {
+		get {
+			return _installed;
+		}
+		set {
+			if ((!Utils.__unittestmode) &&
+			    (idname != "") &&
+			    (!has_installdata ()) &&
+			    (feed_url == "")) {
+				warning ("Trying to set dependency %s to 'satisfied', although it is not a standardlib. (Reason: No install-data found!) - This usually is a packaging bug.", idname);
+			}
+			_installed = value;
+		}
+	}
+
+	public string origin { get; internal set; }
+	public int64 install_time { get; internal set; }
+	public string environment { get; internal set; }
+
+	public string feed_url { get; internal set; }
+
+	public string pkgname { get; internal set; }
 
 	protected string _version_raw;
 	private string _version_cache;
@@ -116,12 +136,21 @@ private abstract class Component : Object {
 	// Items which were installed in order to satisfy this dependency
 	protected HashSet<string> install_data { get; internal set; }
 
-	public Component (string id_name) {
-		idname = id_name;
+	public Dependency.blank () {
 		_full_name = "";
 
 		item_list = new HashSet<string> ();
 		install_data = new HashSet<string> ();
+
+		environment = "";
+		feed_url = "";
+		origin = "unknown";
+		architecture = system_machine_generic ();
+	}
+
+	public Dependency (string id_name) {
+		this.blank ();
+		idname = id_name;
 	}
 
 	protected bool contains_directive (string str) {
@@ -271,6 +300,8 @@ private abstract class Component : Object {
 
 		if (data.get_value ("AlwaysInstalled") == "true")
 			installed = true;
+
+		feed_url = data.get_value ("Feed");
 
 		// The optional stuff is usually only used by the setup process, to group
 		// optional libraries to the right component, without throwing an error.
@@ -501,85 +532,6 @@ private abstract class Component : Object {
 	protected void update_installed_status () {
 		installed = install_data.size == item_list.size;
 	}
-}
-
-/**
- * Definition of a framework dependency
- *
- * A framework is a (usually large) system component, such as the KDELibs
- * or the GNOME platform, or stuff like PolicyKit. It usually requires tight
- * system integration.
- * The only way to satisfy this dependency is via the distribution's native package
- * manager.
- */
-private class Framework : Component {
-
-	public Framework (string idname) {
-		base (idname);
-	}
-
-	public Framework.blank () {
-		base ("");
-	}
-}
-
-/**
- * Definition of a module dependency
- *
- * A module is a dependency which can be installed with Listaller and satisfied using 3rd-party
- * sources.
- * It often simply is a small library, iconset, etc.
- */
-private class Module : Component {
-	public string dependencies { get; private set; }
-
-	public bool installed {
-		get {
-			return _installed;
-		}
-		set {
-			if ((!Utils.__unittestmode) &&
-			    (idname != "") &&
-			    (!has_installdata ()) &&
-			    (feed_url == "")) {
-				warning ("Trying to set dependency %s to 'satisfied', although it is not a standardlib. (Reason: No install-data found!) - This usually is a packaging bug.", idname);
-			}
-			_installed = value;
-		}
-	}
-
-	public string origin { get; internal set; }
-	public int64 install_time { get; internal set; }
-	public string environment { get; internal set; }
-
-	public string feed_url { get; internal set; }
-
-	public string pkgname { get; internal set; }
-
-	public Module (string idname) {
-		base (idname);
-		environment = "";
-		feed_url = "";
-		origin = "unknown";
-		architecture = system_machine_generic ();
-	}
-
-	public Module.blank () {
-		base ("");
-		environment = "";
-		feed_url = "";
-		origin = "unknown";
-	}
-
-	protected override IPK.MetaFile? load_from_file_internal (string fname, bool include_optional = false) {
-		IPK.MetaFile? data = base.load_from_file_internal (fname, include_optional);
-		if (data == null)
-			return null;
-
-		feed_url = data.get_value ("Feed");
-
-		return data;
-	}
 
 	public bool has_feed () {
 		return feed_url != "";
@@ -609,20 +561,20 @@ private class Module : Component {
 }
 
 [CCode (has_target = false)]
-private static uint module_hash_func (Module dep_mod) {
-	string str = dep_mod.idname;
+private static uint dependency_hash_func (Dependency dep) {
+	string str = dep.idname;
 	return str_hash (str);
 }
 
 [CCode (has_target = false)]
-private static bool module_equal_func (Module a, Module b) {
+private static bool dependency_equal_func (Dependency a, Dependency b) {
 	if (a.idname == b.idname)
 		return true;
 	return false;
 }
 
-private HashSet<Module> module_hashset_new () {
-	return new HashSet<Module> ((HashFunc) module_hash_func, (EqualFunc) module_equal_func);
+private HashSet<Dependency> dependency_hashset_new () {
+	return new HashSet<Dependency> ((HashFunc) dependency_hash_func, (EqualFunc) dependency_equal_func);
 }
 
-} // End of namespace: Listaller.Dep
+} // End of namespace: Listaller

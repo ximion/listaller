@@ -610,10 +610,10 @@ private class Builder : Object {
 		HashSet<string>? mod_info_files = find_files_matching (extra_mod_dir, "*.module");
 		if (mod_info_files != null) {
 			foreach (string fname in mod_info_files) {
-				var cmod = new Dep.Module.blank ();
-				bool l_ret = cmod.load_from_file (fname);
+				var dep = new Dependency.blank ();
+				bool l_ret = dep.load_from_file (fname);
 				// installed system modules take precendence before any additional modules
-				if (cmod.idname in cfactory.registered_modules)
+				if (dep.idname in cfactory.registered_deps)
 					continue;
 				if (l_ret) {
 					string pkg_depfile = Path.build_filename (pkg_depfiles_dir, Path.get_basename (fname));

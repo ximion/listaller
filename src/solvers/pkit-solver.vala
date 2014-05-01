@@ -38,19 +38,19 @@ private class PkitSolver : AbstractSolver {
 		pksolv = new PkResolver (ssettings);
 	}
 
-	public override bool check_module_items_installed (Module cmod, out string? reason = null) {
+	public override bool check_dependency_installed (Dependency dep, out string? reason = null) {
 		bool ret;
 
 		// Try if we can find native packages providing the dependency
-		ret = !Utils.str_is_empty (cmod.pkgname);
+		ret = !Utils.str_is_empty (dep.pkgname);
 
 		return ret;
 	}
 
-	public override bool install_module (Module cmod) throws SolverError {
+	public override bool install_dependency (Dependency dep) throws SolverError {
 		bool ret;
 
-		ret = pkinst.install_dependency (cmod);
+		ret = pkinst.install_dependency (dep);
 		if (!ret) {
 			if (pkinst.last_error == null)
 				ret = true;

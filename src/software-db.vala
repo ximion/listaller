@@ -465,7 +465,7 @@ private class SoftwareDB : MessageObject {
 
 	/* Dependency stuff */
 
-	public bool add_dependency (Dep.Module dep) {
+	public bool add_dependency (Dependency dep) {
 		bool ret = false;
 		try {
 			if (is_root ()) {
@@ -486,8 +486,8 @@ private class SoftwareDB : MessageObject {
 		return ret;
 	}
 
-	public Dep.Module? get_dependency_by_id (string depIdName) {
-		Dep.Module? dep = null;
+	public Dependency? get_dependency_by_id (string depIdName) {
+		Dependency? dep = null;
 		if (shared_db_canbeused ())
 			dep = db_shared.get_dependency_by_id (depIdName);
 
