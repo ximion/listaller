@@ -48,4 +48,4 @@ endif()
 #	RENAME libpk_plugin_listaller.so
 #)
 
-install(TARGETS pk_plugin_listaller DESTINATION ${LIB_INSTALL_DIR}/packagekit-plugins)
+install(TARGETS pk_plugin_listaller DESTINATION ${LIB_INSTALL_DIR}/packagekit-plugins-2)

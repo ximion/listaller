@@ -554,6 +554,8 @@ private class Module : Component {
 
 	public string feed_url { get; internal set; }
 
+	public string pkgname { get; internal set; }
+
 	public Module (string idname) {
 		base (idname);
 		environment = "";

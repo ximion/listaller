@@ -146,6 +146,7 @@ void
 pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 {
 	const gchar *description;
+	const gchar *summary;
 	ListallerAppLicense license;
 	const gchar *url;
 	ListallerAppItem *app;
@@ -162,18 +163,21 @@ pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 
 		info = listaller_app_item_get_info (app);
 		description = as_component_get_description (info);
+		summary = as_component_get_summary (info);
 		listaller_app_item_get_license (app, &license);
 		url = as_component_get_homepage (info);
 
 		//TODO: Fetch size of installed application too
 
 		/* emit */
-		pk_backend_job_details (plugin->job, package_ids[i],
-					license.name,
-					PK_GROUP_ENUM_UNKNOWN,
-					description,
-					url,
-					0);
+		pk_backend_job_details (plugin->job,
+						package_ids[i],
+						summary,
+						license.name,
+						PK_GROUP_ENUM_UNKNOWN,
+						description,
+						url,
+						0);
 	};
 }
 
@@ -603,46 +607,6 @@ pk_plugin_reset_backend_jobs (PkPlugin *plugin)
 }
 
 /**
- * pk_backend_job_request_whatprovides_cb:
- *
- * Helper method for a Listaller native PkBackend proxy to do a what-provides request.
- **/
-static PkResults*
-pk_backend_job_request_whatprovides_cb (PkBitfield filters,
-				PkProvidesEnum provides,
-				gchar** search,
-				PkPlugin *plugin)
-{
-	PkResults *results;
-
-	/* query the native backend for a package provinding X */
-	if (plugin == NULL)
-		g_debug ("PLUGIN was NULL!");
-
-	g_debug ("Running what-provides on native backend!");
-
-	/* prepare for native backend call */
-	pk_plugin_reset (plugin);
-
-	/* query the native backend */
-	pk_backend_what_provides (plugin->backend,
-				   plugin->priv->internal_job,
-				   filters,
-				   provides,
-				   search);
-
-	/* wait for finished */
-	g_main_loop_run (plugin->priv->loop);
-
-	results = plugin->priv->backend_results;
-	pk_plugin_reset_backend_jobs (plugin);
-
-	g_debug ("Results exit code is %s", pk_exit_enum_to_string (pk_results_get_exit_code (results)));
-
-	return results;
-}
-
-/**
  * pk_backend_job_request_installpackages_cb:
  *
  * Helper method for a Listaller native PkBackend proxy to do a install-packages request.
@@ -705,9 +669,6 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 
 	/* create a backend proxy and connect it, so Listaller can acces parts of PkBackend */
 	pkbproxy = listaller_pk_backend_proxy_new ();
-	listaller_pk_backend_proxy_set_what_provides (pkbproxy,
-						(ListallerPkBackendProxyWhatProvidesCB) pk_backend_job_request_whatprovides_cb,
-						plugin);
 	listaller_pk_backend_proxy_set_install_packages (pkbproxy,
 						(ListallerPkBackendProxyInstallPackagesCB) pk_backend_job_request_installpackages_cb,
 						plugin);
@@ -912,6 +873,8 @@ pk_plugin_get_description (void)
 void
 pk_plugin_initialize (PkPlugin *plugin)
 {
+	GKeyFile *conf;
+
 	/* create private area */
 	plugin->priv = PK_TRANSACTION_PLUGIN_GET_PRIVATE (PkPluginPrivate);
 	plugin->priv->mgr = listaller_manager_new (TRUE);
@@ -920,7 +883,8 @@ pk_plugin_initialize (PkPlugin *plugin)
 	plugin->priv->setup_settings = NULL;
 
 	/* we use an internal job to communicate with the native backend. plugin->job is used for client communication */
-	plugin->priv->internal_job = pk_backend_job_new ();
+	conf = pk_transaction_get_conf (plugin->priv->current_transaction);
+	plugin->priv->internal_job = pk_backend_job_new (conf);
 
 	/* tell PK we might be able to handle these */
 	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_GET_DETAILS);

@@ -42,25 +42,13 @@ private class PkitSolver : AbstractSolver {
 		bool ret;
 
 		// Try if we can find native packages providing the dependency
-		ret = pksolv.search_dep_packages (cmod);
-		if (!ret)
-			reason = "No native package found to satisfy dependency.";
-		if (pksolv.last_error != null)
-			reason = pksolv.last_error.details;
+		ret = !Utils.str_is_empty (cmod.pkgname);
 
 		return ret;
 	}
 
 	public override bool install_module (Module cmod) throws SolverError {
 		bool ret;
-
-		ret = pksolv.search_dep_packages (cmod);
-		if (!ret) {
-			if (pksolv.last_error == null)
-				warning ("Dependency-solving failed, but we have to error code!");
-			else
-				throw new SolverError.INSTALLATION_FAILED (pksolv.last_error.details);
-		}
 
 		ret = pkinst.install_dependency (cmod);
 		if (!ret) {

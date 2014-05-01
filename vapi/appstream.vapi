@@ -196,7 +196,7 @@ namespace Appstream {
 		[CCode (cname = "as_database_get_component_by_id")]
 		public Appstream.Component get_component_by_id (string idname);
 		[CCode (cname = "as_database_get_components_by_provides")]
-		public GLib.GenericArray<Appstream.Component> get_components_by_provides (string provides_item);
+		public GLib.GenericArray<Appstream.Component> get_components_by_provides (Appstream.ProvidesKind kind, string value, string data);
 		[CCode (cname = "as_database_get_database_path")]
 		public unowned string get_database_path ();
 		public virtual bool open ();
@@ -403,7 +403,7 @@ namespace Appstream {
 	[CCode (cheader_filename = "appstream.h", cname = "as_get_system_categories")]
 	public static GLib.List<Appstream.Category> get_system_categories ();
 	[CCode (cheader_filename = "appstream.h", cname = "as_provides_item_create")]
-	public static string provides_item_create (Appstream.ProvidesKind kind, string value);
+	public static string provides_item_create (Appstream.ProvidesKind kind, string value, string data);
 	[CCode (cheader_filename = "appstream.h", cname = "as_provides_item_get_kind")]
 	public static Appstream.ProvidesKind provides_item_get_kind (string item);
 	[CCode (cheader_filename = "appstream.h", cname = "as_provides_item_get_value")]

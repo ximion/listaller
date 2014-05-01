@@ -109,11 +109,13 @@ void test_dependency_manager () {
 
 void search_install_pkdep (Dep.PkInstaller pkinst, Dep.PkResolver pksolv, ref Dep.Module dep) {
 	bool ret;
+#if 0
 	ret = pksolv.search_dep_packages (dep);
 	if (!ret) {
 		debug (pksolv.last_error.details);
 		assert (ret == true);
 	}
+#endif
 	ret = pkinst.install_dependency (dep);
 	if (!ret) {
 		debug (pkinst.last_error.details);
@@ -146,6 +148,7 @@ void test_packagekit_installer () {
 	search_install_pkdep (pkit, pkslv, ref crazy);
 	assert (crazy.installed == true);
 
+#if 0
 	// Now something which fails
 	Dep.Module fail = new Dep.Module ("Fail");
 	fail.add_item (Dep.ItemType.UNKNOWN, "/run/far_away");
@@ -155,6 +158,7 @@ void test_packagekit_installer () {
 		assert (ret == false);
 	}
 	assert (fail.installed == false);
+#endif
 }
 
 void test_feed_installer () {

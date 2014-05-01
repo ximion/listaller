@@ -33,33 +33,17 @@ private PkBackendProxy? pkit_backend_proxy;
 private static bool packagekit_daemon_caller = false;
 
 internal class PkBackendProxy : Object {
-	public delegate unowned PackageKit.Results? WhatProvidesCB (PackageKit.Bitfield filters,
-							   PackageKit.Provides provides,
-							   [CCode (array_length = false, array_null_terminated = true)] string[] search);
 	public delegate unowned PackageKit.Results? InstallPackagesCB (PackageKit.Bitfield transaction_flags,
 							   [CCode (array_length = false, array_null_terminated = true)] string[] packages);
 
-	private WhatProvidesCB pk_whatprovides;
 	private InstallPackagesCB pk_installpackages;
 
 	public PkBackendProxy () {
-		pk_whatprovides = null;
-	}
-
-	public void set_what_provides (WhatProvidesCB call) {
-		pk_whatprovides = call;
+		pk_installpackages = null;
 	}
 
 	public void set_install_packages (InstallPackagesCB call) {
 		pk_installpackages = call;
-	}
-
-	public unowned PackageKit.Results? run_what_provides (PackageKit.Bitfield filters,
-							      PackageKit.Provides provides,
-						             [CCode (array_length = false, array_null_terminated = true)] string[] values) {
-		if (pk_whatprovides == null)
-			return null;
-		return pk_whatprovides (filters, provides, values);
 	}
 
 	public unowned PackageKit.Results? run_install_packages (PackageKit.Bitfield transaction_flags,
