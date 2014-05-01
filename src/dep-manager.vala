@@ -79,8 +79,8 @@ private class DepManager : MessageObject {
 		}
 
 		bool contains_libs = false;
-		foreach (string comp in dep.raw_itemlist) {
-			if (Dependency.item_get_type (comp) == Dep.ItemType.SHARED_LIB) {
+		foreach (string item in dep.raw_itemlist) {
+			if (Appstream.provides_item_get_kind (item) == Appstream.ProvidesKind.LIBRARY) {
 				contains_libs = true;
 				break;
 			}

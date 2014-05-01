@@ -20,6 +20,7 @@
 
 using GLib;
 using Gee;
+using Appstream;
 using Listaller;
 using Listaller.Utils;
 
@@ -40,8 +41,8 @@ private class BasicSolver : AbstractSolver {
 		bool ret = true;
 		Config conf = new Config ();
 		foreach (string sitem in dep.raw_itemlist) {
-			if (Dependency.item_get_type (sitem) == Dep.ItemType.SHARED_LIB) {
-				string s = Dependency.item_get_name (sitem);
+			if (provides_item_get_kind (sitem) == ProvidesKind.LIBRARY) {
+				string s = provides_item_get_value (sitem);
 				ret = library_exists (s, conf);
 				if (!ret) {
 					debug ("Library not found: %s", s);
@@ -60,8 +61,8 @@ private class BasicSolver : AbstractSolver {
 		// Check if binaries are present
 		bool ret = true;
 		foreach (string sitem in dep.raw_itemlist) {
-			if (Dependency.item_get_type (sitem) == Dep.ItemType.BINARY) {
-				string s = Dependency.item_get_name (sitem);
+			if (provides_item_get_kind (sitem) == ProvidesKind.BINARY) {
+				string s = provides_item_get_value (sitem);
 				if (s.has_prefix ("/")) {
 					ret = FileUtils.test (s, FileTest.EXISTS);
 				} else {
@@ -92,9 +93,9 @@ private class BasicSolver : AbstractSolver {
 		// If all libraries/binaries were found, add them to installdata and exit
 		if (ret) {
 			foreach (string s in dep.raw_itemlist) {
-				switch (dep.item_get_type (s)) {
-					case Dep.ItemType.SHARED_LIB:
-					case Dep.ItemType.BINARY:
+				switch (Appstream.provides_item_get_kind (s)) {
+					case Appstream.ProvidesKind.LIBRARY:
+					case Appstream.ProvidesKind.BINARY:
 						dep.add_installed_item (s);
 						break;
 					default:

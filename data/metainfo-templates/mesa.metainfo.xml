@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This is a AppStream component template used in and by Listaller -->
+<!-- Please don't use it elsewhere, as it is not 100% valid AppStream data -->
+<component>
+  <id>Mesa3D</id>
+  <name>Mesa 3D</name>
+  <provides>
+    <library>libGL.so.*</library>
+    <library>libGLU.so.*</library>
+  </provides>
+</component>

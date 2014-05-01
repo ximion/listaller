@@ -33,18 +33,17 @@ namespace Listaller.Dep {
  * It can also generate new components on the fly.
  */
 internal class ComponentFactory : Object {
-	private string listaller_components_dir;
+	private string listaller_metainfo_dir;
 	private ArrayList<AbstractSolver> solver_pool;
 	private SetupSettings ssettings;
 
 	public HashMap<string, Dependency> registered_deps { get; private set; }
 
-	private HashSet<string>? framework_info_files_sys;
-	private HashSet<string>? framework_info_files_listaller;
-	private HashSet<string>? module_info_files;
+	private HashSet<string>? metainfo_files_sys;
+	private HashSet<string>? metainfo_files_listaller;
 
 	public ComponentFactory (SetupSettings? setup_settings = null) {
-		listaller_components_dir = PkgConfig.DATADIR + "/listaller/modules";
+		listaller_metainfo_dir = PkgConfig.DATADIR + "/listaller/metainfo-templates";
 
 		registered_deps = new HashMap<string, Dependency> ();
 		solver_pool = new ArrayList<AbstractSolver> ();
@@ -54,6 +53,17 @@ internal class ComponentFactory : Object {
 			ssettings = new SetupSettings (IPK.InstallMode.SHARED);
 	}
 
+	private void load_dependency_data (HashSet<string> metainfo_files, bool include_optional) {
+		foreach (string fname in metainfo_files) {
+			var dep = new Dependency.blank ();
+			bool ret = dep.load_from_file (fname, include_optional);
+			if (ret)
+				registered_deps.set (dep.info.idname, dep);
+			else
+				warning ("Unable to load data for component: %s", fname);
+		}
+	}
+
 	/**
 	 * Initialize the component-factory with data from disk.
 	 *
@@ -61,28 +71,17 @@ internal class ComponentFactory : Object {
 	 *                         by the package-builder to group dependencies together. The parameter defaults to FALSE.
 	 */
 	public void initialize (bool include_optional = false) {
-		// search for frameworks installed on this system
-		framework_info_files_sys = find_files_matching (Config.sys_componentdir, "*.framework");
-		// now add Listaller-provided frameworks (the system files override these ones)
-		framework_info_files_listaller = find_files_matching (Path.build_filename (listaller_components_dir, "frameworks", null), "*.framework");
-		// add Listaller-provided modules (these override the definitions provided by IPK packages)
-		module_info_files = find_files_matching (listaller_components_dir, "*.module");
-
-		HashSet<string>? framework_info_files = new HashSet<string> ();
-		framework_info_files.add_all (framework_info_files_sys);
-		framework_info_files.add_all (framework_info_files_listaller);
+		// search for metadata installed on this system
+		metainfo_files_sys = find_files_matching (Config.sys_componentdir, "*.metainfo.xml");
+		// now add Listaller-provided metadata templates (the system files override these ones)
+		metainfo_files_listaller = find_files_matching (listaller_metainfo_dir, "*.metainfo.xml");
+		//FIXME: find_files_matching (Path.build_filename (listaller_metainfo_dir, "frameworks", null), "*.framework");
 
 		// process all dependency data
-		if (module_info_files != null) {
-			foreach (string fname in module_info_files) {
-				var dep = new Dependency.blank ();
-				bool ret = dep.load_from_file (fname, include_optional);
-				if (ret)
-					registered_deps.set (dep.info.idname, dep);
-				else
-					warning ("Unable to load data for module: %s", fname);
-			}
-		}
+		if (metainfo_files_sys != null)
+			load_dependency_data (metainfo_files_sys, include_optional);
+		if (metainfo_files_listaller != null)
+			load_dependency_data (metainfo_files_listaller, include_optional);
 	}
 
 	/**
@@ -92,29 +91,20 @@ internal class ComponentFactory : Object {
 	 *
 	 * @return NULL if no path was found.
 	 */
-	public string? find_component_path (string cmname) {
-		if (framework_info_files_sys != null) {
-			foreach (string fname in framework_info_files_sys) {
-				var cfrmw = new Dependency.blank ();
-				bool ret = cfrmw.load_from_file (fname, false);
-				if (cfrmw.info.idname == cmname)
-					return fname;
-			}
-		}
-		if (framework_info_files_listaller != null) {
-			foreach (string fname in framework_info_files_listaller) {
-				var cfrmw = new Dependency.blank ();
-				bool ret = cfrmw.load_from_file (fname, false);
-				if (cfrmw.info.idname == cmname)
-					return fname;
-			}
-		}
-
-		if (module_info_files != null) {
-			foreach (string fname in module_info_files) {
+	public string? find_component_path (string cptname) {
+		if (metainfo_files_sys != null) {
+			foreach (string fname in metainfo_files_sys) {
 				var dep = new Dependency.blank ();
 				bool ret = dep.load_from_file (fname, false);
-				if (dep.info.idname == cmname)
+				if (dep.info.idname == cptname)
+					return fname;
+			}
+		}
+		if (metainfo_files_listaller != null) {
+			foreach (string fname in metainfo_files_listaller) {
+				var dep = new Dependency.blank ();
+				bool ret = dep.load_from_file (fname, false);
+				if (dep.info.idname == cptname)
 					return fname;
 			}
 		}

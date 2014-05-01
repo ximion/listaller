@@ -119,8 +119,8 @@ private class DependencyScanner : Object {
 				continue;
 			do {
 				string s = iter.get ();
-				Dep.ItemType itype = Dependency.item_get_type (s);
-				string iname = Dependency.item_get_name (s);
+				Appstream.ProvidesKind itype = Appstream.provides_item_get_kind (s);
+				string iname = Appstream.provides_item_get_value (s);
 
 				if (dep.has_matching_item (itype, iname)) {
 					comp_list.set (dep.info.idname, dep);

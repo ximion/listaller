@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This is a AppStream component template used in and by Listaller -->
+<!-- Please don't use it elsewhere, as it is not 100% valid AppStream data -->
+<component>
+  <id>GLib2.0</id>
+  <name>GLib 2.0</name>
+  <provides>
+    <library>libgio-2.0.so.0</library>
+    <library>libgobject-2.0.so.0</library>
+    <librar>libglib-2.0.so.0</library>
+    <binary>gdbus</binary>
+    <binary>gio-querymodules</binary>
+    <binary>glib-compile-resources</binary>
+    <binary>glib-compile-schemas</binary>
+    <binary>gresource</binary>
+    <binary>gsettings</binary>
+  </provides>
+  <x-version-template>shell$ pkg-config --modversion glib-2.0</x-version-template>
+</component>

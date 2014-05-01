@@ -54,8 +54,8 @@ void test_dependency_installer () {
 	Dependency test1 = new Dependency.blank ();
 	test1.info.idname = "Test:1#expat";
 	test1.feed_url = "http://repo.roscidus.com/lib/expat1";
-	//test1.add_item ("libgee.so.2", Dep.ItemType.SHARED_LIB);
-	test1.add_item (Dep.ItemType.SHARED_LIB, "bladada.so.2");
+	//test1.add_item ("libgee.so.2", Appstream.ProvidesKind.LIBRARY);
+	test1.add_item (Appstream.ProvidesKind.LIBRARY, "bladada.so.2");
 
 	ret = depinst.install_existing_module_dependency (cfactory, ref test1);
 	assert (ret == true);
@@ -67,8 +67,8 @@ void test_dependency_installer () {
 	Dependency test2 = new Dependency.blank ();
 	test2.info.idname = "Test:2#GNU_parallel";
 	test2.feed_url = "http://git.savannah.gnu.org/cgit/parallel.git/plain/packager/0install/parallel.xml";
-	//test2.add_item ("libvorbis.so.0", Dep.ItemType.SHARED_LIB);
-	test2.add_item (Dep.ItemType.SHARED_LIB, "nobis.so.0");
+	//test2.add_item ("libvorbis.so.0", Appstream.ProvidesKind.LIBRARY);
+	test2.add_item (Appstream.ProvidesKind.LIBRARY, "nobis.so.0");
 
 	ret = depinst.install_existing_module_dependency (cfactory, ref test2);
 
@@ -133,7 +133,7 @@ void test_packagekit_installer () {
 	ArrayList<Dependency> deplist = new ArrayList<Dependency> ();
 	Dependency depNano = new Dependency.blank ();
 	depNano.info.idname = "Nano";
-	depNano.add_item (Dep.ItemType.BINARY, "/usr/bin/nano");
+	depNano.add_item (Appstream.ProvidesKind.BINARY, "/usr/bin/nano");
 
 	Dep.PkInstaller pkit = new Dep.PkInstaller (ssettings);
 	Dep.PkResolver pkslv = new Dep.PkResolver (ssettings);
@@ -145,9 +145,9 @@ void test_packagekit_installer () {
 	// Now something more advanced
 	Dependency crazy = new Dependency.blank ();
 	crazy.info.idname = "CrazyStuff";
-	crazy.add_item (Dep.ItemType.BINARY, "/bin/bash");
-	crazy.add_item (Dep.ItemType.SHARED_LIB, "libpackagekit-glib2.so");
-	crazy.add_item (Dep.ItemType.SHARED_LIB, "libc6.so");
+	crazy.add_item (Appstream.ProvidesKind.BINARY, "/bin/bash");
+	crazy.add_item (Appstream.ProvidesKind.LIBRARY, "libpackagekit-glib2.so");
+	crazy.add_item (Appstream.ProvidesKind.LIBRARY, "libc6.so");
 
 	search_install_pkdep (pkit, pkslv, ref crazy);
 	assert (crazy.installed == true);
@@ -155,7 +155,7 @@ void test_packagekit_installer () {
 #if 0
 	// Now something which fails
 	Dependency fail = new Dependency ("Fail");
-	fail.add_item (Dep.ItemType.UNKNOWN, "/run/far_away");
+	fail.add_item (Appstream.ProvidesKind.UNKNOWN, "/run/far_away");
 	ret = pkslv.search_dep_packages (fail);
 	if (!ret) {
 		debug (pkit.last_error.details);
@@ -191,25 +191,25 @@ void test_depsolver () {
 	Dependency dep1 = new Dependency.blank ();
 	dep1.info.idname = "Gee";
 	dep1.feed_url = "http://sweets.sugarlabs.org/base/libgee";
-	dep1.add_item (Dep.ItemType.SHARED_LIB, "libc.so.6");
+	dep1.add_item (Appstream.ProvidesKind.LIBRARY, "libc.so.6");
 	deplist.add (dep1);
 
 	Dependency dep2 = new Dependency.blank ();
 	dep2.info.idname = "SDLMixer1.2";
 	dep2.feed_url = "http://repo.roscidus.com/lib_rsl/sdl-mixer1.2";
-	dep2.add_item (Dep.ItemType.SHARED_LIB, "libgee.so");
+	dep2.add_item (Appstream.ProvidesKind.LIBRARY, "libgee.so");
 	deplist.add (dep2);
 
 	Dependency dep3 = new Dependency.blank ();
 	dep3.info.idname = "Nano";
-	dep3.add_item (Dep.ItemType.BINARY, "/usr/bin/nano");
-	dep3.add_item (Dep.ItemType.SHARED_LIB, "libc.so.6");
+	dep3.add_item (Appstream.ProvidesKind.BINARY, "/usr/bin/nano");
+	dep3.add_item (Appstream.ProvidesKind.LIBRARY, "libc.so.6");
 	deplist.add (dep3);
 
 	Dependency dep4 = new Dependency.blank ();
 	dep4.info.idname = "LibXml2";
 	dep4.feed_url = "http://sweets.sugarlabs.org/base/libxml2";
-	dep4.add_item (Dep.ItemType.SHARED_LIB, "libglib-2.0.so.0");
+	dep4.add_item (Appstream.ProvidesKind.LIBRARY, "libglib-2.0.so.0");
 	deplist.add (dep4);
 
 	bool ret;

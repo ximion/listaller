@@ -33,21 +33,6 @@ private errordomain ComponentError {
     DIRECTIVES_INVALID
 }
 
-/**
- * Type of a component-item
- *
- * Describes the type of an item which is part of a
- * dependency (framework/module).
- */
-private enum ItemType {
-	SHARED_LIB,
-	BINARY,
-	PYTHON,
-	PYTHON_2,
-	FILE,
-	UNKNOWN;
-}
-
 }
 
 namespace Listaller {
@@ -60,6 +45,7 @@ namespace Listaller {
  */
 private class Dependency : Object {
 	public Component info { get; private set; }
+	public string xmldata { get; set; }
 
 	public string architecture { get; internal set; } // e.g. amd64
 
@@ -249,15 +235,28 @@ private class Dependency : Object {
 		_version_cache = new_version;
 	}
 
-	protected virtual IPK.MetaFile? load_from_file_internal (string fname, bool include_optional = false) {
-		var data = new IPK.MetaFile ();
-		var ret = data.open_file (fname);
-		if (!ret)
-			return null;
-		data.open_block_first ();
+	public bool load_from_file (string fname, bool include_optional = false) {
+		// parse canonical AppStream Component
+		var mdata = new Appstream.Metadata ();
+		var f = File.new_for_path (fname);
+		Appstream.Component cpt;
+		try {
+			cpt = mdata.parse_file (f);
+		} catch (Error e) {
+			warning (e.message);
+			return false;
+		}
+		info = cpt;
 
-		info.name = data.get_value ("Name");
-		info.idname = data.get_value ("ID");
+		GenericArray<string> items = info.get_provided_items ();
+		for(uint i = 0; i < items.length; i++) {
+			string item = items.get (i);
+			item_list.add (item);
+		}
+
+
+		// TODO
+		/**
 		_version_raw = data.get_value ("Version");
 		if (!data.has_field ("Version"))
 			// if there is no version field, we can never determine the version, so this component is not versioned
@@ -274,23 +273,7 @@ private class Dependency : Object {
 		prefixes += "";
 		if (include_optional)
 			prefixes += "Optional";
-
-		// add item data for this component
-		foreach (string prefix in prefixes) {
-			add_item_list (ItemType.SHARED_LIB, data.get_value (prefix + "Libraries"));
-			add_item_list (ItemType.BINARY, data.get_value (prefix + "Binaries"));
-			add_item_list (ItemType.PYTHON, data.get_value (prefix + "Python"));
-			add_item_list (ItemType.PYTHON_2, data.get_value (prefix + "Python2"));
-			add_item_list (ItemType.FILE, data.get_value (prefix + "Files"));
-		}
-
-		return data;
-	}
-
-	public bool load_from_file (string fname, bool include_optional = false) {
-		IPK.MetaFile? data = load_from_file_internal (fname, include_optional);
-		if (data == null)
-			return false;
+		**/
 
 		return true;
 	}
@@ -335,39 +318,17 @@ private class Dependency : Object {
 		return res;
 	}
 
-	private static string get_item_type_idstr (ItemType tp) {
-		string idstr = "";
-		switch (tp) {
-			case ItemType.SHARED_LIB: idstr = "lib:%s";
-						  break;
-			case ItemType.BINARY: idstr = "bin:%s";
-						  break;
-			case ItemType.PYTHON: idstr = "python:%s";
-						  break;
-			case ItemType.PYTHON_2: idstr = "python2:%s";
-						  break;
-			default: idstr = "file:%s";
-				 break;
-		}
-
-		return idstr;
-	}
-
-	public void add_item (ItemType tp, string item_name) {
-		string str = get_item_type_idstr (tp).printf (item_name);
+	public void add_item (ProvidesKind kind, string item_name) {
+		string str = provides_item_create (kind, item_name, null);
 		item_list.add (str);
 	}
 
-	public void add_item_list (ItemType ty, string list) {
+	public void add_item_list (ProvidesKind kind, string list) {
 		if (list.strip () == "")
 			return;
 
-		// We don't like file requirements
-		if (ty == ItemType.FILE)
-			warning ("Component %s depends on a file (%s), which is not supported at time.".printf (info.idname, list));
-
 		if (list.index_of ("\n") < 0) {
-			add_item (ty, list);
+			add_item (kind, list);
 			return;
 		}
 
@@ -375,17 +336,18 @@ private class Dependency : Object {
 		for (int i = 0; i < comp.length; i++) {
 			string s = comp[i].strip ();
 			if (s != "")
-				add_item (ty, s);
+				add_item (kind, s);
 		}
 
 	}
 
-	public bool has_item (ItemType tp, string cname) {
-		return item_list.contains (get_item_type_idstr (tp).printf (cname));
+	public bool has_item (ProvidesKind kind, string val) {
+		string str = provides_item_create (kind, val, null);
+		return item_list.contains (str);
 	}
 
-	public bool has_matching_item (ItemType tp, string cname) {
-		string item_id = get_item_type_idstr (tp).printf (cname);
+	public bool has_matching_item (ProvidesKind kind, string val) {
+		string item_id = provides_item_create (kind, val, null);
 		foreach (string s in item_list) {
 			if (PatternSpec.match_simple (s, item_id))
 				return true;
@@ -398,39 +360,14 @@ private class Dependency : Object {
 		return item_list.size > 0;
 	}
 
-	internal string get_items_by_type_as_str (ItemType tp) {
+	internal string get_items_by_type_as_str (ProvidesKind kind) {
 		string res = "";
 		foreach (string s in item_list) {
-			if (item_get_type (s) == tp)
-				res += item_get_name (s) + "\n";
+			if (provides_item_get_kind (s) == kind)
+				res += provides_item_get_value (s) + "\n";
 		}
 
 		return res;
-	}
-
-	public static string item_get_name (string item_idstr) {
-		return item_idstr.substring (item_idstr.index_of (":") + 1).strip ();
-	}
-
-	public static ItemType item_get_type (string item_idstr) {
-		string tpid = item_idstr.substring (0, item_idstr.index_of (":")).strip ();
-		ItemType tp = ItemType.UNKNOWN;
-		switch (tpid) {
-			case "lib": tp = ItemType.SHARED_LIB;
-				    break;
-			case "bin": tp = ItemType.BINARY;
-				    break;
-			case "python": tp = ItemType.PYTHON;
-				    break;
-			case "python2": tp = ItemType.PYTHON_2;
-				    break;
-			case "file": tp = ItemType.FILE;
-				    break;
-			default: tp = ItemType.UNKNOWN;
-				    break;
-		}
-
-		return tp;
 	}
 
 	public HashSet<string> get_installdata () {
