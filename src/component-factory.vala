@@ -124,7 +124,7 @@ internal class ComponentFactory : Object {
 		// the order of the solvers defines their priority
 		solver_pool.add (new BasicSolver (ssettings));
 		solver_pool.add (new PkitSolver (ssettings));
-		//solver_pool.add (new PythonSolver (ssettings));
+		//! solver_pool.add (new PythonSolver (ssettings));
 		solver_pool.add (new ZFeedSolver (ssettings));
 	}
 

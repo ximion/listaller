@@ -1,6 +1,0 @@
-# GTK+3 visual toolkit
-
-ID: GTK+3
-Version: shell$ pkg-config --modversion gtk+-3.0
-Libraries: libgtk-3.so.0
-Binaries: update-icon-caches

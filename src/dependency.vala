@@ -238,10 +238,11 @@ private class Dependency : Object {
 	public bool load_from_file (string fname, bool include_optional = false) {
 		// parse canonical AppStream Component
 		var mdata = new Appstream.Metadata ();
-		var f = File.new_for_path (fname);
+		string xmldata = null;
 		Appstream.Component cpt;
 		try {
-			cpt = mdata.parse_file (f);
+			xmldata = load_file_to_string (fname);
+			cpt = mdata.parse_data (xmldata);
 		} catch (Error e) {
 			warning (e.message);
 			return false;
@@ -254,19 +255,36 @@ private class Dependency : Object {
 			item_list.add (item);
 		}
 
+		// set version, if there is one
+		GenericArray<Appstream.Release> releases = cpt.get_releases ();
+		if (releases.length > 0) {
+			// the fisrt item should always be the newest one
+			Appstream.Release release = releases.get (0);
+			set_version (release.get_version ());
+		}
+
+		// Find Listaller-specific nodes in AppStream XML
+
+		// Parse the document from path
+		Xml.Doc *xdoc = Xml.Parser.parse_doc (xmldata);
+		// Get the root node
+		Xml.Node* root = xdoc->get_root_element ();
+		for (Xml.Node* iter = root; iter != null; iter = iter->next) {
+			// discard spaces
+			if (iter->type != Xml.ElementType.ELEMENT_NODE) {
+				continue;
+			}
+			if (iter->name == "x-version-template") {
+				_version_raw = iter->get_content ();
+			} else if (iter->name == "x-always-installed") {
+				installed = iter->get_content () == "true";
+			}
+		}
+
+		delete xdoc;
 
 		// TODO
 		/**
-		_version_raw = data.get_value ("Version");
-		if (!data.has_field ("Version"))
-			// if there is no version field, we can never determine the version, so this component is not versioned
-			_version_cache = "none";
-
-		if (data.get_value ("AlwaysInstalled") == "true")
-			installed = true;
-
-		feed_url = data.get_value ("Feed");
-
 		// The optional stuff is usually only used by the setup process, to group
 		// optional libraries to the right component, without throwing an error.
 		string[] prefixes = {};
