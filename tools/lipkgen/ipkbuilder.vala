@@ -613,7 +613,7 @@ private class Builder : Object {
 				var dep = new Dependency.blank ();
 				bool l_ret = dep.load_from_file (fname);
 				// installed system modules take precendence before any additional modules
-				if (dep.info.idname in cfactory.registered_deps)
+				if (dep.info.id in cfactory.registered_deps)
 					continue;
 				if (l_ret) {
 					string pkg_depfile = Path.build_filename (pkg_depfiles_dir, Path.get_basename (fname));

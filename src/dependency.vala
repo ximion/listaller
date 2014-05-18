@@ -58,10 +58,10 @@ private class Dependency : Object {
 		}
 		set {
 			if ((!Utils.__unittestmode) &&
-			    (info.idname != "") &&
+			    (info.id != "") &&
 			    (!has_installdata ()) &&
 			    (feed_url == "")) {
-				warning ("Trying to set dependency %s to 'satisfied', although it is not a standardlib. (Reason: No install-data found!) - This usually is a packaging bug.", info.idname);
+				warning ("Trying to set dependency %s to 'satisfied', although it is not a standardlib. (Reason: No install-data found!) - This usually is a packaging bug.", info.id);
 			}
 			_installed = value;
 		}
@@ -226,7 +226,7 @@ private class Dependency : Object {
 		res = res.replace ("\n", "");
 
 		if (res == "")
-			warning ("No version found for component '%s'.", info.idname);
+			warning ("No version found for component '%s'.", info.id);
 
 		return res;
 	}
@@ -461,7 +461,7 @@ private class Dependency : Object {
 	 * Get installation directory for this module, using the SettupSettings taken as argument
 	 */
 	public string get_install_dir_for_setting (SetupSettings setup_setting) {
-		return Path.build_filename (setup_setting.depdata_dir (), info.idname, null);
+		return Path.build_filename (setup_setting.depdata_dir (), info.id, null);
 	}
 
 	/**
@@ -469,7 +469,7 @@ private class Dependency : Object {
 	*/
 	public string build_pk_package_id () {
 		string package_id;
-		string unique_idname = "dep:%s".printf (info.idname);
+		string unique_idname = "dep:%s".printf (info.id);
 
 		package_id = PackageKit.Package.id_build (unique_idname,
 							  get_version (),
@@ -482,13 +482,13 @@ private class Dependency : Object {
 
 [CCode (has_target = false)]
 private static uint dependency_hash_func (Dependency dep) {
-	string str = dep.info.idname;
+	string str = dep.info.id;
 	return str_hash (str);
 }
 
 [CCode (has_target = false)]
 private static bool dependency_equal_func (Dependency a, Dependency b) {
-	if (a.info.idname == b.info.idname)
+	if (a.info.id == b.info.id)
 		return true;
 	return false;
 }

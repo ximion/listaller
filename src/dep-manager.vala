@@ -51,9 +51,9 @@ private class DepManager : MessageObject {
 	}
 
 	public bool module_is_installed (ref Dependency dep) {
-		Dependency? dbDep = db.get_dependency_by_id (dep.info.idname);
+		Dependency? dbDep = db.get_dependency_by_id (dep.info.id);
 		if (dbDep != null) {
-			debug ("Dependency with id [%s] is already installed :)", dep.info.idname);
+			debug ("Dependency with id [%s] is already installed :)", dep.info.id);
 			dep = dbDep;
 			return true;
 		}
@@ -89,18 +89,18 @@ private class DepManager : MessageObject {
 		if (!contains_libs)
 			return "";
 
-		string depInstallDir = Path.build_filename (ssettings.depdata_dir (), dep.info.idname, null);
+		string depInstallDir = Path.build_filename (ssettings.depdata_dir (), dep.info.id, null);
 		// If directory is non-existent, we don't need to continue here. Maybe we have a system library/package installed.'
 		if (!FileUtils.test (depInstallDir, FileTest.EXISTS))
 			return "";
 
 		string? resDir = find_dir_containing_file (depInstallDir, "*.so", true);
 		if (resDir == null) {
-			GLib.message ("Could not find shared libraries for dependency '%s'. this might be an error.", dep.info.idname);
+			GLib.message ("Could not find shared libraries for dependency '%s'. this might be an error.", dep.info.id);
 			return "";
 		}
 
-		db.set_dependency_environment (dep.info.idname, "LD_LIBRARY_PATH=\"%s\"".printf (resDir));
+		db.set_dependency_environment (dep.info.id, "LD_LIBRARY_PATH=\"%s\"".printf (resDir));
 
 		return resDir;
 	}

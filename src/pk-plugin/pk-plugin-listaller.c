@@ -165,7 +165,7 @@ pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 		description = as_component_get_description (info);
 		summary = as_component_get_summary (info);
 		listaller_app_item_get_license (app, &license);
-		url = as_component_get_homepage (info);
+		url = as_component_get_url (info, AS_URL_KIND_HOMEPAGE);
 
 		//TODO: Fetch size of installed application too
 

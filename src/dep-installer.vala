@@ -124,7 +124,7 @@ private class DepInstaller : MessageObject {
 		}
 
 		foreach (Dependency dep in req_mods) {
-			debug ("Prepared module dependency %s, satisfied: %i", dep.info.idname, (int) dep.installed);
+			debug ("Prepared module dependency %s, satisfied: %i", dep.info.id, (int) dep.installed);
 
 			ret = true;
 			if (!depman.module_is_installed (ref dep)) {

@@ -52,7 +52,7 @@ void test_dependency_installer () {
 
 	// Test 1
 	Dependency test1 = new Dependency.blank ();
-	test1.info.idname = "Test:1#expat";
+	test1.info.id = "Test:1#expat";
 	test1.feed_url = "http://repo.roscidus.com/lib/expat1";
 	//test1.add_item ("libgee.so.2", Appstream.ProvidesKind.LIBRARY);
 	test1.add_item (Appstream.ProvidesKind.LIBRARY, "bladada.so.2");
@@ -65,7 +65,7 @@ void test_dependency_installer () {
 
 	// Test 2
 	Dependency test2 = new Dependency.blank ();
-	test2.info.idname = "Test:2#GNU_parallel";
+	test2.info.id = "Test:2#GNU_parallel";
 	test2.feed_url = "http://git.savannah.gnu.org/cgit/parallel.git/plain/packager/0install/parallel.xml";
 	//test2.add_item ("libvorbis.so.0", Appstream.ProvidesKind.LIBRARY);
 	test2.add_item (Appstream.ProvidesKind.LIBRARY, "nobis.so.0");
@@ -98,7 +98,7 @@ void test_dependency_manager () {
 	assert (testA != null);
 
 	string path = depman.get_absolute_library_path (testA);
-	string expectedPath = Path.build_filename (ssettings.depdata_dir (), testA.info.idname, "usr", "lib", null);
+	string expectedPath = Path.build_filename (ssettings.depdata_dir (), testA.info.id, "usr", "lib", null);
 	debug (path);
 	assert (path == expectedPath);
 
@@ -132,7 +132,7 @@ void test_packagekit_installer () {
 	// Build simple Nano dependency
 	ArrayList<Dependency> deplist = new ArrayList<Dependency> ();
 	Dependency depNano = new Dependency.blank ();
-	depNano.info.idname = "Nano";
+	depNano.info.id = "Nano";
 	depNano.add_item (Appstream.ProvidesKind.BINARY, "/usr/bin/nano");
 
 	Dep.PkInstaller pkit = new Dep.PkInstaller (ssettings);
@@ -144,7 +144,7 @@ void test_packagekit_installer () {
 
 	// Now something more advanced
 	Dependency crazy = new Dependency.blank ();
-	crazy.info.idname = "CrazyStuff";
+	crazy.info.id = "CrazyStuff";
 	crazy.add_item (Appstream.ProvidesKind.BINARY, "/bin/bash");
 	crazy.add_item (Appstream.ProvidesKind.LIBRARY, "libpackagekit-glib2.so");
 	crazy.add_item (Appstream.ProvidesKind.LIBRARY, "libc6.so");
@@ -170,7 +170,7 @@ void test_feed_installer () {
 	Dep.FeedInstaller finst = new Dep.FeedInstaller (ssettings);
 
 	Dependency test1 = new Dependency.blank ();
-	test1.info.idname = "feedTest:1-gnu_parallel";
+	test1.info.id = "feedTest:1-gnu_parallel";
 	test1.feed_url = "http://git.savannah.gnu.org/cgit/parallel.git/plain/packager/0install/parallel.xml";
 
 	bool ret;
@@ -189,25 +189,25 @@ void test_depsolver () {
 
 	// Create a set of dependencies
 	Dependency dep1 = new Dependency.blank ();
-	dep1.info.idname = "Gee";
+	dep1.info.id = "Gee";
 	dep1.feed_url = "http://sweets.sugarlabs.org/base/libgee";
 	dep1.add_item (Appstream.ProvidesKind.LIBRARY, "libc.so.6");
 	deplist.add (dep1);
 
 	Dependency dep2 = new Dependency.blank ();
-	dep2.info.idname = "SDLMixer1.2";
+	dep2.info.id = "SDLMixer1.2";
 	dep2.feed_url = "http://repo.roscidus.com/lib_rsl/sdl-mixer1.2";
 	dep2.add_item (Appstream.ProvidesKind.LIBRARY, "libgee.so");
 	deplist.add (dep2);
 
 	Dependency dep3 = new Dependency.blank ();
-	dep3.info.idname = "Nano";
+	dep3.info.id = "Nano";
 	dep3.add_item (Appstream.ProvidesKind.BINARY, "/usr/bin/nano");
 	dep3.add_item (Appstream.ProvidesKind.LIBRARY, "libc.so.6");
 	deplist.add (dep3);
 
 	Dependency dep4 = new Dependency.blank ();
-	dep4.info.idname = "LibXml2";
+	dep4.info.id = "LibXml2";
 	dep4.feed_url = "http://sweets.sugarlabs.org/base/libxml2";
 	dep4.add_item (Appstream.ProvidesKind.LIBRARY, "libglib-2.0.so.0");
 	deplist.add (dep4);

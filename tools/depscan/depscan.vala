@@ -123,7 +123,7 @@ private class DependencyScanner : Object {
 				string iname = Appstream.provides_item_get_value (s);
 
 				if (dep.has_matching_item (itype, iname)) {
-					comp_list.set (dep.info.idname, dep);
+					comp_list.set (dep.info.id, dep);
 					iter.remove ();
 				}
 
@@ -139,12 +139,12 @@ private class DependencyScanner : Object {
 			try {
 				version = dep.get_version ();
 			} catch (Error e) {
-				debug ("Unable to retrieve version for %s: %s", dep.info.idname, e.message);
+				debug ("Unable to retrieve version for %s: %s", dep.info.id, e.message);
 			}
 			if (version == "")
-				res.add (dep.info.idname);
+				res.add (dep.info.id);
 			else
-				res.add ("%s (>= %s)".printf (dep.info.idname, version));
+				res.add ("%s (>= %s)".printf (dep.info.id, version));
 		}
 
 		if (required_items.size != 0) {

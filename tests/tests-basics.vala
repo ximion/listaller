@@ -116,11 +116,11 @@ void test_zfeeds () {
 	feed.update_dependency_data (dep);
 
 	assert (dep.info.name == "libogg");
-	assert (dep.info.homepage == "http://xiph.org/ogg/");
+	assert (dep.info.get_url (Appstream.UrlKind.HOMEPAGE) == "http://xiph.org/ogg/");
 	/* Info: It is "libogg-0", because the version is set through "search_matching_dependency ()",
 	 * which we don't call here because the libogg feed does not provide implementations
 	 * for every platform out there. (This is a default-test, which should not fail, usually.) */
-	assert (dep.info.idname == "libogg");
+	assert (dep.info.id == "libogg");
 
 	bool ret = feed.search_matching_dependency ();
 	assert (ret == true);
@@ -207,7 +207,7 @@ void test_components () {
 	ret = foo_frmw.load_from_file (Path.build_filename (datadir, "FooTest2.framework", null));
 	assert (ret);
 
-	assert (foo_frmw.info.idname == "FooTest2");
+	assert (foo_frmw.info.id == "FooTest2");
 
 	foo_frmw.installed = true;
 	string version = foo_frmw.get_version ();
@@ -219,7 +219,7 @@ void test_components () {
 	var lilibv_frmw = new Dependency.blank ();
 	ret = lilibv_frmw.load_from_file (Path.build_filename (datadir, "ListallerTest1.framework", null));
 	assert (ret);
-	assert (lilibv_frmw.info.idname == "ListallerTest1");
+	assert (lilibv_frmw.info.id == "ListallerTest1");
 
 	lilibv_frmw.installed = true;
 	version = lilibv_frmw.get_version ();

@@ -742,7 +742,7 @@ private abstract class InternalDB : Object {
 
 		try {
 			// Assign values
-			db_assert (insert_dep.bind_text (DepRow.IDNAME +1, dep.info.idname), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.IDNAME +1, dep.info.id), "bind value");
 
 			db_assert (insert_dep.bind_text (DepRow.FULLNAME +1, dep.info.name), "bind value");
 
@@ -777,7 +777,7 @@ private abstract class InternalDB : Object {
 	private Dependency? retrieve_dependency (Sqlite.Statement stmt) {
 		var dep = new Dependency.blank ();
 
-		dep.info.idname = stmt.column_text (DepRow.IDNAME);
+		dep.info.id = stmt.column_text (DepRow.IDNAME);
 		dep.info.name = stmt.column_text (DepRow.FULLNAME);
 		dep.set_version (stmt.column_text (DepRow.VERSION));
 

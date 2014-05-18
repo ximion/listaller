@@ -58,7 +58,7 @@ internal class ComponentFactory : Object {
 			var dep = new Dependency.blank ();
 			bool ret = dep.load_from_file (fname, include_optional);
 			if (ret)
-				registered_deps.set (dep.info.idname, dep);
+				registered_deps.set (dep.info.id, dep);
 			else
 				warning ("Unable to load data for component: %s", fname);
 		}
@@ -96,7 +96,7 @@ internal class ComponentFactory : Object {
 			foreach (string fname in metainfo_files_sys) {
 				var dep = new Dependency.blank ();
 				bool ret = dep.load_from_file (fname, false);
-				if (dep.info.idname == cptname)
+				if (dep.info.id == cptname)
 					return fname;
 			}
 		}
@@ -104,7 +104,7 @@ internal class ComponentFactory : Object {
 			foreach (string fname in metainfo_files_listaller) {
 				var dep = new Dependency.blank ();
 				bool ret = dep.load_from_file (fname, false);
-				if (dep.info.idname == cptname)
+				if (dep.info.id == cptname)
 					return fname;
 			}
 		}
@@ -143,10 +143,10 @@ internal class ComponentFactory : Object {
 				var dep = new Dependency.blank ();
 				bool ret = dep.load_from_file (fname);
 				// installed system modules take precendence before any additional modules
-				if (dep.info.idname in registered_deps)
+				if (dep.info.id in registered_deps)
 					continue;
 				if (ret)
-					registered_deps.set (dep.info.idname, dep);
+					registered_deps.set (dep.info.id, dep);
 				else
 					warning ("Unable to load data for module: %s", fname);
 			}

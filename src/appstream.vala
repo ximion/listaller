@@ -30,14 +30,14 @@ namespace Listaller {
  * @raturns NULL if Component was of wrong type or another converion error occured.
  */
 private AppItem? appstream_component_to_appitem (Appstream.Component cpt) {
-	if (cpt.kind != ComponentKind.DESKTOP_APP)
+	if (cpt.kind != ComponentKind.DESKTOP)
 		return null;
 
 	// we will want to replace AppItem with AsComponent sooner or later
 	var app = new AppItem.blank ();
 	app.idname = cpt.pkgname;
 	app.info = cpt;
-	app.desktop_file = cpt.idname;
+	app.desktop_file = cpt.id;
 	app.set_license_name (cpt.project_license);
 
 	// set version, after retting the latest release

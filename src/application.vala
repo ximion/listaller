@@ -469,8 +469,8 @@ public class AppItem : Object {
 		}
 
 		// set desktop-file
-		if (cpt.idname.has_suffix (".desktop")) {
-			desktop_file = "%APP%/" + cpt.idname;
+		if (cpt.id.has_suffix (".desktop")) {
+			desktop_file = "%APP%/" + cpt.id;
 		} else {
 			warning (_("AppStream metadata for %s did not have desktop-file as ID!").printf (cpt.name));
 		}
