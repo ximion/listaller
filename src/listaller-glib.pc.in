@@ -7,4 +7,4 @@ Name: listaller-glib
 Description: Access software management features of Listaller
 Version: @LILIBS_FULL_VERSION@
 Libs: -L${libdir} -llistaller-glib -lgee -lgobject-2.0 -lglib-2.0 -lappstream
-Cflags: -I${includedir}/listaller-glib
+Cflags: -I${includedir}/listaller-glib -I${includedir}/Appstream
