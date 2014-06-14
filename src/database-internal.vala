@@ -64,7 +64,7 @@ private enum AppRow {
 	ARCHITECTURE = 4,
 	ORIGIN = 5,
 	INST_TIME = 6,
-	DEPS = 7;
+	DEPENDENCIES = 7;
 }
 
 private enum DepRow {
@@ -223,7 +223,7 @@ private abstract class InternalDB : Object {
 		// InsertDep statement
 		try {
 			db_assert (db.prepare_v2 ("INSERT INTO dependencies (" + depcols + ") "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					-1, out insert_dep), "prepare dependency insert statement");
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (e.message);
@@ -429,7 +429,7 @@ private abstract class InternalDB : Object {
 
 			db_assert (insert_app.bind_int64 (AppRow.INST_TIME +1, item.install_time), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.DEPS +1, item.dependencies_str), "assign value");
+			db_assert (insert_app.bind_text (AppRow.DEPENDENCIES +1, item.dependencies_str), "assign value");
 
 			db_assert (insert_app.step (), "execute app insert");
 
@@ -465,7 +465,7 @@ private abstract class InternalDB : Object {
 		item.desktop_file = stmt.column_text (AppRow.METADATA);
 
 		item.install_time = stmt.column_int (AppRow.INST_TIME);
-		item.dependencies_str = stmt.column_text (AppRow.DEPS);
+		item.dependencies_str = stmt.column_text (AppRow.DEPENDENCIES);
 		item.state = db_type;
 
 		item.origin = stmt.column_text (AppRow.ORIGIN);

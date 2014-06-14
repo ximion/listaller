@@ -32,10 +32,9 @@ struct PkPluginPrivate {
 	PkTransaction		*current_transaction;
 	PkBackendJob		*internal_job; /* job to communicate with the backend - plugin->job is used for frontend communication */
 	ListallerManager	*mgr;
-	ListallerSetupSettings	*setup_settings;
-	PkResults		*backend_results;
-	GMainLoop		*loop;
-	gboolean		error_set;
+	PkResults			*backend_results;
+	GMainLoop			*loop;
+	gboolean			error_set;
 };
 
 static void pk_plugin_reset_backend_jobs (PkPlugin *plugin);
@@ -661,6 +660,13 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 	/* set the transaction */
 	plugin->priv->current_transaction = transaction;
 
+	/* we use an internal job to communicate with the native backend. plugin->job is used for client communication */
+	if (plugin->priv->internal_job == NULL) {
+		GKeyFile *conf;
+		conf = pk_transaction_get_conf (plugin->priv->current_transaction);
+		plugin->priv->internal_job = pk_backend_job_new (conf);
+	}
+
 	plugin->priv->error_set = FALSE;
 
 	/* reset all jobs connected to the backend (public/private) */
@@ -863,7 +869,7 @@ pk_plugin_transaction_finished_results (PkPlugin *plugin,
 const gchar *
 pk_plugin_get_description (void)
 {
-	// TODO: Think of a better description
+	/* TODO: Think of a better description */
 	return "Listaller support for PackageKit";
 }
 
@@ -873,18 +879,11 @@ pk_plugin_get_description (void)
 void
 pk_plugin_initialize (PkPlugin *plugin)
 {
-	GKeyFile *conf;
-
 	/* create private area */
 	plugin->priv = PK_TRANSACTION_PLUGIN_GET_PRIVATE (PkPluginPrivate);
 	plugin->priv->mgr = listaller_manager_new (TRUE);
 	plugin->priv->loop = g_main_loop_new (NULL, FALSE);
 	plugin->priv->backend_results = pk_results_new ();
-	plugin->priv->setup_settings = NULL;
-
-	/* we use an internal job to communicate with the native backend. plugin->job is used for client communication */
-	conf = pk_transaction_get_conf (plugin->priv->current_transaction);
-	plugin->priv->internal_job = pk_backend_job_new (conf);
 
 	/* tell PK we might be able to handle these */
 	pk_backend_implement (plugin->backend, PK_ROLE_ENUM_GET_DETAILS);
@@ -911,10 +910,10 @@ void
 pk_plugin_destroy (PkPlugin *plugin)
 {
 	g_main_loop_unref (plugin->priv->loop);
-	pk_backend_stop_job (plugin->backend, plugin->priv->internal_job);
-	plugin->priv->internal_job = NULL;
-	if (plugin->priv->setup_settings != NULL)
-		g_object_unref (plugin->priv->setup_settings);
+	if (plugin->priv->internal_job != NULL) {
+		pk_backend_stop_job (plugin->backend, plugin->priv->internal_job);
+		plugin->priv->internal_job = NULL;
+	}
 	g_object_unref (plugin->priv->mgr);
 	g_object_unref (plugin->priv->backend_results);
 }
