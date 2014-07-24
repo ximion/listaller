@@ -31,6 +31,8 @@ private const string DATABASE = ""
 		+ "idname TEXT PRIMARY KEY, "
 		+ "full_name TEXT NOT NULL, "
 		+ "version TEXT NOT NULL, "
+		+ "summary TEXT NOT NULL, "
+		+ "description TEXT, "
 		+ "metadata TEXT,"
 		+ "architecture TEXT NOT NULL, "
 		+ "origin TEXT NOT NULL, "
@@ -41,6 +43,8 @@ private const string DATABASE = ""
 		+ "idname TEXT PRIMARY KEY, "
 		+ "full_name TEXT NOT NULL, "
 		+ "version TEXT NOT NULL, "
+		+ "summary TEXT NOT NULL, "
+		+ "description TEXT, "
 		+ "metadata TEXT, "
 		+ "architecture TEXT NOT NULL, "
 		+ "origin TEXT NOT NULL, "
@@ -52,33 +56,37 @@ private const string DATABASE = ""
 		+ ");" +
 		"";
 
-private const string appcols = "idname, full_name, version, metadata, architecture, origin, install_time, dependencies";
-private const string depcols = "idname, full_name, version, metadata, architecture, origin, install_time, items_installed, " +
+private const string appcols = "idname, full_name, version, summary, description, metadata, architecture, origin, install_time, dependencies";
+private const string depcols = "idname, full_name, version, summary, description, metadata, architecture, origin, install_time, items_installed, " +
 						"items, environment, dependencies";
 
 private enum AppRow {
 	IDNAME = 0,
 	FULLNAME = 1,
 	VERSION = 2,
-	METADATA = 3,
-	ARCHITECTURE = 4,
-	ORIGIN = 5,
-	INST_TIME = 6,
-	DEPENDENCIES = 7;
+	SUMMARY = 3,
+	DESCRIPTION = 4,
+	METADATA = 5,
+	ARCHITECTURE = 6,
+	ORIGIN = 7,
+	INST_TIME = 8,
+	DEPENDENCIES = 9;
 }
 
 private enum DepRow {
 	IDNAME = 0,
 	FULLNAME = 1,
 	VERSION = 2,
-	METADATA = 3,
-	ARCHITECTURE = 4,
-	ORIGIN = 5,
-	INST_TIME = 6,
-	ITEMS_INSTALLED = 7,
-	ITEMS = 8,
-	ENVIRONMENT = 9,
-	DEPENDENCIES = 10;
+	SUMMARY = 3,
+	DESCRIPTION = 4,
+	METADATA = 5,
+	ARCHITECTURE = 6,
+	ORIGIN = 7,
+	INST_TIME = 8,
+	ITEMS_INSTALLED = 9,
+	ITEMS = 10,
+	ENVIRONMENT = 11,
+	DEPENDENCIES = 12;
 }
 
 public errordomain DatabaseError {
@@ -214,7 +222,7 @@ private abstract class InternalDB : Object {
 		// InsertApp statement
 		try {
 			db_assert (db.prepare_v2 ("INSERT INTO applications (" + appcols + ") "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					-1, out insert_app), "prepare app insert statement");
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (e.message);
@@ -223,7 +231,7 @@ private abstract class InternalDB : Object {
 		// InsertDep statement
 		try {
 			db_assert (db.prepare_v2 ("INSERT INTO dependencies (" + depcols + ") "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					-1, out insert_dep), "prepare dependency insert statement");
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (e.message);
@@ -421,7 +429,11 @@ private abstract class InternalDB : Object {
 
 			db_assert (insert_app.bind_text (AppRow.FULLNAME +1, item.info.name), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.METADATA +1, item.desktop_file), "assign value");
+			db_assert (insert_app.bind_text (AppRow.SUMMARY +1, item.info.summary), "assign value");
+
+			db_assert (insert_app.bind_text (AppRow.DESCRIPTION +1, item.info.description), "assign value");
+
+			db_assert (insert_app.bind_text (AppRow.METADATA +1, item.get_metadata_xml ()), "assign value");
 
 			db_assert (insert_app.bind_text (AppRow.ARCHITECTURE +1, arch), "assign value");
 
@@ -748,7 +760,7 @@ private abstract class InternalDB : Object {
 
 			db_assert (insert_dep.bind_text (DepRow.VERSION +1, dep.get_version ()), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.METADATA +1, "TODO"));
+			db_assert (insert_dep.bind_text (DepRow.METADATA +1, dep.get_metadata_xml ()));
 
 			db_assert (insert_dep.bind_int64 (DepRow.INST_TIME +1, dep.install_time), "bind value");
 

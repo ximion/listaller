@@ -62,7 +62,7 @@ void test_application_ids () {
 	msg ("Testing app-ids");
 
 	string foobar_mfile = Path.build_filename (foobar_dir, "foobar.appdata.xml", null);
-	AppItem dummy = new AppItem.from_metadata (foobar_mfile);
+	AppItem dummy = new AppItem.from_xml_file (foobar_mfile);
 	msg ("Dummy application id: " + dummy.appid);
 	string expected_id = "foobar;1.0;" + fold_user_dir (foobar_mfile) + ";" + "unknown";
 
@@ -72,8 +72,8 @@ void test_application_ids () {
 	assert (item1.idname == "foobar");
 	assert (item1.info.name == "Listaller FooBar");
 	assert (item1.version == "1.0");
-	//! assert (item1.publisher == "Listaller Project");
-	assert (item1.get_raw_cmd () == "%INST%/foo");
+	//! assert (item1.info.developer == "Listaller Project");
+	//! assert (item1.get_raw_cmd () == "%INST%/foo");
 	assert (item1.origin == "unknown");
 
 	var cpt = new Appstream.Component ();
@@ -85,8 +85,9 @@ void test_application_ids () {
 	assert (item2.idname == "myapp");
 	item2.metadata_file = Path.build_filename (foobar_dir, "foobar.appdata.xml", null);
 	item2.update_with_metadata_file ();
-	assert (item2.desktop_file == "");
-	assert (item2.appid == "myapp;0.1;;http://example.com");
+	assert (item2.desktop_file == "%APP%/foobar.desktop");
+	debug (item2.appid);
+	assert (item2.appid == "myapp;1.0;%s;http://example.com".printf (item2.metadata_file));
 
 	cpt.name = "Google Earth";
 	AppItem item3 = new AppItem (cpt);
@@ -157,7 +158,7 @@ void test_appstream_xml () {
 		error (e.message);
 	}
 
-	AppItem? item = appstream_component_to_appitem (cpt);
+	var item = new AppItem (cpt);
 	item.fast_check ();
 	assert (item != null);
 	assert (item.idname == "foobar-1");

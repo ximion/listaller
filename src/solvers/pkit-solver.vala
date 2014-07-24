@@ -42,7 +42,7 @@ private class PkitSolver : AbstractSolver {
 		bool ret;
 
 		// Try if we can find native packages providing the dependency
-		ret = !Utils.str_is_empty (dep.info.pkgname);
+		ret = !(dep.info.pkgnames == null);
 
 		return ret;
 	}

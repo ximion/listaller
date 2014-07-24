@@ -197,12 +197,16 @@ public abstract class Control : Object {
 		// new AppStream metadata parser
 		mdata = new Appstream.Metadata ();
 
+		// load data separately to get correct error message
+		// FIXME: Update AppItem to not load failing stuff in the constrcutor anymore
 		try {
 			cpt = mdata.parse_data (appXML);
 		} catch (Error e) {
 			throw new ControlDataError.APPDATA_INVALID (e.message);
 		}
-		item = appstream_component_to_appitem (cpt);
+		item = new AppItem (cpt);
+		// Meh...
+		item.xmldata = appXML;
 
 		if (item != null)
 			appItem = item;

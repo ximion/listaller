@@ -464,6 +464,10 @@ private class Dependency : Object {
 		return Path.build_filename (setup_setting.depdata_dir (), info.id, null);
 	}
 
+	public string get_metadata_xml () {
+		return xmldata;
+	}
+
 	/**
 	* Generate a PackageKit package-id for this dependency information
 	*/

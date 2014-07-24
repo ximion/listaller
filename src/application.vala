@@ -101,6 +101,7 @@ public class AppItem : Object {
 	private SetupSettings setup_settings;
 	private string _metadata_file;
 	private Appstream.Component _info;
+	public string xmldata { private get; internal set; }
 
 	/**
 	 * Application identifier
@@ -138,8 +139,6 @@ public class AppItem : Object {
 	}
 
 	public int size_installed { get; set; } // Installed size of this application in KiB
-
-	public string xml_data { get; set; }
 
 	private string _metadata_fname_folded;
 	public string metadata_file {
@@ -208,11 +207,12 @@ public class AppItem : Object {
 
 	public string author { get; set; }
 
-	public AppItem.blank () {
+	public AppItem (Appstream.Component cpt) {
 		_idname = "";
 		install_time = 0;
 		origin = "unknown";
 		_app_id = "";
+		_version = "";
 		desktop_file = "";
 		_metadata_file = "";
 		setup_settings = new SetupSettings ();
@@ -221,23 +221,40 @@ public class AppItem : Object {
 			name = "",
 			text = ""
 		};
-	}
-
-	public AppItem (Appstream.Component cpt) {
-		this.blank ();
 		_info = cpt;
 	}
 
-	public AppItem.from_metadata (string asdata_fname) {
+	public AppItem.blank () {
+		var cpt = new Appstream.Component ();
+		this (cpt);
+	}
+
+	public AppItem.from_xml_file (string asdata_fname) {
 		this.blank ();
 		var mdata = new Appstream.Metadata ();
 		var f = File.new_for_path (asdata_fname);
 		Appstream.Component cpt;
 		try {
 			cpt = mdata.parse_file (f);
+			xmldata = load_file_to_string (asdata_fname);
 		} catch (Error e) {
 			error (e.message);
 		}
+		_metadata_file = asdata_fname;
+		_info = cpt;
+	}
+
+	public AppItem.from_xml_data (string xmld) {
+		this.blank ();
+		var mdata = new Appstream.Metadata ();
+		Appstream.Component cpt;
+		try {
+			cpt = mdata.parse_data (xmld);
+		} catch (Error e) {
+			error (e.message);
+		}
+		_metadata_file = "";
+		xmldata = xmld;
 		_info = cpt;
 	}
 
@@ -327,7 +344,7 @@ public class AppItem : Object {
 			return _app_id;
 
 		if (metadata_file.strip () == "") {
-			warning (_("We don't know a metadata-file for application '%s'!").printf (info.name));
+			debug (_("We don't know a metadata-file for application '%s'!").printf (info.name));
 			// If no metadata file was found, we can only use application name and version as ID
 			res = "%s;%s;;%s".printf (idname, version, origin);
 		} else {
@@ -447,11 +464,11 @@ public class AppItem : Object {
 			warning (_("Could not open AppStream metadata file: %s").printf (_("File does not exist.")));
 			return;
 		}
-		xml_data = xml;
+		xmldata = xml;
 
 		// fetch AppStream component from data
 		var mdata = new Appstream.Metadata ();
-		var cpt = mdata.parse_data (xml_data);
+		var cpt = mdata.parse_data (xmldata);
 
 		// set version, after retting the latest release
 		Appstream.Release? release = null;
@@ -510,6 +527,15 @@ public class AppItem : Object {
 		}
 
 		return cmd;
+	}
+
+	public string get_metadata_xml () {
+		if (Utils.str_is_empty (xmldata)) {
+			warning ("Component '%s' does not have raw XML metadata.", idname);
+			return "";
+		}
+
+		return xmldata;
 	}
 
 	/*  1 == bversion is higher
