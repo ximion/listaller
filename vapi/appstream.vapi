@@ -61,6 +61,10 @@ namespace Appstream {
 	public class Component : GLib.Object {
 		[CCode (cname = "as_component_new", has_construct_function = false)]
 		public Component ();
+		[CCode (cname = "as_component_add_extends")]
+		public void add_extends (string cpt_id);
+		[CCode (cname = "as_component_add_language")]
+		public void add_language (string locale, int percentage);
 		[CCode (cname = "as_component_add_provided_item")]
 		public void add_provided_item (Appstream.ProvidesKind kind, string value, string data);
 		[CCode (cname = "as_component_add_release")]
@@ -77,28 +81,30 @@ namespace Appstream {
 		public unowned string[] get_compulsory_for_desktops ();
 		[CCode (cname = "as_component_get_description")]
 		public unowned string get_description ();
-		[CCode (cname = "as_component_get_homepage")]
-		[Deprecated (since = "0.6.2")]
-		public unowned string get_homepage ();
+		[CCode (cname = "as_component_get_developer_name")]
+		public unowned string get_developer_name ();
+		[CCode (cname = "as_component_get_extends")]
+		public unowned GLib.GenericArray<string> get_extends ();
 		[CCode (cname = "as_component_get_icon")]
 		public unowned string get_icon ();
 		[CCode (cname = "as_component_get_icon_url")]
 		public unowned string get_icon_url ();
 		[CCode (cname = "as_component_get_id")]
 		public unowned string get_id ();
-		[CCode (cname = "as_component_get_idname")]
-		[Deprecated (since = "0.6.2")]
-		public unowned string get_idname ();
 		[CCode (array_length = false, array_null_terminated = true, cname = "as_component_get_keywords")]
-		public string[] get_keywords ();
+		public unowned string[] get_keywords ();
 		[CCode (cname = "as_component_get_kind")]
 		public Appstream.ComponentKind get_kind ();
+		[CCode (cname = "as_component_get_language")]
+		public int get_language (string locale);
+		[CCode (cname = "as_component_get_languages")]
+		public GLib.List<weak string> get_languages ();
 		[CCode (cname = "as_component_get_name")]
 		public unowned string get_name ();
 		[CCode (cname = "as_component_get_name_original")]
 		public unowned string get_name_original ();
-		[CCode (cname = "as_component_get_pkgname")]
-		public unowned string get_pkgname ();
+		[CCode (array_length = false, array_null_terminated = true, cname = "as_component_get_pkgnames")]
+		public unowned string[] get_pkgnames ();
 		[CCode (cname = "as_component_get_project_group")]
 		public unowned string get_project_group ();
 		[CCode (cname = "as_component_get_project_license")]
@@ -124,35 +130,31 @@ namespace Appstream {
 		[CCode (cname = "as_component_provides_item")]
 		public bool provides_item (Appstream.ProvidesKind kind, string value);
 		[CCode (cname = "as_component_set_categories")]
-		public void set_categories (string value);
+		public void set_categories ([CCode (array_length = false, array_null_terminated = true)] string[] value);
 		[CCode (cname = "as_component_set_categories_from_str")]
 		public void set_categories_from_str (string categories_str);
 		[CCode (cname = "as_component_set_compulsory_for_desktops")]
 		public void set_compulsory_for_desktops (string value);
 		[CCode (cname = "as_component_set_description")]
 		public void set_description (string value);
-		[CCode (cname = "as_component_set_homepage")]
-		[Deprecated (since = "0.6.2")]
-		public void set_homepage (string value);
+		[CCode (cname = "as_component_set_developer_name")]
+		public void set_developer_name (string value);
 		[CCode (cname = "as_component_set_icon")]
 		public void set_icon (string value);
 		[CCode (cname = "as_component_set_icon_url")]
 		public void set_icon_url (string value);
 		[CCode (cname = "as_component_set_id")]
 		public void set_id (string value);
-		[CCode (cname = "as_component_set_idname")]
-		[Deprecated (since = "0.6.2")]
-		public void set_idname (string value);
 		[CCode (cname = "as_component_set_keywords")]
-		public void set_keywords (string value);
+		public void set_keywords ([CCode (array_length = false, array_null_terminated = true)] string[] value);
 		[CCode (cname = "as_component_set_kind")]
 		public void set_kind (Appstream.ComponentKind value);
 		[CCode (cname = "as_component_set_name")]
 		public void set_name (string value);
 		[CCode (cname = "as_component_set_name_original")]
 		public void set_name_original (string value);
-		[CCode (cname = "as_component_set_pkgname")]
-		public void set_pkgname (string value);
+		[CCode (cname = "as_component_set_pkgnames")]
+		public void set_pkgnames ([CCode (array_length = false, array_null_terminated = true)] string[] value);
 		[CCode (cname = "as_component_set_project_group")]
 		public void set_project_group (string value);
 		[CCode (cname = "as_component_set_project_license")]
@@ -167,6 +169,8 @@ namespace Appstream {
 		[NoAccessorMethod]
 		public string description { owned get; set; }
 		[NoAccessorMethod]
+		public string developer_name { owned get; set; }
+		[NoAccessorMethod]
 		public string icon { owned get; set; }
 		[NoAccessorMethod]
 		public string icon_url { owned get; set; }
@@ -177,15 +181,15 @@ namespace Appstream {
 		public string[] keywords { owned get; set; }
 		[NoAccessorMethod]
 		public Appstream.ComponentKind kind { get; set; }
-		[CCode (array_length = false, array_null_terminated = true)]
-		[NoAccessorMethod]
-		public string[] mimetypes { owned get; set; }
 		[NoAccessorMethod]
 		public string name { owned get; set; }
 		[NoAccessorMethod]
 		public string name_original { owned get; set; }
+		[CCode (array_length = false, array_null_terminated = true)]
 		[NoAccessorMethod]
-		public string pkgname { owned get; set; }
+		public string[] pkgnames { owned get; set; }
+		[NoAccessorMethod]
+		public string project_group { owned get; set; }
 		[NoAccessorMethod]
 		public string project_license { owned get; set; }
 		[NoAccessorMethod]
@@ -194,6 +198,21 @@ namespace Appstream {
 		public string summary { owned get; set; }
 		[NoAccessorMethod]
 		public GLib.HashTable<weak void*,weak void*> urls { owned get; }
+	}
+	[CCode (cheader_filename = "appstream.h", type_id = "as_data_pool_get_type ()")]
+	public class DataPool : GLib.Object {
+		[CCode (cname = "as_data_pool_new", has_construct_function = false)]
+		public DataPool ();
+		[CCode (cname = "as_data_pool_get_components")]
+		public GLib.List<weak Appstream.Component> get_components ();
+		[CCode (array_length = false, array_null_terminated = true, cname = "as_data_pool_get_watched_locations")]
+		public string[] get_watched_locations ();
+		[CCode (cname = "as_data_pool_initialize")]
+		public void initialize ();
+		[CCode (cname = "as_data_pool_set_data_source_directories")]
+		public void set_data_source_directories (string dirs);
+		[CCode (cname = "as_data_pool_update")]
+		public bool update ();
 	}
 	[CCode (cheader_filename = "appstream.h", type_id = "as_database_get_type ()")]
 	public class Database : GLib.Object {
@@ -205,12 +224,14 @@ namespace Appstream {
 		public bool db_exists ();
 		[CCode (cname = "as_database_find_components")]
 		public GLib.GenericArray<Appstream.Component> find_components (Appstream.SearchQuery query);
-		[CCode (cname = "as_database_find_components_by_str")]
-		public GLib.GenericArray<Appstream.Component> find_components_by_str (string search_str, string categories_str);
+		[CCode (cname = "as_database_find_components_by_term")]
+		public GLib.GenericArray<Appstream.Component> find_components_by_term (string search_term, string? categories_str);
 		[CCode (cname = "as_database_get_all_components")]
 		public GLib.GenericArray<Appstream.Component> get_all_components ();
 		[CCode (cname = "as_database_get_component_by_id")]
 		public Appstream.Component get_component_by_id (string idname);
+		[CCode (cname = "as_database_get_components_by_kind")]
+		public GLib.GenericArray<Appstream.Component> get_components_by_kind (Appstream.ComponentKind kinds);
 		[CCode (cname = "as_database_get_components_by_provides")]
 		public GLib.GenericArray<Appstream.Component> get_components_by_provides (Appstream.ProvidesKind kind, string value, string data);
 		[CCode (cname = "as_database_get_database_path")]
@@ -437,6 +458,7 @@ namespace Appstream {
 		TAG_DUPLICATED,
 		TAG_MISSING,
 		TAG_UNKNOWN,
+		TAG_NOT_ALLOWED,
 		PROPERTY_MISSING,
 		PROPERTY_INVALID,
 		VALUE_WRONG,
@@ -457,7 +479,8 @@ namespace Appstream {
 		FIRMWARE,
 		PYTHON2,
 		PYTHON3,
-		MIMETYPE
+		MIMETYPE,
+		DBUS
 	}
 	[CCode (cheader_filename = "appstream.h", cprefix = "AS_SCREENSHOT_KIND_", has_type_id = false)]
 	public enum ScreenshotKind {
@@ -493,6 +516,8 @@ namespace Appstream {
 	public static Appstream.ProvidesKind provides_kind_from_string (string kind_str);
 	[CCode (cheader_filename = "appstream.h", cname = "as_provides_kind_to_string")]
 	public static unowned string provides_kind_to_string (Appstream.ProvidesKind kind);
+	[CCode (array_length = false, array_null_terminated = true, cheader_filename = "appstream.h", cname = "as_ptr_array_to_strv")]
+	public static string[] ptr_array_to_strv (GLib.GenericArray<string> array);
 	[CCode (cheader_filename = "appstream.h", cname = "as_str_empty")]
 	public static bool str_empty (string str);
 	[CCode (cheader_filename = "appstream.h", cname = "as_url_kind_from_string")]
