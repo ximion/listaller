@@ -51,7 +51,7 @@ private class DepInstaller : MessageObject {
 		if (inst_error != null)
 			text = "\n\n%s".printf (inst_error.details);
 		emit_error (ErrorEnum.DEPENDENCY_MISSING, "%s%s".printf (
-			_("Unable to find valid candidate to satisfy dependency '%s'!").printf (dep.info.name),
+			_("Unable to find valid candidate to satisfy dependency '%s'!").printf (dep.metainfo.name),
 			  text));
 	}
 
@@ -83,7 +83,7 @@ private class DepInstaller : MessageObject {
 				if (msg == null)
 					msg = "Solver did not return an error.";
 				debug ("Solver install error: %s", msg);
-				error_msg = _("Unable to install module '%s' which is required for this installation.\nMessage: %s").printf (dep.info.name, msg);
+				error_msg = _("Unable to install module '%s' which is required for this installation.\nMessage: %s").printf (dep.metainfo.name, msg);
 			}
 			if (ret)
 				return true;
@@ -98,7 +98,7 @@ private class DepInstaller : MessageObject {
 		// all resolvers failed, but we don't have an explicit error -> no resolver was able to handle the dependency
 		if (!ret) {
 			emit_error (ErrorEnum.DEPENDENCY_INSTALL_FAILED,
-						_("Unable to install module '%s' which is required for this installation.\nUnable to find a method to satisfy the dependency.").printf (dep.info.name));
+						_("Unable to install module '%s' which is required for this installation.\nUnable to find a method to satisfy the dependency.").printf (dep.metainfo.name));
 		}
 
 		return ret;
@@ -124,7 +124,7 @@ private class DepInstaller : MessageObject {
 		}
 
 		foreach (Dependency dep in req_mods) {
-			debug ("Prepared module dependency %s, satisfied: %i", dep.info.id, (int) dep.installed);
+			debug ("Prepared module dependency %s, satisfied: %i", dep.metainfo.id, (int) dep.installed);
 
 			ret = true;
 			if (!depman.module_is_installed (ref dep)) {

@@ -149,7 +149,7 @@ pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 	ListallerAppLicense license;
 	const gchar *url;
 	ListallerAppItem *app;
-	AsComponent *info;
+	AsComponent *cpt;
 	guint i;
 
 	g_debug ("listaller: running get_details ()");
@@ -160,13 +160,13 @@ pk_listaller_get_details (PkPlugin *plugin, gchar **package_ids)
 		/* update AppItem with database data */
 		listaller_manager_refresh_appitem_data (plugin->priv->mgr, &app);
 
-		info = listaller_app_item_get_info (app);
-		description = as_component_get_description (info);
-		summary = as_component_get_summary (info);
+		cpt = listaller_app_item_get_metainfo (app);
+		description = as_component_get_description (cpt);
+		summary = as_component_get_summary (cpt);
 		listaller_app_item_get_license (app, &license);
-		url = as_component_get_url (info, AS_URL_KIND_HOMEPAGE);
+		url = as_component_get_url (cpt, AS_URL_KIND_HOMEPAGE);
 
-		//TODO: Fetch size of installed application too
+		/* TODO: Fetch size of installed application too */
 
 		/* emit */
 		pk_backend_job_details (plugin->job,
@@ -216,7 +216,7 @@ static void
 listaller_application_cb (GObject *sender, ListallerAppItem *item, PkPlugin *plugin)
 {
 	gchar *package_id;
-	AsComponent *info;
+	AsComponent *cpt;
 
 	package_id = pk_listaller_pkid_from_appitem (item);
 	if (package_id == NULL) {
@@ -225,11 +225,11 @@ listaller_application_cb (GObject *sender, ListallerAppItem *item, PkPlugin *plu
 	}
 	g_debug ("new app found -> %s (%s)", listaller_app_item_get_appid (item), package_id);
 
-	info = listaller_app_item_get_info (item);
+	cpt = listaller_app_item_get_metainfo (item);
 
 	/* emit */
 	pk_backend_job_package (plugin->job, PK_INFO_ENUM_INSTALLED, package_id,
-			    as_component_get_summary (info));
+			    as_component_get_summary (cpt));
 
 	g_free (package_id);
 }
@@ -338,7 +338,7 @@ pk_listaller_install_file (PkPlugin *plugin, const gchar *filename)
 	ListallerSetup *setup;
 	gchar* package_id;
 	ListallerAppItem *app = NULL;
-	AsComponent *info;
+	AsComponent *cpt;
 
 	setup = listaller_setup_new (filename);
 	g_signal_connect (setup, "error-code",
@@ -367,11 +367,11 @@ pk_listaller_install_file (PkPlugin *plugin, const gchar *filename)
 	if (package_id == NULL) {
 		g_debug ("listaller: <error> Unable to build package-id from app-id!");
 	} else if (!pk_backend_job_get_is_error_set (plugin->job)) {
-		info = listaller_app_item_get_info (app);
+		cpt = listaller_app_item_get_metainfo (app);
 		/* emit */
 		pk_backend_job_package (plugin->job, PK_INFO_ENUM_INSTALLED,
 					package_id,
-					as_component_get_summary (info));
+					as_component_get_summary (cpt));
 		g_free (package_id);
 	}
 	g_object_unref (app);
@@ -419,7 +419,7 @@ pk_listaller_get_updates (PkPlugin *plugin)
 	ListallerUpdateItem *uitem;
 	ListallerAppItem *app;
 	ListallerDependency *dep;
-	AsComponent *info;
+	AsComponent *cpt;
 	gchar *package_id;
 	GType swtype;
 	gpointer ptr;
@@ -451,10 +451,10 @@ pk_listaller_get_updates (PkPlugin *plugin)
 			}
 
 			g_debug ("Emitting update package: %s", package_id);
-			info = listaller_app_item_get_info (app);
+			cpt = listaller_app_item_get_metainfo (app);
 			pk_backend_job_package (plugin->job, PK_INFO_ENUM_NORMAL,
 						package_id,
-						as_component_get_summary (info));
+						as_component_get_summary (cpt));
 			g_free (package_id);
 		} else if (swtype == LISTALLER_TYPE_DEPENDENCY) {
 			// TODO

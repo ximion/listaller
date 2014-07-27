@@ -62,7 +62,10 @@ void test_application_ids () {
 	msg ("Testing app-ids");
 
 	string foobar_mfile = Path.build_filename (foobar_dir, "foobar.appdata.xml", null);
-	AppItem dummy = new AppItem.from_xml_file (foobar_mfile);
+	AppItem dummy = new AppItem ();
+	ret = dummy.load_xml_file (foobar_mfile);
+	assert (ret == true);
+
 	msg ("Dummy application id: " + dummy.appid);
 	string expected_id = "foobar;1.0;" + fold_user_dir (foobar_mfile) + ";" + "unknown";
 
@@ -70,18 +73,19 @@ void test_application_ids () {
 
 	AppItem item1 = new AppItem.from_id (expected_id);
 	assert (item1.idname == "foobar");
-	assert (item1.info.name == "Listaller FooBar");
+	assert (item1.metainfo.name == "Listaller FooBar");
 	assert (item1.version == "1.0");
-	//! assert (item1.info.developer == "Listaller Project");
+	//! assert (item1.metainfo.developer == "Listaller Project");
 	//! assert (item1.get_raw_cmd () == "%INST%/foo");
 	assert (item1.origin == "unknown");
 
 	var cpt = new Appstream.Component ();
 	cpt.name = "MyApp";
-	AppItem item2 = new AppItem (cpt);
+	AppItem item2 = new AppItem ();
+	item2.metainfo = cpt;
 	item2.version = "0.1";
 	item2.origin = "http://example.com";
-	assert (item2.info.name == "MyApp");
+	assert (item2.metainfo.name == "MyApp");
 	assert (item2.idname == "myapp");
 	item2.metadata_file = Path.build_filename (foobar_dir, "foobar.appdata.xml", null);
 	item2.update_with_metadata_file ();
@@ -90,7 +94,8 @@ void test_application_ids () {
 	assert (item2.appid == "myapp;1.0;%s;http://example.com".printf (item2.metadata_file));
 
 	cpt.name = "Google Earth";
-	AppItem item3 = new AppItem (cpt);
+	AppItem item3 = new AppItem ();
+	item3.metainfo = cpt;
 	assert (item3.idname == "google_earth");
 }
 
@@ -116,12 +121,12 @@ void test_zfeeds () {
 	var dep = new Dependency.blank ();
 	feed.update_dependency_data (dep);
 
-	assert (dep.info.name == "libogg");
-	assert (dep.info.get_url (Appstream.UrlKind.HOMEPAGE) == "http://xiph.org/ogg/");
+	assert (dep.metainfo.name == "libogg");
+	assert (dep.metainfo.get_url (Appstream.UrlKind.HOMEPAGE) == "http://xiph.org/ogg/");
 	/* Info: It is "libogg-0", because the version is set through "search_matching_dependency ()",
 	 * which we don't call here because the libogg feed does not provide implementations
 	 * for every platform out there. (This is a default-test, which should not fail, usually.) */
-	assert (dep.info.id == "libogg");
+	assert (dep.metainfo.id == "libogg");
 
 	bool ret = feed.search_matching_dependency ();
 	assert (ret == true);
@@ -158,10 +163,10 @@ void test_appstream_xml () {
 		error (e.message);
 	}
 
-	var item = new AppItem (cpt);
+	var item = new AppItem ();
+	item.metainfo = cpt;
 	item.fast_check ();
-	assert (item != null);
-	assert (item.idname == "foobar-1");
+	assert (item.idname == "foobar");
 }
 
 void test_metafile () {
@@ -205,10 +210,10 @@ void test_components () {
 	bool ret;
 
 	var foo_frmw = new Dependency.blank ();
-	ret = foo_frmw.load_from_file (Path.build_filename (datadir, "FooTest2.framework", null));
+	ret = foo_frmw.load_from_file (Path.build_filename (datadir, "FooTest2.framework.xml", null));
 	assert (ret);
 
-	assert (foo_frmw.info.id == "FooTest2");
+	assert (foo_frmw.metainfo.id == "FooTest2");
 
 	foo_frmw.installed = true;
 	string version = foo_frmw.get_version ();
@@ -220,7 +225,7 @@ void test_components () {
 	var lilibv_frmw = new Dependency.blank ();
 	ret = lilibv_frmw.load_from_file (Path.build_filename (datadir, "ListallerTest1.framework", null));
 	assert (ret);
-	assert (lilibv_frmw.info.id == "ListallerTest1");
+	assert (lilibv_frmw.metainfo.id == "ListallerTest1");
 
 	lilibv_frmw.installed = true;
 	version = lilibv_frmw.get_version ();

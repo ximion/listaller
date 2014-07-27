@@ -59,7 +59,7 @@ void test_ipk_package () {
 	assert (ret == true);
 
 	AppItem app = ipk.control.get_application ();
-	assert (app.info.name == "FooBar");
+	assert (app.metainfo.name == "FooBar");
 
 	Collection<IPK.FileEntry> flist = ipk.get_file_entries ();
 	foreach (IPK.FileEntry e in flist) {
@@ -127,7 +127,7 @@ void test_ipk_packcontrol () {
 	assert (ret);
 
 	AppItem app = ipkc.get_application ();
-	assert (app.info.name == "FooBar");
+	assert (app.metainfo.name == "FooBar");
 	assert (app.idname == "foobar");
 }
 

@@ -61,7 +61,8 @@ void test_software_db () {
 
 	var cpt = new Appstream.Component ();
 	cpt.name = "Test";
-	AppItem item = new AppItem (cpt);
+	AppItem item = new AppItem ();
+	item.metainfo = cpt;
 	item.version = "0.1";
 	ret = sdb.add_application (item);
 	assert (ret == true);
@@ -73,7 +74,7 @@ void test_software_db () {
 	AppItem newItem = sdb.get_application_by_idname ("test");
 	assert (newItem != null);
 	assert (newItem.idname == "test");
-	assert (newItem.info.name == "Test");
+	assert (newItem.metainfo.name == "Test");
 
 	msg ("Item is: %s".printf (newItem.to_string ()));
 

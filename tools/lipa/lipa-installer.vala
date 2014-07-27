@@ -97,9 +97,9 @@ public class LipaInstaller : LipaModule {
 
 		AppItem app = ipkmeta.get_application ();
 		//print ("%c8", 0x1B);
-		print ("==== %s ====\n\n", _("Installation of %s").printf (app.info.name));
+		print ("==== %s ====\n\n", _("Installation of %s").printf (app.metainfo.name));
 
-		print ("%s\n\n%s\n", _("Description:"), app.info.description);
+		print ("%s\n\n%s\n", _("Description:"), app.metainfo.description);
 
 		if (ipkmeta.user_accept_license) {
 			string[] licenseLines = app.license.text.split ("\n");
@@ -154,7 +154,7 @@ public class LipaInstaller : LipaModule {
 		if (app == null)
 			error ("Did not receive valid application information!");
 
-		ret = console_get_prompt (_("Do you want to install %s now?").printf (app.info.name), true);
+		ret = console_get_prompt (_("Do you want to install %s now?").printf (app.metainfo.name), true);
 		// If user doesn't want to install the application, exit
 		if (!ret)
 			return;
@@ -165,9 +165,9 @@ public class LipaInstaller : LipaModule {
 		progress_bar.end ();
 
 		if (ret) {
-			print ("Installation of %s completed successfully!\n", app.info.name);
+			print ("Installation of %s completed successfully!\n", app.metainfo.name);
 		} else {
-			print ("Installation of %s failed!\n", app.info.name);
+			print ("Installation of %s failed!\n", app.metainfo.name);
 			error_code = 3;
 		}
 

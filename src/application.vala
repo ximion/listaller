@@ -87,7 +87,8 @@ public struct AppLicense {
  * Application entry
  *
  * Objects of this class contain information about
- * an application
+ * an application (installed or not installed) and associated
+ * Listaller state data.
  */
 public class AppItem : Object {
 	private string _idname;
@@ -100,7 +101,6 @@ public class AppItem : Object {
 	private string _app_id;
 	private SetupSettings setup_settings;
 	private string _metadata_file;
-	private Appstream.Component _info;
 	public string xmldata { private get; internal set; }
 
 	/**
@@ -109,13 +109,13 @@ public class AppItem : Object {
 	public string idname {
 		get {
 			if (_idname.strip () == "")
-				_idname = string_replace (info.name.down (), "( )", "_");
+				_idname = string_replace (_metainfo.name.down (), "( )", "_");
 			return _idname;
 		}
 		internal set {
 			_idname = value;
-			if (info.name.strip () == "")
-				info.name = _idname;
+			if (_metainfo.name.strip () == "")
+			_metainfo.name = _idname;
 		}
 	}
 
@@ -129,13 +129,14 @@ public class AppItem : Object {
 		set { _license = value; }
 	}
 
-	public Appstream.Component info {
+	private Appstream.Component _metainfo;
+	public Appstream.Component metainfo {
 		get {
-			if (_info == null)
-				error ("Fatal: AppItem does not contain AppStream Component information object!");
-			return _info;
+			if (_metainfo == null)
+				error ("Fatal: AppItem does not contain AppStream Component.metainfo.mation object!");
+			return _metainfo;
 		}
-		set { _info = value; }
+		set { _metainfo = value; }
 	}
 
 	public int size_installed { get; set; } // Installed size of this application in KiB
@@ -207,7 +208,7 @@ public class AppItem : Object {
 
 	public string author { get; set; }
 
-	public AppItem (Appstream.Component cpt) {
+	public AppItem () {
 		_idname = "";
 		install_time = 0;
 		origin = "unknown";
@@ -221,16 +222,16 @@ public class AppItem : Object {
 			name = "",
 			text = ""
 		};
-		_info = cpt;
+		metainfo = new Appstream.Component ();
 	}
 
-	public AppItem.blank () {
-		var cpt = new Appstream.Component ();
-		this (cpt);
+	public AppItem.from_id (string application_id) {
+		this ();
+		_app_id = application_id;
+		update_with_appid ();
 	}
 
-	public AppItem.from_xml_file (string asdata_fname) {
-		this.blank ();
+	public bool load_xml_file (string asdata_fname) throws GLib.Error {
 		var mdata = new Appstream.Metadata ();
 		var f = File.new_for_path (asdata_fname);
 		Appstream.Component cpt;
@@ -238,34 +239,31 @@ public class AppItem : Object {
 			cpt = mdata.parse_file (f);
 			xmldata = load_file_to_string (asdata_fname);
 		} catch (Error e) {
-			error (e.message);
+			throw e;
 		}
 		_metadata_file = asdata_fname;
-		_info = cpt;
+		metainfo = cpt;
+
+		return true;
 	}
 
-	public AppItem.from_xml_data (string xmld) {
-		this.blank ();
+	public bool load_xml_data (string xmld) throws GLib.Error {
 		var mdata = new Appstream.Metadata ();
 		Appstream.Component cpt;
 		try {
 			cpt = mdata.parse_data (xmld);
 		} catch (Error e) {
-			error (e.message);
+			throw e;
 		}
 		_metadata_file = "";
 		xmldata = xmld;
-		_info = cpt;
+		metainfo = cpt;
+
+		return true;
 	}
 
 	public void set_origin_local () {
 		origin = "local";
-	}
-
-	public AppItem.from_id (string application_id) {
-		this.blank ();
-		_app_id = application_id;
-		update_with_appid ();
 	}
 
 	public string to_string () {
@@ -281,13 +279,14 @@ public class AppItem : Object {
 		else
 			app_state_str = "[%s|%s]".printf (_("INSTALLED"), str_ownership);
 
-		return "%s %s (%s) :: %s".printf (app_state_str, idname, version, info.to_string ());
+		return "%s %s (%s) :: %s".printf (app_state_str, idname, version, metainfo.to_string ());
 	}
 
 	public void fast_check () {
 		// Fast sanity checks for AppItem
-		assert (info != null);
-		assert (info.name != null);
+		assert (metainfo != null);
+		assert (metainfo.name != null);
+		assert (metainfo.id != null);
 		assert (version != null);
 		assert (appid != "");
 	}
@@ -344,7 +343,7 @@ public class AppItem : Object {
 			return _app_id;
 
 		if (metadata_file.strip () == "") {
-			debug (_("We don't know a metadata-file for application '%s'!").printf (info.name));
+			debug (_("We don't know a metadata-file for application '%s'!").printf (metainfo.name));
 			// If no metadata file was found, we can only use application name and version as ID
 			res = "%s;%s;;%s".printf (idname, version, origin);
 		} else {
@@ -493,7 +492,7 @@ public class AppItem : Object {
 		}
 
 		// set new component
-		info = cpt;
+		metainfo = cpt;
 	}
 
 	public string get_raw_cmd (bool subst_cmd = false) {

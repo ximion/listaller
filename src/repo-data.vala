@@ -199,10 +199,10 @@ internal abstract class ContentFile : Object {
 			return null;
 		}
 
-		var app = new AppItem.blank ();
+		var app = new AppItem ();
 
 		app.idname = idname;
-		app.info.name = data.get_value ("Name");
+		app.metainfo.name = data.get_value ("Name");
 		app.version = data.get_value ("Version");
 		string s = data.get_value ("Author");
 		if (s != "")
@@ -212,8 +212,8 @@ internal abstract class ContentFile : Object {
 		if (s != "") {
 			string[] desc_lines = s.split ("\n", 2);
 
-			app.info.summary = desc_lines[0];
-			app.info.description = desc_lines[1];
+			app.metainfo.summary = desc_lines[0];
+			app.metainfo.description = desc_lines[1];
 		}
 
 		app.origin = repo_origin;
@@ -273,12 +273,12 @@ internal class ContentIndex : ContentFile {
 
 		data.update_value ("Type", "application");
 		data.update_value ("ID", app.idname);
-		data.update_value ("Name", app.info.name);
+		data.update_value ("Name", app.metainfo.name);
 		data.update_value ("Version", app.version);
 		if (app.author != null)
 			data.update_value ("Author", app.author);
-		if (app.info.description != null)
-			data.update_value ("Description", app.info.description);
+		if (app.metainfo.description != null)
+			data.update_value ("Description", app.metainfo.description);
 	}
 }
 

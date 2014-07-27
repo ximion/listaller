@@ -181,7 +181,7 @@ private class FeedInstaller : MessageObject {
 			// TODO
 			//! rollback_extraction ();
 			set_error (ErrorEnum.DEPENDENCY_INSTALL_FAILED,
-				   _("Unable to extract file '%s' for dependency '%s'!").printf (Path.get_basename (fname), dep.info.name));
+				   _("Unable to extract file '%s' for dependency '%s'!").printf (Path.get_basename (fname), dep.metainfo.name));
 			return false;
 		}
 
@@ -246,7 +246,7 @@ private class FeedInstaller : MessageObject {
 		ret = feed.search_matching_dependency ();
 		if (!ret) {
 			set_error (ErrorEnum.DEPENDENCY_MISSING,
-				   _("Unable to find a matching implementation of '%s' for your system/architecture.").printf (dep.info.name));
+				   _("Unable to find a matching implementation of '%s' for your system/architecture.").printf (dep.metainfo.name));
 			return false;
 		}
 

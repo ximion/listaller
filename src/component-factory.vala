@@ -58,7 +58,7 @@ internal class ComponentFactory : Object {
 			var dep = new Dependency.blank ();
 			bool ret = dep.load_from_file (fname, include_optional);
 			if (ret)
-				registered_deps.set (dep.info.id, dep);
+				registered_deps.set (dep.metainfo.id, dep);
 			else
 				warning ("Unable to load data for component: %s", fname);
 		}
@@ -96,7 +96,7 @@ internal class ComponentFactory : Object {
 			foreach (string fname in metainfo_files_sys) {
 				var dep = new Dependency.blank ();
 				bool ret = dep.load_from_file (fname, false);
-				if (dep.info.id == cptname)
+				if (dep.metainfo.id == cptname)
 					return fname;
 			}
 		}
@@ -104,7 +104,7 @@ internal class ComponentFactory : Object {
 			foreach (string fname in metainfo_files_listaller) {
 				var dep = new Dependency.blank ();
 				bool ret = dep.load_from_file (fname, false);
-				if (dep.info.id == cptname)
+				if (dep.metainfo.id == cptname)
 					return fname;
 			}
 		}
@@ -143,10 +143,10 @@ internal class ComponentFactory : Object {
 				var dep = new Dependency.blank ();
 				bool ret = dep.load_from_file (fname);
 				// installed system modules take precendence before any additional modules
-				if (dep.info.id in registered_deps)
+				if (dep.metainfo.id in registered_deps)
 					continue;
 				if (ret)
-					registered_deps.set (dep.info.id, dep);
+					registered_deps.set (dep.metainfo.id, dep);
 				else
 					warning ("Unable to load data for module: %s", fname);
 			}
@@ -191,7 +191,7 @@ internal class ComponentFactory : Object {
 		}
 
 		if ((!dep.installed) && (reason == null))
-			critical ("Module '%s' is not installed, but we don't know a reason why, since no resolver has failed. This is usually a bug in a resolver, please fix it!", dep.info.name);
+			critical ("Module '%s' is not installed, but we don't know a reason why, since no resolver has failed. This is usually a bug in a resolver, please fix it!", dep.metainfo.name);
 
 		return dep.installed;
 	}
@@ -264,7 +264,7 @@ internal class ComponentFactory : Object {
 
 			ret = component_version_satisfied (c_version, required_version, required_version_relation);
 			if (!ret) {
-				reason = _("Component %s is only available in version %s, while a version %s %s is required. This software can not be installed, please notify the original author about it.").printf (dep.info.name,
+				reason = _("Component %s is only available in version %s, while a version %s %s is required. This software can not be installed, please notify the original author about it.").printf (dep.metainfo.name,
 																										c_version,
 																										required_version,
 																										required_version_relation);

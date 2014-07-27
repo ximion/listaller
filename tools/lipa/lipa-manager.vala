@@ -81,7 +81,7 @@ public class LipaManager : LipaModule {
 		else
 			app_state_str = "[%s|%s]".printf (_("INSTALLED"), app_ownership_str (app));
 
-		stdout.printf ("%s <%s> %s %s -- %s\n", app_state_str, app.idname, app.info.name, app.version, app.info.summary);
+		stdout.printf ("%s <%s> %s %s -- %s\n", app_state_str, app.idname, app.metainfo.name, app.version, app.metainfo.summary);
 	}
 
 	private void manager_new_application (AppItem app) {
@@ -107,7 +107,7 @@ public class LipaManager : LipaModule {
 			print_appitem (app);
 		}
 
-		ret = console_get_prompt (_("Do you want to remove %s (%s) now?").printf (app.info.name, app_ownership_str (app)), true);
+		ret = console_get_prompt (_("Do you want to remove %s (%s) now?").printf (app.metainfo.name, app_ownership_str (app)), true);
 		// If user doesn't want to remove the application, exit
 		if (!ret)
 			return;
@@ -126,9 +126,9 @@ public class LipaManager : LipaModule {
 			progress_bar.end ();
 
 		if (ret) {
-			stdout.printf ("%s\n", _("Removal of %s completed successfully!").printf (app.info.name));
+			stdout.printf ("%s\n", _("Removal of %s completed successfully!").printf (app.metainfo.name));
 		} else {
-			stdout.printf ("%s\n", _("Removal of %s failed!").printf (app.info.name));
+			stdout.printf ("%s\n", _("Removal of %s failed!").printf (app.metainfo.name));
 			error_code = 3;
 		}
 	}

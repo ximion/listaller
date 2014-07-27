@@ -144,7 +144,7 @@ public class Manager : MessageObject {
 	private bool remove_application_internal (AppItem app) {
 		// Emit that we're starting
 		emit_status (StatusEnum.ACTION_STARTED,
-			     _("Removal of %s started.").printf (app.info.name));
+			     _("Removal of %s started.").printf (app.metainfo.name));
 
 		SoftwareDB db;
 		if (!init_db (out db))
@@ -152,14 +152,14 @@ public class Manager : MessageObject {
 
 		// Check if this application exists, if not exit
 		if (db.get_application_by_id (app) == null) {
-			emit_error (ErrorEnum.REMOVAL_FAILED, _("Could not uninstall application %s. It is not installed.").printf (app.info.name));
+			emit_error (ErrorEnum.REMOVAL_FAILED, _("Could not uninstall application %s. It is not installed.").printf (app.metainfo.name));
 			return false;
 		}
 
 		// Remove all files which belong to this application
 		ArrayList<IPK.FileEntry>? files = db.get_application_filelist (app);
 		if (files == null) {
-			emit_error (ErrorEnum.REMOVAL_FAILED, _("'%s' has no file-list registered. The software database might be broken.").printf (app.info.name));
+			emit_error (ErrorEnum.REMOVAL_FAILED, _("'%s' has no file-list registered. The software database might be broken.").printf (app.metainfo.name));
 			return false;
 		}
 
@@ -181,7 +181,7 @@ public class Manager : MessageObject {
 		bool ret = db.remove_application (app);
 
 		emit_status (StatusEnum.REMOVAL_FINISHED,
-			     _("Removal of %s finished.").printf (app.info.name));
+			     _("Removal of %s finished.").printf (app.metainfo.name));
 
 		return ret;
 	}
@@ -224,7 +224,7 @@ public class Manager : MessageObject {
 
 		// Emit status message (setup finished)
 		emit_status (StatusEnum.REMOVAL_FINISHED,
-			     _("Removal of %s finished.").printf (app.info.name));
+			     _("Removal of %s finished.").printf (app.metainfo.name));
 
 		return ret;
 

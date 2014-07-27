@@ -290,7 +290,7 @@ private class Builder : Object {
 		if (outname == "") {
 			string ipkname;
 			// Delete invalid chars from filename
-			string simple_appname = delete_chars (appInfo.info.name, {"(", ")", "[", "]", "#", " "});
+			string simple_appname = delete_chars (appInfo.metainfo.name, {"(", ")", "[", "]", "#", " "});
 
 			// we do the arch split to prevent invalid archs from being added (this is much more failsafe)
 			string[] archs = ictrl.get_architectures ().split (",");
@@ -494,7 +494,7 @@ private class Builder : Object {
 		// Get application-id from IPK source control XML file
 		appInfo = ipkCDir.get_application ();
 
-		debug ("Building package for %s, version: %s (id: %s)", appInfo.info.name, appInfo.version, appInfo.idname);
+		debug ("Building package for %s, version: %s (id: %s)", appInfo.metainfo.name, appInfo.version, appInfo.idname);
 
 		// Build IPK control directory
 		ictrl.create_new (ipkCDir.get_appstream_data (), ipkVersion);
@@ -613,7 +613,7 @@ private class Builder : Object {
 				var dep = new Dependency.blank ();
 				bool l_ret = dep.load_from_file (fname);
 				// installed system modules take precendence before any additional modules
-				if (dep.info.id in cfactory.registered_deps)
+				if (dep.metainfo.id in cfactory.registered_deps)
 					continue;
 				if (l_ret) {
 					string pkg_depfile = Path.build_filename (pkg_depfiles_dir, Path.get_basename (fname));

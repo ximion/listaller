@@ -427,11 +427,11 @@ private abstract class InternalDB : Object {
 
 			db_assert (insert_app.bind_text (AppRow.VERSION +1, item.version), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.FULLNAME +1, item.info.name), "assign value");
+			db_assert (insert_app.bind_text (AppRow.FULLNAME +1, item.metainfo.name), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.SUMMARY +1, item.info.summary), "assign value");
+			db_assert (insert_app.bind_text (AppRow.SUMMARY +1, item.metainfo.summary), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.DESCRIPTION +1, item.info.description), "assign value");
+			db_assert (insert_app.bind_text (AppRow.DESCRIPTION +1, item.metainfo.description), "assign value");
 
 			db_assert (insert_app.bind_text (AppRow.METADATA +1, item.get_metadata_xml ()), "assign value");
 
@@ -469,10 +469,10 @@ private abstract class InternalDB : Object {
 	}
 
 	protected virtual AppItem? retrieve_app_item (Sqlite.Statement stmt) {
-		AppItem item = new AppItem.blank ();
+		AppItem item = new AppItem ();
 
 		item.idname = stmt.column_text (AppRow.IDNAME);
-		item.info.name = stmt.column_text (AppRow.FULLNAME);
+		item.metainfo.name = stmt.column_text (AppRow.FULLNAME);
 		item.version = stmt.column_text (AppRow.VERSION);
 		item.desktop_file = stmt.column_text (AppRow.METADATA);
 
@@ -665,11 +665,11 @@ private abstract class InternalDB : Object {
 		string str = s.down ();
 		if (item.idname.down ().index_of (str) > -1)
 			return true;
-		if (item.info.name.down ().index_of (str) > -1)
+		if (item.metainfo.name.down ().index_of (str) > -1)
 			return true;
-		if (item.info.summary.down ().index_of (str) > -1)
+		if (item.metainfo.summary.down ().index_of (str) > -1)
 			return true;
-		if (item.info.description.down ().index_of (str) > -1)
+		if (item.metainfo.description.down ().index_of (str) > -1)
 			return true;
 		return false;
 	}
@@ -754,9 +754,9 @@ private abstract class InternalDB : Object {
 
 		try {
 			// Assign values
-			db_assert (insert_dep.bind_text (DepRow.IDNAME +1, dep.info.id), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.IDNAME +1, dep.metainfo.id), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.FULLNAME +1, dep.info.name), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.FULLNAME +1, dep.metainfo.name), "bind value");
 
 			db_assert (insert_dep.bind_text (DepRow.VERSION +1, dep.get_version ()), "bind value");
 
@@ -789,8 +789,8 @@ private abstract class InternalDB : Object {
 	private Dependency? retrieve_dependency (Sqlite.Statement stmt) {
 		var dep = new Dependency.blank ();
 
-		dep.info.id = stmt.column_text (DepRow.IDNAME);
-		dep.info.name = stmt.column_text (DepRow.FULLNAME);
+		dep.metainfo.id = stmt.column_text (DepRow.IDNAME);
+		dep.metainfo.name = stmt.column_text (DepRow.FULLNAME);
 		dep.set_version (stmt.column_text (DepRow.VERSION));
 
 		dep.install_time = stmt.column_int (DepRow.INST_TIME);
@@ -931,7 +931,7 @@ private class LocalDB : InternalDB {
 					return false;
 
 				var data_stream = new DataOutputStream (file_stream);
-				data_stream.put_string ("# File list for " + aid.info.name + "\n\n");
+				data_stream.put_string ("# File list for " + aid.metainfo.name + "\n\n");
 				// Now write file list to file
 				foreach (IPK.FileEntry fe in flist) {
 					if (fe.is_installed ()) {

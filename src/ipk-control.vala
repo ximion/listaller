@@ -188,27 +188,20 @@ public abstract class Control : Object {
 	}
 
 	public AppItem get_application () throws ControlDataError {
-		Appstream.Metadata mdata;
-		if (appItem != null)
-			return appItem;
 		AppItem? item;
 		Appstream.Component cpt;
 
-		// new AppStream metadata parser
-		mdata = new Appstream.Metadata ();
+		if (appItem != null)
+			return appItem;
 
-		// load data separately to get correct error message
-		// FIXME: Update AppItem to not load failing stuff in the constrcutor anymore
+		item = new AppItem ();
 		try {
-			cpt = mdata.parse_data (appXML);
+			item.load_xml_data (appXML);
 		} catch (Error e) {
 			throw new ControlDataError.APPDATA_INVALID (e.message);
 		}
-		item = new AppItem (cpt);
-		// Meh...
-		item.xmldata = appXML;
 
-		if (item != null)
+		if (!(Utils.str_is_empty (item.metainfo.id)))
 			appItem = item;
 		else
 			throw new ControlDataError.APPDATA_INVALID (_("Unable to load valid application from AppData. The XML file might be malformed or lacking data."));

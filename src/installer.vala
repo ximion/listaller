@@ -210,7 +210,7 @@ public class Setup : MessageObject {
 
 		// We start now!
 		emit_status (StatusEnum.ACTION_STARTED,
-			     _("Running installation of %s").printf (app.info.name));
+			     _("Running installation of %s").printf (app.metainfo.name));
 
 		inst_progress = 25;
 		change_progress (0);
@@ -238,7 +238,7 @@ public class Setup : MessageObject {
 
 		// Emit status message
 		emit_status (StatusEnum.RESOLVING_DEPENDENCIES,
-			     _("Resolving dependencies of '%s'.").printf (app.info.name));
+			     _("Resolving dependencies of '%s'.").printf (app.metainfo.name));
 
 		// get all dependencies for the current architecture and possibly generic dependencies
 		string pkg_dep_info = ipkp.control.get_dependencies (arch_generic (system_machine ()));
@@ -274,7 +274,7 @@ public class Setup : MessageObject {
 
 		// Emit status message
 		emit_status (StatusEnum.REGISTERING_APPLICATION,
-			     _("Making '%s' known to your system.").printf (app.info.name));
+			     _("Making '%s' known to your system.").printf (app.metainfo.name));
 
 		// We don't trust the IPKpackage: App might have changed, so set again if this
 		// is a shared app.

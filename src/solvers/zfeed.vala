@@ -138,12 +138,12 @@ private class Feed : Object {
 	}
 
 	public void update_dependency_data (Dependency dep) {
-		dep.info.name = get_intf_info_str ("name");
-		dep.info.id = get_intf_info_str ("name").replace (" ", "");
+		dep.metainfo.name = get_intf_info_str ("name");
+		dep.metainfo.id = get_intf_info_str ("name").replace (" ", "");
 		dep.set_version (impl_version);
-		dep.info.summary = get_intf_info_str ("summary");
-		dep.info.description = get_intf_info_str ("description");
-		dep.info.add_url (Appstream.UrlKind.HOMEPAGE, get_intf_info_str ("homepage"));
+		dep.metainfo.summary = get_intf_info_str ("summary");
+		dep.metainfo.description = get_intf_info_str ("description");
+		dep.metainfo.add_url (Appstream.UrlKind.HOMEPAGE, get_intf_info_str ("homepage"));
 	}
 
 	private bool node_arch_property_matching (Xml.Node* node) {

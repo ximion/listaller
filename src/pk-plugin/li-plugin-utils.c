@@ -86,7 +86,7 @@ pk_listaller_appitem_from_pkid (const gchar *package_id)
 	if (g_strcmp0 (tmp[0], "local:listaller") != 0)
 		goto out;
 
-	item = listaller_app_item_new_blank ();
+	item = listaller_app_item_new ();
 	listaller_app_item_set_idname (item, parts[0]);
 	listaller_app_item_set_version (item, parts[1]);
 	listaller_app_item_set_desktop_file (item, tmp[1]);
