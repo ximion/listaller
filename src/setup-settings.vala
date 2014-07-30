@@ -137,9 +137,7 @@ public class SetupSettings : Object {
 		if (uinsttmp != "")
 			return uinsttmp;
 
-		string template = Path.build_filename (conf.tmp_dir (), "testinst-XXXXXX", null);
-
-		string res = DirUtils.mkdtemp (template);
+		string res = conf.get_unique_tmp_dir ("testinst");
 		if (res == null) {
 			critical ("Unable to create tmp-dir! Error: %s", strerror (errno));
 			res = Path.build_filename (conf.tmp_dir (), "error-invalid", null);

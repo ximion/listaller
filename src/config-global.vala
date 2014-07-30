@@ -174,6 +174,7 @@ internal class Config : Object {
 			critical ("Unable to create tmp-dir! Error: %s", strerror (errno));
 			res = tmp_dir ();
 		}
+
 		return res;
 	}
 

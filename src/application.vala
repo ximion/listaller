@@ -210,6 +210,7 @@ public class AppItem : Object {
 	public string author { get; set; }
 
 	public AppItem () {
+		dbid = -1;
 		_idname = "";
 		install_time = 0;
 		origin = "unknown";

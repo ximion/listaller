@@ -88,6 +88,7 @@ private class Dependency : Object {
 	protected HashSet<string> install_data { get; internal set; }
 
 	public Dependency.blank () {
+		dbid = -1;
 		metainfo = new Component ();
 
 		item_list = new HashSet<string> ();
