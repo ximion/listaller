@@ -46,11 +46,11 @@ namespace Listaller {
 private class Dependency : Object {
 	public Component metainfo { get; private set; }
 	public string xmldata { get; set; }
+	internal int dbid { get; set; }
 
 	public string architecture { get; internal set; } // e.g. amd64
 
 	protected bool _installed;
-	public string dependencies { get; private set; }
 
 	public bool installed {
 		get {

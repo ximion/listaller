@@ -102,6 +102,7 @@ public class AppItem : Object {
 	private SetupSettings setup_settings;
 	private string _metadata_file;
 	public string xmldata { private get; internal set; }
+	internal int dbid { get; set; }
 
 	/**
 	 * Application identifier

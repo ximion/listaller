@@ -202,7 +202,6 @@ public class Setup : MessageObject {
 
 		if (str_is_empty (origin))
 			app.set_origin_local ();
-		app.dependencies_str = "?";
 		app.fast_check ();
 		// This is required to only check the shared db for this application
 		if (is_root ())

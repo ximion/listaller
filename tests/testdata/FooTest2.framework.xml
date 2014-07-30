@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This is a AppStream component template used in and by Listaller -->
+<!-- THIS IS A DUMMY FILE, USED ONLY IN THE TESTSUITE -->
+<component>
+  <id>FooTest2</id>
+  <name>FooTest 2.0</name>
+  <provides>
+    <binary>bash</binary>
+    <binary>xdg-open</binary>
+    <library>libc6.so</library>
+  </provides>
+  <x-version-template>shell$ echo "MegaFoo: 1.0" prefix$ "MegaFoo: "</x-version-template>
+  <x-extra-lib-searchpath>%SYS_LIB%/kde4</x-extra-lib-searchpath>
+</component>

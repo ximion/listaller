@@ -24,11 +24,15 @@ using Sqlite;
 using Listaller;
 using Listaller.Utils;
 
+// we want to use this function of SQLite, which is not yet part of the VAPI
+extern unowned string sqlite3_errstr (int i);
+
 namespace Listaller {
 
 private const string DATABASE = ""
 		+ "CREATE TABLE applications ("
-		+ "idname TEXT PRIMARY KEY, "
+		+ "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+		+ "idname TEXT NOT NULL, "
 		+ "full_name TEXT NOT NULL, "
 		+ "version TEXT NOT NULL, "
 		+ "summary TEXT NOT NULL, "
@@ -36,11 +40,11 @@ private const string DATABASE = ""
 		+ "metadata TEXT,"
 		+ "architecture TEXT NOT NULL, "
 		+ "origin TEXT NOT NULL, "
-		+ "install_time INTEGER, "
-		+ "dependencies TEXT"
+		+ "install_time INTEGER"
 		+ "); "
 		+ "CREATE TABLE dependencies ("
-		+ "idname TEXT PRIMARY KEY, "
+		+ "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+		+ "idname TEXT NOT NULL, "
 		+ "full_name TEXT NOT NULL, "
 		+ "version TEXT NOT NULL, "
 		+ "summary TEXT NOT NULL, "
@@ -51,42 +55,52 @@ private const string DATABASE = ""
 		+ "install_time INTEGER, "
 		+ "items_installed TEXT NOT NULL, "
 		+ "items TEXT NOT NULL, "
-		+ "environment TEXT, "
-		+ "dependencies TEXT"
-		+ ");" +
-		"";
+		+ "environment TEXT"
+		+ "); "
+		+ "CREATE TABLE app_dep_assoc ("
+		+ "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+		+ "app_id INTEGER, "
+		+ "dep_id INTEGER"
+		+ ");";
 
-private const string appcols = "idname, full_name, version, summary, description, metadata, architecture, origin, install_time, dependencies";
-private const string depcols = "idname, full_name, version, summary, description, metadata, architecture, origin, install_time, items_installed, " +
-						"items, environment, dependencies";
+private const string columns_app = "idname, full_name, version, summary, description, metadata, architecture, origin, install_time";
+private const string columns_dep = "idname, full_name, version, summary, description, metadata, architecture, origin, install_time, items_installed, " +
+						"items, environment";
+private const string columns_appdepassoc = "app_id, dep_id";
 
 private enum AppRow {
-	IDNAME = 0,
-	FULLNAME = 1,
-	VERSION = 2,
-	SUMMARY = 3,
-	DESCRIPTION = 4,
-	METADATA = 5,
-	ARCHITECTURE = 6,
-	ORIGIN = 7,
-	INST_TIME = 8,
-	DEPENDENCIES = 9;
+	DBID = 0,
+	IDNAME = 1,
+	FULLNAME = 2,
+	VERSION = 3,
+	SUMMARY = 4,
+	DESCRIPTION = 5,
+	METADATA = 6,
+	ARCHITECTURE = 7,
+	ORIGIN = 8,
+	INST_TIME = 9;
 }
 
 private enum DepRow {
-	IDNAME = 0,
-	FULLNAME = 1,
-	VERSION = 2,
-	SUMMARY = 3,
-	DESCRIPTION = 4,
-	METADATA = 5,
-	ARCHITECTURE = 6,
-	ORIGIN = 7,
-	INST_TIME = 8,
-	ITEMS_INSTALLED = 9,
-	ITEMS = 10,
-	ENVIRONMENT = 11,
-	DEPENDENCIES = 12;
+	DBID = 0,
+	IDNAME = 1,
+	FULLNAME = 2,
+	VERSION = 3,
+	SUMMARY = 4,
+	DESCRIPTION = 5,
+	METADATA = 6,
+	ARCHITECTURE = 7,
+	ORIGIN = 8,
+	INST_TIME = 9,
+	ITEMS_INSTALLED = 10,
+	ITEMS = 11,
+	ENVIRONMENT = 12,
+}
+
+private enum AppDepAssoc {
+	DBID = 0,
+	APP_ID = 1,
+	DEP_ID = 2;
 }
 
 public errordomain DatabaseError {
@@ -143,6 +157,7 @@ private abstract class InternalDB : Object {
 
 	private Sqlite.Statement insert_app;
 	private Sqlite.Statement insert_dep;
+	private Sqlite.Statement insert_appdepassoc;
 
 	public signal void message (MessageItem message);
 
@@ -221,8 +236,8 @@ private abstract class InternalDB : Object {
 
 		// InsertApp statement
 		try {
-			db_assert (db.prepare_v2 ("INSERT INTO applications (" + appcols + ") "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+			db_assert (db.prepare_v2 ("INSERT INTO applications (" + columns_app + ") "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					-1, out insert_app), "prepare app insert statement");
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (e.message);
@@ -230,9 +245,18 @@ private abstract class InternalDB : Object {
 
 		// InsertDep statement
 		try {
-			db_assert (db.prepare_v2 ("INSERT INTO dependencies (" + depcols + ") "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+			db_assert (db.prepare_v2 ("INSERT INTO dependencies (" + columns_dep + ") "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					-1, out insert_dep), "prepare dependency insert statement");
+		} catch (Error e) {
+			throw new DatabaseError.ERROR (e.message);
+		}
+
+		// InsertAppDepAssoc statement
+		try {
+			db_assert (db.prepare_v2 ("INSERT INTO app_dep_assoc (" + columns_appdepassoc + ") "
+				+ "VALUES (?, ?)",
+					-1, out insert_appdepassoc), "prepare app-dependency association insert statement");
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (e.message);
 		}
@@ -302,7 +326,7 @@ private abstract class InternalDB : Object {
 	protected void db_assert (int result, string action_name = "") throws DatabaseError {
 		if (action_name == "")
 			action_name = "unknown action";
-		string msg = _("Database action '%s' failed: %s").printf (action_name, db.errmsg ());
+		string msg = _("Database action '%s' failed: %s (%s)").printf (action_name, sqlite3_errstr (result), db.errmsg ());
 
 		switch (result) {
 			case Sqlite.OK:
@@ -423,29 +447,55 @@ private abstract class InternalDB : Object {
 
 		// Assign values
 		try {
-			db_assert (insert_app.bind_text (AppRow.IDNAME +1, item.idname), "assign value");
+			db_assert (insert_app.bind_text (AppRow.IDNAME, item.idname), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.VERSION +1, item.version), "assign value");
+			db_assert (insert_app.bind_text (AppRow.VERSION, item.version), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.FULLNAME +1, item.metainfo.name), "assign value");
+			db_assert (insert_app.bind_text (AppRow.FULLNAME, item.metainfo.name), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.SUMMARY +1, item.metainfo.summary), "assign value");
+			db_assert (insert_app.bind_text (AppRow.SUMMARY, item.metainfo.summary), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.DESCRIPTION +1, item.metainfo.description), "assign value");
+			db_assert (insert_app.bind_text (AppRow.DESCRIPTION, item.metainfo.description), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.METADATA +1, item.get_metadata_xml ()), "assign value");
+			db_assert (insert_app.bind_text (AppRow.METADATA, item.get_metadata_xml ()), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.ARCHITECTURE +1, arch), "assign value");
+			db_assert (insert_app.bind_text (AppRow.ARCHITECTURE, arch), "assign value");
 
-			db_assert (insert_app.bind_text (AppRow.ORIGIN +1, item.origin), "assign value");
+			db_assert (insert_app.bind_text (AppRow.ORIGIN, item.origin), "assign value");
 
-			db_assert (insert_app.bind_int64 (AppRow.INST_TIME +1, item.install_time), "assign value");
-
-			db_assert (insert_app.bind_text (AppRow.DEPENDENCIES +1, item.dependencies_str), "assign value");
+			db_assert (insert_app.bind_int64 (AppRow.INST_TIME, item.install_time), "assign value");
 
 			db_assert (insert_app.step (), "execute app insert");
 
 			db_assert (insert_app.reset (), "reset statement");
+		} catch (Error e) {
+			throw new DatabaseError.ERROR (e.message);
+		}
+
+		if (Utils.str_is_empty (item.dependencies_str))
+			return ret;
+
+		// now associate dependencies with this application
+		AppItem app = get_application_by_idname (item.idname);
+		if (app == null)
+			error ("Could not retrieve recently added application '%s' from the database!", item.idname);
+
+		try {
+			string[] dep_ids = item.dependencies_str.split (",");
+			foreach (string dep_id in dep_ids) {
+				Dependency? dep;
+				dep = get_dependency_by_id (dep_id);
+				if (dep == null) {
+					warning ("Adding application '%s', but could not find it's dependency '%s' in the database!", item.idname, dep_id);
+					continue;
+				}
+
+				db_assert (insert_appdepassoc.bind_int64 (AppDepAssoc.APP_ID, app.dbid), "assign value");
+				db_assert (insert_appdepassoc.bind_int64 (AppDepAssoc.DEP_ID, dep.dbid), "assign value");
+
+				db_assert (insert_appdepassoc.step (), "execute app insert");
+				db_assert (insert_appdepassoc.reset (), "reset statement");
+			}
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (e.message);
 		}
@@ -477,7 +527,10 @@ private abstract class InternalDB : Object {
 		item.desktop_file = stmt.column_text (AppRow.METADATA);
 
 		item.install_time = stmt.column_int (AppRow.INST_TIME);
-		item.dependencies_str = stmt.column_text (AppRow.DEPENDENCIES);
+		item.dbid = stmt.column_int (AppRow.DBID);
+
+		// FIXME
+		//! item.dependencies_str = stmt.column_text (AppRow.DEPENDENCIES);
 		item.state = db_type;
 
 		item.origin = stmt.column_text (AppRow.ORIGIN);
@@ -774,8 +827,6 @@ private abstract class InternalDB : Object {
 
 			db_assert (insert_dep.bind_text (DepRow.ENVIRONMENT +1, dep.environment), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.DEPENDENCIES +1, ""), "bind value");
-
 			db_assert (insert_dep.step (), "add dependency");
 
 			db_assert (insert_dep.reset (), "reset insert_dep statement");
@@ -798,6 +849,7 @@ private abstract class InternalDB : Object {
 		dep.set_items_from_string (stmt.column_text (DepRow.ITEMS));
 		dep.set_installdata_from_string (stmt.column_text (DepRow.ITEMS_INSTALLED));
 		dep.environment = stmt.column_text (DepRow.ENVIRONMENT);
+		dep.dbid = stmt.column_int (DepRow.DBID);
 
 		// Because dep is in the database already, it has to be satisfied
 		dep.installed = true;

@@ -7,7 +7,7 @@
   <provides>
     <library>libgio-2.0.so.0</library>
     <library>libgobject-2.0.so.0</library>
-    <librar>libglib-2.0.so.0</library>
+    <library>libglib-2.0.so.0</library>
     <binary>gdbus</binary>
     <binary>gio-querymodules</binary>
     <binary>glib-compile-resources</binary>
