@@ -72,10 +72,10 @@ void test_application_ids () {
 	//! assert (dummy.appid == expected_id);
 
 	AppItem item1 = new AppItem.from_id (expected_id);
-	assert (item1.idname == "foobar");
+	assert (item1.idname == "foobar-1.0");
 	assert (item1.metainfo.name == "Listaller FooBar");
 	assert (item1.version == "1.0");
-	//! assert (item1.metainfo.developer == "Listaller Project");
+	assert (item1.metainfo.developer_name == "Listaller Project");
 	//! assert (item1.get_raw_cmd () == "%INST%/foo");
 	assert (item1.origin == "unknown");
 
@@ -86,12 +86,12 @@ void test_application_ids () {
 	item2.version = "0.1";
 	item2.origin = "http://example.com";
 	assert (item2.metainfo.name == "MyApp");
-	assert (item2.idname == "myapp");
+	assert (item2.idname == "myapp-0.1");
 	item2.metadata_file = Path.build_filename (foobar_dir, "foobar.appdata.xml", null);
 	item2.update_with_metadata_file ();
 	assert (item2.desktop_file == "%APP%/foobar.desktop");
 	debug (item2.appid);
-	assert (item2.appid == "myapp;1.0;%s;http://example.com".printf (item2.metadata_file));
+	assert (item2.appid == "foobar-1.0;1.0;%s;http://example.com".printf (item2.metadata_file));
 
 	cpt.name = "Google Earth";
 	AppItem item3 = new AppItem ();

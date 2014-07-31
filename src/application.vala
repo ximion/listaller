@@ -436,8 +436,8 @@ public class AppItem : Object {
 	private void update_unique_id (bool force = false) {
 		if ((_unique_id.strip () != "") && (!force))
 			return;
-		string app_baseid = _metainfo.id;
-		if (Utils.str_is_empty (app_baseid))
+		string app_baseid = _metainfo.id.replace (".desktop", "");
+		if ((Utils.str_is_empty (app_baseid)) && (!Utils.str_is_empty (metadata_file)))
 			app_baseid = string_replace (Path.get_basename (metadata_file), "(.appdata.xml)", "");
 		if (Utils.str_is_empty (app_baseid))
 			app_baseid = _metainfo.name.down ();
@@ -452,9 +452,6 @@ public class AppItem : Object {
 	public void update_with_metadata_file () {
 		if (metadata_file == "")
 			return;
-		// Set identifier if no identifier was specified
-		if (_unique_id == "")
-			update_unique_id ();
 
 		// Get complete metadata-file path
 		string fname = expand_user_dir (metadata_file);
@@ -503,6 +500,9 @@ public class AppItem : Object {
 
 		// set new component
 		metainfo = cpt;
+
+		// we might have received a new unique identifier by updating the metadata
+		update_unique_id (true);
 	}
 
 	public string get_raw_cmd (bool subst_cmd = false) {
