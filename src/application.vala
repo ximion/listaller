@@ -91,11 +91,10 @@ public struct AppLicense {
  * Listaller state data.
  */
 public class AppItem : Object {
-	private string _idname;
+	private string _unique_id;
 	private string _version;
 	private AppLicense _license;
 	private int64  _install_time;
-	private string _dependencies;
 	private AppState _state;
 	private string _origin;
 	private string _app_id;
@@ -109,14 +108,13 @@ public class AppItem : Object {
 	 * */
 	public string idname {
 		get {
-			if (_idname.strip () == "")
-				_idname = string_replace (_metainfo.name.down (), "( )", "_");
-			return _idname;
+			update_unique_id ();
+			return _unique_id;
 		}
 		internal set {
-			_idname = value;
-			if (_metainfo.name.strip () == "")
-			_metainfo.name = _idname;
+			_unique_id = value;
+			if (_metainfo.id.strip () == "")
+				_metainfo.id = _unique_id;
 		}
 	}
 
@@ -198,20 +196,15 @@ public class AppItem : Object {
 		set { _origin = value; }
 	}
 
-	public string dependencies_str {
-		get { return _dependencies; }
-		set { _dependencies = value; }
-	}
-
 	public string appid {
 		get { _app_id = generate_appid (); return _app_id; }
 	}
 
-	public string author { get; set; }
+	public GenericArray<Dependency> dependencies { get; set; }
 
 	public AppItem () {
 		dbid = -1;
-		_idname = "";
+		_unique_id = "";
 		install_time = 0;
 		origin = "unknown";
 		_app_id = "";
@@ -225,6 +218,7 @@ public class AppItem : Object {
 			text = ""
 		};
 		metainfo = new Appstream.Component ();
+		dependencies = new GenericArray<Dependency> ();
 	}
 
 	public AppItem.from_id (string application_id) {
@@ -439,14 +433,28 @@ public class AppItem : Object {
 		return fname;
 	}
 
+	private void update_unique_id (bool force = false) {
+		if ((_unique_id.strip () != "") && (!force))
+			return;
+		string app_baseid = _metainfo.id;
+		if (Utils.str_is_empty (app_baseid))
+			app_baseid = string_replace (Path.get_basename (metadata_file), "(.appdata.xml)", "");
+		if (Utils.str_is_empty (app_baseid))
+			app_baseid = _metainfo.name.down ();
+		if (Utils.str_is_empty (app_baseid))
+			error ("Unable to generate unique identifier for application!");
+		_unique_id = string_replace (app_baseid, "( )", "_");
+		if (!Utils.str_is_empty (version)) {
+			_unique_id = "%s-%s".printf (_unique_id, version);
+		}
+	}
+
 	public void update_with_metadata_file () {
 		if (metadata_file == "")
 			return;
-		// Set idname if no idname was specified
-		if (_idname == "") {
-			idname = string_replace (Path.get_basename (metadata_file), "(.appdata.xml)", "");
-			debug ("Set app-idname from AppStream metafile: %s".printf (idname));
-		}
+		// Set identifier if no identifier was specified
+		if (_unique_id == "")
+			update_unique_id ();
 
 		// Get complete metadata-file path
 		string fname = expand_user_dir (metadata_file);

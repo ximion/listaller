@@ -27,7 +27,7 @@ using Appstream;
 
 namespace Listaller.Dep {
 
-private errordomain ComponentError {
+public errordomain ComponentError {
     VERSION_NOT_FOUND,
     DIRECTIVES_RESOLVE_FAILED,
     DIRECTIVES_INVALID
@@ -43,10 +43,12 @@ namespace Listaller {
  * Contains a #AsComponent which holds the actual information
  * about the referenced component-dependency.
  */
-private class Dependency : Object {
+public class Dependency : Object {
 	public Component metainfo { get; private set; }
 	public string xmldata { get; set; }
 	internal int dbid { get; set; }
+
+	public string unique_id { get; set; }
 
 	public string architecture { get; internal set; } // e.g. amd64
 

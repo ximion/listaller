@@ -206,7 +206,7 @@ internal abstract class ContentFile : Object {
 		app.version = data.get_value ("Version");
 		string s = data.get_value ("Author");
 		if (s != "")
-			app.author = s;
+			app.metainfo.developer_name = s;
 		s = data.get_value ("Description");
 
 		if (s != "") {
@@ -275,8 +275,8 @@ internal class ContentIndex : ContentFile {
 		data.update_value ("ID", app.idname);
 		data.update_value ("Name", app.metainfo.name);
 		data.update_value ("Version", app.version);
-		if (app.author != null)
-			data.update_value ("Author", app.author);
+		if (app.metainfo.developer_name != null)
+			data.update_value ("Author", app.metainfo.developer_name);
 		if (app.metainfo.description != null)
 			data.update_value ("Description", app.metainfo.description);
 	}

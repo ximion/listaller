@@ -312,7 +312,7 @@ private abstract class InternalDB : Object {
 			// Set db locking back to normal
 			try {
 				db_assert (db.exec ("PRAGMA locking_mode = NORMAL"));
-			} catch (Error e) {
+			} catch (DatabaseError e) {
 				throw e;
 			}
 			locked = false;
@@ -472,7 +472,7 @@ private abstract class InternalDB : Object {
 			throw new DatabaseError.ERROR (e.message);
 		}
 
-		if (Utils.str_is_empty (item.dependencies_str))
+		if (item.dependencies.length <= 0)
 			return ret;
 
 		// now associate dependencies with this application
@@ -481,17 +481,16 @@ private abstract class InternalDB : Object {
 			error ("Could not retrieve recently added application '%s' from the database!", item.idname);
 
 		try {
-			string[] dep_ids = item.dependencies_str.split (",");
-			foreach (string dep_id in dep_ids) {
-				Dependency? dep;
-				dep = get_dependency_by_id (dep_id);
-				if (dep == null) {
-					warning ("Adding application '%s', but could not find it's dependency '%s' in the database!", item.idname, dep_id);
+			for (var i = 0; i < app.dependencies.length; i++) {
+				Dependency dep = app.dependencies.get (i);
+				Dependency? db_dep = get_dependency_by_id (dep.unique_id);
+				if (db_dep == null) {
+					warning ("Adding application '%s', but could not find it's dependency '%s' in the database!", item.idname, dep.unique_id);
 					continue;
 				}
 
 				db_assert (insert_appdepassoc.bind_int64 (AppDepAssoc.APP_ID, app.dbid), "assign value");
-				db_assert (insert_appdepassoc.bind_int64 (AppDepAssoc.DEP_ID, dep.dbid), "assign value");
+				db_assert (insert_appdepassoc.bind_int64 (AppDepAssoc.DEP_ID, db_dep.dbid), "assign value");
 
 				db_assert (insert_appdepassoc.step (), "execute app insert");
 				db_assert (insert_appdepassoc.reset (), "reset statement");

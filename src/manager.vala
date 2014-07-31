@@ -318,10 +318,9 @@ public class Manager : MessageObject {
 			inst_mode = IPK.InstallMode.SHARED;
 		string paths = VarSolver.autosubst_instvars ("%LIB_PRIVATE%", app.idname, inst_mode);
 
-		string[] depStr = app.dependencies_str.split (",");
-		if (depStr.length <= 0) {
-			debug ("No dependencies set! Application was maybe not retrieved from software DB and therefore lacks the required data.");
-			debug ("Setting standard environment...");
+		if (app.dependencies.length <= 0) {
+			debug ("Application has no dependencies set!");
+			debug ("Using standard environment...");
 			return paths;
 		}
 
@@ -341,10 +340,9 @@ public class Manager : MessageObject {
 		// A new DepManager to resolve environment
 		DepManager depman = new DepManager (db);
 
+		for (var i = 0; i < app.dependencies.length; i++) {
+			Dependency dep = app.dependencies.get (i);
 
-		HashSet<Dependency> depList = depman.dependencies_from_idlist (depStr);
-
-		foreach (Dependency dep in depList) {
 			// Now get paths for library, if possible (if dependency is a library)
 			string p = depman.get_absolute_library_path (dep);
 			if (p != "")
