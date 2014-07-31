@@ -4,8 +4,9 @@ Modules are software dependencies, which are required by other software to be ru
 They can be libraries, artwork, Python-modules, basically everything which can be referenced
 by a 3rd-party application.
 
-Each module is described by a module-info file, which is shipped by the upstream project.
-Since some projects don't ship these files yet, Listaller provides them for some commonly
+Each module is described by an AppStream metadata file, which is shipped by the upstream project.
+Since some projects don't ship these files yet, Listaller provides templates for some commonly
 used components.
 
-The module-info file format is described in Listaller's documentation.
+The template files are standard AppStream upstream metadata files, extended with some Listaller-specific
+tags. They should never be used outside of Listaller.

@@ -1,17 +1,9 @@
 # CMakeLists for default component templates
 
-# find frameworks and add README
-file (GLOB_RECURSE FRAMEWORKS_DATA "${CMAKE_CURRENT_SOURCE_DIR}/frameworks/*.framework")
-set(FRAMEWORKS_DATA ${FRAMEWORKS_DATA} frameworks/README)
+# find metainfo templates and add README
+file (GLOB_RECURSE METAINFO_TEMPLATE_DATA "${CMAKE_CURRENT_SOURCE_DIR}/*.metainfo.xml")
+set(METAINFO_TEMPLATE_DATA ${METAINFO_TEMPLATE_DATA} README)
 
-# find modules and add README
-file (GLOB_RECURSE MODULES_DATA "${CMAKE_CURRENT_SOURCE_DIR}/*.metainfo.xml")
-set(MODULES_DATA ${MODULES_DATA} README)
-
-install(FILES ${FRAMEWORKS_DATA}
-	DESTINATION ${DATA_INSTALL_DIR}/metainfo-templates/frameworks
-)
-
-install(FILES ${MODULES_DATA}
+install(FILES ${METAINFO_TEMPLATE_DATA}
 	DESTINATION ${DATA_INSTALL_DIR}/metainfo-templates
 )
