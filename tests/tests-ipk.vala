@@ -45,7 +45,7 @@ void test_ipk_package () {
 	bool ret = false;
 	msg ("Package tests");
 
-	string ipkfilename = Path.build_filename (datadir, "FooBar-1.0_%s.ipk".printf (Utils.system_machine_generic ()), null);
+	string ipkfilename = Path.build_filename (datadir, "ListallerFooBar-1.0_%s.ipk".printf (Utils.system_machine_generic ()), null);
 	msg ("Loading IPK package %s".printf (ipkfilename));
 
 	IPK.Package ipk = new IPK.Package (ipkfilename);
@@ -59,7 +59,7 @@ void test_ipk_package () {
 	assert (ret == true);
 
 	AppItem app = ipk.control.get_application ();
-	assert (app.metainfo.name == "FooBar");
+	assert (app.metainfo.name == "Listaller FooBar");
 
 	Collection<IPK.FileEntry> flist = ipk.get_file_entries ();
 	foreach (IPK.FileEntry e in flist) {
@@ -128,7 +128,7 @@ void test_ipk_packcontrol () {
 
 	AppItem app = ipkc.get_application ();
 	assert (app.metainfo.name == "Listaller FooBar");
-	assert (app.unique_id == "listaller_foobar");
+	assert (app.unique_id == "foobar-1.0");
 }
 
 void test_ipk_filelist_file () {

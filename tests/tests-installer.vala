@@ -47,7 +47,7 @@ void test_install_package () {
 	bool ret = false;
 	msg ("Installer tests");
 
-	string ipkfilename = Path.build_filename (datadir, "FooBar-1.0_%s.ipk".printf (Utils.system_machine_generic ()), null);
+	string ipkfilename = Path.build_filename (datadir, "ListallerFooBar-1.0_%s.ipk".printf (Utils.system_machine_generic ()), null);
 
 	Setup setup = new Setup (ipkfilename);
 	setup.error_code.connect (test_setup_error_code_cb);

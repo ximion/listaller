@@ -67,7 +67,7 @@ pkg_check_modules(GIO2 REQUIRED gio-2.0>=2.26)
 pkg_check_modules(SOUP REQUIRED libsoup-2.4>=2.40)
 pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2>=0.9.4)
 pkg_check_modules(PACKAGEKIT_PLUGIN REQUIRED packagekit-plugin)
-pkg_check_modules(APPSTREAM REQUIRED appstream>=0.7)
+pkg_check_modules(APPSTREAM REQUIRED appstream>=0.7.0)
 #find_gir(PKGIR "PackageKitGlib-1.0" REQUIRED)
 
 # make sure that the ir-compiler really has been found

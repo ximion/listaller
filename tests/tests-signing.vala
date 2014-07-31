@@ -58,7 +58,7 @@ void test_sign_failing () {
 	GPGSign gsig = new GPGSign ();
 
 	string sign_text;
-	gsig.sign_package (Path.build_filename (datadir, "FooBar-1.0_%s.ipk".printf (Utils.system_machine_generic ()), null), out sign_text);
+	gsig.sign_package (Path.build_filename (datadir, "ListallerFooBar-1.0_%s.ipk".printf (Utils.system_machine_generic ()), null), out sign_text);
 
 	msg ("============FAILING============");
 	msg (sign_text);

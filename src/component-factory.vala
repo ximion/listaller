@@ -135,7 +135,7 @@ internal class ComponentFactory : Object {
 	}
 
 	public void load_extra_modules (string module_dir) {
-		HashSet<string>? extra_module_info_files = find_files_matching (module_dir, "*.module");
+		HashSet<string>? extra_module_info_files = find_files_matching (module_dir, "*.xml");
 
 		// process additional module data
 		if (extra_module_info_files != null) {

@@ -540,8 +540,8 @@ private abstract class InternalDB : Object {
 	public string? get_arch_for_app (string app_idname) {
 		Sqlite.Statement stmt;
 		try {
-			db_assert (db.prepare_v2 ("SELECT * FROM applications WHERE idname=?", -1, out stmt),
-				   "prepare find app by idname statement");
+			db_assert (db.prepare_v2 ("SELECT * FROM applications WHERE unique_name=?", -1, out stmt),
+				   "prepare find app by unique-name statement");
 
 			db_assert (stmt.bind_text (1, app_idname), "bind value");
 
@@ -561,8 +561,8 @@ private abstract class InternalDB : Object {
 	public AppItem? get_application_by_idname (string app_idname) throws DatabaseError {
 		Sqlite.Statement stmt;
 		try {
-			db_assert (db.prepare_v2 ("SELECT * FROM applications WHERE idname=?", -1, out stmt),
-				   "prepare find app by idname statement");
+			db_assert (db.prepare_v2 ("SELECT * FROM applications WHERE unique_name=?", -1, out stmt),
+				   "prepare find app by unique-name statement");
 
 			db_assert (stmt.bind_text (1, app_idname), "bind value");
 
@@ -675,7 +675,7 @@ private abstract class InternalDB : Object {
 
 	public AppItem? get_application_by_name_version (string appName, string appVersion) throws DatabaseError {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT * FROM applications WHERE idname=? AND version=?", -1, out stmt);
+		int res = db.prepare_v2 ("SELECT * FROM applications WHERE full_name=? AND version=?", -1, out stmt);
 		try {
 			db_assert (res, "get application (by full_name and version)");
 			db_assert (stmt.bind_text (1, appName), "bind value");
@@ -700,7 +700,7 @@ private abstract class InternalDB : Object {
 
 	public virtual bool remove_application (AppItem app) throws DatabaseError {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("DELETE FROM applications WHERE idname=?", -1, out stmt);
+		int res = db.prepare_v2 ("DELETE FROM applications WHERE unique_name=?", -1, out stmt);
 
 		try {
 			db_assert (res, "delete application (prepare statement)");
@@ -779,7 +779,7 @@ private abstract class InternalDB : Object {
 
 	public bool set_application_dependencies (string appName, string depstr) throws DatabaseError {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("UPDATE applications SET dependencies=? WHERE idname=?", -1, out stmt);
+		int res = db.prepare_v2 ("UPDATE applications SET dependencies=? WHERE unique_name=?", -1, out stmt);
 
 		try {
 			db_assert (res, "update application deps (by name)");
@@ -839,6 +839,7 @@ private abstract class InternalDB : Object {
 	private Dependency? retrieve_dependency (Sqlite.Statement stmt) {
 		var dep = new Dependency.blank ();
 
+		dep.unique_id = stmt.column_text (DepRow.UNIQUE_NAME);
 		dep.metainfo.id = stmt.column_text (DepRow.UNIQUE_NAME);
 		dep.metainfo.name = stmt.column_text (DepRow.FULLNAME);
 		dep.set_version (stmt.column_text (DepRow.VERSION));
@@ -858,7 +859,7 @@ private abstract class InternalDB : Object {
 
 	public Dependency? get_dependency_by_id (string depIdName) {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("SELECT * FROM dependencies WHERE idname=?", -1, out stmt);
+		int res = db.prepare_v2 ("SELECT * FROM dependencies WHERE unique_name=?", -1, out stmt);
 
 		try {
 			db_assert (res, "get dependency (by id)");
@@ -878,7 +879,7 @@ private abstract class InternalDB : Object {
 
 	public bool set_dependency_environment (string depIdName, string env) throws DatabaseError {
 		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("UPDATE dependencies SET environment=? WHERE idname=?", -1, out stmt);
+		int res = db.prepare_v2 ("UPDATE dependencies SET environment=? WHERE unique_name=?", -1, out stmt);
 
 		try {
 			db_assert (res, "get dependency (by id)");

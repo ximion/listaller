@@ -77,7 +77,7 @@ void test_lipkgen_build () {
 	msg ("Lipkgen tests");
 
 	// Cleanup
-	FileUtils.remove (Path.build_filename (datadir, "FooBar-1.0_%s.ipk".printf (Utils.system_machine_generic ()), null));
+	FileUtils.remove (Path.build_filename (datadir, "ListallerFooBar-1.0_%s.ipk".printf (Utils.system_machine_generic ()), null));
 	FileUtils.remove (Path.build_filename (datadir, "Dummy-0.1_all.ipk", null));
 
 	string cmd;

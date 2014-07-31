@@ -120,7 +120,11 @@ public class AppItem : Object {
 
 	public string version {
 		get { return _version; }
-		set { _version = value; }
+		set {
+			_version = value;
+			// we might have received a new id (we could probably add a version number there)
+			update_unique_id (true);
+		}
 	}
 
 	public AppLicense license {
@@ -135,7 +139,12 @@ public class AppItem : Object {
 				error ("Fatal: AppItem does not contain AppStream Component.metainfo.mation object!");
 			return _metainfo;
 		}
-		set { _metainfo = value; }
+		set {
+			_metainfo = value;
+			update_version_from_component (_metainfo);
+			// we might have received a new id due to the new component
+			update_unique_id (true);
+		}
 	}
 
 	public int size_installed { get; set; } // Installed size of this application in KiB
@@ -217,7 +226,7 @@ public class AppItem : Object {
 			name = "",
 			text = ""
 		};
-		metainfo = new Appstream.Component ();
+		_metainfo = new Appstream.Component ();
 		dependencies = new GenericArray<Dependency> ();
 	}
 
@@ -445,6 +454,23 @@ public class AppItem : Object {
 		}
 	}
 
+	private void update_version_from_component (Appstream.Component cpt) {
+		// set version, after retting the latest release
+		Appstream.Release? release = null;
+		GenericArray<Appstream.Release> releases = cpt.get_releases ();
+		uint64 timestamp = 0;
+		for(uint i = 0; i < releases.length; i++) {
+			Appstream.Release r = releases.get (i);
+			if (r.get_timestamp () > timestamp) {
+				release = r;
+				timestamp = r.get_timestamp ();
+			}
+		}
+		if (release != null) {
+			version = release.get_version ();
+		}
+	}
+
 	public void update_with_metadata_file () {
 		if (metadata_file == "")
 			return;
@@ -472,21 +498,6 @@ public class AppItem : Object {
 		var mdata = new Appstream.Metadata ();
 		var cpt = mdata.parse_data (xmldata);
 
-		// set version, after retting the latest release
-		Appstream.Release? release = null;
-		GenericArray<Appstream.Release> releases = cpt.get_releases ();
-		uint64 timestamp = 0;
-		for(uint i = 0; i < releases.length; i++) {
-			Appstream.Release r = releases.get (i);
-			if (r.get_timestamp () > timestamp) {
-				release = r;
-				timestamp = r.get_timestamp ();
-			}
-		}
-		if (release != null) {
-			version = release.get_version ();
-		}
-
 		// set desktop-file
 		if (cpt.id.has_suffix (".desktop")) {
 			desktop_file = "%APP%/" + cpt.id;
@@ -496,9 +507,6 @@ public class AppItem : Object {
 
 		// set new component
 		metainfo = cpt;
-
-		// we might have received a new unique identifier by updating the metadata
-		update_unique_id (true);
 	}
 
 	public string get_raw_cmd (bool subst_cmd = false) {

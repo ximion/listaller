@@ -81,6 +81,7 @@ void test_application_ids () {
 
 	var cpt = new Appstream.Component ();
 	cpt.name = "MyApp";
+	cpt.id = "myapp";
 	AppItem item2 = new AppItem ();
 	item2.metainfo = cpt;
 	item2.version = "0.1";
@@ -94,6 +95,7 @@ void test_application_ids () {
 	assert (item2.appid == "foobar-1.0;1.0;%s;http://example.com".printf (item2.metadata_file));
 
 	cpt.name = "Google Earth";
+	cpt.id = "";
 	AppItem item3 = new AppItem ();
 	item3.metainfo = cpt;
 	assert (item3.unique_id == "google_earth");
@@ -166,7 +168,7 @@ void test_appstream_xml () {
 	var item = new AppItem ();
 	item.metainfo = cpt;
 	item.fast_check ();
-	assert (item.unique_id == "foobar");
+	assert (item.unique_id == "foobar-1.0");
 }
 
 void test_metafile () {

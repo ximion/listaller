@@ -249,7 +249,7 @@ private class Builder : Object {
 			}
 			string pathname = Path.get_basename (fname);
 			// simple hack, to always have all dependencies stored in a dependencies/ subdirectory
-			if ((fname.has_suffix (".module") || fname.has_suffix (".framework")) && (fname.index_of ("dependencies") >= 0))
+			if ((fname.has_suffix (".xml")) && (fname.index_of ("dependencies") >= 0))
 				pathname = Path.build_filename ("dependencies", pathname, null);
 
 			entry.set_pathname (pathname);
@@ -607,7 +607,7 @@ private class Builder : Object {
 		cfactory.initialize (true);
 
 		// add the package's cutom modules
-		HashSet<string>? mod_info_files = find_files_matching (extra_mod_dir, "*.module");
+		HashSet<string>? mod_info_files = find_files_matching (extra_mod_dir, "*.xml");
 		if (mod_info_files != null) {
 			foreach (string fname in mod_info_files) {
 				var dep = new Dependency.blank ();
@@ -620,7 +620,7 @@ private class Builder : Object {
 					copy_file (fname, pkg_depfile);
 					ctrlfiles.add (pkg_depfile);
 				} else {
-					warning ("Unable to load data for module: %s", fname);
+					warning ("Unable to load data for AppStream data: %s", fname);
 				}
 			}
 		}
