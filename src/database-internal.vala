@@ -32,7 +32,7 @@ namespace Listaller {
 private const string DATABASE = ""
 		+ "CREATE TABLE applications ("
 		+ "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-		+ "idname TEXT NOT NULL, "
+		+ "unique_name TEXT NOT NULL, "
 		+ "full_name TEXT NOT NULL, "
 		+ "version TEXT NOT NULL, "
 		+ "summary TEXT NOT NULL, "
@@ -44,7 +44,7 @@ private const string DATABASE = ""
 		+ "); "
 		+ "CREATE TABLE dependencies ("
 		+ "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-		+ "idname TEXT NOT NULL, "
+		+ "unique_name TEXT NOT NULL, "
 		+ "full_name TEXT NOT NULL, "
 		+ "version TEXT NOT NULL, "
 		+ "summary TEXT NOT NULL, "
@@ -63,14 +63,14 @@ private const string DATABASE = ""
 		+ "dep_id INTEGER"
 		+ ");";
 
-private const string columns_app = "idname, full_name, version, summary, description, metadata, architecture, origin, install_time";
-private const string columns_dep = "idname, full_name, version, summary, description, metadata, architecture, origin, install_time, items_installed, " +
+private const string columns_app = "unique_name, full_name, version, summary, description, metadata, architecture, origin, install_time";
+private const string columns_dep = "unique_name, full_name, version, summary, description, metadata, architecture, origin, install_time, items_installed, " +
 						"items, environment";
 private const string columns_appdepassoc = "app_id, dep_id";
 
 private enum AppRow {
 	DBID = 0,
-	IDNAME = 1,
+	UNIQUE_NAME = 1,
 	FULLNAME = 2,
 	VERSION = 3,
 	SUMMARY = 4,
@@ -83,7 +83,7 @@ private enum AppRow {
 
 private enum DepRow {
 	DBID = 0,
-	IDNAME = 1,
+	UNIQUE_NAME = 1,
 	FULLNAME = 2,
 	VERSION = 3,
 	SUMMARY = 4,
@@ -447,7 +447,7 @@ private abstract class InternalDB : Object {
 
 		// Assign values
 		try {
-			db_assert (insert_app.bind_text (AppRow.IDNAME, item.idname), "assign value");
+			db_assert (insert_app.bind_text (AppRow.UNIQUE_NAME, item.unique_id), "assign value");
 
 			db_assert (insert_app.bind_text (AppRow.VERSION, item.version), "assign value");
 
@@ -476,16 +476,16 @@ private abstract class InternalDB : Object {
 			return ret;
 
 		// now associate dependencies with this application
-		AppItem app = get_application_by_idname (item.idname);
+		AppItem app = get_application_by_idname (item.unique_id);
 		if (app == null)
-			error ("Could not retrieve recently added application '%s' from the database!", item.idname);
+			error ("Could not retrieve recently added application '%s' from the database!", item.unique_id);
 
 		try {
 			for (var i = 0; i < app.dependencies.length; i++) {
 				Dependency dep = app.dependencies.get (i);
 				Dependency? db_dep = get_dependency_by_id (dep.unique_id);
 				if (db_dep == null) {
-					warning ("Adding application '%s', but could not find it's dependency '%s' in the database!", item.idname, dep.unique_id);
+					warning ("Adding application '%s', but could not find it's dependency '%s' in the database!", item.unique_id, dep.unique_id);
 					continue;
 				}
 
@@ -520,7 +520,7 @@ private abstract class InternalDB : Object {
 	protected virtual AppItem? retrieve_app_item (Sqlite.Statement stmt) {
 		AppItem item = new AppItem ();
 
-		item.idname = stmt.column_text (AppRow.IDNAME);
+		item.unique_id = stmt.column_text (AppRow.UNIQUE_NAME);
 		item.metainfo.name = stmt.column_text (AppRow.FULLNAME);
 		item.version = stmt.column_text (AppRow.VERSION);
 		item.desktop_file = stmt.column_text (AppRow.METADATA);
@@ -704,7 +704,7 @@ private abstract class InternalDB : Object {
 
 		try {
 			db_assert (res, "delete application (prepare statement)");
-			db_assert (stmt.bind_text (1, app.idname), "bind text");
+			db_assert (stmt.bind_text (1, app.unique_id), "bind text");
 			db_assert (stmt.step(), "execute action");
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (e.message);
@@ -715,7 +715,7 @@ private abstract class InternalDB : Object {
 
 	private bool string_in_app_item (AppItem item, string s) {
 		string str = s.down ();
-		if (item.idname.down ().index_of (str) > -1)
+		if (item.unique_id.down ().index_of (str) > -1)
 			return true;
 		if (item.metainfo.name.down ().index_of (str) > -1)
 			return true;
@@ -806,7 +806,7 @@ private abstract class InternalDB : Object {
 
 		try {
 			// Assign values
-			db_assert (insert_dep.bind_text (DepRow.IDNAME +1, dep.metainfo.id), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.UNIQUE_NAME +1, dep.metainfo.id), "bind value");
 
 			db_assert (insert_dep.bind_text (DepRow.FULLNAME +1, dep.metainfo.name), "bind value");
 
@@ -839,7 +839,7 @@ private abstract class InternalDB : Object {
 	private Dependency? retrieve_dependency (Sqlite.Statement stmt) {
 		var dep = new Dependency.blank ();
 
-		dep.metainfo.id = stmt.column_text (DepRow.IDNAME);
+		dep.metainfo.id = stmt.column_text (DepRow.UNIQUE_NAME);
 		dep.metainfo.name = stmt.column_text (DepRow.FULLNAME);
 		dep.set_version (stmt.column_text (DepRow.VERSION));
 
@@ -953,7 +953,7 @@ private class LocalDB : InternalDB {
 		if (!ret)
 			return ret;
 
-		string metadir = Path.build_filename (regdir, item.idname, null);
+		string metadir = Path.build_filename (regdir, item.unique_id, null);
 		create_dir_structure (metadir);
 
 		// Save extra package properties
@@ -971,7 +971,7 @@ private class LocalDB : InternalDB {
 			throw new DatabaseError.ERROR (_("Tried to write on readonly database! (This should never happen)"));
 		}
 
-		string metadir = Path.build_filename (regdir, aid.idname, null);
+		string metadir = Path.build_filename (regdir, aid.unique_id, null);
 
 		try {
 			var file = File.new_for_path (Path.build_filename (metadir, "files.list", null));
@@ -1005,7 +1005,7 @@ private class LocalDB : InternalDB {
 	}
 
 	public ArrayList<IPK.FileEntry>? get_application_filelist (AppItem app) throws DatabaseError {
-		string metadir = Path.build_filename (regdir, app.idname, null);
+		string metadir = Path.build_filename (regdir, app.unique_id, null);
 
 		var file = File.new_for_path (Path.build_filename (metadir, "files.list", null));
 		if (!file.query_exists ()) {
@@ -1044,7 +1044,7 @@ private class LocalDB : InternalDB {
 		if (item == null)
 			return null;
 
-		string metadir = Path.build_filename (regdir, item.idname, null);
+		string metadir = Path.build_filename (regdir, item.unique_id, null);
 
 		// Load extra package properties
 		var data = new IPK.MetaFile ();
@@ -1057,7 +1057,7 @@ private class LocalDB : InternalDB {
 
 	public override bool remove_application (AppItem app) throws DatabaseError {
 		bool ret = true;
-		string metadir = Path.build_filename (regdir, app.idname, null);
+		string metadir = Path.build_filename (regdir, app.unique_id, null);
 
 		try {
 			base.remove_application (app);
@@ -1065,7 +1065,7 @@ private class LocalDB : InternalDB {
 
 		ret = delete_dir_recursive (metadir);
 		if (!ret)
-			warning ("Could not remove metadata directory for application-id %s!".printf (app.idname));
+			warning ("Could not remove metadata directory for application-id %s!".printf (app.unique_id));
 		return ret;
 	}
 }

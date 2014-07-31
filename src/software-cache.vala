@@ -81,7 +81,7 @@ private class SoftwareCache : MessageObject {
 
 		AppItem? tmpApp;
 
-		tmpApp = cache_db.get_application_by_idname (app.idname);
+		tmpApp = cache_db.get_application_by_idname (app.unique_id);
 		if (tmpApp != null) {
 			cache_db.remove_application (tmpApp);
 		}
@@ -156,7 +156,7 @@ private class SoftwareCache : MessageObject {
 		// build hash-map of available applications (large speed improvements when used later)
 		var apps_available = new HashMap<string, AppItem> ();
 		foreach (AppItem app in apps_available_list) {
-			apps_available.set (app.idname, app);
+			apps_available.set (app.unique_id, app);
 		}
 
 		return apps_available;

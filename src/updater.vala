@@ -111,9 +111,9 @@ public class Updater : MessageObject {
 
 		foreach (AppItem app_i in apps_installed) {
 			AppItem? app_remote = null;
-			app_remote = apps_available.get (app_i.idname);
+			app_remote = apps_available.get (app_i.unique_id);
 			if (app_remote == null) {
-				debug ("No remote app for '%s' found.", app_i.idname);
+				debug ("No remote app for '%s' found.", app_i.unique_id);
 				continue;
 			}
 
@@ -153,7 +153,7 @@ public class Updater : MessageObject {
 		if (!inst.installation_allowed (out minSecLvl, out packSecLvl)) {
 			// we are not allowed to update this package!
 			string message = _("You are not allowed to update the application '%s'! The security level of the update is '%s' and you need at least security-level '%s'.\n" +
-				"Please make sure you trusted this signature and that your system is not compromised!").printf (app_old.idname, packSecLvl.to_string (), minSecLvl.to_string ());
+				"Please make sure you trusted this signature and that your system is not compromised!").printf (app_old.unique_id, packSecLvl.to_string (), minSecLvl.to_string ());
 			if (Utils.__unittestmode) {
 				debug (message);
 			} else {

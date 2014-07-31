@@ -108,7 +108,7 @@ private class Manager : MessageObject {
 	}
 
 	public string get_arch_for_app (AppItem app) {
-		return cache.get_arch_for_app (app.idname);
+		return cache.get_arch_for_app (app.unique_id);
 	}
 
 	public Setup? get_setup_for_remote_app_by_id (string app_idname) {

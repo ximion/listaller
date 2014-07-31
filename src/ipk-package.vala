@@ -178,7 +178,7 @@ private class Package : MessageObject {
 		// Cache list of files
 		var list = ipkf.get_files_list ();
 		fcache = new HashMap<string, IPK.FileEntry> ();
-		VarSolver vs = new VarSolver (appInfo.idname);
+		VarSolver vs = new VarSolver (appInfo.unique_id);
 		foreach (IPK.FileEntry fe in list) {
 			fcache.set (vs.substitute_vars_id (fe.get_full_filename ()), fe);
 		}
@@ -603,7 +603,7 @@ private class Package : MessageObject {
 
 	/** Internal helper method for install_file() */
 	private bool install_file_arc_internal (Read plar, FileEntry fe) {
-		VarSolver vs = new VarSolver (appInfo.idname);
+		VarSolver vs = new VarSolver (appInfo.unique_id);
 		string int_path = vs.substitute_vars_id (fe.get_full_filename ());
 
 		if (plar == null)
@@ -664,7 +664,7 @@ private class Package : MessageObject {
 		}
 
 		// VarSetter to set LI path vars in files
-		VarSetter vset = new VarSetter (setup_settings, appInfo.idname);
+		VarSetter vset = new VarSetter (setup_settings, appInfo.unique_id);
 		if (ret)
 			vset.execute (fe.fname_installed);
 
@@ -680,7 +680,7 @@ private class Package : MessageObject {
 		weak Entry e;
 
 		IPK.FileEntry fe = null;
-		VarSolver vs = new VarSolver (appInfo.idname);
+		VarSolver vs = new VarSolver (appInfo.unique_id);
 		// Now extract & validate all stuff
 		while (plar.next_header (out e) == Result.OK) {
 			fe = fcache.get (e.pathname ());
@@ -756,7 +756,7 @@ private class Package : MessageObject {
 		}
 
 		// Create new varsetter, so we can set path variables directly in files
-		VarSetter vset = new VarSetter (setup_settings, appInfo.idname);
+		VarSetter vset = new VarSetter (setup_settings, appInfo.unique_id);
 		// Set variables in external files
 		if (ret)
 			foreach (IPK.FileEntry f in get_file_entries ()) {

@@ -95,7 +95,7 @@ internal ArrayList<UpdateItem> get_update_items_from_package_id_list (Updater up
 				if (swid.has_prefix ("dep:"))
 					continue;
 
-				if ((item.sw_old as AppItem).idname == swid)
+				if ((item.sw_old as AppItem).unique_id == swid)
 					res.add (item);
 
 			} else if (item.sw_type == typeof (Dependency)) {

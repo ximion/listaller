@@ -47,7 +47,7 @@ private class RepoLocal : Repo {
 	 */
 	private bool add_package_new (string fname, AppItem app, string arch) {
 		bool ret;
-		string app_dir = Path.build_filename (repo_pool_dir, app.idname, null);
+		string app_dir = Path.build_filename (repo_pool_dir, app.unique_id, null);
 
 		string canonical_pkgname = build_canonical_pkgname (app, arch);
 
@@ -73,8 +73,8 @@ private class RepoLocal : Repo {
 	 */
 	private bool add_package_existing (string fname, AppItem app, string arch) {
 		bool ret;
-		string app_dir = Path.build_filename (repo_pool_dir, app.idname, null);
-		AppItem appExisting = cindex.get_application (app.idname);
+		string app_dir = Path.build_filename (repo_pool_dir, app.unique_id, null);
+		AppItem appExisting = cindex.get_application (app.unique_id);
 
 		if (appExisting == null)
 			error ("FATAL: Application was assumed to be present in index, but it was not found!");
@@ -122,7 +122,7 @@ private class RepoLocal : Repo {
 		if (cindex.application_exists (app)) {
 			int j = cindex.compare_version (app);
 			if (j == 0) {
-				Report.log_error (_("The package you want to add already exists in the repository (ID: %s, Version: %s).").printf (app.idname, app.version));
+				Report.log_error (_("The package you want to add already exists in the repository (ID: %s, Version: %s).").printf (app.unique_id, app.version));
 				return false;
 			} else if (j < 0) {
 				Report.log_error (_("A newer version of the package you want to add is already present in the repository."));

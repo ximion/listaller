@@ -106,7 +106,7 @@ public class AppItem : Object {
 	/**
 	 * Application identifier
 	 * */
-	public string idname {
+	public string unique_id {
 		get {
 			update_unique_id ();
 			return _unique_id;
@@ -275,7 +275,7 @@ public class AppItem : Object {
 		else
 			app_state_str = "[%s|%s]".printf (_("INSTALLED"), str_ownership);
 
-		return "%s %s (%s) :: %s".printf (app_state_str, idname, version, metainfo.to_string ());
+		return "%s %s (%s) :: %s".printf (app_state_str, unique_id, version, metainfo.to_string ());
 	}
 
 	public void fast_check () {
@@ -324,8 +324,8 @@ public class AppItem : Object {
 	/** Build a Listaller application-id
 	 *
 	 * An application ID has the following form:
-	 * idname;version;metadata-file;origin
-	 * idname usually is the application's .desktop file name
+	 * unique-id;version;metadata-file;origin
+	 * The unique id usually is the application's .desktop file name
 	 * version is the application's version
 	 * arch the architecture(s) the app was build for
 	 * metadata-file is the application's AppStream metadata file
@@ -341,9 +341,9 @@ public class AppItem : Object {
 		if (metadata_file.strip () == "") {
 			debug (_("We don't know a metadata-file for application '%s'!").printf (metainfo.name));
 			// If no metadata file was found, we can only use application name and version as ID
-			res = "%s;%s;;%s".printf (idname, version, origin);
+			res = "%s;%s;;%s".printf (unique_id, version, origin);
 		} else {
-			res = "%s;%s;%s;%s".printf (idname, version, metadata_file, origin);
+			res = "%s;%s;%s;%s".printf (unique_id, version, metadata_file, origin);
 		}
 		return res;
 	}
@@ -370,7 +370,7 @@ public class AppItem : Object {
 			return;
 
 		string[] blocks = appid.split (";");
-		idname = blocks[0];
+		unique_id = blocks[0];
 		version = blocks[1];
 		string asfile = blocks[2];
 		// Set application origin
@@ -398,7 +398,7 @@ public class AppItem : Object {
 			data = "local:listaller#%s".printf (metadata_file);
 
 		// FIXME: Handle architecture correctly
-		package_id = PackageKit.Package.id_build (idname, version, system_machine_generic (), data);
+		package_id = PackageKit.Package.id_build (unique_id, version, system_machine_generic (), data);
 
 		return package_id;
 	}
@@ -417,12 +417,8 @@ public class AppItem : Object {
 	}
 
 	private string get_desktop_filename_expanded () {
-		/* NOTE: Hopefully nobody will ever try to store a .desktop-file in %INST%, because
-		 * this might cause problems with AppItem's which don't have the correct idname specified.
-		 * (Maybe limit this to %APP% only?)
-		 */
 		// Resolve variables in desktop_file path
-		VarSolver vs = new VarSolver (idname);
+		VarSolver vs = new VarSolver (unique_id);
 		string fname = expand_user_dir (desktop_file);
 		fname = vs.substitute_vars_auto (fname, setup_settings);
 
@@ -531,7 +527,7 @@ public class AppItem : Object {
 			}
 		}
 		if (subst_cmd) {
-			VarSolver vs = new VarSolver (idname);
+			VarSolver vs = new VarSolver (unique_id);
 			cmd = vs.substitute_vars_auto (cmd, setup_settings);
 		}
 
@@ -540,7 +536,7 @@ public class AppItem : Object {
 
 	public string get_metadata_xml () {
 		if (Utils.str_is_empty (xmldata)) {
-			warning ("Component '%s' does not have raw XML metadata.", idname);
+			warning ("Component '%s' does not have raw XML metadata.", unique_id);
 			return "";
 		}
 

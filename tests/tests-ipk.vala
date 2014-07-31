@@ -77,7 +77,7 @@ void test_ipk_control_file () {
 	IPK.PackControl ipkc = new IPK.PackControl ();
 	//! ipkc.create_new ();
 	AppItem a = new AppItem ("echoecho", "123");
-	a.idname = "echo-123";
+	a.unique_id = "echo-123";
 	a.desktop_file = "echo.desktop";
 	//! ipkc.set_application (a);
 
@@ -105,7 +105,7 @@ void test_ipk_control_file () {
 
 	AppItem app = ipkc.get_application ();
 	assert (app.full_name == "echoecho");
-	assert (app.idname == "echo-123");
+	assert (app.unique_id == "echo-123");
 	assert (app.desktop_file == "%APP%/echo.desktop");
 
 	list = ipkc.get_dependencies ();
@@ -128,7 +128,7 @@ void test_ipk_packcontrol () {
 
 	AppItem app = ipkc.get_application ();
 	assert (app.metainfo.name == "Listaller FooBar");
-	assert (app.idname == "listaller_foobar");
+	assert (app.unique_id == "listaller_foobar");
 }
 
 void test_ipk_filelist_file () {

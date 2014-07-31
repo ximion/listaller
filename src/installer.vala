@@ -288,7 +288,7 @@ public class Setup : MessageObject {
 		}
 
 		// Link the dependency idNames to this application
-		ret = db.set_application_dependencies (app.idname, pkg_dep_info);
+		ret = db.set_application_dependencies (app.unique_id, pkg_dep_info);
 		if (!ret) {
 			return false;
 		}

@@ -74,7 +74,7 @@ void test_software_db () {
 	msg ("Retrieving AppItem from database...");
 	AppItem newItem = sdb.get_application_by_idname ("test");
 	assert (newItem != null);
-	assert (newItem.idname == "test");
+	assert (newItem.unique_id == "test");
 	assert (newItem.metainfo.name == "Test");
 
 	msg ("Item is: %s".printf (newItem.to_string ()));
