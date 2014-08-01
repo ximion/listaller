@@ -8,5 +8,7 @@
     <library>libgtk-3.so.0</library>
     <binary>update-icon-caches</binary>
   </provides>
-  <x-version-template>shell$ pkg-config --modversion gtk+-3.0</x-version-template>
+  <x-listaller_extra>
+    <version_template>shell$ pkg-config --modversion gtk+-3.0</version_template>
+  </x-listaller_extra>
 </component>

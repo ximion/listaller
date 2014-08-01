@@ -100,6 +100,7 @@ public class Dependency : Object {
 		feed_url = "";
 		origin = "unknown";
 		architecture = system_machine_generic ();
+		_version_raw = "";
 	}
 
 	public Dependency (Component cpt) {
@@ -238,6 +239,30 @@ public class Dependency : Object {
 		_version_cache = new_version;
 	}
 
+	private void parse_metainfo_listaller_extras (Xml.Node *node) {
+		for (Xml.Node* iter = node->children; iter != null; iter = iter->next) {
+			// discard spaces
+			if (iter->type != Xml.ElementType.ELEMENT_NODE) {
+				continue;
+			}
+			if (iter->name == "version_template") {
+				_version_raw = iter->get_content ();
+			} else if (iter->name == "always_installed") {
+				installed = iter->get_content () == "true";
+			}
+		}
+
+		// TODO
+		/**
+		// The optional stuff is usually only used by the setup process, to group
+		// optional libraries to the right component, without throwing an error.
+		string[] prefixes = {};
+		prefixes += "";
+		if (include_optional)
+			prefixes += "Optional";
+		**/
+	}
+
 	public bool load_from_file (string fname, bool include_optional = false) {
 		// parse canonical AppStream Component
 		var mdata = new Appstream.Metadata ();
@@ -272,29 +297,15 @@ public class Dependency : Object {
 		Xml.Doc *xdoc = Xml.Parser.parse_doc (xmldata);
 		// Get the root node
 		Xml.Node* root = xdoc->get_root_element ();
-		for (Xml.Node* iter = root; iter != null; iter = iter->next) {
+		for (Xml.Node* iter = root->children; iter != null; iter = iter->next) {
 			// discard spaces
 			if (iter->type != Xml.ElementType.ELEMENT_NODE) {
 				continue;
 			}
-			if (iter->name == "x-version-template") {
-				_version_raw = iter->get_content ();
-			} else if (iter->name == "x-always-installed") {
-				installed = iter->get_content () == "true";
-			}
+			if (iter->name == "x-listaller_extra")
+				parse_metainfo_listaller_extras (iter);
 		}
-
 		delete xdoc;
-
-		// TODO
-		/**
-		// The optional stuff is usually only used by the setup process, to group
-		// optional libraries to the right component, without throwing an error.
-		string[] prefixes = {};
-		prefixes += "";
-		if (include_optional)
-			prefixes += "Optional";
-		**/
 
 		return true;
 	}

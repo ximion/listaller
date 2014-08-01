@@ -15,5 +15,7 @@
     <binary>gresource</binary>
     <binary>gsettings</binary>
   </provides>
-  <x-version-template>shell$ pkg-config --modversion glib-2.0</x-version-template>
+  <x-listaller_extra>
+    <version_template>shell$ pkg-config --modversion glib-2.0</version_template>
+  </x-listaller_extra>
 </component>

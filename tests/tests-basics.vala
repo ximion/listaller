@@ -212,7 +212,7 @@ void test_components () {
 	bool ret;
 
 	var foo_frmw = new Dependency.blank ();
-	ret = foo_frmw.load_from_file (Path.build_filename (datadir, "FooTest2.framework.xml", null));
+	ret = foo_frmw.load_from_file (Path.build_filename (datadir, "FooTest2.metainfo.xml", null));
 	assert (ret);
 
 	assert (foo_frmw.metainfo.id == "FooTest2");
@@ -225,7 +225,7 @@ void test_components () {
 
 	// Test capabilities of resolving version names
 	var lilibv_frmw = new Dependency.blank ();
-	ret = lilibv_frmw.load_from_file (Path.build_filename (datadir, "ListallerTest1.framework", null));
+	ret = lilibv_frmw.load_from_file (Path.build_filename (datadir, "ListallerTest1.metainfo.xml", null));
 	assert (ret);
 	assert (lilibv_frmw.metainfo.id == "ListallerTest1");
 

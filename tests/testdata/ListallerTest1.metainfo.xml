@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Listaller Framework Test 1 -->
+<!-- THIS FILE IS ONLY FOR UNIT-TESTING! -->
+<component>
+  <id>ListallerTest1</id>
+  <name>Listaller Test 1</name>
+  <provides>
+    <binary>lipa</binary>
+    <library>liblistaller-glib.so</library>
+  </provides>
+  <x-listaller_extra>
+    <version_template>libversion$ liblistaller-glib.so.*</version_template>
+  </x-listaller_extra>
+</component>

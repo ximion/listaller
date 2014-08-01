@@ -9,6 +9,11 @@
     <binary>xdg-open</binary>
     <library>libc6.so</library>
   </provides>
-  <x-version-template>shell$ echo "MegaFoo: 1.0" prefix$ "MegaFoo: "</x-version-template>
-  <x-extra-lib-searchpath>%SYS_LIB%/kde4</x-extra-lib-searchpath>
+  <x-listaller_extra>
+    <version_template>
+<![CDATA[shell$ echo "MegaFoo: 1.0"
+prefix$ "MegaFoo: "]]>
+    </version_template>
+    <extra_searchpath_libs>%SYS_LIB%/kde4</extra_searchpath_libs>
+  </x-listaller_extra>
 </component>
