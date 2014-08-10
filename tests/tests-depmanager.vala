@@ -50,18 +50,17 @@ void test_dependency_installer () {
 	var depinst = new DepInstaller (sdb);
 	var cfactory = new Dep.ComponentFactory (ssettings);
 
+	// Feed installer is currently disabled by default
 	// Test 1
 	Dependency test1 = new Dependency.blank ();
-	test1.metainfo.id = "Test:1#expat";
-	test1.feed_url = "http://repo.roscidus.com/lib/expat1";
-	//test1.add_item ("libgee.so.2", Appstream.ProvidesKind.LIBRARY);
-	test1.add_item (Appstream.ProvidesKind.LIBRARY, "bladada.so.2");
+	test1.unique_id = "Test:1#expat";
+	//test1.feed_url = "http://repo.roscidus.com/lib/expat1";
+	test1.add_item (Appstream.ProvidesKind.LIBRARY, "libc6.so");
+	//test1.add_item (Appstream.ProvidesKind.LIBRARY, "bladada.so.2");
 
 	ret = depinst.install_existing_module_dependency (cfactory, ref test1);
 	assert (ret == true);
 	assert (test1.installed == true);
-	debug (test1.metainfo.name);
-	assert (test1.metainfo.name == "libexpat1");
 
 	// Test 2
 	Dependency test2 = new Dependency.blank ();

@@ -112,7 +112,7 @@ private class Manager : MessageObject {
 	}
 
 	public Setup? get_setup_for_remote_app_by_id (string app_idname) {
-		AppItem? app = cache.get_application_by_idname (app_idname);
+		AppItem? app = cache.get_application_by_unique_name (app_idname);
 		if (app == null) {
 			debug ("Application with id '%s' not found in cache!", app_idname);
 			return null;

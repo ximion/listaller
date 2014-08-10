@@ -113,7 +113,7 @@ private class DepInstaller : MessageObject {
 	 *
 	 * @returns TRUE if there were no errors.
 	 */
-	public bool install_dependencies (string dependencies_str, ComponentFactory cfactory) {
+	public bool install_dependencies (AppItem app, string dependencies_str, ComponentFactory cfactory) {
 		ArrayList<Dependency> req_mods;
 		string fail_reason;
 
@@ -135,6 +135,10 @@ private class DepInstaller : MessageObject {
 			if (!ret)
 				break;
 		}
+
+		if (ret)
+			foreach (Dependency dep in req_mods)
+				app.dependencies.add (dep);
 
 		return ret;
 	}

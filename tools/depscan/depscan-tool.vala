@@ -28,7 +28,7 @@ public class DepScanTool : Object {
 	private static bool o_components = false;
 	private static bool o_verbose_mode = false;
 	private static string o_input_path = null;
-	private static string o_extra_modules_dir = null;
+	private static string o_extra_metainfo_dir = null;
 
 	public int exit_code { get; set; }
 
@@ -41,7 +41,7 @@ public class DepScanTool : Object {
 			N_("Print machine-readable simple text"), null },
 		{ "out-components", 'c', 0, OptionArg.NONE, ref o_components,
 			N_("Print list of used framework/modules"), null },
-		{ "include-modules", 0, 0, OptionArg.STRING, ref o_extra_modules_dir,
+		{ "include-metainfo", 0, 0, OptionArg.STRING, ref o_extra_metainfo_dir,
 			N_("Define an additional directory with module definitions"), null },
 		{ "verbose", 'v', 0, OptionArg.NONE, ref o_verbose_mode,
 			N_("Activate verbose mode"), null },
@@ -96,7 +96,7 @@ public class DepScanTool : Object {
 
 		DependencyScanner scan = new DependencyScanner (o_input_path, omode);
 		scan.recursive = o_run_recursive;
-		scan.extra_modules_dir = o_extra_modules_dir;
+		scan.extra_metainfo_dir = o_extra_metainfo_dir;
 		ret = scan.compile_required_files_list ();
 		if (!ret)
 			exit_code = 1;

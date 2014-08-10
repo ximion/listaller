@@ -134,7 +134,7 @@ internal class ComponentFactory : Object {
 		return solver_pool;
 	}
 
-	public void load_extra_modules (string module_dir) {
+	public void load_extra_metadata (string module_dir) {
 		HashSet<string>? extra_module_info_files = find_files_matching (module_dir, "*.xml");
 
 		// process additional module data
@@ -148,7 +148,7 @@ internal class ComponentFactory : Object {
 				if (ret)
 					registered_deps.set (dep.metainfo.id, dep);
 				else
-					warning ("Unable to load data for module: %s", fname);
+					warning ("Unable to load data for component: %s", fname);
 			}
 		}
 	}

@@ -249,7 +249,7 @@ public class Setup : MessageObject {
 		connect_with_object (depinst, ObjConnectFlags.IGNORE_PROGRESS);
 
 		// Install possibly missing dependencies
-		ret = depinst.install_dependencies (pkg_dep_info, cfactory);
+		ret = depinst.install_dependencies (app, pkg_dep_info, cfactory);
 		if (!ret) {
 			// If dependency installation failed, exit
 			return false;
@@ -284,12 +284,6 @@ public class Setup : MessageObject {
 		ret = db.add_application (app);
 		if (!ret) {
 			ipkp.rollback_installation ();
-			return false;
-		}
-
-		// Link the dependency idNames to this application
-		ret = db.set_application_dependencies (app.unique_id, pkg_dep_info);
-		if (!ret) {
 			return false;
 		}
 

@@ -59,12 +59,6 @@ public class Dependency : Object {
 			return _installed;
 		}
 		set {
-			if ((!Utils.__unittestmode) &&
-			    (metainfo.id != "") &&
-			    (!has_installdata ()) &&
-			    (feed_url == "")) {
-				warning ("Trying to set dependency %s to 'satisfied', although it is not a standardlib. (Reason: No install-data found!) - This usually is a packaging bug.", metainfo.id);
-			}
 			_installed = value;
 		}
 	}
@@ -87,14 +81,14 @@ public class Dependency : Object {
 	}
 
 	// Items which were installed in order to satisfy this dependency
-	protected HashSet<string> install_data { get; internal set; }
+	protected HashSet<string> installed_items { get; internal set; }
 
 	public Dependency.blank () {
 		dbid = -1;
 		metainfo = new Component ();
 
 		item_list = new HashSet<string> ();
-		install_data = new HashSet<string> ();
+		installed_items = new HashSet<string> ();
 
 		environment = "";
 		feed_url = "";
@@ -379,6 +373,8 @@ public class Dependency : Object {
 	}
 
 	public bool has_matching_item (ProvidesKind kind, string val) {
+		if (Utils.str_is_empty (val))
+			return false;
 		string item_id = provides_item_create (kind, val, null);
 		foreach (string s in item_list) {
 			if (PatternSpec.match_simple (s, item_id))
@@ -402,33 +398,29 @@ public class Dependency : Object {
 		return res;
 	}
 
-	public HashSet<string> get_installdata () {
-		return install_data;
-	}
-
-	public string get_installdata_as_string () {
+	public string get_installed_items_as_string () {
 		string res = "";
-		foreach (string s in install_data)
+		foreach (string s in installed_items)
 			res += s + "\n";
 		return res;
 	}
 
-	public bool has_installdata () {
-		if (install_data == null)
+	public bool has_installed_items () {
+		if (installed_items == null)
 			return false;
-		return install_data.size > 0;
+		return installed_items.size > 0;
 	}
 
 	internal bool add_installed_item (string sinstcomp) {
-		if (sinstcomp.index_of (":") <= 0)
+		if (sinstcomp.index_of (";") <= 0)
 			warning ("Invalid install data set! This should never happen! (Data was %s)", sinstcomp);
-		bool ret = install_data.add (sinstcomp);
+		bool ret = installed_items.add (sinstcomp);
 		update_installed_status ();
 		return ret;
 	}
 
-	internal void clear_installdata () {
-		install_data.clear ();
+	internal void clear_installed_items () {
+		installed_items.clear ();
 		update_installed_status ();
 	}
 
@@ -464,11 +456,11 @@ public class Dependency : Object {
 	 * installed
 	 */
 	protected void update_installed_status () {
-		installed = install_data.size == item_list.size;
+		installed = installed_items.size == item_list.size;
 	}
 
 	public bool has_feed () {
-		return feed_url != "";
+		return !Utils.str_is_empty (feed_url);
 	}
 
 	/**

@@ -85,11 +85,13 @@ public class KeyManager : MessageObject {
 		string fpr = key_fpr;
 		Key key;
 
+		set_context_local (main_ctx);
+
 		// add 0x prefix, gpg2 needs this...
 		if (!fpr.has_prefix ("0x"))
 			fpr = "0x%s".printf (fpr);
 
-		/* using LOCAL and EXTERN together doesn't work for GPG 1.X. Ugh. */
+		// using LOCAL and EXTERN together doesn't work for GPG 1.X. Ugh.
 		if (!local)
 			set_context_external (main_ctx);
 
@@ -97,8 +99,8 @@ public class KeyManager : MessageObject {
 		if (err.code () == GPGError.ErrorCode.EOF) {
 			debug ("key lookup failed, unknown key");
 			/* Try an alternate lookup using the 8 character fingerprint value, since
-			* busted-ass keyservers can't support lookups using subkeys with the full
-			* value as of now. This is why 2012 is not the year of PGP encryption. */
+			 * busted-ass keyservers can't support lookups using subkeys with the full
+			 * value as of now. This is why 2012 is not the year of PGP encryption. */
 			int fpr_length = fpr.length;
 			if(fpr_length > 8) {
 				string short_fpr = "0x%s".printf (fpr.substring (fpr_length - 8));
@@ -109,8 +111,6 @@ public class KeyManager : MessageObject {
 					debug ("key lookup failed, unknown key");
 			}
 		}
-
-		set_context_local (main_ctx);
 
 		if (!check_gpg_err (err, false))
 			return null;

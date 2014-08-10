@@ -72,7 +72,7 @@ void test_application_ids () {
 	//! assert (dummy.appid == expected_id);
 
 	AppItem item1 = new AppItem.from_id (expected_id);
-	assert (item1.unique_id == "foobar-1.0");
+	assert (item1.unique_id == "foobar");
 	assert (item1.metainfo.name == "Listaller FooBar");
 	assert (item1.version == "1.0");
 	assert (item1.metainfo.developer_name == "Listaller Project");
@@ -87,12 +87,12 @@ void test_application_ids () {
 	item2.version = "0.1";
 	item2.origin = "http://example.com";
 	assert (item2.metainfo.name == "MyApp");
-	assert (item2.unique_id == "myapp-0.1");
+	assert (item2.unique_id == "myapp");
 	item2.metadata_file = Path.build_filename (foobar_dir, "foobar.appdata.xml", null);
 	item2.update_with_metadata_file ();
 	assert (item2.desktop_file == "%APP%/foobar.desktop");
 	debug (item2.appid);
-	assert (item2.appid == "foobar-1.0;1.0;%s;http://example.com".printf (item2.metadata_file));
+	assert (item2.appid == "foobar;1.0;%s;http://example.com".printf (item2.metadata_file));
 
 	cpt.name = "Google Earth";
 	cpt.id = "";
@@ -168,7 +168,7 @@ void test_appstream_xml () {
 	var item = new AppItem ();
 	item.metainfo = cpt;
 	item.fast_check ();
-	assert (item.unique_id == "foobar-1.0");
+	assert (item.unique_id == "foobar");
 }
 
 void test_metafile () {

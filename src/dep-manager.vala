@@ -51,7 +51,7 @@ private class DepManager : MessageObject {
 	}
 
 	public bool module_is_installed (ref Dependency dep) {
-		Dependency? dbDep = db.get_dependency_by_id (dep.metainfo.id);
+		Dependency? dbDep = db.get_dependency_by_unique_name (dep.metainfo.id);
 		if (dbDep != null) {
 			debug ("Dependency with id [%s] is already installed :)", dep.metainfo.id);
 			dep = dbDep;
@@ -106,7 +106,7 @@ private class DepManager : MessageObject {
 	}
 
 	public Dependency? dependency_from_idname (string depIdName) {
-		Dependency? dep = db.get_dependency_by_id (depIdName);
+		Dependency? dep = db.get_dependency_by_unique_name (depIdName);
 		if (dep == null)
 			debug ("Dependency not found in database: %s", depIdName);
 
@@ -117,7 +117,7 @@ private class DepManager : MessageObject {
 		HashSet<Dependency> resList = dependency_hashset_new ();
 		Dependency? dep = null;
 		foreach (string s in dep_ids) {
-			dep = db.get_dependency_by_id (s);
+			dep = db.get_dependency_by_unique_name (s);
 			if (dep == null) {
 				debug ("Dependency not found in database: %s", s);
 				continue;

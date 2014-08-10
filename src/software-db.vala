@@ -298,18 +298,18 @@ private class SoftwareDB : MessageObject {
 		return cnt;
 	}
 
-	public AppItem? get_application_by_idname (string appIdName) {
+	public AppItem? get_application_by_unique_name (string appIdName) {
 		AppItem? app = null;
 
 		try {
 			// It is important that we prefer the personal over the shared database!
 			// (so command-line tools allow removing the personal app first)
 			if (private_db_canbeused ())
-					app = db_priv.get_application_by_idname (appIdName);
+					app = db_priv.get_application_by_unique_name (appIdName);
 
 			if (app == null)
 				if (shared_db_canbeused ())
-					app = db_shared.get_application_by_idname (appIdName);
+					app = db_shared.get_application_by_unique_name (appIdName);
 
 		} catch (Error e) {
 			emit_dberror (_("Unable to fetch application by id: %s").printf (e.message));
@@ -320,7 +320,7 @@ private class SoftwareDB : MessageObject {
 
 	public AppItem? get_application_by_id (AppItem app) {
 		AppItem? resApp;
-		resApp = get_application_by_idname (app.unique_id);
+		resApp = get_application_by_unique_name (app.unique_id);
 		return resApp;
 	}
 
@@ -449,15 +449,15 @@ private class SoftwareDB : MessageObject {
 		return true;
 	}
 
-	public bool set_application_dependencies (string appName, string dependencies_str) {
+	public bool set_application_dependencies (string unique_AppId, GenericArray<Dependency> deps) {
 		if (is_root ()) {
 			if (shared_db_canbeused (true))
-				return db_shared.set_application_dependencies (appName, dependencies_str);
+				return db_shared.set_application_dependencies (unique_AppId, deps);
 			else
 				return false;
 		} else {
 			if (private_db_canbeused (true))
-				return db_priv.set_application_dependencies (appName, dependencies_str);
+				return db_priv.set_application_dependencies (unique_AppId, deps);
 			else
 				return false;
 		}
@@ -486,14 +486,14 @@ private class SoftwareDB : MessageObject {
 		return ret;
 	}
 
-	public Dependency? get_dependency_by_id (string depIdName) {
+	public Dependency? get_dependency_by_unique_name (string depIdName) {
 		Dependency? dep = null;
 		if (shared_db_canbeused ())
-			dep = db_shared.get_dependency_by_id (depIdName);
+			dep = db_shared.get_dependency_by_unique_name (depIdName);
 
 		if (dep == null)
 			if (private_db_canbeused ())
-				dep = db_priv.get_dependency_by_id (depIdName);
+				dep = db_priv.get_dependency_by_unique_name (depIdName);
 		return dep;
 	}
 

@@ -81,7 +81,7 @@ private class SoftwareCache : MessageObject {
 
 		AppItem? tmpApp;
 
-		tmpApp = cache_db.get_application_by_idname (app.unique_id);
+		tmpApp = cache_db.get_application_by_unique_name (app.unique_id);
 		if (tmpApp != null) {
 			cache_db.remove_application (tmpApp);
 		}
@@ -89,8 +89,8 @@ private class SoftwareCache : MessageObject {
 		cache_db.add_application (app, arch);
 	}
 
-	public AppItem? get_application_by_idname (string app_idname) {
-		return cache_db.get_application_by_idname (app_idname);
+	public AppItem? get_application_by_unique_name (string app_idname) {
+		return cache_db.get_application_by_unique_name (app_idname);
 	}
 
 	/**

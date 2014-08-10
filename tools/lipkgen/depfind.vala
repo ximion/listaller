@@ -36,7 +36,7 @@ private class DepFind : Object {
 	public ArrayList<string>? get_dependency_list () {
 		string output;
 		int exit_code;
-		string[] cmd = { "depscan", "-rc", "--include-modules=%s".printf (module_dir), input_dir };
+		string[] cmd = { "depscan", "-rc", "--include-metainfo=%s".printf (module_dir), input_dir };
 
 		try {
 			Process.spawn_sync (input_dir, cmd, null,

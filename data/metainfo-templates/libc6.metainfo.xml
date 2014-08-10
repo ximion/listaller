@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This is a AppStream component template used in and by Listaller -->
+<!-- Please don't use it elsewhere, as it is not 100% valid AppStream data -->
+<component>
+  <id>Libc6</id>
+  <name>GNU C Library</name>
+  <provides>
+    <library>libc.so.6</library>
+    <library>libpthread.so.0</library>
+    <library>libm.so.*</library>
+    <library>librt.so.*</library>
+    <library>libdl.so.*</library>
+    <library>libresolv.so.*</library>
+  </provides>
+  <x-listaller_extra>
+    <version_template>6</version_template>
+    <essential>yes</essential>
+  </x-listaller_extra>
+</component>

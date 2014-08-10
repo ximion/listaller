@@ -47,13 +47,13 @@ private const string DATABASE = ""
 		+ "unique_name TEXT NOT NULL, "
 		+ "full_name TEXT NOT NULL, "
 		+ "version TEXT NOT NULL, "
-		+ "summary TEXT NOT NULL, "
+		+ "summary TEXT, "
 		+ "description TEXT, "
 		+ "metadata TEXT, "
 		+ "architecture TEXT NOT NULL, "
 		+ "origin TEXT NOT NULL, "
 		+ "install_time INTEGER, "
-		+ "items_installed TEXT NOT NULL, "
+		+ "items_installed TEXT, "
 		+ "items TEXT NOT NULL, "
 		+ "environment TEXT"
 		+ "); "
@@ -476,14 +476,14 @@ private abstract class InternalDB : Object {
 			return ret;
 
 		// now associate dependencies with this application
-		AppItem app = get_application_by_idname (item.unique_id);
+		AppItem app = get_application_by_unique_name (item.unique_id);
 		if (app == null)
 			error ("Could not retrieve recently added application '%s' from the database!", item.unique_id);
 
 		try {
 			for (var i = 0; i < app.dependencies.length; i++) {
 				Dependency dep = app.dependencies.get (i);
-				Dependency? db_dep = get_dependency_by_id (dep.unique_id);
+				Dependency? db_dep = get_dependency_by_unique_name (dep.unique_id);
 				if (db_dep == null) {
 					warning ("Adding application '%s', but could not find it's dependency '%s' in the database!", item.unique_id, dep.unique_id);
 					continue;
@@ -528,11 +528,43 @@ private abstract class InternalDB : Object {
 		item.install_time = stmt.column_int (AppRow.INST_TIME);
 		item.dbid = stmt.column_int (AppRow.DBID);
 
-		// FIXME
-		//! item.dependencies_str = stmt.column_text (AppRow.DEPENDENCIES);
 		item.state = db_type;
-
 		item.origin = stmt.column_text (AppRow.ORIGIN);
+
+		// now fetch the dependency information
+		Sqlite.Statement depStmt;
+		int res = db.prepare_v2 ("SELECT * FROM app_dep_assoc WHERE app_id=?", -1, out depStmt);
+
+		try {
+			db_assert (depStmt.bind_int64 (1, item.dbid), "bind value");
+			db_assert (res, "get all dependencies for application");
+
+			res = depStmt.step ();
+			db_assert (res, "execute");
+			// no row means no dependencies found
+			if (res != Sqlite.ROW)
+				return item;
+		} catch (Error e) {
+			throw new DatabaseError.ERROR (e.message);
+		}
+
+		do {
+			switch (res) {
+				case Sqlite.DONE:
+					break;
+				case Sqlite.ROW:
+					int depid = depStmt.column_int (AppDepAssoc.DEP_ID);
+					Dependency? dep = get_dependency_by_dbid (depid);
+					if (dep == null)
+						throw new DatabaseError.ERROR ("Unable to retrieve dependency with id %i from database! DB might be in an inconstistent state!", depid);
+					item.dependencies.add (dep);
+					break;
+				default:
+					db_assert (res, "execute");
+					break;
+			}
+			res = depStmt.step ();
+		} while (res == Sqlite.ROW);
 
 		return item;
 	}
@@ -558,7 +590,7 @@ private abstract class InternalDB : Object {
 		return arch;
 	}
 
-	public AppItem? get_application_by_idname (string app_idname) throws DatabaseError {
+	public AppItem? get_application_by_unique_name (string app_idname) throws DatabaseError {
 		Sqlite.Statement stmt;
 		try {
 			db_assert (db.prepare_v2 ("SELECT * FROM applications WHERE unique_name=?", -1, out stmt),
@@ -777,15 +809,27 @@ private abstract class InternalDB : Object {
 		return resList;
 	}
 
-	public bool set_application_dependencies (string appName, string depstr) throws DatabaseError {
-		Sqlite.Statement stmt;
-		int res = db.prepare_v2 ("UPDATE applications SET dependencies=? WHERE unique_name=?", -1, out stmt);
+	public bool set_application_dependencies (string unique_AppId, GenericArray<Dependency> deps) throws DatabaseError {
+		AppItem app = get_application_by_unique_name (unique_AppId);
+		if (app == null)
+			throw new DatabaseError.ERROR ("Could not retrieve application '%s' from the database!", unique_AppId);
+
 
 		try {
-			db_assert (res, "update application deps (by name)");
-			db_assert (stmt.bind_text (1, depstr), "bind text value");
-			db_assert (stmt.bind_text (2, appName), "bind text value");
-			db_assert (stmt.step ());
+			for (var i = 0; i < deps.length; i++) {
+				Dependency dep = deps.get (i);
+				Dependency? db_dep = get_dependency_by_unique_name (dep.unique_id);
+				if (db_dep == null) {
+					warning ("Adding application '%s', but could not find it's dependency '%s' in the database!", unique_AppId, dep.unique_id);
+					continue;
+				}
+
+				db_assert (insert_appdepassoc.bind_int64 (AppDepAssoc.APP_ID, app.dbid), "assign value");
+				db_assert (insert_appdepassoc.bind_int64 (AppDepAssoc.DEP_ID, db_dep.dbid), "assign value");
+
+				db_assert (insert_appdepassoc.step (), "execute app-dep assoc insert");
+				db_assert (insert_appdepassoc.reset (), "reset statement");
+			}
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (e.message);
 		}
@@ -800,31 +844,34 @@ private abstract class InternalDB : Object {
 			throw new DatabaseError.ERROR (_("Tried to write on readonly database! (This should never happen)"));
 		}
 
+		if (Utils.str_is_empty (dep.metainfo.name))
+			dep.metainfo.name = dep.unique_id;
+
 		// Set install timestamp
 		DateTime dt = new DateTime.now_local ();
 		dep.install_time = dt.to_unix ();
 
 		try {
 			// Assign values
-			db_assert (insert_dep.bind_text (DepRow.UNIQUE_NAME +1, dep.metainfo.id), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.UNIQUE_NAME, dep.unique_id), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.FULLNAME +1, dep.metainfo.name), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.FULLNAME, dep.metainfo.name), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.VERSION +1, dep.get_version ()), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.VERSION, dep.get_version ()), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.METADATA +1, dep.get_metadata_xml ()));
+			db_assert (insert_dep.bind_text (DepRow.METADATA, dep.get_metadata_xml ()));
 
-			db_assert (insert_dep.bind_int64 (DepRow.INST_TIME +1, dep.install_time), "bind value");
+			db_assert (insert_dep.bind_int64 (DepRow.INST_TIME, dep.install_time), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.ARCHITECTURE +1, dep.architecture), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.ARCHITECTURE, dep.architecture), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.ORIGIN +1, dep.origin), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.ORIGIN, dep.origin), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.ITEMS_INSTALLED +1, dep.get_installdata_as_string ()), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.ITEMS_INSTALLED, dep.get_installed_items_as_string ()), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.ITEMS +1, dep.get_items_as_string ()), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.ITEMS, dep.get_items_as_string ()), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.ENVIRONMENT +1, dep.environment), "bind value");
+			db_assert (insert_dep.bind_text (DepRow.ENVIRONMENT, dep.environment), "bind value");
 
 			db_assert (insert_dep.step (), "add dependency");
 
@@ -857,13 +904,33 @@ private abstract class InternalDB : Object {
 		return dep;
 	}
 
-	public Dependency? get_dependency_by_id (string depIdName) {
+	public Dependency? get_dependency_by_unique_name (string depIdName) {
 		Sqlite.Statement stmt;
 		int res = db.prepare_v2 ("SELECT * FROM dependencies WHERE unique_name=?", -1, out stmt);
 
 		try {
-			db_assert (res, "get dependency (by id)");
+			db_assert (res, "get dependency (by uname)");
 			db_assert (stmt.bind_text (1, depIdName), "bind text");
+
+			res = stmt.step ();
+			db_assert (res, "execute");
+			if (res != Sqlite.ROW)
+				return null;
+		} catch (Error e) {
+			throw new DatabaseError.ERROR (e.message);
+		}
+
+		Dependency? dep = retrieve_dependency (stmt);
+		return dep;
+	}
+
+	public Dependency? get_dependency_by_dbid (int id) {
+		Sqlite.Statement stmt;
+		int res = db.prepare_v2 ("SELECT * FROM dependencies WHERE id=?", -1, out stmt);
+
+		try {
+			db_assert (res, "get dependency (by id)");
+			db_assert (stmt.bind_int64 (1, id), "bind int64");
 
 			res = stmt.step ();
 			db_assert (res, "execute");

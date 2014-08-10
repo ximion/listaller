@@ -135,8 +135,6 @@ public class AppItem : Object {
 	private Appstream.Component _metainfo;
 	public Appstream.Component metainfo {
 		get {
-			if (_metainfo == null)
-				error ("Fatal: AppItem does not contain AppStream Component.metainfo.mation object!");
 			return _metainfo;
 		}
 		set {
@@ -348,7 +346,7 @@ public class AppItem : Object {
 			return _app_id;
 
 		if (metadata_file.strip () == "") {
-			debug (_("We don't know a metadata-file for application '%s'!").printf (metainfo.name));
+			debug (_("We do not know a metadata-file for application '%s'!").printf (metainfo.name));
 			// If no metadata file was found, we can only use application name and version as ID
 			res = "%s;%s;;%s".printf (unique_id, version, origin);
 		} else {
@@ -449,9 +447,6 @@ public class AppItem : Object {
 		if (Utils.str_is_empty (app_baseid))
 			error ("Unable to generate unique identifier for application!");
 		_unique_id = string_replace (app_baseid, "( )", "_");
-		if (!Utils.str_is_empty (version)) {
-			_unique_id = "%s-%s".printf (_unique_id, version);
-		}
 	}
 
 	private void update_version_from_component (Appstream.Component cpt) {

@@ -784,7 +784,7 @@ private class Package : MessageObject {
 
 		var cfactory = new Dep.ComponentFactory (setup_settings);
 		cfactory.initialize ();
-		cfactory.load_extra_modules (wdir_depdir);
+		cfactory.load_extra_metadata (wdir_depdir);
 
 		return cfactory;
 	}

@@ -93,7 +93,7 @@ public class LipaManager : LipaModule {
 		AppItem? app = null;
 
 		// Try to find an application which matches the name the user throws at us
-		app = li_mgr.get_application_by_idname (app_identifier);
+		app = li_mgr.get_application_by_unique_name (app_identifier);
 		if (app == null) {
 			var appList = li_mgr.get_applications_by_fullname (app_identifier);
 			if ((appList == null) || (appList.size == 0)) {

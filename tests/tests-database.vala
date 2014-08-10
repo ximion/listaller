@@ -72,7 +72,7 @@ void test_software_db () {
 	sdb.open_read ();
 
 	msg ("Retrieving AppItem from database...");
-	AppItem newItem = sdb.get_application_by_idname ("test");
+	AppItem newItem = sdb.get_application_by_unique_name ("test");
 	assert (newItem != null);
 	assert (newItem.unique_id == "test");
 	assert (newItem.metainfo.name == "Test");

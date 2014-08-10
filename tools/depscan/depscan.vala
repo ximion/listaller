@@ -39,7 +39,7 @@ private class DependencyScanner : Object {
 	private string targetdir;
 	private ScannerOutput output_format;
 	public bool recursive { get; set; }
-	public string extra_modules_dir { get; set; }
+	public string extra_metainfo_dir { get; set; }
 
 	public DependencyScanner (string target_dir, ScannerOutput oformat = ScannerOutput.STANDARD) {
 		targetdir = target_dir;
@@ -110,8 +110,8 @@ private class DependencyScanner : Object {
 
 		// intialize factory, loading optional component-items for better dependency-resolving
 		cfactory.initialize (true);
-		if (!Utils.str_is_empty (extra_modules_dir))
-			cfactory.load_extra_modules (extra_modules_dir);
+		if (!Utils.str_is_empty (extra_metainfo_dir))
+			cfactory.load_extra_metadata (extra_metainfo_dir);
 
 		foreach (Dependency dep in cfactory.registered_deps.values) {
 			var iter = required_items.iterator ();
@@ -150,7 +150,7 @@ private class DependencyScanner : Object {
 		if (required_items.size != 0) {
 			// Add stuff which we were unable to detect
 			res.add ("----");
-			res.add ("Dependencies which are not matching a (installed) framework or module:");
+			res.add (_("Dependencies which are not matching a (installed) component:"));
 			res.add_all (required_items);
 		}
 

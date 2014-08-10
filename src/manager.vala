@@ -132,12 +132,12 @@ public class Manager : MessageObject {
 		return appList;
 	}
 
-	public AppItem? get_application_by_idname (string idname) {
+	public AppItem? get_application_by_unique_name (string idname) {
 		SoftwareDB db;
 		if (!init_db (out db, false))
 			return null;
 
-		AppItem? app = db.get_application_by_idname (idname);
+		AppItem? app = db.get_application_by_unique_name (idname);
 		return app;
 	}
 
@@ -269,7 +269,7 @@ public class Manager : MessageObject {
 		else
 			db.dbflags = DatabaseFlags.USE_PRIVATE_INSTALLED;
 
-		var tmpItem = db.get_application_by_idname (item.unique_id);
+		var tmpItem = db.get_application_by_unique_name (item.unique_id);
 		if (tmpItem == null)
 			return false;
 		item = tmpItem;

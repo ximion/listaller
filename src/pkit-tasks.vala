@@ -219,11 +219,6 @@ private class PkInstaller : PkListallerTask {
 		if (dep.installed)
 			return true;
 
-		/* Exit if we have no install-data: No package can be installed, dependency is not satisfied.
-		 * (we might do a feed-install instead */
-		if (!dep.has_installdata ())
-			return false;
-
 		/* We don't install dependencies via PK when unit tests are running.
 		 * Consider everything as satisfied. (unittests can modify this, of course) */
 		if (__unittestmode) {
@@ -234,9 +229,9 @@ private class PkInstaller : PkListallerTask {
 		string[] pkgs = {};
 		/* Now install every not-yet-installed package. The asterisk (*pkg) indicates
 		 * that this package needs to be installed */
-		foreach (string pkg in dep.get_installdata ()) {
-			if (pkg.has_prefix ("*pkg:")) {
-				pkgs += pkg.substring (5);
+		foreach (string pkg in dep.raw_itemlist) {
+			if (pkg.has_prefix ("pkg;")) {
+				pkgs += pkg.substring (4);
 			}
 		}
 		// null-terminate the array

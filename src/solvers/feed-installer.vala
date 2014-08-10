@@ -267,7 +267,7 @@ private class FeedInstaller : MessageObject {
 			return false;
 
 		// Yes! Feed installation completed, we can set this as satisfied!
-		dep.add_installed_item ("feed:%s".printf (dep.feed_url));
+		dep.add_installed_item ("feed;%s;".printf (dep.feed_url));
 		dep.installed = true;
 
 		return ret;

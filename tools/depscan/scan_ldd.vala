@@ -61,7 +61,7 @@ private class DepscanLDD : Object, IDepScanEngine {
 			h = dep[0].strip ();
 			if (!h.contains ("(")) {
 				if (project_files.index_of (h) <= 0)
-					filedeps.add ("%s%s".printf ("lib:", h));
+					filedeps.add ("%s;%s;".printf ("lib", h));
 			}
 		}
 

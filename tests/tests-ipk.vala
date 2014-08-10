@@ -128,7 +128,7 @@ void test_ipk_packcontrol () {
 
 	AppItem app = ipkc.get_application ();
 	assert (app.metainfo.name == "Listaller FooBar");
-	assert (app.unique_id == "foobar-1.0");
+	assert (app.unique_id == "foobar");
 }
 
 void test_ipk_filelist_file () {
