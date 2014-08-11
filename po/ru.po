@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lazaruside\n"
 "Report-Msgid-Bugs-To: listaller@freelists.org\n"
-"POT-Creation-Date: 2013-08-02 16:20+0200\n"
+"POT-Creation-Date: 2014-08-11 03:19+0200\n"
 "PO-Revision-Date: 2013-03-11 20:56+0000\n"
 "Last-Translator: Matthias Klumpp <matthias@tenstral.net>\n"
 "Language-Team: \n"
@@ -34,6 +34,9 @@ msgstr ""
 msgid "Activate verbose mode"
 msgstr "Задействовать подробный режим"
 
+msgid "AppStream metadata for %s did not have desktop-file as ID!"
+msgstr ""
+
 msgid "Application ID %s is invalid!"
 msgstr "Неправильный идентификатор приложения %s!"
 
@@ -42,6 +45,17 @@ msgstr ""
 
 msgid "Build IPK package"
 msgstr "Построение пакета IPK"
+
+msgid ""
+"Cannot override %s! Delete the existing file or run lipkgen with the '-o' "
+"parameter!"
+msgstr ""
+
+msgid ""
+"Component %s is only available in version %s, while a version %s %s is "
+"required. This software can not be installed, please notify the original "
+"author about it."
+msgstr ""
 
 msgid "Copying files to their destination"
 msgstr "Копирование файлов в места назначения"
@@ -80,6 +94,9 @@ msgstr "Невозможно найти приложение соответст�
 msgid "Could not find application!"
 msgstr ""
 
+msgid "Could not load application information: %s"
+msgstr "Нет возможности прочитать контрольную информацию IPK! Ошибка %s"
+
 msgid "Could not load desktop file values: %s"
 msgstr "Нет возможности загрузить файл значений рабочего стола: %s"
 
@@ -87,6 +104,9 @@ msgid ""
 "Could not obtain a PkBackendProxy instance. Maybe the Listaller-PkPlugin is "
 "not installed or broken?"
 msgstr ""
+
+msgid "Could not open AppStream metadata file: %s"
+msgstr "Нет возможности открыть файл рабочего стола: %s"
 
 msgid "Could not open IPK file! Error: %s"
 msgstr "Нет возможности открыть файл IPK! Ошибка %s"
@@ -136,7 +156,7 @@ msgstr "Невозможно деинсталлировать приложени
 msgid "DIRECTORY"
 msgstr "КАТАЛОГ"
 
-msgid "Database action '%s' failed: %s"
+msgid "Database action '%s' failed: %s (%s)"
 msgstr "Действие базы данных '%s' прервано: %s"
 
 msgid "Database action failed"
@@ -154,11 +174,11 @@ msgstr "База данных разблокирована"
 msgid "Define an additional directory with module definitions"
 msgstr ""
 
+msgid "Dependencies which are not matching a (installed) component:"
+msgstr ""
+
 msgid "Description:"
 msgstr "Описание:"
-
-msgid "Details from PackageKit: %s"
-msgstr "Сведения из PackageKit: %s"
 
 msgid "Do you accept these terms and conditions?"
 msgstr "Вы действительно принимаете условия?"
@@ -196,14 +216,8 @@ msgstr "Файл '%s' не существует."
 msgid "File does not exist!"
 msgstr "Файл не существует!"
 
-msgid "Framework %s is not installed! Please make it available to continue."
-msgstr ""
-
-msgid ""
-"Framework %s is only available in version %s, while a version %s %s is "
-"required. This software can not be installed, please notify the original "
-"author about it."
-msgstr ""
+msgid "File does not exist."
+msgstr "Файл не существует!"
 
 msgid "GPG-Sign the resulting package"
 msgstr "Пакет результатов подписки GPG"
@@ -296,19 +310,13 @@ msgid ""
 "Missing parameter for 'remove' action: No application-id or name specified.\n"
 msgstr ""
 
-msgid ""
-"Module %s is only available in version %s, while a version %s %s is "
-"required. This software can not be installed, please notify the original "
-"author about it."
-msgstr ""
-
 msgid "Never trust."
 msgstr "Недоверенные."
 
 msgid "No application specified!"
 msgstr ""
 
-msgid "No framework/module matching '%s' (v%s) found!"
+msgid "No component matching '%s' (v%s) found!"
 msgstr ""
 
 msgid "No path given!"
@@ -319,7 +327,9 @@ msgid ""
 "application, please report the issue!"
 msgstr ""
 
-msgid "No valid DOAP data found in directory %s - Can't open control files."
+msgid ""
+"No valid AppStream application data found in directory %s - Can't open "
+"control files."
 msgstr ""
 
 msgid "One key has been revoked"
@@ -334,12 +344,6 @@ msgstr ""
 msgid ""
 "Package uses custom variable: '%s' - usually this is not intentional, please "
 "contact the package author!"
-msgstr ""
-
-msgid ""
-"PackageKit backend does not support finding packages by stuff they provide - "
-"Installer was unable to use native packages to satisfy dependencies of this "
-"application."
 msgstr ""
 
 msgid ""
@@ -368,12 +372,6 @@ msgid "Print machine-readable simple text"
 msgstr "Показать распознаваемый машиной обычный текст"
 
 msgid "Pubkey is missing"
-msgstr ""
-
-msgid "Query returned no results. Maybe there's no release defined?"
-msgstr ""
-
-msgid "Query returned no results. Maybe this DOAP data is broken?"
 msgstr ""
 
 msgid "RFU"
@@ -460,6 +458,9 @@ msgid "Status of this signature is unknown or package is not signed."
 msgstr "Статус этой подписи неизвестен или пакет не подписан."
 
 msgid "Strip debug infos from files in install-target"
+msgstr ""
+
+msgid "System policy forbids installation of 3rd-party modules."
 msgstr ""
 
 msgid ""
@@ -635,9 +636,6 @@ msgid ""
 msgstr ""
 "Нет возможности найти соответствующий '%s' для вашей системы/архитектуры."
 
-msgid "Unable to find native package for '%s'!"
-msgstr "Нет возможности найти родные пакеты для '%s'!"
-
 msgid "Unable to find valid candidate to satisfy dependency '%s'!"
 msgstr ""
 "Нет возможности найти подходящий пакет для удовлетворения зависимости '%s'!"
@@ -653,6 +651,16 @@ msgstr ""
 msgid ""
 "Unable to install module '%s' which is required for this installation.\n"
 "Unable to find a method to satisfy the dependency."
+msgstr ""
+
+msgid ""
+"Unable to load package information and initialize installation. The IPK "
+"package might be damaged."
+msgstr ""
+
+msgid ""
+"Unable to load valid application from AppData. The XML file might be "
+"malformed or lacking data."
 msgstr ""
 
 msgid "Unable to open database for writing: %s"
@@ -720,7 +728,7 @@ msgstr ""
 msgid "Validity is undefined"
 msgstr ""
 
-msgid "We don't know a desktop-file for application '%s'!"
+msgid "We do not know a metadata-file for application '%s'!"
 msgstr ""
 
 msgid "XML file is not a valid ZI feed!"

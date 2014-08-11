@@ -15,7 +15,6 @@ src/key-manager.vala
 src/gpgex.vala
 src/signature.vala
 src/security-info.vala
-src/doap.vala
 src/ipk-changelog.vala
 src/ipk-metafile.vala
 src/ipk-control.vala
@@ -30,7 +29,7 @@ src/varsetter.vala
 src/manager.vala
 src/installer.vala
 src/updater.vala
-src/components.vala
+src/dependency.vala
 src/component-factory.vala
 src/dep-manager.vala
 src/dep-installer.vala
