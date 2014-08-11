@@ -269,7 +269,7 @@ public class Manager : MessageObject {
 		else
 			db.dbflags = DatabaseFlags.USE_PRIVATE_INSTALLED;
 
-		var tmpItem = db.get_application_by_unique_name (item.unique_id);
+		var tmpItem = db.get_application_by_unique_name (item.unique_name);
 		if (tmpItem == null)
 			return false;
 		item = tmpItem;
@@ -287,14 +287,14 @@ public class Manager : MessageObject {
 
 		// Check if this application exists, if not exit
 		if (db.get_application_by_id (app) == null) {
-			warning ("Unable to get file-list for application %s - app is not installed!", app.unique_id);
+			warning ("Unable to get file-list for application %s - app is not installed!", app.unique_name);
 			return null;
 		}
 
 		// Remove all files which belong to this application
 		ArrayList<IPK.FileEntry>? files = db.get_application_filelist (app);
 		if (files == null) {
-			critical ("Couldn't retrieve file-list for application %s! All apps should have a filelist, this should never happen!", app.unique_id);
+			critical ("Couldn't retrieve file-list for application %s! All apps should have a filelist, this should never happen!", app.unique_name);
 			return null;
 		}
 
@@ -316,7 +316,7 @@ public class Manager : MessageObject {
 		IPK.InstallMode inst_mode = IPK.InstallMode.PRIVATE;
 		if (app.state == AppState.INSTALLED_SHARED)
 			inst_mode = IPK.InstallMode.SHARED;
-		string paths = VarSolver.autosubst_instvars ("%LIB_PRIVATE%", app.unique_id, inst_mode);
+		string paths = VarSolver.autosubst_instvars ("%LIB_PRIVATE%", app.unique_name, inst_mode);
 
 		if (app.dependencies.length <= 0) {
 			debug ("Application has no dependencies set!");

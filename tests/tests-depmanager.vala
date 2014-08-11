@@ -53,7 +53,7 @@ void test_dependency_installer () {
 	// Feed installer is currently disabled by default
 	// Test 1
 	Dependency test1 = new Dependency.blank ();
-	test1.unique_id = "Test:1#expat";
+	test1.unique_name = "Test:1#expat";
 	//test1.feed_url = "http://repo.roscidus.com/lib/expat1";
 	test1.add_item (Appstream.ProvidesKind.LIBRARY, "libc6.so");
 	//test1.add_item (Appstream.ProvidesKind.LIBRARY, "bladada.so.2");

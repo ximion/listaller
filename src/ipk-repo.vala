@@ -94,7 +94,7 @@ internal abstract class Repo : MessageObject {
 	}
 
 	protected string build_canonical_pkgname (AppItem app, string arch) {
-		string canonical_pkgname = "%s-%s_%s.ipk".printf (app.unique_id, app.version, arch);
+		string canonical_pkgname = "%s-%s_%s.ipk".printf (app.unique_name, app.version, arch);
 
 		return canonical_pkgname;
 	}
@@ -177,7 +177,7 @@ internal class RepoRemote : Repo {
 		string pkg_name = build_canonical_pkgname (app, arch);
 
 
-		string url = Path.build_filename (repo_url, "apps", "pool", app.unique_id, pkg_name, null);
+		string url = Path.build_filename (repo_url, "apps", "pool", app.unique_name, pkg_name, null);
 		string fname = Path.build_filename (tmpdir, pkg_name, null);
 
 		var dl = new Downloader ();

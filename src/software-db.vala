@@ -320,7 +320,7 @@ private class SoftwareDB : MessageObject {
 
 	public AppItem? get_application_by_id (AppItem app) {
 		AppItem? resApp;
-		resApp = get_application_by_unique_name (app.unique_id);
+		resApp = get_application_by_unique_name (app.unique_name);
 		return resApp;
 	}
 
@@ -419,7 +419,7 @@ private class SoftwareDB : MessageObject {
 						// remove remote apps which are installed
 
 						foreach (AppItem app in tmpList)
-							apps_avail.remove (app.unique_id);
+							apps_avail.remove (app.unique_name);
 
 						alist = new ArrayList<AppItem> ();
 						alist.add_all (apps_avail.values);
@@ -431,7 +431,7 @@ private class SoftwareDB : MessageObject {
 					HashMap<string, AppItem>? apps_avail = db_available.get_applications_available ();
 					if (apps_avail != null) {
 						foreach (AppItem app in alist)
-							apps_avail.remove (app.unique_id);
+							apps_avail.remove (app.unique_name);
 
 						alist.add_all (apps_avail.values);
 					}

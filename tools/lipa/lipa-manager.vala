@@ -81,7 +81,7 @@ public class LipaManager : LipaModule {
 		else
 			app_state_str = "[%s|%s]".printf (_("INSTALLED"), app_ownership_str (app));
 
-		stdout.printf ("%s <%s> %s %s -- %s\n", app_state_str, app.unique_id, app.metainfo.name, app.version, app.metainfo.summary);
+		stdout.printf ("%s <%s> %s %s -- %s\n", app_state_str, app.unique_name, app.metainfo.name, app.version, app.metainfo.summary);
 	}
 
 	private void manager_new_application (AppItem app) {

@@ -107,7 +107,7 @@ private class Builder : Object {
 		create_dir_structure (Path.build_filename (tmpdir, "data", null));
 		string apath = Path.build_filename (tmpdir, "data", "data-" + arch + ".tar.xz", null);
 		a.open_filename (apath);
-		VarSolver vs = new VarSolver (appInfo.unique_id);
+		VarSolver vs = new VarSolver (appInfo.unique_name);
 
 		Entry entry = new Entry ();
 		foreach (IPK.FileEntry fe in src) {
@@ -494,7 +494,7 @@ private class Builder : Object {
 		// Get application-id from IPK source control XML file
 		appInfo = ipkCDir.get_application ();
 
-		debug ("Building package for %s, version: %s (id: %s)", appInfo.metainfo.name, appInfo.version, appInfo.unique_id);
+		debug ("Building package for %s, version: %s (id: %s)", appInfo.metainfo.name, appInfo.version, appInfo.unique_name);
 
 		// Build IPK control directory
 		ictrl.create_new (ipkCDir.get_appstream_data (), ipkVersion);

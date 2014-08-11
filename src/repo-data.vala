@@ -149,7 +149,7 @@ internal abstract class ContentFile : Object {
 		data.reset ();
 		bool ret;
 
-		ret = data.open_block_by_value ("ID", app.unique_id);
+		ret = data.open_block_by_value ("ID", app.unique_name);
 		if (!ret)
 			return false;
 
@@ -160,7 +160,7 @@ internal abstract class ContentFile : Object {
 			ret = data.block_next ();
 			if (!ret)
 				return false;
-			ret = data.open_block_by_value ("ID", app.unique_id, false);
+			ret = data.open_block_by_value ("ID", app.unique_name, false);
 			if (!ret)
 				return false;
 		}
@@ -182,7 +182,7 @@ internal abstract class ContentFile : Object {
 	public int compare_version (AppItem app) {
 		data.reset ();
 
-		data.open_block_by_value ("ID", app.unique_id);
+		data.open_block_by_value ("ID", app.unique_name);
 		string versionB = data.get_value ("Version");
 
 		return compare_versions (app.version, versionB);
@@ -201,7 +201,7 @@ internal abstract class ContentFile : Object {
 
 		var app = new AppItem ();
 
-		app.unique_id = idname;
+		app.unique_name = idname;
 		app.metainfo.name = data.get_value ("Name");
 		app.version = data.get_value ("Version");
 		string s = data.get_value ("Author");
@@ -265,14 +265,14 @@ internal class ContentIndex : ContentFile {
 	}
 
 	public void update_application (AppItem app) {
-		debug ("Updating index for app: %s", app.unique_id);
+		debug ("Updating index for app: %s", app.unique_name);
 		bool ret;
 		ret = open_data_block_for_application (app);
 		if (!ret)
 			data.reset ();
 
 		data.update_value ("Type", "application");
-		data.update_value ("ID", app.unique_id);
+		data.update_value ("ID", app.unique_name);
 		data.update_value ("Name", app.metainfo.name);
 		data.update_value ("Version", app.version);
 		if (app.metainfo.developer_name != null)

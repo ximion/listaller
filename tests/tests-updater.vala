@@ -77,7 +77,7 @@ void test_foobar_installation () {
 	AppItem? app = setup.get_current_application ();
 	assert (app != null);
 
-	var vs = new VarSolver (app.unique_id);
+	var vs = new VarSolver (app.unique_name);
 	foobar_fake_config_ipath = vs.substitute_vars_auto ("%INST%/foo_testconf.conf", setup.settings);
 }
 

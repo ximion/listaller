@@ -91,7 +91,7 @@ public struct AppLicense {
  * Listaller state data.
  */
 public class AppItem : Object {
-	private string _unique_id;
+	private string _unique_name;
 	private string _version;
 	private AppLicense _license;
 	private int64  _install_time;
@@ -106,15 +106,15 @@ public class AppItem : Object {
 	/**
 	 * Application identifier
 	 * */
-	public string unique_id {
+	public string unique_name {
 		get {
-			update_unique_id ();
-			return _unique_id;
+			update_unique_name ();
+			return _unique_name;
 		}
 		internal set {
-			_unique_id = value;
+			_unique_name = value;
 			if (_metainfo.id.strip () == "")
-				_metainfo.id = _unique_id;
+				_metainfo.id = _unique_name;
 		}
 	}
 
@@ -123,7 +123,7 @@ public class AppItem : Object {
 		set {
 			_version = value;
 			// we might have received a new id (we could probably add a version number there)
-			update_unique_id (true);
+			update_unique_name (true);
 		}
 	}
 
@@ -141,7 +141,7 @@ public class AppItem : Object {
 			_metainfo = value;
 			update_version_from_component (_metainfo);
 			// we might have received a new id due to the new component
-			update_unique_id (true);
+			update_unique_name (true);
 		}
 	}
 
@@ -211,7 +211,7 @@ public class AppItem : Object {
 
 	public AppItem () {
 		dbid = -1;
-		_unique_id = "";
+		_unique_name = "";
 		install_time = 0;
 		origin = "unknown";
 		_app_id = "";
@@ -282,7 +282,7 @@ public class AppItem : Object {
 		else
 			app_state_str = "[%s|%s]".printf (_("INSTALLED"), str_ownership);
 
-		return "%s %s (%s) :: %s".printf (app_state_str, unique_id, version, metainfo.to_string ());
+		return "%s %s (%s) :: %s".printf (app_state_str, unique_name, version, metainfo.to_string ());
 	}
 
 	public void fast_check () {
@@ -348,9 +348,9 @@ public class AppItem : Object {
 		if (metadata_file.strip () == "") {
 			debug (_("We do not know a metadata-file for application '%s'!").printf (metainfo.name));
 			// If no metadata file was found, we can only use application name and version as ID
-			res = "%s;%s;;%s".printf (unique_id, version, origin);
+			res = "%s;%s;;%s".printf (unique_name, version, origin);
 		} else {
-			res = "%s;%s;%s;%s".printf (unique_id, version, metadata_file, origin);
+			res = "%s;%s;%s;%s".printf (unique_name, version, metadata_file, origin);
 		}
 		return res;
 	}
@@ -377,7 +377,7 @@ public class AppItem : Object {
 			return;
 
 		string[] blocks = appid.split (";");
-		unique_id = blocks[0];
+		unique_name = blocks[0];
 		version = blocks[1];
 		string asfile = blocks[2];
 		// Set application origin
@@ -405,7 +405,7 @@ public class AppItem : Object {
 			data = "local:listaller#%s".printf (metadata_file);
 
 		// FIXME: Handle architecture correctly
-		package_id = PackageKit.Package.id_build (unique_id, version, system_machine_generic (), data);
+		package_id = PackageKit.Package.id_build (unique_name, version, system_machine_generic (), data);
 
 		return package_id;
 	}
@@ -425,7 +425,7 @@ public class AppItem : Object {
 
 	private string get_desktop_filename_expanded () {
 		// Resolve variables in desktop_file path
-		VarSolver vs = new VarSolver (unique_id);
+		VarSolver vs = new VarSolver (unique_name);
 		string fname = expand_user_dir (desktop_file);
 		fname = vs.substitute_vars_auto (fname, setup_settings);
 
@@ -436,8 +436,8 @@ public class AppItem : Object {
 		return fname;
 	}
 
-	private void update_unique_id (bool force = false) {
-		if ((_unique_id.strip () != "") && (!force))
+	private void update_unique_name (bool force = false) {
+		if ((_unique_name.strip () != "") && (!force))
 			return;
 		string app_baseid = _metainfo.id.replace (".desktop", "");
 		if ((Utils.str_is_empty (app_baseid)) && (!Utils.str_is_empty (metadata_file)))
@@ -446,7 +446,7 @@ public class AppItem : Object {
 			app_baseid = _metainfo.name.down ();
 		if (Utils.str_is_empty (app_baseid))
 			error ("Unable to generate unique identifier for application!");
-		_unique_id = string_replace (app_baseid, "( )", "_");
+		_unique_name = string_replace (app_baseid, "( )", "_");
 	}
 
 	private void update_version_from_component (Appstream.Component cpt) {
@@ -530,7 +530,7 @@ public class AppItem : Object {
 			}
 		}
 		if (subst_cmd) {
-			VarSolver vs = new VarSolver (unique_id);
+			VarSolver vs = new VarSolver (unique_name);
 			cmd = vs.substitute_vars_auto (cmd, setup_settings);
 		}
 
@@ -539,7 +539,7 @@ public class AppItem : Object {
 
 	public string get_metadata_xml () {
 		if (Utils.str_is_empty (xmldata)) {
-			warning ("Component '%s' does not have raw XML metadata.", unique_id);
+			warning ("Component '%s' does not have raw XML metadata.", unique_name);
 			return "";
 		}
 

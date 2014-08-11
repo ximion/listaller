@@ -48,7 +48,7 @@ public class Dependency : Object {
 	public string xmldata { get; set; }
 	internal int dbid { get; set; }
 
-	public string unique_id { get; set; }
+	public string unique_name { get; set; }
 
 	public string architecture { get; internal set; } // e.g. amd64
 
@@ -479,9 +479,9 @@ public class Dependency : Object {
 	*/
 	public string build_pk_package_id () {
 		string package_id;
-		string unique_idname = "dep:%s".printf (metainfo.id);
+		string uname = "dep:%s".printf (metainfo.id);
 
-		package_id = PackageKit.Package.id_build (unique_idname,
+		package_id = PackageKit.Package.id_build (uname,
 							  get_version (),
 							  architecture,
 							  "local:listaller");

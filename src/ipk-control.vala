@@ -295,7 +295,7 @@ public class PackControl : Control {
 	private bool cache_appitem () {
 		// Cache application entry
 		this.get_application ();
-		if ((appItem == null) || (this.appItem.unique_id == "")) {
+		if ((appItem == null) || (this.appItem.unique_name == "")) {
 			error ("AppItem does not have a valid id-name!");
 			appItem = null;
 			return false;
@@ -340,7 +340,7 @@ public class PackControl : Control {
 		bool ret;
 		assert (appItem != null);
 
-		ret = save_string_to_file (Path.build_filename (dirPath, this.appItem.unique_id + ".appdata.xml", null), asData);
+		ret = save_string_to_file (Path.build_filename (dirPath, this.appItem.unique_name + ".appdata.xml", null), asData);
 		if (!ret)
 			return false;
 
@@ -358,7 +358,7 @@ public class PackControl : Control {
 		assert (appItem != null);
 
 		res = { "pksetting" };
-		res += this.appItem.unique_id + ".appdata.xml";
+		res += this.appItem.unique_name + ".appdata.xml";
 		// Add license text
 		if (has_license_text ())
 			res += "license.txt";
