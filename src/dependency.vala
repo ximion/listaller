@@ -44,16 +44,24 @@ namespace Listaller {
  * about the referenced component-dependency.
  */
 public class Dependency : Object {
-	public Component metainfo { get; private set; }
-	public string xmldata { get; set; }
+	public string unique_name { get; set; }
 	internal int dbid { get; set; }
 
-	public string unique_name { get; set; }
+	private Component _metainfo;
+	public Component metainfo {
+		get {
+			return _metainfo;
+		}
+		internal set {
+			_metainfo = value;
+			update_data_from_metainfo ();
+		}
+	}
+	public string xmldata { get; internal set; }
 
 	public string architecture { get; internal set; } // e.g. amd64
 
 	protected bool _installed;
-
 	public bool installed {
 		get {
 			return _installed;
@@ -72,7 +80,7 @@ public class Dependency : Object {
 	protected string _version_raw;
 	private string _version_cache;
 
-	protected HashSet<string> item_list { get; internal set; } // Parts of this dependency (e.g. shlibs, python modules, files, etc.)
+	protected HashSet<string> item_list { get; private set; } // Parts of this dependency (e.g. shlibs, python modules, files, etc.)
 
 	public HashSet<string> raw_itemlist {
 		get {
@@ -81,9 +89,9 @@ public class Dependency : Object {
 	}
 
 	// Items which were installed in order to satisfy this dependency
-	protected HashSet<string> installed_items { get; internal set; }
+	protected HashSet<string> installed_items { get; private set; }
 
-	public Dependency.blank () {
+	public Dependency () {
 		dbid = -1;
 		metainfo = new Component ();
 
@@ -97,9 +105,66 @@ public class Dependency : Object {
 		_version_raw = "";
 	}
 
-	public Dependency (Component cpt) {
-		this.blank ();
+	public bool load_xml_data (string xmld) throws GLib.Error {
+		var mdata = new Appstream.Metadata ();
+		Appstream.Component cpt;
+		try {
+			cpt = mdata.parse_data (xmld);
+		} catch (Error e) {
+			throw e;
+		}
+		xmldata = xmld;
 		metainfo = cpt;
+
+		// Find Listaller-specific nodes in AppStream XML
+		Xml.Doc *xdoc = Xml.Parser.parse_doc (xmldata);
+		// Get the root node
+		Xml.Node* root = xdoc->get_root_element ();
+		for (Xml.Node* iter = root->children; iter != null; iter = iter->next) {
+			// discard spaces
+			if (iter->type != Xml.ElementType.ELEMENT_NODE) {
+				continue;
+			}
+			if (iter->name == "x-listaller_extra")
+				parse_metainfo_listaller_extras (iter);
+		}
+		delete xdoc;
+
+		return true;
+	}
+
+	public bool load_from_file (string fname, bool include_optional = false) {
+		// parse canonical AppStream Component
+		var mdata = new Appstream.Metadata ();
+		Appstream.Component cpt;
+		try {
+			string xmld = load_file_to_string (fname);
+			load_xml_data (xmld);
+		} catch (Error e) {
+			warning (e.message);
+			return false;
+		}
+
+		return true;
+	}
+
+	private void update_data_from_metainfo () {
+		// for some reason, a simple clear() doesn't work here - Gee bug?
+		item_list = new HashSet<string> ();
+
+		GenericArray<string> items = metainfo.get_provided_items ();
+		for(uint i = 0; i < items.length; i++) {
+			string item = items.get (i);
+			item_list.add (item);
+		}
+
+		// set version, if there is one
+		GenericArray<Appstream.Release> releases = metainfo.get_releases ();
+		if (releases.length > 0) {
+			// the first item should always be the newest one
+			Appstream.Release release = releases.get (0);
+			set_version (release.get_version ());
+		}
 	}
 
 	protected bool contains_directive (string str) {
@@ -255,53 +320,6 @@ public class Dependency : Object {
 		if (include_optional)
 			prefixes += "Optional";
 		**/
-	}
-
-	public bool load_from_file (string fname, bool include_optional = false) {
-		// parse canonical AppStream Component
-		var mdata = new Appstream.Metadata ();
-		string xmldata = null;
-		Appstream.Component cpt;
-		try {
-			xmldata = load_file_to_string (fname);
-			cpt = mdata.parse_data (xmldata);
-		} catch (Error e) {
-			warning (e.message);
-			return false;
-		}
-		metainfo = cpt;
-
-		GenericArray<string> items = metainfo.get_provided_items ();
-		for(uint i = 0; i < items.length; i++) {
-			string item = items.get (i);
-			item_list.add (item);
-		}
-
-		// set version, if there is one
-		GenericArray<Appstream.Release> releases = cpt.get_releases ();
-		if (releases.length > 0) {
-			// the fisrt item should always be the newest one
-			Appstream.Release release = releases.get (0);
-			set_version (release.get_version ());
-		}
-
-		// Find Listaller-specific nodes in AppStream XML
-
-		// Parse the document from path
-		Xml.Doc *xdoc = Xml.Parser.parse_doc (xmldata);
-		// Get the root node
-		Xml.Node* root = xdoc->get_root_element ();
-		for (Xml.Node* iter = root->children; iter != null; iter = iter->next) {
-			// discard spaces
-			if (iter->type != Xml.ElementType.ELEMENT_NODE) {
-				continue;
-			}
-			if (iter->name == "x-listaller_extra")
-				parse_metainfo_listaller_extras (iter);
-		}
-		delete xdoc;
-
-		return true;
 	}
 
 	/**

@@ -52,7 +52,7 @@ void test_dependency_installer () {
 
 	// Feed installer is currently disabled by default
 	// Test 1
-	Dependency test1 = new Dependency.blank ();
+	Dependency test1 = new Dependency ();
 	test1.unique_name = "Test:1#expat";
 	//test1.feed_url = "http://repo.roscidus.com/lib/expat1";
 	test1.add_item (Appstream.ProvidesKind.LIBRARY, "libc6.so");
@@ -63,7 +63,7 @@ void test_dependency_installer () {
 	assert (test1.installed == true);
 
 	// Test 2
-	Dependency test2 = new Dependency.blank ();
+	Dependency test2 = new Dependency ();
 	test2.metainfo.id = "Test:2#GNU_parallel";
 	test2.feed_url = "http://git.savannah.gnu.org/cgit/parallel.git/plain/packager/0install/parallel.xml";
 	//test2.add_item ("libvorbis.so.0", Appstream.ProvidesKind.LIBRARY);
@@ -130,7 +130,7 @@ void test_packagekit_installer () {
 
 	// Build simple Nano dependency
 	ArrayList<Dependency> deplist = new ArrayList<Dependency> ();
-	Dependency depNano = new Dependency.blank ();
+	Dependency depNano = new Dependency ();
 	depNano.metainfo.id = "Nano";
 	depNano.add_item (Appstream.ProvidesKind.BINARY, "/usr/bin/nano");
 
@@ -142,7 +142,7 @@ void test_packagekit_installer () {
 	assert (depNano.installed == true);
 
 	// Now something more advanced
-	Dependency crazy = new Dependency.blank ();
+	Dependency crazy = new Dependency ();
 	crazy.metainfo.id = "CrazyStuff";
 	crazy.add_item (Appstream.ProvidesKind.BINARY, "/bin/bash");
 	crazy.add_item (Appstream.ProvidesKind.LIBRARY, "libpackagekit-glib2.so");
@@ -168,7 +168,7 @@ void test_feed_installer () {
 	msg ("ZI Feed installer tests");
 	Dep.FeedInstaller finst = new Dep.FeedInstaller (ssettings);
 
-	Dependency test1 = new Dependency.blank ();
+	Dependency test1 = new Dependency ();
 	test1.metainfo.id = "feedTest:1-gnu_parallel";
 	test1.feed_url = "http://git.savannah.gnu.org/cgit/parallel.git/plain/packager/0install/parallel.xml";
 
@@ -187,25 +187,25 @@ void test_depsolver () {
 	ArrayList<Dependency> deplist = new ArrayList<Dependency> ();
 
 	// Create a set of dependencies
-	Dependency dep1 = new Dependency.blank ();
+	Dependency dep1 = new Dependency ();
 	dep1.metainfo.id = "Gee";
 	dep1.feed_url = "http://sweets.sugarlabs.org/base/libgee";
 	dep1.add_item (Appstream.ProvidesKind.LIBRARY, "libc.so.6");
 	deplist.add (dep1);
 
-	Dependency dep2 = new Dependency.blank ();
+	Dependency dep2 = new Dependency ();
 	dep2.metainfo.id = "SDLMixer1.2";
 	dep2.feed_url = "http://repo.roscidus.com/lib_rsl/sdl-mixer1.2";
 	dep2.add_item (Appstream.ProvidesKind.LIBRARY, "libgee.so");
 	deplist.add (dep2);
 
-	Dependency dep3 = new Dependency.blank ();
+	Dependency dep3 = new Dependency ();
 	dep3.metainfo.id = "Nano";
 	dep3.add_item (Appstream.ProvidesKind.BINARY, "/usr/bin/nano");
 	dep3.add_item (Appstream.ProvidesKind.LIBRARY, "libc.so.6");
 	deplist.add (dep3);
 
-	Dependency dep4 = new Dependency.blank ();
+	Dependency dep4 = new Dependency ();
 	dep4.metainfo.id = "LibXml2";
 	dep4.feed_url = "http://sweets.sugarlabs.org/base/libxml2";
 	dep4.add_item (Appstream.ProvidesKind.LIBRARY, "libglib-2.0.so.0");

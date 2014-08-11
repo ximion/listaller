@@ -55,7 +55,7 @@ internal class ComponentFactory : Object {
 
 	private void load_dependency_data (HashSet<string> metainfo_files, bool include_optional) {
 		foreach (string fname in metainfo_files) {
-			var dep = new Dependency.blank ();
+			var dep = new Dependency ();
 			bool ret = dep.load_from_file (fname, include_optional);
 			if (ret)
 				registered_deps.set (dep.metainfo.id, dep);
@@ -94,7 +94,7 @@ internal class ComponentFactory : Object {
 	public string? find_component_path (string cptname) {
 		if (metainfo_files_sys != null) {
 			foreach (string fname in metainfo_files_sys) {
-				var dep = new Dependency.blank ();
+				var dep = new Dependency ();
 				bool ret = dep.load_from_file (fname, false);
 				if (dep.metainfo.id == cptname)
 					return fname;
@@ -102,7 +102,7 @@ internal class ComponentFactory : Object {
 		}
 		if (metainfo_files_listaller != null) {
 			foreach (string fname in metainfo_files_listaller) {
-				var dep = new Dependency.blank ();
+				var dep = new Dependency ();
 				bool ret = dep.load_from_file (fname, false);
 				if (dep.metainfo.id == cptname)
 					return fname;
@@ -140,7 +140,7 @@ internal class ComponentFactory : Object {
 		// process additional module data
 		if (extra_module_info_files != null) {
 			foreach (string fname in extra_module_info_files) {
-				var dep = new Dependency.blank ();
+				var dep = new Dependency ();
 				bool ret = dep.load_from_file (fname);
 				// installed system modules take precendence before any additional modules
 				if (dep.metainfo.id in registered_deps)
@@ -283,7 +283,20 @@ internal class ComponentFactory : Object {
 	 * Get dependency by name
 	 */
 	public Dependency? get_dependency (string name) {
-		return registered_deps.get (name);
+		Dependency? dep = registered_deps.get (name);
+		if (dep == null)
+			return null;
+
+		// we want to add the corresponding package name for this component (if the distribution offers it)
+		var db = new Appstream.Database ();
+		db.open ();
+		Appstream.Component? cpt = db.get_component_by_id (dep.metainfo.id);
+		if (cpt == null)
+			return dep;
+		else
+			dep.metainfo.pkgnames = cpt.pkgnames;
+
+		return dep;
 	}
 
 	/**

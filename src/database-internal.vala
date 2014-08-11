@@ -521,9 +521,8 @@ private abstract class InternalDB : Object {
 		AppItem item = new AppItem ();
 
 		item.unique_name = stmt.column_text (AppRow.UNIQUE_NAME);
-		item.metainfo.name = stmt.column_text (AppRow.FULLNAME);
+		item.load_xml_data (stmt.column_text (DepRow.METADATA));
 		item.version = stmt.column_text (AppRow.VERSION);
-		item.desktop_file = stmt.column_text (AppRow.METADATA);
 
 		item.install_time = stmt.column_int (AppRow.INST_TIME);
 		item.dbid = stmt.column_int (AppRow.DBID);
@@ -884,11 +883,10 @@ private abstract class InternalDB : Object {
 	}
 
 	private Dependency? retrieve_dependency (Sqlite.Statement stmt) {
-		var dep = new Dependency.blank ();
+		var dep = new Dependency ();
 
 		dep.unique_name = stmt.column_text (DepRow.UNIQUE_NAME);
-		dep.metainfo.id = stmt.column_text (DepRow.UNIQUE_NAME);
-		dep.metainfo.name = stmt.column_text (DepRow.FULLNAME);
+		dep.load_xml_data (stmt.column_text (DepRow.METADATA));
 		dep.set_version (stmt.column_text (DepRow.VERSION));
 
 		dep.install_time = stmt.column_int (DepRow.INST_TIME);

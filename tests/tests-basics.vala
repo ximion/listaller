@@ -120,7 +120,7 @@ void test_zfeeds () {
 	Dep.Feed feed = new Dep.Feed ();
 	feed.open (Path.build_filename (datadir, "libogg.xml", null));
 
-	var dep = new Dependency.blank ();
+	var dep = new Dependency ();
 	feed.update_dependency_data (dep);
 
 	assert (dep.metainfo.name == "libogg");
@@ -211,26 +211,26 @@ void test_field () {
 void test_components () {
 	bool ret;
 
-	var foo_frmw = new Dependency.blank ();
-	ret = foo_frmw.load_from_file (Path.build_filename (datadir, "FooTest2.metainfo.xml", null));
+	var foo_dep = new Dependency ();
+	ret = foo_dep.load_from_file (Path.build_filename (datadir, "FooTest2.metainfo.xml", null));
 	assert (ret);
 
-	assert (foo_frmw.metainfo.id == "FooTest2");
+	assert (foo_dep.metainfo.id == "FooTest2");
 
-	foo_frmw.installed = true;
-	string version = foo_frmw.get_version ();
+	foo_dep.installed = true;
+	string version = foo_dep.get_version ();
 	assert (version == "1.0");
 
 	// --------------
 
 	// Test capabilities of resolving version names
-	var lilibv_frmw = new Dependency.blank ();
-	ret = lilibv_frmw.load_from_file (Path.build_filename (datadir, "ListallerTest1.metainfo.xml", null));
+	var lilibv_dep = new Dependency ();
+	ret = lilibv_dep.load_from_file (Path.build_filename (datadir, "ListallerTest1.metainfo.xml", null));
 	assert (ret);
-	assert (lilibv_frmw.metainfo.id == "ListallerTest1");
+	assert (lilibv_dep.metainfo.id == "ListallerTest1");
 
-	lilibv_frmw.installed = true;
-	version = lilibv_frmw.get_version ();
+	lilibv_dep.installed = true;
+	version = lilibv_dep.get_version ();
 	debug ("LiVersion: %s", version);
 	assert (version == PkgConfig.PACKAGE_VERSION);
 }

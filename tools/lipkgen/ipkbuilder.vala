@@ -610,7 +610,7 @@ private class Builder : Object {
 		HashSet<string>? mod_info_files = find_files_matching (extra_mod_dir, "*.xml");
 		if (mod_info_files != null) {
 			foreach (string fname in mod_info_files) {
-				var dep = new Dependency.blank ();
+				var dep = new Dependency ();
 				bool l_ret = dep.load_from_file (fname);
 				// installed system modules take precendence before any additional modules
 				if (dep.metainfo.id in cfactory.registered_deps)
