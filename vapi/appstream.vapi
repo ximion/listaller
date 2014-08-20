@@ -91,6 +91,7 @@ namespace Appstream {
 		public void set_project_license (string value);
 		public void set_summary (string value);
 		public string to_string ();
+		public string to_xml ();
 		[CCode (array_length = false, array_null_terminated = true)]
 		public string[] categories { get; set; }
 		public string description { get; set; }

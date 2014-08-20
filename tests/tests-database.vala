@@ -62,7 +62,6 @@ void test_software_db () {
 	var cpt = new Appstream.Component ();
 	cpt.name = "Test";
 	AppItem item = new AppItem ();
-	item.xmldata = "<component><name>Test</name></component>";
 	item.metainfo = cpt;
 	item.version = "0.1";
 	ret = sdb.add_application (item);

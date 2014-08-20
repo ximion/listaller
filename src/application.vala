@@ -100,7 +100,6 @@ public class AppItem : Object {
 	private string _app_id;
 	private SetupSettings setup_settings;
 	private string _metadata_file;
-	public string xmldata { private get; internal set; }
 	internal int dbid { get; set; }
 
 	/**
@@ -240,7 +239,6 @@ public class AppItem : Object {
 		Appstream.Component cpt;
 		try {
 			cpt = mdata.parse_file (f);
-			xmldata = load_file_to_string (asdata_fname);
 		} catch (Error e) {
 			throw e;
 		}
@@ -259,7 +257,6 @@ public class AppItem : Object {
 			throw e;
 		}
 		_metadata_file = "";
-		xmldata = xmld;
 		metainfo = cpt;
 
 		return true;
@@ -475,19 +472,18 @@ public class AppItem : Object {
 		if (fname == "")
 			return;
 
-		string? xml;
+		string? xmldata;
 		try {
-			xml = load_file_to_string (_metadata_file);
+			xmldata = load_file_to_string (_metadata_file);
 		} catch (Error e) {
 			warning (_("Could not open AppStream metadata file: %s").printf (e.message));
 			return;
 		}
 
-		if (xml == null) {
+		if (xmldata == null) {
 			warning (_("Could not open AppStream metadata file: %s").printf (_("File does not exist.")));
 			return;
 		}
-		xmldata = xml;
 
 		// fetch AppStream component from data
 		var mdata = new Appstream.Metadata ();
@@ -538,12 +534,7 @@ public class AppItem : Object {
 	}
 
 	public string get_metadata_xml () {
-		if (Utils.str_is_empty (xmldata)) {
-			warning ("Component '%s' does not have raw XML metadata.", unique_name);
-			return "";
-		}
-
-		return xmldata;
+		return metainfo.to_xml ();
 	}
 
 	/*  1 == bversion is higher

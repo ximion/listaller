@@ -57,7 +57,6 @@ public class Dependency : Object {
 			update_data_from_metainfo ();
 		}
 	}
-	public string xmldata { get; internal set; }
 
 	public string architecture { get; internal set; } // e.g. amd64
 
@@ -113,11 +112,10 @@ public class Dependency : Object {
 		} catch (Error e) {
 			throw e;
 		}
-		xmldata = xmld;
 		metainfo = cpt;
 
 		// Find Listaller-specific nodes in AppStream XML
-		Xml.Doc *xdoc = Xml.Parser.parse_doc (xmldata);
+		Xml.Doc *xdoc = Xml.Parser.parse_doc (xmld);
 		// Get the root node
 		Xml.Node* root = xdoc->get_root_element ();
 		for (Xml.Node* iter = root->children; iter != null; iter = iter->next) {
@@ -489,7 +487,7 @@ public class Dependency : Object {
 	}
 
 	public string get_metadata_xml () {
-		return xmldata;
+		return metainfo.to_xml ();
 	}
 
 	/**
