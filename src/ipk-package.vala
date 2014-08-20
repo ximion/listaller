@@ -189,7 +189,7 @@ private class Package : MessageObject {
 		return ret;
 	}
 
-	private bool install_entry_and_validate (IPK.FileEntry fe, Read plar, Entry e, VarSolver vs, ChecksumType cstype = ChecksumType.SHA1) {
+	private bool install_entry_and_validate (IPK.FileEntry fe, Read plar, Entry e, VarSolver vs, ChecksumType cstype = ChecksumType.SHA256) {
 		bool ret = true;
 		assert (plar != null);
 
