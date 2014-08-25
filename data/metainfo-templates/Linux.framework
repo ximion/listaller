@@ -1,8 +1,0 @@
-Name: Linux
-ID: Linux
-AlwaysInstalled: true
-Libraries: ld-linux.so.*
-    ld-linux-*
-    libselinux.so.*
-OptionalLibraries: linux-vdso.so.1
-    linux-gate.so.*

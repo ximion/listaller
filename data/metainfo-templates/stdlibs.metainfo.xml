@@ -2,15 +2,27 @@
 <!-- This is a AppStream component template used in and by Listaller -->
 <!-- Please don't use it elsewhere, as it is not 100% valid AppStream data -->
 <component>
-  <id>Libc6</id>
-  <name>GNU C Library</name>
+  <id>Stdlibs-Linux</id>
+  <name>Standard System Libraries (GCC/Libc6/Linux)</name>
   <provides>
+    <!-- Libc6 -->
     <library>libc.so.6</library>
     <library>libpthread.so.0</library>
     <library>libm.so.*</library>
     <library>librt.so.*</library>
     <library>libdl.so.*</library>
     <library>libresolv.so.*</library>
+
+    <!-- Linux -->
+    <library>ld-linux.so.*</library>
+    <library>ld-linux-*</library>
+    <library>libselinux.so.*</library>
+    <library>linux-vdso.so.1</library>
+    <library>linux-gate.so.*</library>
+
+    <!-- GCC -->
+    <library>libgcc_s.so.*</library>
+    <library>libstdc++.so.6</library>
   </provides>
   <x-listaller_extra>
     <version_template>6</version_template>
