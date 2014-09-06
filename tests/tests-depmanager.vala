@@ -54,6 +54,8 @@ void test_dependency_installer () {
 	// Test 1
 	Dependency test1 = new Dependency ();
 	test1.unique_name = "Test:1#expat";
+	test1.origin = "testsuite";
+	test1.set_version ("1.0");
 	//test1.feed_url = "http://repo.roscidus.com/lib/expat1";
 	test1.add_item (Appstream.ProvidesKind.LIBRARY, "libc6.so");
 	//test1.add_item (Appstream.ProvidesKind.LIBRARY, "bladada.so.2");

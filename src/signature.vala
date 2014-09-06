@@ -294,7 +294,7 @@ private class GPGSignature : Object {
 		bool ret;
 
 		err = Data.create (out dt);
-		return_if_fail (check_gpg_err (err));
+		return_val_if_fail (check_gpg_err (err), false);
 
 		ret = read_file_to_data (ctrl_fname, ref dt);
 		if (!ret)
@@ -303,7 +303,7 @@ private class GPGSignature : Object {
 		//err = Data.create_from_memory (out sig, signtext, signtext.length, false);
 		err = Data.create (out sig);
 		read_string_to_data (signtext, ref sig);
-		return_if_fail (check_gpg_err (err));
+		return_val_if_fail (check_gpg_err (err), false);
 
 		sig.seek (0, Posix.SEEK_SET);
 		dt.seek (0, Posix.SEEK_SET);

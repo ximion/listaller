@@ -82,7 +82,7 @@ private class GPGSign : Object {
 		Context ctx;
 		err = Context.Context (out ctx);
 		ctx.set_protocol (Protocol.OpenPGP);
-		return_if_fail (check_gpg_err (err));
+		return_val_if_fail (check_gpg_err (err), null);
 
 		string? agent_info = Environment.get_variable ("GPG_AGENT_INFO");
 		if (!((agent_info != null) && (agent_info.index_of_char (':') > 0)))
@@ -93,7 +93,7 @@ private class GPGSign : Object {
 
 		Data din;
 		err = Data.create (out din);
-		return_if_fail (check_gpg_err (err));
+		return_val_if_fail (check_gpg_err (err), null);
 
 		ret = read_file_to_data (control_fname, ref din);
 		if (!ret)
@@ -103,9 +103,9 @@ private class GPGSign : Object {
 		din.seek (0, Posix.SEEK_SET);
 		Data *dout;
 		err = Data.create (out dout);
-		return_if_fail (check_gpg_err (err));
+		return_val_if_fail (check_gpg_err (err), null);
 		err = ctx.op_sign (din, dout, SigMode.DETACH);
-		// return_if_fail (check_gpg_err (err));
+		// return_val_if_fail (check_gpg_err (err), null);
 		SignResult *result = ctx.op_sign_result ();
 		check_result (result, SigMode.DETACH);
 
@@ -119,7 +119,7 @@ private class GPGSign : Object {
 
 		Context ctx;
 		err = Context.Context (out ctx);
-		return_if_fail (check_gpg_err (err));
+		return_val_if_fail (check_gpg_err (err), null);
 
 		string? agent_info = Environment.get_variable ("GPG_AGENT_INFO");
 		if (!((agent_info != null) && (agent_info.index_of_char (':') > 0)))
@@ -130,15 +130,15 @@ private class GPGSign : Object {
 
 		Data din;
 		err = Data.create_from_memory (out din, "Hallo Leute\n", 12, false);
-		return_if_fail (check_gpg_err (err));
+		return_val_if_fail (check_gpg_err (err), null);
 
 		// detached signature.
 		din.seek (0, Posix.SEEK_SET);
 		Data dout;
 		err = Data.create (out dout);
-		return_if_fail (check_gpg_err (err));
+		return_val_if_fail (check_gpg_err (err), null);
 		err = ctx.op_sign (din, dout, SigMode.DETACH);
-		return_if_fail (check_gpg_err (err));
+		return_val_if_fail (check_gpg_err (err), null);
 		SignResult *result = ctx.op_sign_result ();
 		check_result (result, SigMode.DETACH);
 		_dbg_print_data (dout);

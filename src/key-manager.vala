@@ -50,7 +50,7 @@ public class KeyManager : MessageObject {
 		// create main GPG context
 		GPGError.ErrorCode err;
 		err = new_context (out main_ctx);
-		return_if_fail (check_gpg_err (err));
+		return_val_if_fail (check_gpg_err (err), null);
 		main_ctx.set_armor (true);
 	}
 
@@ -136,7 +136,7 @@ public class KeyManager : MessageObject {
 		write_gpg_config_to_homedir (tmpctx.homedir);
 
 		err = new_context (out tmpctx.context, homedir);
-		return_val_if_fail (check_gpg_err (err), null);
+		return_if_fail (check_gpg_err (err));
 		tmpctx.context->set_armor (true);
 
 		ret = import_key_internal (tmpctx.context, fpr, out tmpctx.key);
