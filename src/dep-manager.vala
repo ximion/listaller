@@ -79,12 +79,16 @@ private class DepManager : MessageObject {
 		}
 
 		bool contains_libs = false;
-		foreach (string item in dep.raw_itemlist) {
+		GenericArray<string> items = dep.metainfo.get_provided_items ();
+		for(uint i = 0; i < items.length; i++) {
+			string item = items.get (i);
+
 			if (Appstream.provides_item_get_kind (item) == Appstream.ProvidesKind.LIBRARY) {
 				contains_libs = true;
 				break;
 			}
 		}
+
 		// No shared libs => no library paths
 		if (!contains_libs)
 			return "";

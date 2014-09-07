@@ -5,34 +5,34 @@ namespace PkPlugin {
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", type_id = "pk_backend_get_type ()")]
 	public class Backend : GLib.Object {
 		[CCode (has_construct_function = false)]
-		public Backend ();
+		public Backend (GLib.KeyFile conf);
 		public void accept_eula (string eula_id);
 		public static unowned string bool_to_string (bool value);
 		public void cancel (PkPlugin.BackendJob job);
+		public void depends_on (PkPlugin.BackendJob job, PackageKit.Bitfield filters, string package_ids, bool recursive);
 		public void destroy ();
 		public void download_packages (PkPlugin.BackendJob job, string package_ids, string directory);
 		public string get_accepted_eula_string ();
 		public unowned string get_author ();
 		public void get_categories (PkPlugin.BackendJob job);
-		public void get_depends (PkPlugin.BackendJob job, PackageKit.Bitfield filters, string package_ids, bool recursive);
 		public unowned string get_description ();
 		public void get_details (PkPlugin.BackendJob job, string package_ids);
+		public void get_details_local (PkPlugin.BackendJob job, string files);
 		public void get_distro_upgrades (PkPlugin.BackendJob job);
 		public void get_files (PkPlugin.BackendJob job, string package_ids);
+		public void get_files_local (PkPlugin.BackendJob job, string files);
 		public PackageKit.Bitfield get_filters ();
 		public PackageKit.Bitfield get_groups ();
 		[CCode (array_length = false, array_null_terminated = true)]
 		public string[] get_mime_types ();
 		public unowned string get_name ();
 		public void get_packages (PkPlugin.BackendJob job, PackageKit.Bitfield filters);
-		public PackageKit.Bitfield get_provides ();
 		public void get_repo_list (PkPlugin.BackendJob job, PackageKit.Bitfield filters);
-		public void get_requires (PkPlugin.BackendJob job, PackageKit.Bitfield filters, string package_ids, bool recursive);
 		public PackageKit.Bitfield get_roles ();
 		public void get_update_detail (PkPlugin.BackendJob job, string package_ids);
 		public void get_updates (PkPlugin.BackendJob job, PackageKit.Bitfield filters);
 		public void implement (PackageKit.Role role);
-		public void initialize ();
+		public static void initialize (GLib.KeyFile conf, PkPlugin.Backend backend);
 		public void install_files (PkPlugin.BackendJob job, PackageKit.Bitfield transaction_flags, string full_paths);
 		public void install_packages (PkPlugin.BackendJob job, PackageKit.Bitfield transaction_flags, string package_ids);
 		public void install_signature (PkPlugin.BackendJob job, PackageKit.SigType type, string key_id, string package_id);
@@ -45,7 +45,9 @@ namespace PkPlugin {
 		public void repair_system (PkPlugin.BackendJob job, PackageKit.Bitfield transaction_flags);
 		public void repo_enable (PkPlugin.BackendJob job, string repo_id, bool enabled);
 		public bool repo_list_changed ();
+		public void repo_remove (PkPlugin.BackendJob job, PackageKit.Bitfield transaction_flags, string repo_id, bool autoremove);
 		public void repo_set_data (PkPlugin.BackendJob job, string repo_id, string parameter, string value);
+		public void required_by (PkPlugin.BackendJob job, PackageKit.Bitfield filters, string package_ids, bool recursive);
 		public void reset_job (PkPlugin.BackendJob job);
 		public void resolve (PkPlugin.BackendJob job, PackageKit.Bitfield filters, string packages);
 		public void search_details (PkPlugin.BackendJob job, PackageKit.Bitfield filters, string search);
@@ -55,30 +57,31 @@ namespace PkPlugin {
 		public void start_job (PkPlugin.BackendJob job);
 		public void stop_job (PkPlugin.BackendJob job);
 		public bool supports_parallelization ();
+		public void thread_start (PkPlugin.BackendJob job, void* func);
+		public void thread_stop (PkPlugin.BackendJob job, void* func);
 		public bool unload ();
 		public void update_packages (PkPlugin.BackendJob job, PackageKit.Bitfield transaction_flags, string package_ids);
-		public void upgrade_system (PkPlugin.BackendJob job, string distro_id, PackageKit.UpgradeKind upgrade_kind);
 		public bool watch_file (string filename, PkPlugin.BackendFileChanged func);
-		public void what_provides (PkPlugin.BackendJob job, PackageKit.Bitfield filters, PackageKit.Provides provides, string search);
+		public void what_provides (PkPlugin.BackendJob job, PackageKit.Bitfield filters, string search);
 	}
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", type_id = "pk_backend_job_get_type ()")]
 	public class BackendJob : GLib.Object {
 		[CCode (has_construct_function = false)]
-		public BackendJob ();
+		public BackendJob (GLib.KeyFile conf);
 		public void category (string parent_id, string cat_id, string name, string summary, string icon);
-		public void details (string package_id, string license, PackageKit.Group group, string description, string url, ulong size);
+		public void details (string package_id, string summary, string license, PackageKit.Group group, string description, string url, ulong size);
 		public void distro_upgrade (PackageKit.DistroUpgradeType type, string name, string summary);
 		public void eula_required (string eula_id, string package_id, string vendor_name, string license_agreement);
 		public void files (string package_id, string files);
 		public void finished ();
 		public bool get_allow_cancel ();
 		public void* get_backend ();
-		public PkPlugin.Hint get_background ();
+		public bool get_background ();
 		public uint get_cache_age ();
 		public unowned string get_cmdline ();
 		public PackageKit.Exit get_exit_code ();
 		public string get_frontend_socket ();
-		public PkPlugin.Hint get_interactive ();
+		public bool get_interactive ();
 		public bool get_is_error_set ();
 		public bool get_is_finished ();
 		public string get_locale ();
@@ -107,13 +110,13 @@ namespace PkPlugin {
 		public void reset ();
 		public void set_allow_cancel (bool allow_cancel);
 		public void set_backend (void* backend);
-		public void set_background (PkPlugin.Hint background);
+		public void set_background (bool background);
 		public void set_cache_age (uint cache_age);
 		public void set_cmdline (string cmdline);
 		public void set_download_size_remaining (uint64 download_size_remaining);
 		public void set_exit_code (PackageKit.Exit exit);
 		public void set_frontend_socket (string frontend_socket);
-		public void set_interactive (PkPlugin.Hint interactive);
+		public void set_interactive (bool interactive);
 		public void set_item_progress (string package_id, PackageKit.Status status, uint percentage);
 		public void set_locale (string code);
 		public void set_locked (bool locked);
@@ -130,30 +133,17 @@ namespace PkPlugin {
 		public void set_vfunc (PkPlugin.BackendJobSignal signal_kind, PkPlugin.BackendJobVFunc vfunc);
 		public bool thread_create (owned PkPlugin.BackendJobThreadFunc func);
 		public void update_detail (string package_id, string updates, string obsoletes, string vendor_urls, string bugzilla_urls, string cve_urls, PackageKit.Restart restart, string update_text, string changelog, PackageKit.UpdateState state, string issued, string updated);
-		public bool use_background ();
-	}
-	[CCode (cheader_filename = "plugin/packagekit-plugin.h", type_id = "pk_conf_get_type ()")]
-	public class Conf : GLib.Object {
-		[CCode (has_construct_function = false)]
-		public Conf ();
-		public bool get_bool (string key);
-		public static string get_filename ();
-		public int get_int (string key);
-		public string get_string (string key);
-		[CCode (array_length = false, array_null_terminated = true)]
-		public unowned string[] get_strv (string key);
-		public void set_bool (string key, bool value);
-		public void set_string (string key, string value);
 	}
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", type_id = "pk_transaction_get_type ()")]
 	public class Transaction : GLib.Object {
 		[CCode (has_construct_function = false)]
-		public Transaction (GLib.DBusNodeInfo introspection);
+		public Transaction (GLib.KeyFile conf, GLib.DBusNodeInfo introspection);
 		public void add_supported_content_type (string mime_type);
 		public void cancel_bg ();
 		public static GLib.Quark error_quark ();
 		public unowned PkPlugin.BackendJob get_backend_job ();
-		public unowned PkPlugin.Conf get_conf ();
+		public bool get_background ();
+		public unowned GLib.KeyFile get_conf ();
 		[CCode (array_length = false, array_null_terminated = true)]
 		public unowned string[] get_full_paths ();
 		[CCode (array_length = false, array_null_terminated = true)]
@@ -174,11 +164,12 @@ namespace PkPlugin {
 		public void set_backend (PkPlugin.Backend backend);
 		public void set_full_paths (string full_paths);
 		public void set_package_ids (string package_ids);
-		public bool set_state (PkPlugin.TransactionState state);
+		public void set_state (PkPlugin.TransactionState state);
 		public void signals_reset (PkPlugin.BackendJob job);
 		public void skip_auth_checks (bool skip_checks);
 		public static unowned string state_to_string (PkPlugin.TransactionState state);
 		public signal void finished ();
+		public signal void state_changed (uint object);
 	}
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", has_type_id = false)]
 	public struct Plugin {
@@ -202,12 +193,10 @@ namespace PkPlugin {
 		ERROR_CODE,
 		DISTRO_UPGRADE,
 		FINISHED,
-		MESSAGE,
 		PACKAGE,
 		ITEM_PROGRESS,
 		FILES,
 		PERCENTAGE,
-		REMAINING,
 		SPEED,
 		DOWNLOAD_SIZE_REMAINING,
 		REPO_DETAIL,
@@ -220,17 +209,6 @@ namespace PkPlugin {
 		UPDATE_DETAIL,
 		CATEGORY,
 		LAST
-	}
-	[CCode (cheader_filename = "plugin/packagekit-plugin.h", cname = "PkHintEnum", cprefix = "PK_HINT_ENUM_", has_type_id = false)]
-	[GIR (name = "HintEnum")]
-	public enum Hint {
-		FALSE,
-		TRUE,
-		UNSET,
-		INVALID,
-		LAST;
-		public static PkPlugin.Hint enum_from_string (string hint);
-		public static unowned string enum_to_string (PkPlugin.Hint hint);
 	}
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", cprefix = "PK_PLUGIN_PHASE_", has_type_id = false)]
 	public enum PluginPhase {
@@ -248,10 +226,10 @@ namespace PkPlugin {
 	public enum TransactionState {
 		NEW,
 		WAITING_FOR_AUTH,
-		COMMITTED,
 		READY,
 		RUNNING,
 		FINISHED,
+		ERROR,
 		UNKNOWN
 	}
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", has_target = false)]
@@ -270,10 +248,6 @@ namespace PkPlugin {
 	public delegate void PluginTransactionFunc (PkPlugin.Plugin plugin, PkPlugin.Transaction transaction);
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", cname = "PK_BACKEND_PERCENTAGE_INVALID")]
 	public const int BACKEND_PERCENTAGE_INVALID;
-	[CCode (cheader_filename = "plugin/packagekit-plugin.h", cname = "PK_CONF_GROUP_NAME")]
-	public const string CONF_GROUP_NAME;
-	[CCode (cheader_filename = "plugin/packagekit-plugin.h", cname = "PK_CONF_VALUE_INT_MISSING")]
-	public const int CONF_VALUE_INT_MISSING;
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", cname = "PK_TRANSACTION_ALL_BACKEND_SIGNALS")]
 	public const int TRANSACTION_ALL_BACKEND_SIGNALS;
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h", cname = "PK_TRANSACTION_NO_BACKEND_SIGNALS")]
@@ -294,4 +268,8 @@ namespace PkPlugin {
 	public static bool strtouint64 (string text, uint64 value);
 	[CCode (cheader_filename = "plugin/packagekit-plugin.h")]
 	public static bool strzero (string text);
+	[CCode (cheader_filename = "plugin/packagekit-plugin.h")]
+	public static string util_get_config_filename ();
+	[CCode (cheader_filename = "plugin/packagekit-plugin.h")]
+	public static bool util_set_auto_backend (GLib.KeyFile conf) throws GLib.Error;
 }

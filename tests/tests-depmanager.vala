@@ -57,8 +57,8 @@ void test_dependency_installer () {
 	test1.origin = "testsuite";
 	test1.set_version ("1.0");
 	//test1.feed_url = "http://repo.roscidus.com/lib/expat1";
-	test1.add_item (Appstream.ProvidesKind.LIBRARY, "libc.so.6");
-	//test1.add_item (Appstream.ProvidesKind.LIBRARY, "bladada.so.2");
+	test1.metainfo.add_provided_item (Appstream.ProvidesKind.LIBRARY, "libc.so.6", null);
+	//test1.metainfo.add_provided_item (Appstream.ProvidesKind.LIBRARY, "bladada.so.2", null);
 
 	ret = depinst.install_existing_module_dependency (cfactory, ref test1);
 	assert (ret == true);
@@ -69,7 +69,7 @@ void test_dependency_installer () {
 	test2.metainfo.id = "Test:2#GNU_parallel";
 	test2.feed_url = "http://git.savannah.gnu.org/cgit/parallel.git/plain/packager/0install/parallel.xml";
 	// nobis.so.0 does not exist
-	test2.add_item (Appstream.ProvidesKind.LIBRARY, "nobis.so.0");
+	test2.metainfo.add_provided_item (Appstream.ProvidesKind.LIBRARY, "nobis.so.0", null);
 
 	ret = depinst.install_existing_module_dependency (cfactory, ref test2);
 
@@ -137,7 +137,7 @@ void test_packagekit_installer () {
 	ArrayList<Dependency> deplist = new ArrayList<Dependency> ();
 	Dependency depNano = new Dependency ();
 	depNano.metainfo.id = "Nano";
-	depNano.add_item (Appstream.ProvidesKind.BINARY, "/usr/bin/nano");
+	depNano.metainfo.add_provided_item (Appstream.ProvidesKind.BINARY, "/usr/bin/nano", null);
 
 	Dep.PkInstaller pkit = new Dep.PkInstaller (ssettings);
 	Dep.PkResolver pkslv = new Dep.PkResolver (ssettings);
@@ -149,9 +149,9 @@ void test_packagekit_installer () {
 	// Now something more advanced
 	Dependency crazy = new Dependency ();
 	crazy.metainfo.id = "CrazyStuff";
-	crazy.add_item (Appstream.ProvidesKind.BINARY, "/bin/bash");
-	crazy.add_item (Appstream.ProvidesKind.LIBRARY, "libpackagekit-glib2.so");
-	crazy.add_item (Appstream.ProvidesKind.LIBRARY, "libc6.so");
+	crazy.metainfo.add_provided_item (Appstream.ProvidesKind.BINARY, "/bin/bash", null);
+	crazy.metainfo.add_provided_item (Appstream.ProvidesKind.LIBRARY, "libpackagekit-glib2.so", null);
+	crazy.metainfo.add_provided_item (Appstream.ProvidesKind.LIBRARY, "libc6.so", null);
 
 	search_install_pkdep (pkit, pkslv, ref crazy);
 	assert (crazy.installed == true);
@@ -159,7 +159,7 @@ void test_packagekit_installer () {
 #if 0
 	// Now something which fails
 	Dependency fail = new Dependency ("Fail");
-	fail.add_item (Appstream.ProvidesKind.UNKNOWN, "/run/far_away");
+	fail.metainfo.add_provided_item (Appstream.ProvidesKind.UNKNOWN, "/run/far_away");
 	ret = pkslv.search_dep_packages (fail);
 	if (!ret) {
 		debug (pkit.last_error.details);
@@ -195,25 +195,25 @@ void test_depsolver () {
 	Dependency dep1 = new Dependency ();
 	dep1.metainfo.id = "Gee";
 	dep1.feed_url = "http://sweets.sugarlabs.org/base/libgee";
-	dep1.add_item (Appstream.ProvidesKind.LIBRARY, "libc.so.6");
+	dep1.metainfo.add_provided_item (Appstream.ProvidesKind.LIBRARY, "libc.so.6", null);
 	deplist.add (dep1);
 
 	Dependency dep2 = new Dependency ();
 	dep2.metainfo.id = "SDLMixer1.2";
 	dep2.feed_url = "http://repo.roscidus.com/lib_rsl/sdl-mixer1.2";
-	dep2.add_item (Appstream.ProvidesKind.LIBRARY, "libgee.so");
+	dep2.metainfo.add_provided_item (Appstream.ProvidesKind.LIBRARY, "libgee.so", null);
 	deplist.add (dep2);
 
 	Dependency dep3 = new Dependency ();
 	dep3.metainfo.id = "Nano";
-	dep3.add_item (Appstream.ProvidesKind.BINARY, "/usr/bin/nano");
-	dep3.add_item (Appstream.ProvidesKind.LIBRARY, "libc.so.6");
+	dep3.metainfo.add_provided_item (Appstream.ProvidesKind.BINARY, "/usr/bin/nano", null);
+	dep3.metainfo.add_provided_item (Appstream.ProvidesKind.LIBRARY, "libc.so.6", null);
 	deplist.add (dep3);
 
 	Dependency dep4 = new Dependency ();
 	dep4.metainfo.id = "LibXml2";
 	dep4.feed_url = "http://sweets.sugarlabs.org/base/libxml2";
-	dep4.add_item (Appstream.ProvidesKind.LIBRARY, "libglib-2.0.so.0");
+	dep4.metainfo.add_provided_item (Appstream.ProvidesKind.LIBRARY, "libglib-2.0.so.0", null);
 	deplist.add (dep4);
 
 	bool ret;

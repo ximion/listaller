@@ -54,7 +54,6 @@ private const string DATABASE = ""
 		+ "origin TEXT NOT NULL, "
 		+ "install_time INTEGER, "
 		+ "items_installed TEXT, "
-		+ "items TEXT, "
 		+ "environment TEXT"
 		+ "); "
 		+ "CREATE TABLE app_dep_assoc ("
@@ -64,8 +63,7 @@ private const string DATABASE = ""
 		+ ");";
 
 private const string columns_app = "unique_name, full_name, version, summary, description, metadata, architecture, origin, install_time";
-private const string columns_dep = "unique_name, full_name, version, summary, description, metadata, architecture, origin, install_time, items_installed, " +
-						"items, environment";
+private const string columns_dep = "unique_name, full_name, version, summary, description, metadata, architecture, origin, install_time, items_installed, environment";
 private const string columns_appdepassoc = "app_id, dep_id";
 
 private enum AppRow {
@@ -93,8 +91,7 @@ private enum DepRow {
 	ORIGIN = 8,
 	INST_TIME = 9,
 	ITEMS_INSTALLED = 10,
-	ITEMS = 11,
-	ENVIRONMENT = 12,
+	ENVIRONMENT = 11,
 }
 
 private enum AppDepAssoc {
@@ -246,7 +243,7 @@ private abstract class InternalDB : Object {
 		// InsertDep statement
 		try {
 			db_assert (db.prepare_v2 ("INSERT INTO dependencies (" + columns_dep + ") "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					-1, out insert_dep), "prepare dependency insert statement");
 		} catch (Error e) {
 			throw new DatabaseError.ERROR (e.message);
@@ -872,8 +869,6 @@ private abstract class InternalDB : Object {
 
 			db_assert (insert_dep.bind_text (DepRow.ITEMS_INSTALLED, dep.get_installed_items_as_string ()), "bind value");
 
-			db_assert (insert_dep.bind_text (DepRow.ITEMS, dep.get_items_as_string ()), "bind value");
-
 			db_assert (insert_dep.bind_text (DepRow.ENVIRONMENT, dep.environment), "bind value");
 
 			db_assert (insert_dep.step (), "add dependency");
@@ -895,7 +890,6 @@ private abstract class InternalDB : Object {
 
 		dep.install_time = stmt.column_int (DepRow.INST_TIME);
 		dep.architecture = stmt.column_text (DepRow.ARCHITECTURE);
-		dep.set_items_from_string (stmt.column_text (DepRow.ITEMS));
 		dep.set_installdata_from_string (stmt.column_text (DepRow.ITEMS_INSTALLED));
 		dep.environment = stmt.column_text (DepRow.ENVIRONMENT);
 		dep.dbid = stmt.column_int (DepRow.DBID);

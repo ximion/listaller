@@ -91,14 +91,6 @@ public class Dependency : Object {
 	protected string _version_raw;
 	private string _version_cache;
 
-	protected HashSet<string> item_list { get; private set; } // Parts of this dependency (e.g. shlibs, python modules, files, etc.)
-
-	public HashSet<string> raw_itemlist {
-		get {
-			return item_list;
-		}
-	}
-
 	// Items which were installed in order to satisfy this dependency
 	protected HashSet<string> installed_items { get; private set; }
 
@@ -106,7 +98,6 @@ public class Dependency : Object {
 		dbid = -1;
 		metainfo = new Component ();
 
-		item_list = new HashSet<string> ();
 		installed_items = new HashSet<string> ();
 
 		environment = "";
@@ -160,15 +151,6 @@ public class Dependency : Object {
 	}
 
 	private void update_data_from_metainfo () {
-		// for some reason, a simple clear() doesn't work here - Gee bug?
-		item_list = new HashSet<string> ();
-
-		GenericArray<string> items = metainfo.get_provided_items ();
-		for(uint i = 0; i < items.length; i++) {
-			string item = items.get (i);
-			item_list.add (item);
-		}
-
 		// set version, if there is one
 		GenericArray<Appstream.Release> releases = metainfo.get_releases ();
 		if (releases.length > 0) {
@@ -324,81 +306,27 @@ public class Dependency : Object {
 		}
 	}
 
-	/**
-	 * Add item as string (performing some checks if the string is valid)
-	 */
-	private bool _add_itemstr_save (string line) {
-		string[] item = line.split (";", 3);
-		if (item.length != 3) {
-			critical ("Component item string is invalid! (Error at: %s) %i", line, item.length);
-			return false;
-		}
-
-		item_list.add ("%s;%s;%s".printf (item[0], item[1], item[2]));
-
-		return true;
-	}
-
-	/**
-	 * Set items for this components, using a serialized string as source
-	 */
-	internal void set_items_from_string (string str) {
-		if (str.index_of ("\n") < 0) {
-			_add_itemstr_save (str);
-			return;
-		}
-
-		string[]? lines = str.split ("\n");
-		if (lines == null)
-			return;
-		foreach (string s in lines) {
-			if (s != "")
-				if (!_add_itemstr_save (s))
-					return;
-		}
-	}
-
-	internal string get_items_as_string () {
-		string res = "";
-		foreach (string s in item_list)
-			res += s + "\n";
-		return res;
-	}
-
-	public void add_item (ProvidesKind kind, string item_name) {
-		string str = provides_item_create (kind, item_name, null);
-		item_list.add (str);
-	}
-
-	public void add_item_list (ProvidesKind kind, string list) {
-		if (list.strip () == "")
-			return;
-
-		if (list.index_of ("\n") < 0) {
-			add_item (kind, list);
-			return;
-		}
-
-		string[] comp = list.split ("\n");
-		for (int i = 0; i < comp.length; i++) {
-			string s = comp[i].strip ();
-			if (s != "")
-				add_item (kind, s);
-		}
-
-	}
-
 	public bool has_item (ProvidesKind kind, string val) {
 		string str = provides_item_create (kind, val, null);
-		return item_list.contains (str);
+
+		GenericArray<string> items = metainfo.get_provided_items ();
+		for(uint i = 0; i < items.length; i++) {
+			string item = items.get (i);
+			if (item == str)
+				return true;
+		}
+		return false;
 	}
 
 	public bool has_matching_item (ProvidesKind kind, string val) {
 		if (Utils.str_is_empty (val))
 			return false;
 		string item_id = provides_item_create (kind, val, null);
-		foreach (string s in item_list) {
-			if (PatternSpec.match_simple (s, item_id))
+
+		GenericArray<string> items = metainfo.get_provided_items ();
+		for(uint i = 0; i < items.length; i++) {
+			string item = items.get (i);
+			if (PatternSpec.match_simple (item, item_id))
 				return true;
 		}
 
@@ -406,17 +334,8 @@ public class Dependency : Object {
 	}
 
 	public bool has_items () {
-		return item_list.size > 0;
-	}
-
-	internal string get_items_by_type_as_str (ProvidesKind kind) {
-		string res = "";
-		foreach (string s in item_list) {
-			if (provides_item_get_kind (s) == kind)
-				res += provides_item_get_value (s) + "\n";
-		}
-
-		return res;
+		GenericArray<string> items = metainfo.get_provided_items ();
+		return items.length > 0;
 	}
 
 	public string get_installed_items_as_string () {
@@ -436,13 +355,11 @@ public class Dependency : Object {
 		if (sinstcomp.index_of (";") <= 0)
 			warning ("Invalid install data set! This should never happen! (Data was %s)", sinstcomp);
 		bool ret = installed_items.add (sinstcomp);
-		update_installed_status ();
 		return ret;
 	}
 
 	internal void clear_installed_items () {
 		installed_items.clear ();
-		update_installed_status ();
 	}
 
 	private bool _add_itemstr_instdata_save (string line) {
@@ -470,15 +387,6 @@ public class Dependency : Object {
 				if (!_add_itemstr_instdata_save (s))
 					return;
 		}
-		update_installed_status ();
-	}
-
-	/**
-	 * Check if the Module is installed, and update it's status if it has been
-	 * installed
-	 */
-	protected void update_installed_status () {
-		installed = installed_items.size == item_list.size;
 	}
 
 	public bool has_feed () {
@@ -547,13 +455,13 @@ public class Dependency : Object {
 
 [CCode (has_target = false)]
 private static uint dependency_hash_func (Dependency dep) {
-	string str = dep.metainfo.id;
+	string str = dep.unique_name;
 	return str_hash (str);
 }
 
 [CCode (has_target = false)]
 private static bool dependency_equal_func (Dependency a, Dependency b) {
-	if (a.metainfo.id == b.metainfo.id)
+	if (a.unique_name == b.unique_name)
 		return true;
 	return false;
 }

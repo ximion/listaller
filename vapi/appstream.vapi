@@ -38,7 +38,7 @@ namespace Appstream {
 		public Component ();
 		public void add_extends (string cpt_id);
 		public void add_language (string locale, int percentage);
-		public void add_provided_item (Appstream.ProvidesKind kind, string value, string data);
+		public void add_provided_item (Appstream.ProvidesKind kind, string value, string? data);
 		public void add_release (Appstream.Release release);
 		public void add_screenshot (Appstream.Screenshot sshot);
 		public void add_url (Appstream.UrlKind url_kind, string url);

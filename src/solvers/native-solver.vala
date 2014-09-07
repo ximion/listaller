@@ -82,7 +82,9 @@ private class NativeSolver : AbstractSolver {
 			*/
 			HashTable<string, string> pkg_table = new HashTable<string, string> (str_hash, str_equal);
 
-			foreach (string sitem in dep.raw_itemlist) {
+			GenericArray<string> items = dep.metainfo.get_provided_items ();
+			for(uint i = 0; i < items.length; i++) {
+				string sitem = items.get (i);
 				string? path = null;
 				ProvidesKind kind = provides_item_get_kind (sitem);
 				string? val = provides_item_get_value (sitem);
