@@ -453,7 +453,7 @@ public class AppItem : Object {
 		uint64 timestamp = 0;
 		for(uint i = 0; i < releases.length; i++) {
 			Appstream.Release r = releases.get (i);
-			if (r.get_timestamp () > timestamp) {
+			if (r.get_timestamp () >= timestamp) {
 				release = r;
 				timestamp = r.get_timestamp ();
 			}

@@ -276,6 +276,19 @@ private class FileList : Object {
 		return list;
 	}
 
+	private void refine_fileentry_add_to_list (ArrayList<FileEntry> resList, FileEntry fe, string root_dir, string fname) {
+		FileEntry e = new FileEntry ();
+
+		// Create secure filenames, so Listaller doesn't try to rename files with spaces in their name
+		var fs = fname;
+		if (fs.index_of (" ") > 0)
+			fs = "'%s'".printf (fs);
+
+		e.fname = fs;
+		e.destination = Path.build_filename (fe.destination, Path.get_dirname (fname).replace (root_dir, ""), null);
+		resList.add (e);
+	}
+
 	public ArrayList<FileEntry> get_files_list_expanded () {
 		var resList = new ArrayList<FileEntry> ();
 		ArrayList<FileEntry> wcEntries = new ArrayList<FileEntry> ();
@@ -297,7 +310,8 @@ private class FileList : Object {
 			// rootdir might contain relative paths...
 			dir = real_path (dir);
 
-			HashSet<string> files = find_files (dir, true);
+			// find files, not recursively
+			HashSet<string> files = find_files (dir, false);
 
 			resList.remove (fe);
 			if (files == null)
@@ -306,16 +320,16 @@ private class FileList : Object {
 			foreach (string s in files) {
 				string ematch = Path.build_filename ("*", fe.fname, null);
 				if (PatternSpec.match_simple (ematch, s)) {
-					FileEntry e = new FileEntry ();
-
-					// Create secure filenames, so Listaller doesn't try to rename files with spaces in their name
-					var fs = s;
-					if (fs.index_of (" ") > 0)
-						fs = "'%s'".printf (fs);
-
-					e.fname = fs;
-					e.destination = Path.build_filename (fe.destination, Path.get_dirname (s).replace (dir, ""), null);
-					resList.add (e);
+					// in case the wildcard matched a directory, we add the whole thing
+					if (FileUtils.test (s, FileTest.IS_DIR)) {
+						HashSet<string> subfiles = find_files (s, true);
+						foreach (string sf in subfiles) {
+							refine_fileentry_add_to_list (resList, fe, dir, sf);
+						}
+					} else {
+						// else just add the matched file
+						refine_fileentry_add_to_list (resList, fe, dir, s);
+					}
 				}
 			}
 		}

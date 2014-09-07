@@ -494,6 +494,20 @@ private class Builder : Object {
 		// Get application-id from IPK source control XML file
 		appInfo = ipkCDir.get_application ();
 
+		if (Utils.str_is_empty (appInfo.metainfo.name)) {
+			error_message ("No application name specified in the AppData file.");
+			return false;
+		}
+		if (Utils.str_is_empty (appInfo.metainfo.id)) {
+			error_message ("No application identifier specified in the AppData file.");
+			return false;
+		}
+		if (Utils.str_is_empty (appInfo.version)) {
+			error_message ("The AppData file does not specify a release block with a version number.");
+			return false;
+		}
+
+
 		debug ("Building package for %s, version: %s (id: %s)", appInfo.metainfo.name, appInfo.version, appInfo.unique_name);
 
 		// Build IPK control directory
@@ -517,7 +531,7 @@ private class Builder : Object {
 		// Set license...
 		ictrl.set_license_text (ipkCDir.get_application ().license.text);
 
-		pkbuild_action ("Generating package payload");
+		pkbuild_action ("Generating payload archive");
 
 		IPK.FileList flist = new IPK.FileList (false);
 		string archs = "";
@@ -540,7 +554,7 @@ private class Builder : Object {
 				else
 					archs = "%s, %s".printf (archs, arch);
 
-			pkbuild_action ("Creating payload for architecture: %s".printf (arch));
+			pkbuild_action ("Creating payload container for architecture: %s".printf (arch));
 			// Add comment to IPK file-list
 			flist.comment = "IPK file-listing for architecture %s".printf (arch);
 
