@@ -85,7 +85,8 @@ private class DepInstaller : MessageObject {
 				debug ("Solver install error: %s", msg);
 				error_msg = _("Unable to install module '%s' which is required for this installation.\nMessage: %s").printf (dep.metainfo.name, msg);
 			}
-			if (ret)
+
+			if (dep.installed)
 				return true;
 		}
 
@@ -149,6 +150,10 @@ private class DepInstaller : MessageObject {
 	 */
 	internal bool install_existing_module_dependency (ComponentFactory cfactory, ref Dependency dep) {
 		bool ret = true;
+		ret = cfactory.dependency_installable (dep, null);
+		if (ret)
+			return true;
+
 		if (!depman.module_is_installed (ref dep)) {
 			ret = install_module_dep_internal (cfactory, dep);
 			if ((ret) && (dep.installed))

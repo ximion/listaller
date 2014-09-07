@@ -54,7 +54,7 @@ private const string DATABASE = ""
 		+ "origin TEXT NOT NULL, "
 		+ "install_time INTEGER, "
 		+ "items_installed TEXT, "
-		+ "items TEXT NOT NULL, "
+		+ "items TEXT, "
 		+ "environment TEXT"
 		+ "); "
 		+ "CREATE TABLE app_dep_assoc ("
@@ -275,7 +275,7 @@ private abstract class InternalDB : Object {
 		}
 
 		ret = open_db ();
-		return_if_fail (ret == true);
+		return_val_if_fail (ret == true, false);
 
 		// Lock the database
 		try {
@@ -841,6 +841,10 @@ private abstract class InternalDB : Object {
 	public bool add_dependency (Dependency dep) throws DatabaseError {
 		if (!database_writeable ()) {
 			throw new DatabaseError.ERROR (_("Tried to write on readonly database! (This should never happen)"));
+		}
+
+		if (!dep.is_valid ()) {
+			throw new DatabaseError.ERROR (_("Cannot add invalid dependency to database"));
 		}
 
 		if (Utils.str_is_empty (dep.metainfo.name))

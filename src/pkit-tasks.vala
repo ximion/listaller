@@ -150,6 +150,57 @@ private class PkResolver : PkListallerTask {
 		return packages[0];
 	}
 
+	/**
+	 * Resolve a package-name
+	 *
+	 * @param fname The filename to search for
+	 *
+	 * @return Resolved package-id or NULL, if none was found
+	 */
+	public string? resolve (string pkg_name) throws PkError {
+		PackageKit.Results? res = null;
+		PackageKit.PackageSack? sack;
+
+		// we can't do anything if PK doesn't support SearchFiles
+		if (!supported (PackageKit.Role.RESOLVE)) {
+			warning (_("PackageKit backend does not support resolving packages - Installer was unable to use native packages to satisfy dependencies of this application."));
+			return null;
+		}
+
+		PackageKit.Bitfield filter = PackageKit.Filter.bitfield_from_string ("");
+		if (pkbproxy == null) {
+			try {
+				res  = pktask.search_files (filter, {pkg_name, null}, null, null);
+			} catch (Error e) {
+				debug (e.message);
+				return null;
+			}
+		} else {
+			debug ("::TODO");
+			/*
+			res = pkbproxy.run_resolve (filter, {pkg_name, null});
+			if (res == null) {
+				debug ("Native backend PkResults was NULL!");
+				return null;
+			}
+			*/
+		}
+
+		if (res == null)
+			return null;
+
+		sack = res.get_package_sack ();
+		if (sack == null)
+			return null;
+		string[] packages = sack.get_ids ();
+
+		if ( (res.get_exit_code () != PackageKit.Exit.SUCCESS)) {
+			throw new PkError.TRANSACTION_FAILED (_("PackageKit transaction failed!\nExit message was: %s").printf (PackageKit.Exit.enum_to_string (res.get_exit_code ())));
+		}
+
+		return packages[0];
+	}
+
 }
 
 private class PkInstaller : PkListallerTask {
@@ -219,34 +270,22 @@ private class PkInstaller : PkListallerTask {
 		if (dep.installed)
 			return true;
 
-		/* We don't install dependencies via PK when unit tests are running.
-		 * Consider everything as satisfied. (unittests can modify this, of course) */
-		if (__unittestmode) {
-			dep.installed = true;
-			return true;
-		}
-
-		string[] pkgs = {};
-		/* Now install every not-yet-installed package. The asterisk (*pkg) indicates
-		 * that this package needs to be installed */
-		foreach (string pkg in dep.raw_itemlist) {
-			if (pkg.has_prefix ("pkg;")) {
-				pkgs += pkg.substring (4);
-			}
-		}
-		// null-terminate the array
-		pkgs += null;
-
-		/* If no elements need to be installed and everything is already there,
-		 * the dependency is satisfied and we can leave. */
-		if (pkgs[0] == null) {
+		/* If no packages are given, the native installer is
+		 * useless and we can leave. */
+		if (dep.metainfo.pkgnames.length <= 0) {
+			return false;
+		} else if (__unittestmode) {
+			/* We don't install dependencies via PK when unit tests are running.
+			 * Consider everything as satisfied, as long as we know a package name.
+			 * (unittests can modify this, of course) */
+			debug ("Faking dependency '%s' to be installed.", dep.unique_name);
 			dep.installed = true;
 			return true;
 		}
 
 		// Now do the installing
-		emit_message (_("Installing native packages: %s").printf (strv_to_string (pkgs)));
-		ret = pkit_install_packages (pkgs);
+		emit_message (_("Installing native packages: %s").printf (strv_to_string (dep.metainfo.pkgnames)));
+		ret = pkit_install_packages (dep.metainfo.pkgnames);
 		if (ret) {
 			dep.installed = true;
 			return true;

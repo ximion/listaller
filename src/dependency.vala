@@ -44,7 +44,6 @@ namespace Listaller {
  * about the referenced component-dependency.
  */
 public class Dependency : Object {
-	public string unique_name { get; set; }
 	internal int dbid { get; set; }
 
 	private Component _metainfo;
@@ -55,6 +54,19 @@ public class Dependency : Object {
 		internal set {
 			_metainfo = value;
 			update_data_from_metainfo ();
+		}
+	}
+
+	private string _unique_name;
+	public string unique_name {
+		get {
+			update_unique_name ();
+			return _unique_name;
+		}
+		internal set {
+			_unique_name = value;
+			if ((_metainfo.id == null) || (_metainfo.id.strip () == ""))
+				_metainfo.id = _unique_name;
 		}
 	}
 
@@ -102,6 +114,7 @@ public class Dependency : Object {
 		origin = "unknown";
 		architecture = system_machine_generic ();
 		_version_raw = "";
+		_unique_name = "";
 	}
 
 	public bool load_xml_data (string xmld) throws GLib.Error {
@@ -294,6 +307,7 @@ public class Dependency : Object {
 
 	public void set_version (string new_version) {
 		_version_cache = new_version;
+		update_unique_name (true);
 	}
 
 	private void parse_metainfo_listaller_extras (Xml.Node *node) {
@@ -308,28 +322,19 @@ public class Dependency : Object {
 				installed = iter->get_content () == "true";
 			}
 		}
-
-		// TODO
-		/**
-		// The optional stuff is usually only used by the setup process, to group
-		// optional libraries to the right component, without throwing an error.
-		string[] prefixes = {};
-		prefixes += "";
-		if (include_optional)
-			prefixes += "Optional";
-		**/
 	}
 
 	/**
 	 * Add item as string (performing some checks if the string is valid)
 	 */
 	private bool _add_itemstr_save (string line) {
-		string[] item = line.split (":", 2);
-		if (item.length != 2) {
+		string[] item = line.split (";", 3);
+		if (item.length != 3) {
 			critical ("Component item string is invalid! (Error at: %s) %i", line, item.length);
 			return false;
 		}
-		item_list.add ("%s:%s".printf (item[0], item[1]));
+
+		item_list.add ("%s;%s;%s".printf (item[0], item[1], item[2]));
 
 		return true;
 	}
@@ -441,18 +446,19 @@ public class Dependency : Object {
 	}
 
 	private bool _add_itemstr_instdata_save (string line) {
-		string[] cmp = line.split (":", 2);
-		if (cmp.length != 2) {
+		string[] cmp = line.split (";", 3);
+		if (cmp.length != 3) {
 			critical ("Installdata string is invalid! (Error at: %s) %i", line, cmp.length);
 			return false;
 		}
-		add_installed_item ("%s:%s".printf (cmp[0], cmp[1]));
+		add_installed_item ("%s;%s;%s".printf (cmp[0], cmp[1], cmp[2]));
 		return true;
 	}
 
 	internal void set_installdata_from_string (string str) {
 		if (str.index_of ("\n") < 0) {
-			_add_itemstr_instdata_save (str);
+			if (str != "")
+				_add_itemstr_instdata_save (str);
 			return;
 		}
 
@@ -483,11 +489,32 @@ public class Dependency : Object {
 	 * Get installation directory for this module, using the SettupSettings taken as argument
 	 */
 	public string get_install_dir_for_setting (SetupSettings setup_setting) {
-		return Path.build_filename (setup_setting.depdata_dir (), metainfo.id, null);
+		return Path.build_filename (setup_setting.depdata_dir (), unique_name, null);
 	}
 
 	public string get_metadata_xml () {
 		return metainfo.to_xml ();
+	}
+
+	/**
+	 * Update the unique name of this dependency. The unique-name is composed
+	 * as in applications, but dependencies also include the version-number.
+	 */
+	private void update_unique_name (bool force = false) {
+		if ((_unique_name.strip () != "") && (!force))
+			return;
+		string dep_baseid = _metainfo.id;
+		if (Utils.str_is_empty (dep_baseid))
+			dep_baseid = _metainfo.name.down ();
+		if (Utils.str_is_empty (dep_baseid))
+			error ("Unable to generate unique identifier for application!");
+		string? version = null;
+		try {
+			version = get_version ();
+		} catch (Error e) {}
+		if (!Utils.str_is_empty (version))
+			dep_baseid = "%s-%s".printf (dep_baseid, version);
+		_unique_name = string_replace (dep_baseid, "( )", "_");
 	}
 
 	/**
@@ -504,6 +531,18 @@ public class Dependency : Object {
 
 		return package_id;
 	}
+
+	/**
+	 * Returns %TRUE if the dependency is valid (= contains sane data)
+	 */
+	public bool is_valid () {
+		if (Utils.str_is_empty (unique_name) || Utils.str_is_empty (get_version ()))
+			return false;
+		if (origin == "unknown")
+			return false;
+		return true;
+	}
+
 }
 
 [CCode (has_target = false)]

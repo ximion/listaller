@@ -122,8 +122,7 @@ internal class ComponentFactory : Object {
 		solver_pool.clear ();
 
 		// the order of the solvers defines their priority
-		solver_pool.add (new BasicSolver (ssettings));
-		solver_pool.add (new PkitSolver (ssettings));
+		solver_pool.add (new NativeSolver (ssettings));
 		//! solver_pool.add (new PythonSolver (ssettings));
 		solver_pool.add (new ZFeedSolver (ssettings));
 	}
@@ -177,7 +176,7 @@ internal class ComponentFactory : Object {
 		return ret;
 	}
 
-	private bool check_module_installed (Dependency dep, out string reason = null) {
+	private bool check_dependency_installed (Dependency dep, out string reason = null) {
 		if (dep.installed)
 			return true;
 
@@ -191,7 +190,7 @@ internal class ComponentFactory : Object {
 		}
 
 		if ((!dep.installed) && (reason == null))
-			critical ("Module '%s' is not installed, but we don't know a reason why, since no resolver has failed. This is usually a bug in a resolver, please fix it!", dep.metainfo.name);
+			critical ("Module '%s' is not installed, but we don't know a reason why, since no resolver has failed. This is usually a bug in a resolver, please fix it!", dep.unique_name);
 
 		return dep.installed;
 	}
@@ -246,7 +245,7 @@ internal class ComponentFactory : Object {
 			// TODO: Resolve module (installed? all dependencies installed?)
 			Dependency dep = get_dependency (idname);
 			string ic_reason;
-			check_module_installed (dep, out ic_reason);
+			check_dependency_installed (dep, out ic_reason);
 
 			if (!dep.installed) {
 				reason = ic_reason;
@@ -352,13 +351,31 @@ internal class ComponentFactory : Object {
 	/**
 	 * This function is currently only used for testing purposes.
 	 *
+	 * @returns TRUE if dependency is installable.
+	 */
+	internal bool dependency_installable (Dependency dep, out string? reason = null) {
+		bool ret = true;
+
+		string ic_reason;
+		ret = check_dependency_installed (dep, out ic_reason);
+		if (!ret) {
+			reason = ic_reason;
+			return false;
+		}
+
+		return ret;
+	}
+
+	/**
+	 * This function is currently only used for testing purposes.
+	 *
 	 * @returns TRUE if dependencies in dep_list are installable.
 	 */
-	internal bool modules_installable (ref ArrayList<Dependency> dep_list, out string? reason = null) {
+	internal bool dependencies_installable (ArrayList<Dependency> dep_list, out string? reason = null) {
 		bool ret = true;
 		foreach (Dependency dep in dep_list) {
 			string ic_reason;
-			ret = check_module_installed (dep, out ic_reason);
+			ret = check_dependency_installed (dep, out ic_reason);
 			if (!ret) {
 				reason = ic_reason;
 				return false;
@@ -367,6 +384,8 @@ internal class ComponentFactory : Object {
 
 		return ret;
 	}
+
+
 }
 
 } // End of namespace: Listaller.Dep

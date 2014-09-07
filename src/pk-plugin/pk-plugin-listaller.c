@@ -711,7 +711,7 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 	}
 
 	/* set locale so Listaller messages are translated */
-	locale = pk_backend_job_get_locale (plugin->job)
+	locale = pk_backend_job_get_locale (plugin->job);
 	setenv ("LANGUAGE", locale, 1);
 	setenv ("LANG", locale, 1);
 	g_free (locale);

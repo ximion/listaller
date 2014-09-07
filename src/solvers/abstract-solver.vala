@@ -55,7 +55,7 @@ private abstract class AbstractSolver : Object {
 		if (!enabled)
 			return false;
 
-		enabled = (id == "Basic") || conf.installer_get_string_in_list ("UseResolvers", id);
+		enabled = (id == "Native") || conf.installer_get_string_in_list ("UseResolvers", id);
 		// we enable all solvers when running unit-tests
 		if (__unittestmode)
 			enabled = true;

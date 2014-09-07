@@ -78,8 +78,7 @@ endif (INTROSPECTION_COMPILER STREQUAL "")
 
 set(COMPONENT_SOLVER_SOURCES
 	solvers/abstract-solver.vala
-	solvers/basic-solver.vala
-	solvers/pkit-solver.vala
+	solvers/native-solver.vala
 	solvers/python-solver.vala
 	solvers/zfeed-solver.vala
 	solvers/zfeed.vala
