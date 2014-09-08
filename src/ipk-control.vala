@@ -93,7 +93,7 @@ public abstract class Control : Object {
 	/**
 	 * Get replaced native components for the package.
 	 *
-	 * @deprecated
+	 * DEPRECATED
 	 */
 	public string get_replaces () {
 		string s = packSetting.get_value ("Replaces", false);
@@ -101,7 +101,7 @@ public abstract class Control : Object {
 	}
 
 	/**
-	 * @deprecated
+	 * DEPRECATED
 	 */
 	public void set_replaces (string repList) {
 		packSetting.add_value ("Replaces", repList);

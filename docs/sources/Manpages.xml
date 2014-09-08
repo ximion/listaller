@@ -7,6 +7,11 @@
 <chapter id="chap-Listaller-ManualPages">
 	<title>Manual pages</title>
 
+	<para>
+		The manual pages (appcompile(1), depscan(1), lig++(1), ligcc(1), likey(1), lipa(1), lipkgen(1), relaytool(1) and runapp(1))
+		are currently not available for online-viewing.
+	</para>
+<!--
 	<xi:include href="../../../man/appcompile.1.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
 	<xi:include href="../../../man/depscan.1.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
 	<xi:include href="../../../man/lig++.1.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
@@ -16,4 +21,5 @@
 	<xi:include href="../../../man/lipkgen.1.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
 	<xi:include href="../../../man/relaytool.1.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
 	<xi:include href="../../../man/runapp.1.xml" xmlns:xi="http://www.w3.org/2001/XInclude"/>
+	-->
  </chapter>

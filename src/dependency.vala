@@ -190,7 +190,7 @@ public class Dependency : Object {
 	}
 
 	/**
-	 * @returns Value of the directives found
+	 * @return Value of the directives found
 	 */
 	protected string process_directives (string directive_str) throws ComponentError {
 		// first grab all data from shell commands and env vars
