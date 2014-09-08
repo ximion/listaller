@@ -195,13 +195,14 @@ void test_depsolver () {
 	Dependency dep1 = new Dependency ();
 	dep1.metainfo.id = "Gee";
 	dep1.feed_url = "http://sweets.sugarlabs.org/base/libgee";
-	dep1.metainfo.add_provided_item (Appstream.ProvidesKind.LIBRARY, "libc.so.6", null);
+	dep1.metainfo.add_provided_item (Appstream.ProvidesKind.LIBRARY, "libgee-0.8.so", null);
 	deplist.add (dep1);
 
 	Dependency dep2 = new Dependency ();
 	dep2.metainfo.id = "SDLMixer1.2";
 	dep2.feed_url = "http://repo.roscidus.com/lib_rsl/sdl-mixer1.2";
-	dep2.metainfo.add_provided_item (Appstream.ProvidesKind.LIBRARY, "libgee.so", null);
+	// library name, just so we have something to resolve
+	dep2.metainfo.add_provided_item (Appstream.ProvidesKind.LIBRARY, "libc.so.6", null);
 	deplist.add (dep2);
 
 	Dependency dep3 = new Dependency ();

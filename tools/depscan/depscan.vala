@@ -115,8 +115,9 @@ private class DependencyScanner : Object {
 
 		foreach (Dependency dep in cfactory.registered_deps.values) {
 			var iter = required_items.iterator ();
-			if (!iter.first ())
+			if (!iter.next ())
 				continue;
+
 			do {
 				string s = iter.get ();
 				Appstream.ProvidesKind itype = Appstream.provides_item_get_kind (s);

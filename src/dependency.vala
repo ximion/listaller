@@ -467,7 +467,7 @@ private static bool dependency_equal_func (Dependency a, Dependency b) {
 }
 
 private HashSet<Dependency> dependency_hashset_new () {
-	return new HashSet<Dependency> ((HashFunc) dependency_hash_func, (EqualFunc) dependency_equal_func);
+	return new HashSet<Dependency> (dependency_hash_func, dependency_equal_func);
 }
 
 } // End of namespace: Listaller

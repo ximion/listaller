@@ -6,7 +6,7 @@ find_package(SQLite3 REQUIRED)
 find_package(LibArchive REQUIRED)
 find_package(GPGMe REQUIRED)
 find_library(M_LIB m)
-pkg_check_modules(GEE REQUIRED gee-1.0)
+pkg_check_modules(GEE REQUIRED gee-0.8)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
 pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2>=0.9.4)
 
@@ -16,7 +16,7 @@ set(LI_TOOLS_SHARED_SOURCES toolshared.vala
 )
 
 vala_precompile(tools-shared LI_TOOLS_SHARED_C ${LI_TOOLS_SHARED_SOURCES}
-			PACKAGES config gee-1.0 gio-2.0 posix appstream listaller-${LILIBS_VERSION}
+			PACKAGES config gee-0.8 gio-2.0 posix appstream listaller-${LILIBS_VERSION}
 			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi ${CMAKE_BINARY_DIR}/src
 )
 

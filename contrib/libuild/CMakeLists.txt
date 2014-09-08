@@ -4,7 +4,7 @@ find_package(Vala REQUIRED)
 include("${VALA_USE_FILE}")
 
 find_package(GLIB2 REQUIRED)
-pkg_check_modules(GEE REQUIRED gee-1.0)
+pkg_check_modules(GEE REQUIRED gee-0.8)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
 
 ensure_vala_version("0.14" MINIMUM)
@@ -27,7 +27,7 @@ include_directories(${CMAKE_BINARY_DIR}
 add_definitions(${GEE_CFLAGS} ${GEE_CFLAGS_OTHER})
 
 vala_add_executable(buildlist ${BUILDLIST_SOURCES}
-				PACKAGES posix glib-2.0 gio-2.0 gee-1.0
+				PACKAGES posix glib-2.0 gio-2.0 gee-0.8
 )
 
 install(TARGETS buildlist DESTINATION lib/listaller COMPONENT buildtools)

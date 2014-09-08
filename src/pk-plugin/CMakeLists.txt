@@ -1,7 +1,7 @@
 # CMakeLists for Listaller PackageKit PlugIn
 
 find_package(GLIB2 REQUIRED)
-pkg_check_modules(GEE REQUIRED gee-1.0)
+pkg_check_modules(GEE REQUIRED gee-0.8)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
 pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2)
 pkg_check_modules(PACKAGEKIT_PLUGIN REQUIRED packagekit-plugin)

@@ -1,7 +1,7 @@
 # CMakeLists for Lilith
 
 find_package(GLIB2 REQUIRED)
-pkg_check_modules(GEE REQUIRED gee-1.0)
+pkg_check_modules(GEE REQUIRED gee-0.8)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
 
 set(LILITH_SOURCES lilith.vala

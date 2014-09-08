@@ -82,7 +82,7 @@ if (API_DOCS)
 			"-X" "${CMAKE_BINARY_DIR}/src/listaller.h" "-X" "-l"
 			"-X" "${CMAKE_BINARY_DIR}/src/liblistaller-glib.so.${LISTALLER_LIB_VERSION}"
 			"--doclet" "gtkdoc"
-			"--pkg=config" "--pkg=gee-1.0" "--pkg=gio-2.0" "--pkg=libsoup-2.4"
+			"--pkg=config" "--pkg=gee-0.8" "--pkg=gio-2.0" "--pkg=libsoup-2.4"
 			"--pkg=sqlite3" "--pkg=libarchive" "--pkg=gpgme" "--pkg=libxml-2.0"
 			"--pkg=appstream" "--pkg=packagekit-glib2"
 			"--package-name=listaller"

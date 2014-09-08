@@ -150,7 +150,7 @@ private class MetaFile : Object {
 	public bool open_block_by_value (string field, string value, bool reset_index = true) {
 		if (reset_index)
 			reset ();
-		var iter = content.list_iterator ();
+		var iter = content.bidir_list_iterator ();
 		iter.first ();
 
 		if (content.size == 0) {
@@ -183,7 +183,7 @@ private class MetaFile : Object {
 	public bool open_block_by_field (string field, bool reset_index = false) {
 		if (reset_index)
 			reset ();
-		var iter = content.list_iterator ();
+		var iter = content.bidir_list_iterator ();
 
 		if (content.size == 0) {
 			currentBlockId = -1;
@@ -230,12 +230,13 @@ private class MetaFile : Object {
 	 */
 	public bool open_block_first () {
 		reset ();
-		var iter = content.list_iterator ();
+		var iter = content.bidir_list_iterator ();
 
 		bool start = false;
 
 		if (!iter.first ())
 			return false;
+
 		do {
 			string line = iter.get ();
 			if (is_empty (line))
@@ -258,10 +259,11 @@ private class MetaFile : Object {
 	}
 
 	public bool block_next () {
-		var iter = content.list_iterator ();
+		var iter = content.bidir_list_iterator ();
 
 		if (!iter.first ())
 			return false;
+
 		do {
 			if (iter.index () < currentBlockId)
 				continue;
@@ -290,10 +292,11 @@ private class MetaFile : Object {
 	public string get_value (string field, bool respectOpenedBlock = true) {
 		string res = "";
 		bool addToBlock = false;
-		var iter = content.list_iterator ();
+		var iter = content.bidir_list_iterator ();
 
 		if (!iter.first ())
 			return "";
+
 		do {
 			if (iter.index () < currentBlockId)
 				continue;
@@ -327,10 +330,11 @@ private class MetaFile : Object {
 
 	public bool has_field (string field, bool respectOpenedBlock = true) {
 		bool ret = false;
-		var iter = content.list_iterator ();
+		var iter = content.bidir_list_iterator ();
 
 		if (!iter.first ())
 			return false;
+
 		do {
 			if (iter.index () < currentBlockId)
 				continue;
@@ -392,9 +396,9 @@ private class MetaFile : Object {
 			currentBlockId = content.size;
 		} else {
 			// Insert into existing field
-			var iter = content.list_iterator ();
-			iter.first ();
+			var iter = content.bidir_list_iterator ();
 			int location = -1;
+			iter.first ();
 
 			while (iter.has_next ()) {
 				if (iter.index () < currentBlockId) {
@@ -444,7 +448,7 @@ private class MetaFile : Object {
 			return false;
 		}
 
-		var iter = content.list_iterator ();
+		var iter = content.bidir_list_iterator ();
 
 		if (!iter.first ())
 			return false;

@@ -101,7 +101,7 @@ private static bool fileentry_equal_func (FileEntry a, FileEntry b) {
 }
 
 private HashSet<FileEntry> fileentry_hashset_new () {
-	return new HashSet<FileEntry> ((HashFunc) fileentry_hash_func, (EqualFunc) fileentry_equal_func);
+	return new HashSet<FileEntry> (fileentry_hash_func, fileentry_equal_func);
 }
 
 /**
@@ -157,7 +157,7 @@ private class FileList : Object {
 		}
 
 		string current_dir = "";
-		Iterator<string> it = text.iterator ();
+		BidirListIterator<string> it = text.bidir_list_iterator ();
 
 		it.first ();
 		while (it.has_next ()) {

@@ -140,10 +140,10 @@ int main(string[] args)
 		FileInfo fileinfo;
 		var counter = 0;
 
-		var symbolMap = new Gee.HashMap<string, VersionNumber>(GLib.str_hash, GLib.str_equal);
+		var symbolMap = new Gee.HashMap<string, VersionNumber> ();
 		// This map contains every symbol and the version as close to the minimum version as possible
 
-		var symbolsNewerThanMinimum = new Gee.HashSet<string>(GLib.str_hash, GLib.str_equal);
+		var symbolsNewerThanMinimum = new Gee.HashSet<string> ();
 		// This set contains all symbols used by glibc versions newer than minimumVersion
 
 		while((fileinfo = enumerator.next_file(null)) != null)

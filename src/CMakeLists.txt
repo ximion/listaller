@@ -30,7 +30,7 @@ set(LISTALLER_BASE_SOURCES ${lisrc}/logging.vala
 	CACHE INTERNAL "Listaller core source files"
 )
 
-set(LISTALLER_BASE_VALA_DEPS config gee-1.0 gio-2.0 sqlite3 libarchive libsoup-2.4 gpgme libxml-2.0 appstream
+set(LISTALLER_BASE_VALA_DEPS config gee-0.8 gio-2.0 sqlite3 libarchive libsoup-2.4 gpgme libxml-2.0 appstream
 			     CACHE INTERNAL "Essential Vala package dependencies"
 )
 
@@ -62,7 +62,7 @@ find_package(LibXml2 REQUIRED)
 find_package(GPGMe REQUIRED)
 find_package(GI REQUIRED)
 find_library(M_LIB m)
-pkg_check_modules(GEE REQUIRED gee-1.0>=0.6)
+pkg_check_modules(GEE REQUIRED gee-0.8>=0.10)
 pkg_check_modules(GIO2 REQUIRED gio-2.0>=2.26)
 pkg_check_modules(SOUP REQUIRED libsoup-2.4>=2.40)
 pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2>=0.9.4)

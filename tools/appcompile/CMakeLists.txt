@@ -6,7 +6,7 @@ include("${VALA_USE_FILE}")
 
 find_package(GLIB2 REQUIRED)
 find_package(Gettext REQUIRED)
-pkg_check_modules(GEE REQUIRED gee-1.0)
+pkg_check_modules(GEE REQUIRED gee-0.8)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
 
 set(LIBUILD_SOURCES ${lisrc}/utils.vala
@@ -27,7 +27,7 @@ include_directories(${CMAKE_BINARY_DIR}
 
 # Database tests
 vala_add_executable (appcompile ${LIBUILD_SOURCES}
-			PACKAGES config gee-1.0 gio-2.0 posix
+			PACKAGES config gee-0.8 gio-2.0 posix
 			VAPI_DIRS ${CMAKE_SOURCE_DIR}/vapi
 			COMPILE_FLAGS ${GLOBAL_VALAC_FLAGS}
 )
