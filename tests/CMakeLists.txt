@@ -10,7 +10,6 @@ find_package(GI REQUIRED)
 find_library(M_LIB m)
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
-pkg_check_modules(REDLAND REQUIRED redland>=0.4)
 pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2)
 #find_gir(PKGIR "packagekit-glib2" REQUIRED)
 
@@ -24,7 +23,6 @@ link_libraries(${M_LIB}
 		${LIBXML2_LIBRARIES}
 		${GPGME_VANILLA_LIBRARIES}
 		${PACKAGEKIT_LIBRARIES}
-		${REDLAND_LIBRARIES}
 		listaller-glib
 )
 

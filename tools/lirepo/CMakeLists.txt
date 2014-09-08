@@ -41,7 +41,6 @@ target_link_libraries(lirepo
 		${LibArchive_LIBRARIES}
 		${LIBXML2_LIBRARIES}
 		${GPGME_VANILLA_LIBRARIES}
-		${REDLAND_LIBRARIES}
 		listaller-glib
 )
 

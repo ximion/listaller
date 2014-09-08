@@ -8,8 +8,7 @@ find_package(GPGMe REQUIRED)
 find_library(M_LIB m)
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(GIO2 REQUIRED gio-2.0)
-pkg_check_modules(REDLAND REQUIRED redland>=0.4)
-pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2>=0.8.4)
+pkg_check_modules(PACKAGEKIT REQUIRED packagekit-glib2>=0.9.4)
 
 set(LI_TOOLS_SHARED_SOURCES toolshared.vala
 			console-progress-bar.vala
