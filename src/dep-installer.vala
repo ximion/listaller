@@ -150,10 +150,10 @@ private class DepInstaller : MessageObject {
 	 */
 	internal bool install_existing_module_dependency (ComponentFactory cfactory, ref Dependency dep) {
 		bool ret = true;
-		ret = cfactory.dependency_installable (dep, null);
-		if (ret)
-			return true;
 
+		/* check if dependency was found, to speed up potential installation */
+
+		cfactory.dependency_found (dep, null);
 		if (!depman.module_is_installed (ref dep)) {
 			ret = install_module_dep_internal (cfactory, dep);
 			if ((ret) && (dep.installed))

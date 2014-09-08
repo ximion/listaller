@@ -72,8 +72,7 @@ private class NativeSolver : AbstractSolver {
 		return path;
 	}
 
-	public override bool check_dependency_installed (Dependency dep, out string? reason = null) {
-		bool ret = true;
+	public override void check_dependency_found (Dependency dep) throws SolverError {
 
 		if (dep.metainfo.pkgnames == null) {
 			/**
@@ -102,8 +101,7 @@ private class NativeSolver : AbstractSolver {
 				try {
 					pkg = pksolv.find_package_name_for_file (path);
 				} catch (Error e) {
-					reason = e.message;
-					ret = false;
+					throw new SolverError.RESOLVING_FAILED (e.message);
 					break;
 				}
 				pkg_table.insert (pkg, null);
@@ -121,8 +119,7 @@ private class NativeSolver : AbstractSolver {
 					string[] id_parts = key.split (";");
 					if (id_parts.length <= 2) {
 						error ("Invalid package-id: %s", key);
-						reason = "Invalid package-id: %s".printf (key);
-						return false;
+						throw new SolverError.RESOLVING_FAILED ("Invalid package-id: %s".printf (key));
 					}
 
 					pkgs += id_parts[0];
@@ -131,25 +128,27 @@ private class NativeSolver : AbstractSolver {
 				pkgs += null;
 
 				dep.metainfo.pkgnames = pkgs;
-			} else {
-				reason = "No package found for dependency '%s'.".printf (dep.unique_name);
-				ret = false;
 			}
 		} else {
+			bool ret = true;
 			foreach (string pkg in dep.metainfo.pkgnames) {
 				string? pkg_resolved;
-				pkg_resolved = pksolv.resolve (pkg);
+				try {
+					pkg_resolved = pksolv.resolve (pkg);
+				} catch (Error e) {
+					throw new SolverError.RESOLVING_FAILED ("Could not resolve package name '%s' for dependency '%s'. Error: %s".printf (pkg, dep.unique_name, e.message));
+					break;
+				}
 				if (pkg_resolved == null) {
-					reason = "Could not resolve package name '%s' for dependency '%s'.".printf (pkg, dep.unique_name);
+					debug ("Package %s not found!", pkg);
 					ret = false;
 					break;
 				}
+				debug ("Resolved package: %s", pkg_resolved);
 			}
 			if (ret)
 				dep.installed = true;
 		}
-
-		return ret;
 	}
 
 	public override bool install_dependency (Dependency dep) throws SolverError {

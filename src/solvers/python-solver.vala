@@ -60,9 +60,9 @@ private class PythonSolver : AbstractSolver {
 	}
 
 
-	public override bool check_dependency_installed (Dependency dep, out string? reason = null) {
+	public override void check_dependency_found (Dependency dep) throws SolverError {
 		// TODO
-		return true;
+		return;
 	}
 
 	public override bool install_dependency (Dependency dep) throws SolverError {

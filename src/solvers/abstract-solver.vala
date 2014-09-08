@@ -68,17 +68,14 @@ private abstract class AbstractSolver : Object {
 	}
 
 	/**
-	 * Function to check if items of a module are already installed.
-	 * This function should complete relatively fast, since it is run even before
-	 * a request to PackageKit is sent.
-	 * Installed items are added to the list of installed items.
+	 * Function to check if items of a module are already installed, but
+	 * not yet known to Listaller.
 	 *
 	 * @param dep Dependency which should be checked.
-	 * @param reason Reference to a string in which the reason why the dependency can not be satisfied is returned.
-	 *
-	 * @return TRUE if this solver was successful, FALSE otherwise.
 	 */
-	public abstract bool check_dependency_installed (Dependency dep, out string? reason = null);
+	public virtual void check_dependency_found (Dependency dep) throws SolverError {
+		return;
+	}
 
 	/**
 	 * Trigger installation of a module.

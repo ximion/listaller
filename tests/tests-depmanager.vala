@@ -219,7 +219,8 @@ void test_depsolver () {
 	bool ret;
 	var cfactory = new Dep.ComponentFactory (ssettings);
 
-	ret = cfactory.dependencies_installable (deplist);
+	/* this stuff should be found on the current system */
+	ret = cfactory.dependencies_found (deplist);
 	assert (ret == true);
 }
 

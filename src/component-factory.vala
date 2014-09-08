@@ -167,30 +167,32 @@ internal class ComponentFactory : Object {
 	 * determine if they are installed and, if not, which parts are missing
 	 * to satisfy a dependency.
 	 */
-	private bool run_solver_module (AbstractSolver depsolver, Dependency dep, out string reason) {
+	private void run_solver_module (AbstractSolver depsolver, Dependency dep) throws SolverError {
 		if (!depsolver.usable (dep))
-			return true;
-		bool ret;
-		ret = depsolver.check_dependency_installed (dep, out reason);
+			return;
 
-		return ret;
+		try {
+			depsolver.check_dependency_found (dep);
+		} catch (SolverError e) {
+			throw e;
+		}
 	}
 
-	private bool check_dependency_installed (Dependency dep, out string reason = null) {
+	private bool check_dependency_found (Dependency dep, out string reason = null) {
 		if (dep.installed)
 			return true;
 
-		bool ret;
 		init_solverpool ();
 
 		foreach (AbstractSolver solver in solver_pool) {
-			ret = run_solver_module (solver, dep, out reason);
-			if (!ret)
+			try {
+				run_solver_module (solver, dep);
+			} catch (Error e) {
+				reason = _("Component '%s' could not be resolved. A solver failed: %s").printf (dep.unique_name, e.message);
+				critical (reason);
 				return false;
+			}
 		}
-
-		if ((!dep.installed) && (reason == null))
-			critical ("Module '%s' is not installed, but we don't know a reason why, since no resolver has failed. This is usually a bug in a resolver, please fix it!", dep.unique_name);
 
 		return dep.installed;
 	}
@@ -244,11 +246,15 @@ internal class ComponentFactory : Object {
 		if (registered_deps.has_key (idname)) {
 			// TODO: Resolve module (installed? all dependencies installed?)
 			Dependency dep = get_dependency (idname);
-			string ic_reason;
-			check_dependency_installed (dep, out ic_reason);
+			string? ic_reason = null;
+			check_dependency_found (dep, out ic_reason);
 
 			if (!dep.installed) {
-				reason = ic_reason;
+				if (ic_reason == null) {
+					reason = ic_reason;
+				} else {
+					reason = _("Could not detect installation of component '%s'.").printf (dep.unique_name);
+				}
 				required_dep = dep;
 				return false;
 			}
@@ -353,11 +359,11 @@ internal class ComponentFactory : Object {
 	 *
 	 * @returns TRUE if dependency is installable.
 	 */
-	internal bool dependency_installable (Dependency dep, out string? reason = null) {
+	internal bool dependency_found (Dependency dep, out string? reason = null) {
 		bool ret = true;
 
 		string ic_reason;
-		ret = check_dependency_installed (dep, out ic_reason);
+		ret = check_dependency_found (dep, out ic_reason);
 		if (!ret) {
 			reason = ic_reason;
 			return false;
@@ -371,11 +377,11 @@ internal class ComponentFactory : Object {
 	 *
 	 * @returns TRUE if dependencies in dep_list are installable.
 	 */
-	internal bool dependencies_installable (ArrayList<Dependency> dep_list, out string? reason = null) {
+	internal bool dependencies_found (ArrayList<Dependency> dep_list, out string? reason = null) {
 		bool ret = true;
 		foreach (Dependency dep in dep_list) {
 			string ic_reason;
-			ret = check_dependency_installed (dep, out ic_reason);
+			ret = check_dependency_found (dep, out ic_reason);
 			if (!ret) {
 				reason = ic_reason;
 				return false;

@@ -40,11 +40,6 @@ private class ZFeedSolver : AbstractSolver {
 		return true;
 	}
 
-	public override bool check_dependency_installed (Dependency dep, out string? reason = null) {
-		// we do not handle install-checks
-		return true;
-	}
-
 	public override bool install_dependency (Dependency dep) throws SolverError {
 		Dep.FeedInstaller finst = new Dep.FeedInstaller (ssettings);
 		bool ret;

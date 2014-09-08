@@ -125,14 +125,11 @@ private class PkResolver : PkListallerTask {
 				return null;
 			}
 		} else {
-			debug ("::TODO");
-			/*
 			res = pkbproxy.run_search_files (filter, {fname, null});
 			if (res == null) {
 				debug ("Native backend PkResults was NULL!");
 				return null;
 			}
-			*/
 		}
 
 		if (res == null)
@@ -170,20 +167,17 @@ private class PkResolver : PkListallerTask {
 		PackageKit.Bitfield filter = PackageKit.Filter.bitfield_from_string ("");
 		if (pkbproxy == null) {
 			try {
-				res  = pktask.search_files (filter, {pkg_name, null}, null, null);
+				res  = pktask.resolve (filter, {pkg_name, null}, null, null);
 			} catch (Error e) {
 				debug (e.message);
 				return null;
 			}
 		} else {
-			debug ("::TODO");
-			/*
-			res = pkbproxy.run_resolve (filter, {pkg_name, null});
+			res = pkbproxy.run_resolve_packages (filter, {pkg_name, null});
 			if (res == null) {
 				debug ("Native backend PkResults was NULL!");
 				return null;
 			}
-			*/
 		}
 
 		if (res == null)

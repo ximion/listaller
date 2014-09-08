@@ -606,12 +606,12 @@ pk_plugin_reset_backend_jobs (PkPlugin *plugin)
 }
 
 /**
- * pk_backend_job_request_installpackages_cb:
+ * pk_backend_job_request_install_packages_cb:
  *
  * Helper method for a Listaller native PkBackend proxy to do a install-packages request.
  **/
 static PkResults*
-pk_backend_job_request_installpackages_cb (PkBitfield transaction_flags,
+pk_backend_job_request_install_packages_cb (PkBitfield transaction_flags,
 					gchar **package_ids,
 					PkPlugin *plugin)
 {
@@ -627,6 +627,74 @@ pk_backend_job_request_installpackages_cb (PkBitfield transaction_flags,
 				      plugin->priv->internal_job,
 				      transaction_flags,
 				      package_ids);
+
+	/* wait for finished */
+	g_main_loop_run (plugin->priv->loop);
+
+	results = plugin->priv->backend_results;
+	pk_plugin_reset_backend_jobs (plugin);
+
+	g_debug ("Results exit code is %s", pk_exit_enum_to_string (pk_results_get_exit_code (results)));
+
+	return results;
+}
+
+/**
+ * pk_backend_job_request_resolve_packages_cb:
+ *
+ * Helper method for a Listaller native PkBackend proxy to perform a resolve request.
+ **/
+static PkResults*
+pk_backend_job_request_resolve_packages_cb (PkBitfield transaction_flags,
+					gchar **package_ids,
+					PkPlugin *plugin)
+{
+	PkResults *results;
+
+	g_debug ("Running resolve-packages on native backend!");
+
+	/* prepare the backend */
+	pk_plugin_reset (plugin);
+
+	/* query the native backend */
+	pk_backend_resolve_packages (plugin->backend,
+				      plugin->priv->internal_job,
+				      transaction_flags,
+				      package_ids);
+
+	/* wait for finished */
+	g_main_loop_run (plugin->priv->loop);
+
+	results = plugin->priv->backend_results;
+	pk_plugin_reset_backend_jobs (plugin);
+
+	g_debug ("Results exit code is %s", pk_exit_enum_to_string (pk_results_get_exit_code (results)));
+
+	return results;
+}
+
+/**
+ * pk_backend_job_request_search_files_cb:
+ *
+ * Helper method for a Listaller native PkBackend proxy to perform a search-files request.
+ **/
+static PkResults*
+pk_backend_job_request_search_files_cb (PkBitfield transaction_flags,
+					gchar **files,
+					PkPlugin *plugin)
+{
+	PkResults *results;
+
+	g_debug ("Running resolve-packages on native backend!");
+
+	/* prepare the backend */
+	pk_plugin_reset (plugin);
+
+	/* query the native backend */
+	pk_backend_search_files (plugin->backend,
+				      plugin->priv->internal_job,
+				      transaction_flags,
+				      files);
 
 	/* wait for finished */
 	g_main_loop_run (plugin->priv->loop);
@@ -674,10 +742,9 @@ pk_plugin_transaction_started (PkPlugin *plugin,
 	pk_backend_job_set_status (plugin->job, PK_STATUS_ENUM_SETUP);
 
 	/* create a backend proxy and connect it, so Listaller can acces parts of PkBackend */
-	pkbproxy = listaller_pk_backend_proxy_new ();
-	listaller_pk_backend_proxy_set_install_packages (pkbproxy,
-						(ListallerPkBackendProxyInstallPackagesCB) pk_backend_job_request_installpackages_cb,
-						plugin);
+	pkbproxy = listaller_pk_backend_proxy_new ((ListallerPkBackendProxyResolvePackagesCB) pk_backend_job_request_resolve_packages_cb, plugin,
+												(ListallerPkBackendProxySearchFilesCB) pk_backend_job_request_search_files_cb, plugin,
+												(ListallerPkBackendProxyInstallPackagesCB) pk_backend_job_request_install_packages_cb, plugin);
 	listaller_set_backend_proxy (pkbproxy);
 
 	/* get transaction role */

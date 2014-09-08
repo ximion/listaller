@@ -36,14 +36,20 @@ internal class PkBackendProxy : Object {
 	public delegate unowned PackageKit.Results? InstallPackagesCB (PackageKit.Bitfield transaction_flags,
 							   [CCode (array_length = false, array_null_terminated = true)] string[] packages);
 
+	public delegate unowned PackageKit.Results? ResolvePackagesCB (PackageKit.Bitfield transaction_flags,
+							   [CCode (array_length = false, array_null_terminated = true)] string[] packages);
+
+	public delegate unowned PackageKit.Results? SearchFilesCB (PackageKit.Bitfield transaction_flags,
+							   [CCode (array_length = false, array_null_terminated = true)] string[] files);
+
 	private InstallPackagesCB pk_installpackages;
+	private ResolvePackagesCB pk_resolvepackages;
+	private SearchFilesCB	  pk_searchfiles;
 
-	public PkBackendProxy () {
-		pk_installpackages = null;
-	}
-
-	public void set_install_packages (InstallPackagesCB call) {
-		pk_installpackages = call;
+	public PkBackendProxy (ResolvePackagesCB solvpkgs_call, SearchFilesCB searchfiles_call, InstallPackagesCB instpkgs_call) {
+		pk_resolvepackages = solvpkgs_call;
+		pk_installpackages = instpkgs_call;
+		pk_searchfiles = searchfiles_call;
 	}
 
 	public unowned PackageKit.Results? run_install_packages (PackageKit.Bitfield transaction_flags,
@@ -51,6 +57,20 @@ internal class PkBackendProxy : Object {
 		if (pk_installpackages == null)
 			return null;
 		return pk_installpackages (transaction_flags, packages);
+	}
+
+	public unowned PackageKit.Results? run_resolve_packages (PackageKit.Bitfield transaction_flags,
+								 [CCode (array_length = false, array_null_terminated = true)] string[] packages) {
+		if (pk_resolvepackages == null)
+			return null;
+		return pk_resolvepackages (transaction_flags, packages);
+	}
+
+	public unowned PackageKit.Results? run_search_files (PackageKit.Bitfield transaction_flags,
+								 [CCode (array_length = false, array_null_terminated = true)] string[] files) {
+		if (pk_searchfiles == null)
+			return null;
+		return pk_searchfiles (transaction_flags, files);
 	}
 
 }
