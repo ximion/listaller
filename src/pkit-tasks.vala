@@ -82,6 +82,10 @@ private abstract class PkListallerTask : MessageObject {
 	}
 
 	protected bool supported (PackageKit.Role role) {
+		/* FIXME: Role data is not correct when running as plugin */
+		if (packagekit_daemon_caller)
+			return true;
+
 		return (supported_roles & (1 << role)) > 0;
 	}
 }

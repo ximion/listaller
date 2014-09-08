@@ -657,7 +657,7 @@ pk_backend_job_request_resolve_packages_cb (PkBitfield transaction_flags,
 	pk_plugin_reset (plugin);
 
 	/* query the native backend */
-	pk_backend_resolve_packages (plugin->backend,
+	pk_backend_resolve (plugin->backend,
 				      plugin->priv->internal_job,
 				      transaction_flags,
 				      package_ids);
