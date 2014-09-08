@@ -1,14 +1,40 @@
 Version 0.5.9
 ~~~~~~~~~~~~~~
- == Still in development ==
 
 Notes:
+ * This release is mainly for PK 0.9.x compatibility, and a preview on what happens next
+   with Listaller.
+   There are some huge plans, even a rewrite (again) is possible due to changes in PK
+ * Do not rely on this unstable Listaller release and build on it!
 
 Features:
+ * Remove dependency on Redland and DOAP RDF module (Matthias Klumpp)
+ * Convert IPK to use AppStream appdata, and switch to IPK2.0 (Matthias Klumpp)
+ * Include all dependency-information in every IPK package (Matthias Klumpp)
+ * Replace own AppStream parser with libappstream (Matthias Klumpp)
+ * Use AsComponent as data store in AppItem (Matthias Klumpp)
+ * Add support for PackageKit 0.9.x (Matthias Klumpp)
+ * Add support for a few internal Listaller-specific AppStream extensions (Matthias Klumpp)
+ * Some database tweaks and test fixes (Matthias Klumpp)
+ * Use SHA256 as default checksumming algorithm (Matthias Klumpp)
+ * Create a "Stdlibs" metainfo template (Matthias Klumpp)
+ * Add option to disable 3rd-party module installs (Matthias Klumpp)
 
 Specs & Docs:
+ * docs: Slight module-graph image change (Matthias Klumpp)
+ * docs: A few changes on the listaller-tools image (Matthias Klumpp)
 
 Bugfixes:
+ * fix FTBFS with clang instead of gcc (Nicolas Sévelin-Radiguet)
+ * Use ia32 for x86 architecture naming everywhere (Matthias Klumpp)
+ * Don't silently die if malformed AppData leads to broken AppInfo (Matthias Klumpp)
+ * lipa: Never silently exit when initialization fails at an early stage (Matthias Klumpp)
+ * clitools: Don't repeat error messages if a cli tool is running (Matthias Klumpp)
+ * Fix bug in depscan and lipkgen which added invalid dependencies (Matthias Klumpp)
+ * Apply the unique-id naming project-wide (Matthias Klumpp)
+ * Ensure we always have reliable unique ids, and fix various bugs around it (Matthias Klumpp)
+ * Get rid of the xmldata hack (Matthias Klumpp)
+ * Remove useless cruft from the dependency representation (Matthias Klumpp)
 
 Version 0.5.8
 ~~~~~~~~~~~~~~
